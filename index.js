@@ -1,7 +1,7 @@
 var express = require("express"),
     app = express(),
     builds = express(),
-    config = require("config.json");
+    config = require("./config.json");
 
 /**
  * Deploy listener
