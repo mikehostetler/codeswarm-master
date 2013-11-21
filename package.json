@@ -1,0 +1,10 @@
+{
+  "name": "PostTravis",
+  "version": "0.0.1",
+  "private": true,
+  "description": "A simple server for deploying multiple projects on Travis after_success",
+  "readmeFilename": "README.md",
+  "dependencies": {
+    "express": "~3.4.0"
+  }
+}
