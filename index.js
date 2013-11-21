@@ -3,7 +3,7 @@ var express = require("express"),
 
 app.get("/:project", function(req, res){
     
-    res.send(req.params.build);
+    res.send(req.params.project);
 
 });
 
