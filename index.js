@@ -10,11 +10,15 @@ var express = require("express"),
 app.get("/:project", function(req, res){
     
     // Ensure the project has been config'd
-    if (!config.hasOwnProperty[req.param.project]) {
+    if (!config.hasOwnProperty(req.params.project)) {
         // Nope, send an error
         res.send("Failed to deploy. Missing or incorrect configuration");
     } else {
+        // Good to go
         res.send("Deploying!");
+        
+        var spawn = require('child_process').spawn;
+        spawn(__dirname + "/runner.sh " + __dirname + "/builds/" + req.params.project, [], { stdio: "inherit" });
     }
 
 });
@@ -27,5 +31,5 @@ console.log("Serving app over 1337");
  */
 
 builds.use(express.static(__dirname + '/builds'));
-builds.listen(80);
-console.log("Serving builds over 80");
+builds.listen(8080);
+console.log("Serving builds over 8080");
