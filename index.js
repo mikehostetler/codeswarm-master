@@ -18,7 +18,7 @@ app.get("/:project", function(req, res){
         res.send("Deploying!");
         
         var spawn = require('child_process').spawn;
-        spawn(__dirname + "/runner.sh " + __dirname + "/builds/" + req.params.project, [], { stdio: "inherit" });
+        spawn(__dirname + "/runner.sh \"" + __dirname + "/builds/" + req.params.project + "\"", [], { stdio: "inherit" });
     }
 
 });
