@@ -38,7 +38,7 @@ app.get("/:project", function(req, res) {
                 if (err) {
                     console.log("ERROR: cleanup");
                 }
-                git.clone(build.repo, __dirname+"/builds/"+build.dir, this);
+                git.clone(build.repo, build_path+build.dir, this);
             },
             // Install
             function install (err) {
@@ -60,7 +60,7 @@ app.get("/:project", function(req, res) {
             // Complete
             function complete () {
                 if (arguments[0] !== null) {
-                    console.log("ERROR: install");
+                    console.log("ERROR: grunt");
                 } else {
                     console.log("Built!");
                 }
