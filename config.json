@@ -1,5 +1,6 @@
 {
     "standards-and-practices-demo" : {
-        "dir": "standards-and-practices-demo"
+        "dir": "standards-and-practices-demo",
+        "repo": "git@github.com:appendto/standards-and-practices-demo.git"
     }
 }

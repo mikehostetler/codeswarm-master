@@ -15,10 +15,11 @@ app.get("/:project", function(req, res){
         // Nope, send an error
         res.send("Failed to deploy. Missing or incorrect configuration");
     } else {
+        
         // Good to go
         
-        var command = spawn(__dirname + "/runner.sh", [__dirname + "/builds/" + req.params.project], {
-            cwd: __dirname + "/builds/" + req.params.project    
+        var command = spawn(__dirname + "/runner.sh", [__dirname + "/builds/" + req.params.project.dir], {
+            cwd: __dirname + "/builds/" + req.params.project.dir    
         });
         var output  = [];
         
