@@ -1,6 +1,7 @@
 var express = require("express"),
     app = express(),
     builds = express(),
+    spawn = require('child_process').spawn,
     config = require("./config.json");
 
 /**
@@ -15,12 +16,26 @@ app.get("/:project", function(req, res){
         res.send("Failed to deploy. Missing or incorrect configuration");
     } else {
         // Good to go
-        res.send("Deploying!");
         
-        console.log("Running: " + __dirname + "/runner.sh \"" + __dirname + "/builds/" + req.params.project + "\"");
+        var command = spawn(__dirname + "/runner.sh", [__dirname + "/builds/" + req.params.project], {
+            cwd: __dirname + "/builds/" + req.params.project    
+        });
+        var output  = [];
         
-        var spawn = require('child_process').spawn;
-        spawn(__dirname + "/runner.sh \"" + __dirname + "/builds/" + req.params.project + "\"", [], { stdio: "inherit" });
+        command.stdout.on('data', function (chunk) {
+            output.push(chunk);
+        }); 
+        
+        command.on('close', function(code) {
+            if (code === 0) {
+                res.send("Deployed");
+                console.log(Buffer.concat(output).toString());
+            } else {
+                res.send("Error");
+                console.log("ERROR " + code + " " + Buffer.concat(output).toString());
+            }
+        });
+            
     }
 
 });
