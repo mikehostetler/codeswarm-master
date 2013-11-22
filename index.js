@@ -17,6 +17,8 @@ app.get("/:project", function(req, res){
         // Good to go
         res.send("Deploying!");
         
+        console.log("Running: " + __dirname + "/runner.sh \"" + __dirname + "/builds/" + req.params.project + "\"");
+        
         var spawn = require('child_process').spawn;
         spawn(__dirname + "/runner.sh \"" + __dirname + "/builds/" + req.params.project + "\"", [], { stdio: "inherit" });
     }
