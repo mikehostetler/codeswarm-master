@@ -48,6 +48,15 @@ app.get("/:project", function(req, res) {
                 }
                 exec("npm install", { cwd: build_path+build.dir }, this);
             },
+            // Grunt
+            function grunt () {
+                console.log("Grunting");
+                if (arguments[0] !== null) {
+                    console.log("ERROR: install");
+                } else {
+                    exec("grunt", { cwd: build_path+build.dir }, this);
+                }
+            },
             // Complete
             function complete () {
                 if (arguments[0] !== null) {
