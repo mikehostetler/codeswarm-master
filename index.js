@@ -40,12 +40,26 @@ app.get("/:project", function(req, res) {
                 }
                 git.clone(build.repo, build_path+build.dir, this);
             },
+            // Ensure .deploy available
+            function config (err) {
+				console.log("Loading deploy config");
+				if (err) {
+					console.log("ERROR: clone");
+				} else {
+					fs.readFile(build_path+build.dir+"/.deploy.json", this);
+				}
+            },
             // Install
-            function install (err) {
+            function install (err, config) {
                 console.log("Installing");
                 if (err) {
-                    console.log("ERROR: clone");
+                    console.log("ERROR: config");
                 }
+                // Set build config from .deploy.json
+                build.config = JSON.parse(config);
+                console.log("BUILD CONFIG: ");
+                console.log(build);
+                // Run npm install
                 exec("npm install", { cwd: build_path+build.dir }, this);
             },
             // Grunt
