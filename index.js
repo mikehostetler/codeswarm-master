@@ -57,8 +57,6 @@ app.get("/:project", function(req, res) {
                 }
                 // Set build config from .deploy.json
                 build.config = JSON.parse(config);
-                console.log("BUILD CONFIG: ");
-                console.log(build);
                 // Run npm install
                 exec("npm install", { cwd: build_path+build.dir }, this);
             },
