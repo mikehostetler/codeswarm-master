@@ -7,7 +7,8 @@ var fs = require("fs"),
     exec = require("child_process").exec,
     git = require("gift"),
     config = require("./config.json"),
-    build_path = __dirname + "/builds/";
+    build_path = __dirname + "/builds/",
+    log_path = __dirname + "/logs/";
 
 /**
  * Deploy listener
@@ -21,39 +22,45 @@ app.get("/:project", function(req, res) {
         res.send("Failed to deploy. Missing or incorrect configuration");
     } else {
         
-        res.send("Deploying...");
-        
         // Set build
         var build = config[req.params.project];
         
+        build.log = log_path + build.dir + "/" + new Date().getTime()+".log";
+        
+        res.send("Deploying. Logfile: " + build.log);
+        
         step(
+            // Create log
+            function makeLog () {
+                fse.createFile(build.log, this);
+            },
             // Cleanup
-            function cleanup () {
-                console.log("Cleanup");
+            function cleanup (err) {
+                log(build.log, "Running Cleanup");
                 fse.remove(build_path+build.dir, this);
             },
             // Clone
             function clone (err) {
-                console.log("Cloning");
+                log(build.log, "Cloning");
                 if (err) {
-                    console.log("ERROR: cleanup");
+                    log(build.log, "ERROR: cleanup");
                 }
                 git.clone(build.repo, build_path+build.dir, this);
             },
             // Ensure .deploy available
             function config (err) {
-                console.log("Loading deploy config");
+                log(build.log, "Loading deploy config");
                 if (err) {
-                    console.log("ERROR: clone");
+                    log(build.log, "ERROR: clone");
                 } else {
                     fs.readFile(build_path+build.dir+"/.deploy.json", this);
                 }
             },
             // Install
             function install (err, config) {
-                console.log("Installing");
+                log(build.log, "Installing");
                 if (err) {
-                    console.log("ERROR: config");
+                    log(build.log, "ERROR: config");
                 }
                 // Set build config from .deploy.json
                 build.config = JSON.parse(config);
@@ -62,9 +69,9 @@ app.get("/:project", function(req, res) {
             },
             // Grunt
             function grunt () {
-                console.log("Grunting");
+                log(build.log, "Grunting");
                 if (arguments[0] !== null) {
-                    console.log("ERROR: install");
+                    log(build.log, "ERROR: install");
                 } else {
                     exec("grunt", { cwd: build_path+build.dir }, this);
                 }
@@ -72,9 +79,9 @@ app.get("/:project", function(req, res) {
             // Complete
             function complete () {
                 if (arguments[0] !== null) {
-                    console.log("ERROR: grunt");
+                    log(build.log, "ERROR: grunt");
                 } else {
-                    console.log("Built!");
+                    log(build.log, "Built!");
                 }
             }
             
@@ -82,6 +89,10 @@ app.get("/:project", function(req, res) {
     }
 
 });
+
+var log = function (logfile, data) {
+    fs.appendFileSync(logfile, data + "\n");
+};
 
 
 app.listen(1337);
