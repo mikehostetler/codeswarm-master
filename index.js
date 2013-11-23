@@ -1,6 +1,6 @@
 var fs = require("fs"),
     fse = require("fs-extra"),
-    step = require("step"),
+    async = require("async"),
     express = require("express"),
     app = express(),
     builds = express(),
@@ -23,75 +23,74 @@ app.get("/:project", function(req, res) {
     } else {
         
         // Set build
-        var build = config[req.params.project];
+        var build = config[req.params.project],
+            step;
         
         build.log = log_path + build.dir + "/" + new Date().getTime()+".log";
         
         res.send("Deploying. Logfile: " + build.log.replace(__dirname, ""));
         
-        step(
-            // Create log
-            function makeLog () {
-                fse.createFile(build.log, this);
+        async.series({
+            // Create log file
+            log: function (callback) {
+                fse.createFile(build.log, callback);
             },
-            // Cleanup
-            function cleanup (err) {
-                log(build.log, "Running Cleanup");
-                fse.remove(build_path+build.dir, this);
+            cleanup: function (callback) {
+                log(build, "Cleanup");
+                fse.remove(build_path+build.dir, callback);
             },
-            // Clone
-            function clone (err) {
-                log(build.log, "Cloning");
-                if (err) {
-                    log(build.log, "ERROR: cleanup");
-                }
-                git.clone(build.repo, build_path+build.dir, this);
+            clone: function (callback) {
+                log(build, " [PASS]", false);
+                log(build, "Cloning Repo");
+                git.clone(build.repo, build_path+build.dir, callback);
             },
-            // Ensure .deploy available
-            function config (err) {
-                log(build.log, "Loading deploy config");
-                if (err) {
-                    log(build.log, "ERROR: clone");
+            config: function (callback) {
+                log(build, " [PASS]", false);
+                log(build, "Getting Config");
+                fs.readFile(build_path+build.dir+"/.deploy.json", function (err, config) {
+                    build.config = JSON.parse(config);
+                    callback(err);
+                });
+            },
+            install: function (callback) {
+                log(build, " [PASS]", false);
+                if (build.config.install) {
+                    log(build, "Running npm install");
+                    exec("npm install", { cwd: build_path+build.dir }, callback);
                 } else {
-                    fs.readFile(build_path+build.dir+"/.deploy.json", this);
+                    callback(null);
                 }
             },
-            // Install
-            function install (err, config) {
-                log(build.log, "Installing");
-                if (err) {
-                    log(build.log, "ERROR: config");
+            grunt: function (callback) {
+                if (build.config.install) {
+                    log(build, " [PASS]", false);
                 }
-                // Set build config from .deploy.json
-                build.config = JSON.parse(config);
-                // Run npm install
-                exec("npm install", { cwd: build_path+build.dir }, this);
-            },
-            // Grunt
-            function grunt () {
-                log(build.log, "Grunting");
-                if (arguments[0] !== null) {
-                    log(build.log, "ERROR: install");
+                
+                if (build.config.grunt) {
+                    log(build, "Running Grunt");
+                    exec("grunt " + build.config.grunt, { cwd: build_path+build.dir }, callback);
                 } else {
-                    exec("grunt", { cwd: build_path+build.dir }, this);
-                }
-            },
-            // Complete
-            function complete () {
-                if (arguments[0] !== null) {
-                    log(build.log, "ERROR: grunt");
-                } else {
-                    log(build.log, "Built!");
+                    callback(null);
                 }
             }
-            
-        );
+        }, function (err, result) {
+            if (err) {
+                log(build, "[FAIL] " + err, false);
+            } else {
+                if (build.config.grunt) {
+                    log(build, " [PASS]", false);
+                }
+                log(build, "BUILD COMPLETE");
+            }
+        });
     }
 
 });
 
-var log = function (logfile, data) {
-    fs.appendFileSync(logfile, data + "\n");
+var log = function (build, data, br) {
+    br = (br === undefined) ? "\n" : " ";
+    fs.appendFileSync(build.log, br + data);
+    console.log(data);
 };
 
 
