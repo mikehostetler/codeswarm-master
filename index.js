@@ -42,12 +42,12 @@ app.get("/:project", function(req, res) {
             },
             // Ensure .deploy available
             function config (err) {
-				console.log("Loading deploy config");
-				if (err) {
-					console.log("ERROR: clone");
-				} else {
-					fs.readFile(build_path+build.dir+"/.deploy.json", this);
-				}
+                console.log("Loading deploy config");
+                if (err) {
+                    console.log("ERROR: clone");
+                } else {
+                    fs.readFile(build_path+build.dir+"/.deploy.json", this);
+                }
             },
             // Install
             function install (err, config) {
