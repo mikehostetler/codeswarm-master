@@ -27,7 +27,7 @@ app.get("/:project", function(req, res) {
         
         build.log = log_path + build.dir + "/" + new Date().getTime()+".log";
         
-        res.send("Deploying. Logfile: " + build.log);
+        res.send("Deploying. Logfile: " + build.log.replace(__dirname, ""));
         
         step(
             // Create log
