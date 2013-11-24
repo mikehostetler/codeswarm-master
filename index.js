@@ -53,6 +53,7 @@ app.get("/:project", function(req, res) {
                 });
             },
             run: function (callback) {
+
                 log(build, "[PASS]", false);
                 // Ensure run commands available
                 if (build.config.hasOwnProperty("run")) {
@@ -98,7 +99,7 @@ app.get("/:project", function(req, res) {
                             }
                         });
                     }, function (err) {
-                        console.log(err);
+                        callback(err);
                     });
                     
                 } else {
