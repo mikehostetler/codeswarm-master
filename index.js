@@ -52,73 +52,45 @@ app.get("/:project", function(req, res) {
                     callback(err);
                 });
             },
-            install: function (callback) {
-                log(build, " [PASS]", false);
-                if (build.config.install) {
-                    log(build, "Running npm install");
+            run: function (callback) {
+                // Ensure run commands available
+                if (build.config.hasOwnProperty("run")) {
                     
-                    // Spawn command and push output to array
-                    var npm = spawn("npm", ["install"], { cwd: build_path+build.dir }),
-                        output = [];
-                    
-                    // Record standard output
-                    npm.stdout.on("data", function (data) {
-                        output.push(data);
-                    });
-                    
-                    // Record error output
-                    npm.stderr.on("data", function (data) {
-                        output.push(data);
-                    });
+                    async.eachSeries(build.config.run, function(i, callback) {
                         
-                    // Check status on close
-                    npm.on("close", function (code, signal) {
-                        if (code===0) {
-                            // Success
-                            log(build, Buffer.concat(output).toString());
-                            callback(null);
-                        } else {
-                            // Failure
-                            callback(Buffer.concat(output).toString());
-                        }
-                    });
-                    
-                } else {
-                    callback(null);
-                }
-            },
-            grunt: function (callback) {
-                if (build.config.install) {
-                    log(build, " [PASS]", false);
-                }
-                
-                if (build.config.grunt) {
-                    log(build, "Running Grunt");
-                    
-                    // Spawn command and push output to array
-                    var grunt = spawn("grunt", [build.config.grunt], { cwd: build_path+build.dir }),
-                        output = [];
-                    
-                    // Record standard output
-                    grunt.stdout.on("data", function (data) {
-                        output.push(data);
-                    });
-                    
-                    // Record error output
-                    grunt.stderr.on("data", function (data) {
-                        output.push(data);
-                    });
+                        var command = i.split(" ")[0].replace(" ",""),
+                            args = i.replace(command, "").replace(" ", "");
                         
-                    // Check status on close
-                    grunt.on("close", function (code, signal) {
-                        if (code===0) {
-                            // Success
-                            log(build, Buffer.concat(output).toString());
-                            callback(null);
-                        } else {
-                            // Failure
-                            callback(Buffer.concat(output).toString());
-                        }
+                        if(args==="") { args=null; }
+                    
+                        // Spawn command and push output to array
+                        var proc = spawn(command, [args], { cwd: build_path+build.dir }),
+                            output = [];
+                        
+                        // Record standard output
+                        proc.stdout.on("data", function (data) {
+                            output.push(data);
+                        });
+                        
+                        // Record error output
+                        proc.stderr.on("data", function (data) {
+                            output.push(data);
+                        });
+                            
+                        // Check status on close
+                        proc.on("close", function (code, signal) {
+                            if (code===0) {
+                                // Success
+                                log(build, Buffer.concat(output).toString());
+                                log(build, "[PASS]", false);
+                                callback(null);
+                            } else {
+                                // Failure
+                                callback(Buffer.concat(output).toString());
+                            }
+                        });
+                    }, function (err) {
+                        console.log(err);
                     });
                     
                 } else {
@@ -129,9 +101,6 @@ app.get("/:project", function(req, res) {
             if (err) {
                 log(build, "[FAIL] \n" + err, false);
             } else {
-                if (build.config.grunt) {
-                    log(build, " [PASS]", false);
-                }
                 log(build, "BUILD COMPLETE");
             }
         });
