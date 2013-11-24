@@ -1,6 +1,6 @@
-# Node Deploy
+# Vouch-CD
 
-A simple server for building and deploying apps through Node.
+A simple coninuous integration and deployment server for building and deploying apps through Node.
 
 ## Installation & Startup
 
