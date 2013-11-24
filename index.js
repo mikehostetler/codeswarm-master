@@ -40,12 +40,12 @@ app.get("/:project", function(req, res) {
                 fse.remove(build_path+build.dir, callback);
             },
             clone: function (callback) {
-                log(build, " [PASS]", false);
+                log(build, "[PASS]", false);
                 log(build, "Cloning Repo");
                 git.clone(build.repo, build_path+build.dir, callback);
             },
             config: function (callback) {
-                log(build, " [PASS]", false);
+                log(build, "[PASS]", false);
                 log(build, "Getting Config");
                 fs.readFile(build_path+build.dir+"/.deploy.json", function (err, config) {
                     build.config = JSON.parse(config);
@@ -53,19 +53,27 @@ app.get("/:project", function(req, res) {
                 });
             },
             run: function (callback) {
+                log(build, "[PASS]", false);
                 // Ensure run commands available
                 if (build.config.hasOwnProperty("run")) {
                     
                     async.eachSeries(build.config.run, function(i, callback) {
                         
-                        var command = i.split(" ")[0].replace(" ",""),
-                            args = i.replace(command, "").replace(" ", "");
+                        log(build, "Running " + i);
                         
-                        if(args==="") { args=null; }
+                        var args = i.split(" "),
+                            command = args[0],
+                            proc,
+                            output = [];
+
+                        args.shift();
                     
                         // Spawn command and push output to array
-                        var proc = spawn(command, [args], { cwd: build_path+build.dir }),
-                            output = [];
+                        if (args.length) {
+                            proc = spawn(command, [args], { cwd: build_path+build.dir });
+                        } else {
+                            proc = spawn(command, [], { cwd: build_path+build.dir });
+                        }
                         
                         // Record standard output
                         proc.stdout.on("data", function (data) {
