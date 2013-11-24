@@ -12,7 +12,7 @@ itself can be started by calling `node index.js`.
 The server will build a project from a Git repo when the URL is triggered:
 
 ```
-http(s)://yourserver.com:[APP-PORT]/[PROJECT-NAME]
+http(s)://yourserver.com:[APP-PORT]/[BUILD-KEY]/[PROJECT-NAME]
 ```
 
 ### Configuration
@@ -23,7 +23,12 @@ This trigger will use 2 configurations, the first is the `config.json` file on t
 {
     "[PROJECT-NAME]" : {
         "dir": "[PROJECT-DIRECTORY]",
-        "repo": "[PROJECT-REPO]"
+        "repo": "[PROJECT-REPO]",
+        "key": "[BUILD-KEY]",
+        "auth": {
+            "user": "[VIEW-USER]",
+            "pass": "[VIEW-PASS]"
+        }
     },
     ...
 }
@@ -32,6 +37,10 @@ This trigger will use 2 configurations, the first is the `config.json` file on t
 * `PROJECT-NAME` is a reference to the project (and the trigger)
 * `PROJECT-DIRECTORY` is the directory (inside `/builds`) where the project will reside
 * `PROJECT-REPO` is the SSH URL to the repository
+* `BUILD-KEY` is a key value string in the trigger URL that is checked before build
+* HTTP Build-View Authentication, set to `false` for no authentication
+    * `[VIEW-USER]` is the username for accessing the completed build
+    * `[VIEW-PASS]` is the password for accessing the completed build
 
 The second configration is in the project repository itself in `/.deploy.json`:
 
@@ -67,4 +76,6 @@ http(s)://yourserver.com:[BUILD-PORT]/[PROJECT-NAME]
 
 It runs off the configuration set in the `.deploy.json` file to load the appropriate distribution 
 directory and default file.
+
+If the `auth` object in `config.json` is set for the project, the user will be prompted to enter a username and password.
 
