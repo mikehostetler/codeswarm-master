@@ -11,7 +11,7 @@ itself can be started by calling `node index.js`.
 
 The server will build a project from a Git repo when the URL is triggered:
 
-```
+```html
 http(s)://yourserver.com:{APP-PORT}/{BUILD-KEY}/{PROJECT-NAME}
 ```
 
@@ -46,12 +46,12 @@ This trigger will use 2 configurations, the first is the `config.json` file on t
 
 **Project Configuration**
 
-The second configration is in the project repository itself in the `/.vouch.json` file:
+The second configration is in the project repository itself in the `.vouch.json` file:
 
 ```json
 {
     "dir": "{DIST-DIRECTORY}",
-    "default: "{DEFAULT-FILE}",
+    "default": "{DEFAULT-FILE}",
     "run": {
         "{COMMAND}",
         "{COMMAND}",
@@ -74,7 +74,7 @@ in the HTTP response when the build is triggered.
 
 Once a build passes it is served through Express at the following URL:
 
-```
+```html
 http(s)://yourserver.com:{BUILD-PORT}/{PROJECT-NAME}
 ```
 
