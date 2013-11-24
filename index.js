@@ -50,7 +50,7 @@ app.get("/:key/:project", function(req, res) {
             config: function (callback) {
                 log(build, "[PASS]", false);
                 log(build, "Getting Config");
-                fs.readFile(build_path+build.dir+"/.deploy.json", function (err, config) {
+                fs.readFile(build_path+build.dir+"/.vouch.json", function (err, config) {
                     build.config = JSON.parse(config);
                     callback(err);
                 });
@@ -139,8 +139,8 @@ builds.get("/:project", function (req, res) {
     if(!config.hasOwnProperty(req.params.project)) {
         res.send("Missing configuration");
     } else {
-        // Get .deploy.json from build
-        fs.readFile(build_path + config[req.params.project].dir + "/.deploy.json", function (err, data) {
+        // Get .vouch.json from build
+        fs.readFile(build_path + config[req.params.project].dir + "/.vouch.json", function (err, data) {
             if (err) {
                 // Problem reading deploy config
                 res.send(err);

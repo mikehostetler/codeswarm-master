@@ -17,6 +17,8 @@ http(s)://yourserver.com:[APP-PORT]/[BUILD-KEY]/[PROJECT-NAME]
 
 ### Configuration
 
+**Server Configuration**
+
 This trigger will use 2 configurations, the first is the `config.json` file on the server:
 
 ```json
@@ -42,7 +44,9 @@ This trigger will use 2 configurations, the first is the `config.json` file on t
     * `VIEW-USER` is the username for accessing the completed build
     * `VIEW-PASS` is the password for accessing the completed build
 
-The second configration is in the project repository itself in `/.deploy.json`:
+**Project Configuration**
+
+The second configration is in the project repository itself in the `/.vouch.json` file:
 
 ```json
 {
@@ -74,7 +78,7 @@ Once a build passes it is served through Express at the following URL:
 http(s)://yourserver.com:[BUILD-PORT]/[PROJECT-NAME]
 ```
 
-It runs off the configuration set in the `.deploy.json` file to load the appropriate distribution 
+It runs off the configuration set in the `.vouch.json` file to load the appropriate distribution 
 directory and default file.
 
 If the `auth` object in `config.json` is set for the project, the user will be prompted to enter a username and password.
