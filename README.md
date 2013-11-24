@@ -39,8 +39,8 @@ This trigger will use 2 configurations, the first is the `config.json` file on t
 * `PROJECT-REPO` is the SSH URL to the repository
 * `BUILD-KEY` is a key value string in the trigger URL that is checked before build
 * HTTP Build-View Authentication, set to `false` for no authentication
-    * `[VIEW-USER]` is the username for accessing the completed build
-    * `[VIEW-PASS]` is the password for accessing the completed build
+    * `VIEW-USER` is the username for accessing the completed build
+    * `VIEW-PASS` is the password for accessing the completed build
 
 The second configration is in the project repository itself in `/.deploy.json`:
 
