@@ -1,8 +1,8 @@
 {
-  "name": "PostTravis",
+  "name": "VouchCD",
   "version": "0.0.1",
   "private": true,
-  "description": "A simple server for deploying multiple projects on Travis after_success",
+  "description": "A simple server for node-based continuous integration and deployment",
   "readmeFilename": "README.md",
   "dependencies": {
     "express": "~3.4.0",
