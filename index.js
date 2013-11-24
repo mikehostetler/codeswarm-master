@@ -130,6 +130,23 @@ console.log("Serving app over 1337");
 /**
  * Static server
  */
+ 
+builds.get("/:project", function (req, res) {
+    if(!config.hasOwnProperty(req.params.project)) {
+        res.send("Missing configurstion");
+    } else {
+        fs.readFile(build_path + config[req.params.project].dir + "/.deploy.json", function (err, data) {
+            if (err) {
+                res.send(err);
+            } else {
+                var deploy = JSON.parse(data),
+                    dir = build_path + config[req.params.project].dir + "/" + deploy.dir;
+                console.log(dir);
+                res.sendfile("/" + deploy.default, { root: dir } );
+            }    
+        });
+    }
+});
 
 builds.use(express.static(__dirname + '/builds'));
 builds.listen(8080);
