@@ -117,6 +117,7 @@ app.get("/:project", function(req, res) {
 
 });
 
+// Log build data
 var log = function (build, data, br) {
     br = (br === undefined) ? "\n" : " ";
     fs.appendFileSync(build.log, br + data);
@@ -133,21 +134,22 @@ console.log("Serving app over 1337");
  
 builds.get("/:project", function (req, res) {
     if(!config.hasOwnProperty(req.params.project)) {
-        res.send("Missing configurstion");
+        res.send("Missing configuration");
     } else {
+        // Get .deploy.json from build
         fs.readFile(build_path + config[req.params.project].dir + "/.deploy.json", function (err, data) {
             if (err) {
+                // Problem reading deploy config
                 res.send(err);
             } else {
                 var deploy = JSON.parse(data),
                     dir = build_path + config[req.params.project].dir + "/" + deploy.dir;
-                console.log(dir);
+                // Send default file by... well, default.
                 res.sendfile("/" + deploy.default, { root: dir } );
             }    
         });
     }
 });
 
-builds.use(express.static(__dirname + '/builds'));
 builds.listen(8080);
 console.log("Serving builds over 8080");
