@@ -14,12 +14,15 @@ var fs = require("fs"),
  * Deploy listener
  */
 
-app.get("/:project", function(req, res) {
+app.get("/:key/:project", function(req, res) {
     
     // Ensure the project has been config'd
     if (!config.hasOwnProperty(req.params.project)) {
         // Nope, send an error
-        res.send("Failed to deploy. Missing or incorrect configuration");
+        res.send("Failed to deploy. Missing or incorrect configuration.");
+    } else if (config[req.params.project].key !== req.params.key) {
+        // Incorrect build key
+        res.send("Failed to deploy. Incorrect or missing build key.");
     } else {
         
         // Set build
