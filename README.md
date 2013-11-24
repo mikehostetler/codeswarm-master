@@ -57,3 +57,14 @@ All steps of the build process are stored in a log file located in the `logs` di
 in a folder matching the server config's `PROJECT-NAME`. The log file's name is returned 
 in the HTTP response when the build is triggered.
 
+### Accessing Builds
+
+Once a build passes it is served through Express at the following URL:
+
+```
+http(s)://yourserver.com:[BUILD-PORT]/[PROJECT-NAME]
+```
+
+It runs off the configuration set in the `.deploy.json` file to load the appropriate distribution 
+directory and default file.
+
