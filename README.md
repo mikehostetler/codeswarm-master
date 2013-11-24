@@ -12,7 +12,7 @@ itself can be started by calling `node index.js`.
 The server will build a project from a Git repo when the URL is triggered:
 
 ```
-http(s)://yourserver.com:[APP-PORT]/[BUILD-KEY]/[PROJECT-NAME]
+http(s)://yourserver.com:{APP-PORT}/{BUILD-KEY}/{PROJECT-NAME}
 ```
 
 ### Configuration
@@ -23,13 +23,13 @@ This trigger will use 2 configurations, the first is the `config.json` file on t
 
 ```json
 {
-    "[PROJECT-NAME]" : {
-        "dir": "[PROJECT-DIRECTORY]",
-        "repo": "[PROJECT-REPO]",
-        "key": "[BUILD-KEY]",
+    "{PROJECT-NAME}" : {
+        "dir": "{PROJECT-DIRECTORY}",
+        "repo": "{PROJECT-REPO}",
+        "key": "{BUILD-KEY}",
         "auth": {
-            "user": "[VIEW-USER]",
-            "pass": "[VIEW-PASS]"
+            "user": "{VIEW-USER}",
+            "pass": "{VIEW-PASS}"
         }
     },
     ...
@@ -50,13 +50,13 @@ The second configration is in the project repository itself in the `/.vouch.json
 
 ```json
 {
-    "dir": "[DIST-DIRECTORY]",
-    "default: "[DEFAULT-FILE]",
-    "run": [
-        "[COMMAND]",
-        "[COMMAND]",
+    "dir": "{DIST-DIRECTORY}",
+    "default: "{DEFAULT-FILE}",
+    "run": {
+        "{COMMAND}",
+        "{COMMAND}",
         ...
-    ]
+    }
 }
 ```
 
@@ -75,7 +75,7 @@ in the HTTP response when the build is triggered.
 Once a build passes it is served through Express at the following URL:
 
 ```
-http(s)://yourserver.com:[BUILD-PORT]/[PROJECT-NAME]
+http(s)://yourserver.com:{BUILD-PORT}/{PROJECT-NAME}
 ```
 
 It runs off the configuration set in the `.vouch.json` file to load the appropriate distribution 
