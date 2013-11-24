@@ -38,6 +38,7 @@ The second configration is in the project repository itself in `/.deploy.json`:
 ```json
 {
     "dir": "[DIST-DIRECTORY]",
+    "default: "[DEFAULT-FILE]",
     "run": [
         "[COMMAND]",
         "[COMMAND]",
@@ -47,6 +48,7 @@ The second configration is in the project repository itself in `/.deploy.json`:
 ```
 
 * `DIST-DIRECTORY` is the directory of the build to run, leave empty for root
+* `DEFAULT-FILE` is the default file to serve when serving the build over http
 * `COMMAND` is any task or command to run (in order) in order to build the project
 
 ### Logging
