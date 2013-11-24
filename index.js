@@ -135,7 +135,27 @@ console.log("Serving app over 1337");
  * Static server
  */
  
-builds.get("/:project", function (req, res) {
+// Setup basic authentication
+var basicAuth = express.basicAuth,
+    auth = function(req, res, next) {
+        if (config.hasOwnProperty(req.params.project)) {
+            var auth = config[req.params.project].auth;
+            if (auth) {
+                basicAuth(function(user, pass, callback) {
+                    // Check credentials
+                    callback(null, user === auth.user && pass === auth.pass);
+                })(req, res, next);
+            } else {
+                // No authentication
+                return true;
+            }
+        }
+    };
+    
+console.log(auth);
+
+ 
+builds.get("/:project", auth, function (req, res) {
     if(!config.hasOwnProperty(req.params.project)) {
         res.send("Missing configuration");
     } else {
