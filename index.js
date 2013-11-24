@@ -147,12 +147,10 @@ var basicAuth = express.basicAuth,
                 })(req, res, next);
             } else {
                 // No authentication
-                return true;
+                next();
             }
         }
     };
-    
-console.log(auth);
 
  
 builds.get("/:project", auth, function (req, res) {
