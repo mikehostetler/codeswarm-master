@@ -3,6 +3,9 @@
         "dir": "standards-and-practices-demo",
         "repo": "git@github.com:appendto/standards-and-practices-demo.git",
         "key": "56A7BEE90CF3",
-        "auth": false
+        "auth": {
+            "user": "test",
+            "pass": "password"
+        }
     }
 }

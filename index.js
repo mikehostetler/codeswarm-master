@@ -6,9 +6,24 @@ var fs = require("fs"),
     builds = express(),
     spawn = require("child_process").spawn,
     git = require("gift"),
-    config = require("./config.json"),
     build_path = __dirname + "/builds/",
-    log_path = __dirname + "/logs/";
+    log_path = __dirname + "/logs/",
+    config = require("./config.json"),
+    app_port = 1337,
+    build_port = 8080;
+    
+/**
+ * Watch config for changes
+ */
+ 
+fs.watchFile("./config.json", { persistent: true, interval: 500 }, function (curr, prev) {
+    if (curr.mtime !== prev.mtime) {
+        fs.readFile("./config.json", function (err, data) {
+            if (err) throw err;
+            config = JSON.parse(data);
+        });
+    }
+});
 
 /**
  * Deploy listener
@@ -128,8 +143,8 @@ var log = function (build, data, br) {
 };
 
 
-app.listen(1337);
-console.log("Serving app over 1337");
+app.listen(app_port);
+console.log("Serving app over " + app_port);
 
 /**
  * Static server
@@ -172,5 +187,5 @@ builds.get("/:project", auth, function (req, res) {
     }
 });
 
-builds.listen(8080);
-console.log("Serving builds over 8080");
+builds.listen(build_port);
+console.log("Serving builds over " + build_port);
