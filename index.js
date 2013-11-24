@@ -61,6 +61,11 @@ app.get("/:project", function(req, res) {
                     var npm = spawn("npm", ["install"], { cwd: build_path+build.dir }),
                         output = [];
                     
+                    // Record standard output
+                    npm.stdout.on("data", function (data) {
+                        output.push(data);
+                    });
+                    
                     // Record error output
                     npm.stderr.on("data", function (data) {
                         output.push(data);
@@ -70,6 +75,7 @@ app.get("/:project", function(req, res) {
                     npm.on("close", function (code, signal) {
                         if (code===0) {
                             // Success
+                            log(build, Buffer.concat(output).toString());
                             callback(null);
                         } else {
                             // Failure
@@ -93,6 +99,11 @@ app.get("/:project", function(req, res) {
                     var grunt = spawn("grunt", [build.config.grunt], { cwd: build_path+build.dir }),
                         output = [];
                     
+                    // Record standard output
+                    grunt.stdout.on("data", function (data) {
+                        output.push(data);
+                    });
+                    
                     // Record error output
                     grunt.stderr.on("data", function (data) {
                         output.push(data);
@@ -102,6 +113,7 @@ app.get("/:project", function(req, res) {
                     grunt.on("close", function (code, signal) {
                         if (code===0) {
                             // Success
+                            log(build, Buffer.concat(output).toString());
                             callback(null);
                         } else {
                             // Failure
