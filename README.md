@@ -9,7 +9,7 @@ itself can be started by calling `node index.js`.
 
 ## Usage
 
-The server will build a project from a Git repo when the URL is triggered:
+The server will build a project from a Git repo when the URL is triggered with a `POST`:
 
 ```html
 http(s)://yourserver.com:{APP-PORT}/{BUILD-KEY}/{PROJECT-NAME}

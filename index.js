@@ -3,14 +3,12 @@ var fs = require("fs"),
     async = require("async"),
     express = require("express"),
     app = express(),
-    builds = express(),
     spawn = require("child_process").spawn,
     git = require("gift"),
     build_path = __dirname + "/builds/",
     log_path = __dirname + "/logs/",
     config = require("./config.json"),
-    app_port = 1337,
-    build_port = 8080;
+    port = 8080;
     
 /**
  * Watch config for changes
@@ -29,7 +27,7 @@ fs.watchFile("./config.json", { persistent: true, interval: 500 }, function (cur
  * Deploy listener
  */
 
-app.get("/:key/:project", function(req, res) {
+app.post("/:key/:project", function(req, res) {
     
     // Ensure the project has been config'd
     if (!config.hasOwnProperty(req.params.project)) {
@@ -142,10 +140,6 @@ var log = function (build, data, br) {
     console.log(data);
 };
 
-
-app.listen(app_port);
-console.log("Serving app over " + app_port);
-
 /**
  * Static server
  */
@@ -168,7 +162,7 @@ var basicAuth = express.basicAuth,
     };
 
  
-builds.get("/:project", auth, function (req, res) {
+app.get("/:project", auth, function (req, res) {
     if(!config.hasOwnProperty(req.params.project)) {
         res.send("Missing configuration");
     } else {
@@ -187,5 +181,5 @@ builds.get("/:project", auth, function (req, res) {
     }
 });
 
-builds.listen(build_port);
-console.log("Serving builds over " + build_port);
+app.listen(port);
+console.log("Service running over " + port);
