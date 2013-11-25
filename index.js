@@ -162,7 +162,7 @@ var basicAuth = express.basicAuth,
     };
 
  
-app.get("/:project", auth, function (req, res) {
+app.get("/:project/*", auth, function (req, res) {
     if(!config.hasOwnProperty(req.params.project)) {
         res.send("Missing configuration");
     } else {
@@ -173,9 +173,10 @@ app.get("/:project", auth, function (req, res) {
                 res.send(err);
             } else {
                 var deploy = JSON.parse(data),
-                    dir = build_path + config[req.params.project].dir + "/" + deploy.dir;
+                    dir = build_path + config[req.params.project].dir + "/" + deploy.dir,
+                    path = req.params[0] ? req.params[0] : deploy.default;
                 // Send default file by... well, default.
-                res.sendfile("/" + deploy.default, { root: dir } );
+                res.sendfile( path, { root: "./builds/" + config[req.params.project].dir + "/" + deploy.dir } );
             }    
         });
     }
