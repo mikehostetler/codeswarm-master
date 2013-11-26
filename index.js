@@ -3,6 +3,7 @@ var fs = require("fs"),
     async = require("async"),
     express = require("express"),
     app = express(),
+    slashes = require("./lib/connect-slashes.js"),
     spawn = require("child_process").spawn,
     git = require("gift"),
     build_path = __dirname + "/builds/",
@@ -161,8 +162,12 @@ var basicAuth = express.basicAuth,
         }
     };
 
- 
+// Fix trailing slashes (or lack there of)  
+app.use(slashes());
+
+// Get by project route 
 app.get("/:project/*", auth, function (req, res) {
+    console.log("hit!");
     if(!config.hasOwnProperty(req.params.project)) {
         res.send("Missing configuration");
     } else {
