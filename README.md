@@ -22,17 +22,20 @@ http(s)://yourserver.com:{APP-PORT}/{BUILD-KEY}/{PROJECT-NAME}
 This trigger will use 2 configurations, the first is the `config.json` file on the server:
 
 ```json
-{
-    "{PROJECT-NAME}" : {
-        "dir": "{PROJECT-DIRECTORY}",
-        "repo": "{PROJECT-REPO}",
-        "key": "{BUILD-KEY}",
-        "auth": {
-            "user": "{VIEW-USER}",
-            "pass": "{VIEW-PASS}"
-        }
-    },
-    ...
+...
+},
+    "builds": {
+        "{PROJECT-NAME}" : {
+            "dir": "{PROJECT-DIRECTORY}",
+            "repo": "{PROJECT-REPO}",
+            "key": "{BUILD-KEY}",
+            "auth": {
+                "user": "{VIEW-USER}",
+                "pass": "{VIEW-PASS}"
+            }
+        },
+        ...
+    }
 }
 ```
 
