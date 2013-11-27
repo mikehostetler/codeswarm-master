@@ -19,23 +19,34 @@ http(s)://yourserver.com:{APP-PORT}/{BUILD-KEY}/{PROJECT-NAME}
 
 **Server Configuration**
 
-This trigger will use 2 configurations, the first is the `config.json` file on the server:
+The server uses `config.json` to set application runtime params as well as build projects.
+
+The first section is the `app` configuration:
 
 ```json
-...
-},
-    "builds": {
-        "{PROJECT-NAME}" : {
-            "dir": "{PROJECT-DIRECTORY}",
-            "repo": "{PROJECT-REPO}",
-            "key": "{BUILD-KEY}",
-            "auth": {
-                "user": "{VIEW-USER}",
-                "pass": "{VIEW-PASS}"
-            }
-        },
-        ...
-    }
+"app": {
+    "port": 8080,
+    "logs": "./logs/",
+    "builds": "./builds/"
+}
+```
+
+Which sets the port, log directory and build directory.
+
+The second section is `builds` which sets the parameters for build projects:
+
+```json
+"builds": {
+    "{PROJECT-NAME}" : {
+        "dir": "{PROJECT-DIRECTORY}",
+        "repo": "{PROJECT-REPO}",
+        "key": "{BUILD-KEY}",
+        "auth": {
+            "user": "{VIEW-USER}",
+            "pass": "{VIEW-PASS}"
+        }
+    },
+    {...}
 }
 ```
 
