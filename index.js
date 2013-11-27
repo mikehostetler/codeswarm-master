@@ -53,8 +53,8 @@ app.post("/:key/:project", function(req, res) {
 // Setup basic authentication
 var basicAuth = express.basicAuth,
     auth = function(req, res, next) {
-        if (config.hasOwnProperty(req.params.project)) {
-            var auth = config[req.params.project].auth;
+        if (config.builds.hasOwnProperty(req.params.project)) {
+            var auth = config.builds[req.params.project].auth;
             if (auth) {
                 basicAuth(function(user, pass, callback) {
                     // Check credentials
@@ -72,21 +72,20 @@ app.use(slashes());
 
 // Get by project route 
 app.get("/:project/*", auth, function (req, res) {
-    console.log("hit!");
-    if(!config.hasOwnProperty(req.params.project)) {
+    if(!config.builds.hasOwnProperty(req.params.project)) {
         res.send("Missing configuration");
     } else {
         // Get .vouch.json from build
-        fs.readFile(config.app.builds + config[req.params.project].dir + "/.vouch.json", function (err, data) {
+        fs.readFile(config.app.builds + config.builds[req.params.project].dir + "/.vouch.json", function (err, data) {
             if (err) {
                 // Problem reading deploy config
                 res.send(err);
             } else {
                 var deploy = JSON.parse(data),
-                    dir = config.app.builds + config[req.params.project].dir + "/" + deploy.dir,
+                    dir = config.app.builds + config.builds[req.params.project].dir + "/" + deploy.dir,
                     path = req.params[0] ? req.params[0] : deploy.default;
                 // Send default file by... well, default.
-                res.sendfile( path, { root: "./builds/" + config[req.params.project].dir + "/" + deploy.dir } );
+                res.sendfile( path, { root: dir } );
             }    
         });
     }
