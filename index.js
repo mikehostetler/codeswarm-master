@@ -3,7 +3,6 @@ var fs = require("fs"),
     app = express(),
     builder = require("./lib/builder.js");
     slashes = require("./lib/connect-slashes.js"),
-    git = require("gift"),
     config = require("./config.json");
     
 /**
