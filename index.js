@@ -6,10 +6,7 @@ var fs = require("fs"),
     slashes = require("./lib/connect-slashes.js"),
     spawn = require("child_process").spawn,
     git = require("gift"),
-    build_path = __dirname + "/builds/",
-    log_path = __dirname + "/logs/",
-    config = require("./config.json"),
-    port = 8080;
+    config = require("./config.json");
     
 /**
  * Watch config for changes
@@ -31,19 +28,19 @@ fs.watchFile("./config.json", { persistent: true, interval: 500 }, function (cur
 app.post("/:key/:project", function(req, res) {
     
     // Ensure the project has been config'd
-    if (!config.hasOwnProperty(req.params.project)) {
+    if (!config.builds.hasOwnProperty(req.params.project)) {
         // Nope, send an error
         res.send("Failed to deploy. Missing or incorrect configuration.");
-    } else if (config[req.params.project].key !== req.params.key) {
+    } else if (config.builds[req.params.project].key !== req.params.key) {
         // Incorrect build key
         res.send("Failed to deploy. Incorrect or missing build key.");
     } else {
         
         // Set build
-        var build = config[req.params.project],
+        var build = config.builds[req.params.project],
             step;
         
-        build.log = log_path + build.dir + "/" + new Date().getTime()+".log";
+        build.log = config.app.logs + build.dir + "/" + new Date().getTime()+".log";
         
         res.send("Deploying. Logfile: " + build.log.replace(__dirname, ""));
         
@@ -54,17 +51,17 @@ app.post("/:key/:project", function(req, res) {
             },
             cleanup: function (callback) {
                 log(build, "Cleanup");
-                fse.remove(build_path+build.dir, callback);
+                fse.remove(config.app.builds+build.dir, callback);
             },
             clone: function (callback) {
                 log(build, "[PASS]", false);
                 log(build, "Cloning Repo");
-                git.clone(build.repo, build_path+build.dir, callback);
+                git.clone(build.repo, config.app.builds+build.dir, callback);
             },
             config: function (callback) {
                 log(build, "[PASS]", false);
                 log(build, "Getting Config");
-                fs.readFile(build_path+build.dir+"/.vouch.json", function (err, config) {
+                fs.readFile(config.app.builds+build.dir+"/.vouch.json", function (err, config) {
                     build.config = JSON.parse(config);
                     callback(err);
                 });
@@ -88,9 +85,9 @@ app.post("/:key/:project", function(req, res) {
                     
                         // Spawn command and push output to array
                         if (args.length) {
-                            proc = spawn(command, [args], { cwd: build_path+build.dir });
+                            proc = spawn(command, [args], { cwd: config.app.builds+build.dir });
                         } else {
-                            proc = spawn(command, [], { cwd: build_path+build.dir });
+                            proc = spawn(command, [], { cwd: config.app.builds+build.dir });
                         }
                         
                         // Record standard output
@@ -172,13 +169,13 @@ app.get("/:project/*", auth, function (req, res) {
         res.send("Missing configuration");
     } else {
         // Get .vouch.json from build
-        fs.readFile(build_path + config[req.params.project].dir + "/.vouch.json", function (err, data) {
+        fs.readFile(config.app.builds + config[req.params.project].dir + "/.vouch.json", function (err, data) {
             if (err) {
                 // Problem reading deploy config
                 res.send(err);
             } else {
                 var deploy = JSON.parse(data),
-                    dir = build_path + config[req.params.project].dir + "/" + deploy.dir,
+                    dir = config.app.builds + config[req.params.project].dir + "/" + deploy.dir,
                     path = req.params[0] ? req.params[0] : deploy.default;
                 // Send default file by... well, default.
                 res.sendfile( path, { root: "./builds/" + config[req.params.project].dir + "/" + deploy.dir } );
@@ -187,5 +184,5 @@ app.get("/:project/*", auth, function (req, res) {
     }
 });
 
-app.listen(port);
-console.log("Service running over " + port);
+app.listen(config.app.port);
+console.log("Service running over " + config.app.port);

@@ -1,11 +1,18 @@
 {
-    "standards-and-practices-demo" : {
-        "dir": "standards-and-practices-demo",
-        "repo": "git@github.com:appendto/standards-and-practices-demo.git",
-        "key": "56A7BEE90CF3",
-        "auth": {
-            "user": "test",
-            "pass": "password"
+    "app": {
+        "port": 8080,
+        "logs": "./logs/",
+        "builds": "./builds/"
+    },
+    "builds": {
+        "standards-and-practices-demo" : {
+            "dir": "standards-and-practices-demo",
+            "repo": "git@github.com:appendto/standards-and-practices-demo.git",
+            "key": "56A7BEE90CF3",
+            "auth": {
+                "user": "test",
+                "pass": "password"
+            }
         }
     }
 }
