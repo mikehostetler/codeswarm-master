@@ -7,7 +7,7 @@ var fs = require("fs"),
     config = require("./config.json");
     
 /**
- * Watch config for changes
+ * Watch config for changes ##########################################
  */
  
 fs.watchFile("./config.json", { persistent: true, interval: 500 }, function (curr, prev) {
@@ -20,7 +20,7 @@ fs.watchFile("./config.json", { persistent: true, interval: 500 }, function (cur
 });
 
 /**
- * Build/Deploy listener
+ * Build/Deploy Listener #############################################
  */
 
 app.post("/:key/:project", function(req, res) {
@@ -33,7 +33,6 @@ app.post("/:key/:project", function(req, res) {
         // Incorrect build key
         res.send("ERROR: Build Key.");
     } else {
-        
         // Set build
         var build = config.builds[req.params.project],
             stamp = new Date().getTime();
@@ -52,7 +51,7 @@ app.post("/:key/:project", function(req, res) {
 });
 
 /**
- * Static server
+ * Static Server #####################################################
  */
 
 // Fix trailing slashes (or lack there of)  
@@ -60,17 +59,18 @@ app.use(slashes());
 
 // Get by project route 
 app.get("/:project/*", expressAuth, function (req, res) {
-    if(!config.builds.hasOwnProperty(req.params.project)) {
+    var project = req.params.project;
+    if(!config.builds.hasOwnProperty(project)) {
         res.send("Missing configuration");
     } else {
         // Get .vouch.json from build
-        fs.readFile(config.app.builds + config.builds[req.params.project].dir + "/.vouch.json", function (err, data) {
+        fs.readFile(config.app.builds + config.builds[project].dir + "/.vouch.json", function (err, data) {
             if (err) {
                 // Problem reading deploy config
                 res.send(err);
             } else {
                 var deploy = JSON.parse(data),
-                    dir = config.app.builds + config.builds[req.params.project].dir + "/" + deploy.dir,
+                    dir = config.app.builds + config.builds[project].dir + "/" + deploy.dir,
                     path = req.params[0] ? req.params[0] : deploy.default;
                 // Send default file by... well, default.
                 res.sendfile( path, { root: dir } );
@@ -78,6 +78,10 @@ app.get("/:project/*", expressAuth, function (req, res) {
         });
     }
 });
+
+/**
+ * Start App #########################################################
+ */
 
 app.listen(config.app.port);
 console.log("Service running over " + config.app.port);
