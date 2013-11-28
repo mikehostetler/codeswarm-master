@@ -34,9 +34,12 @@ app.post("/:key/:project", function(req, res) {
     } else {
         
         // Set build
-        var build = config.builds[req.params.project];
+        var build = config.builds[req.params.project],
+            stamp = new Date().getTime();
+        // Set name
+        build.name = req.params.project + ", Build " + stamp;
         // Set log
-        build.log = config.app.logs + build.dir + "/" + new Date().getTime()+".log";
+        build.log = config.app.logs + build.dir + "/" + stamp +".log";
         // Set status
         build.status = "Running";
         // Send deploy response
