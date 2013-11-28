@@ -27,10 +27,10 @@ app.post("/:key/:project", function(req, res) {
     // Ensure the project has been config'd
     if (!config.builds.hasOwnProperty(req.params.project)) {
         // Nope, send an error
-        res.send("Failed to deploy. Missing or incorrect configuration.");
+        res.send("ERROR: Configuration.");
     } else if (config.builds[req.params.project].key !== req.params.key) {
         // Incorrect build key
-        res.send("Failed to deploy. Incorrect or missing build key.");
+        res.send("ERROR: Build Key.");
     } else {
         
         // Set build
@@ -38,7 +38,7 @@ app.post("/:key/:project", function(req, res) {
         // Create log
         build.log = config.app.logs + build.dir + "/" + new Date().getTime()+".log";
         // Send deploy response
-        res.send("Deploying. Logfile: " + build.log.replace(__dirname, ""));
+        res.send("DEPLOYING: Logfile: " + build.log.replace(__dirname, ""));
         // Run build
         builder(build);
     }   
