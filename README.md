@@ -30,8 +30,12 @@ The first section is the `app` configuration:
     "builds": "./builds/",
     "mailer": {
         "host": "smtp.yourserver.com",
-        "user": "user",
-        "pass": "password"
+        "secureConnection": true,
+        "port": 465,
+        "auth": {
+            "user": "user@yourserver.com",
+            "pass": "password"
+        }
     }
 }
 ```
