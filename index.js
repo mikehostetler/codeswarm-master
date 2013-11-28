@@ -35,8 +35,10 @@ app.post("/:key/:project", function(req, res) {
         
         // Set build
         var build = config.builds[req.params.project];
-        // Create log
+        // Set log
         build.log = config.app.logs + build.dir + "/" + new Date().getTime()+".log";
+        // Set status
+        build.status = "Running";
         // Send deploy response
         res.send("DEPLOYING: Logfile: " + build.log.replace(__dirname, ""));
         // Run build
