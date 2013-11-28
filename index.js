@@ -3,7 +3,7 @@ var fs = require("fs"),
     app = express(),
     expressAuth = require("./lib/express-auth.js"),
     builder = require("./lib/builder.js");
-    slashes = require("./lib/connect-slashes.js"),
+    slashes = require("connect-slashes"),
     config = require("./config.json");
     
 /**
