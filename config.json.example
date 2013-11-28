@@ -2,7 +2,12 @@
     "app": {
         "port": 8080,
         "logs": "./logs/",
-        "builds": "./builds/"
+        "builds": "./builds/",
+        "mailer": {
+            "host": "smtp.yourserver.com",
+            "user": "user",
+            "pass": "password"
+        }
     },
     "builds": {
         "project-one" : {

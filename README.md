@@ -27,11 +27,16 @@ The first section is the `app` configuration:
 "app": {
     "port": 8080,
     "logs": "./logs/",
-    "builds": "./builds/"
+    "builds": "./builds/",
+    "mailer": {
+        "host": "smtp.yourserver.com",
+        "user": "user",
+        "pass": "password"
+    }
 }
 ```
 
-Which sets the port, log directory and build directory.
+Which sets the port, log directory, build directory and mailer configuration.
 
 The second section is `builds` which sets the parameters for build projects:
 
