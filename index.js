@@ -1,6 +1,7 @@
 var fs = require("fs"),
     express = require("express"),
     app = express(),
+    expressAuth = require("./lib/express-auth.js"),
     builder = require("./lib/builder.js");
     slashes = require("./lib/connect-slashes.js"),
     config = require("./config.json");
@@ -53,29 +54,12 @@ app.post("/:key/:project", function(req, res) {
 /**
  * Static server
  */
- 
-// Setup basic authentication
-var basicAuth = express.basicAuth,
-    auth = function(req, res, next) {
-        if (config.builds.hasOwnProperty(req.params.project)) {
-            var auth = config.builds[req.params.project].auth;
-            if (auth) {
-                basicAuth(function(user, pass, callback) {
-                    // Check credentials
-                    callback(null, user === auth.user && pass === auth.pass);
-                })(req, res, next);
-            } else {
-                // No authentication
-                next();
-            }
-        }
-    };
 
 // Fix trailing slashes (or lack there of)  
 app.use(slashes());
 
 // Get by project route 
-app.get("/:project/*", auth, function (req, res) {
+app.get("/:project/*", expressAuth, function (req, res) {
     if(!config.builds.hasOwnProperty(req.params.project)) {
         res.send("Missing configuration");
     } else {
