@@ -52,7 +52,7 @@
   "laxcomma":       false,  //suppresses warnings about comma-first coding style
   "loopfunc":       false,  //suppresses warnings about functions inside of loops
   "moz":            false,  //tells JSHint that your code uses Mozilla JavaScript extensions
-  "multistr":       false,  //suppresses warnings about multi-line strings
+  "multistr":       true,  //suppresses warnings about multi-line strings
   "proto":          false,  //suppresses warnings about the `__proto__` property
   "scripturl":      false,  //suppresses warnings about the use of script-targeted URLs—such as `javascript:...`
   "smarttabs":      false,  //suppresses warnings about mixed tabs and spaces when the latter are used for alignmnent only
@@ -93,6 +93,9 @@
 
   "globals": {
     "require": true,
-    "define": true
+    "define": true,
+    "module": true,
+    "__dirname": true,
+    "config": true
   }
 }

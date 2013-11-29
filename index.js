@@ -2,7 +2,7 @@ var fs = require("fs"),
     express = require("express"),
     app = express(),
     expressAuth = require("./lib/express-auth.js"),
-    builder = require("./lib/builder.js");
+    builder = require("./lib/builder.js"),
     slashes = require("connect-slashes"),
     config = require("./config.json");
     
@@ -13,7 +13,9 @@ var fs = require("fs"),
 fs.watchFile("./config.json", { persistent: true, interval: 500 }, function (curr, prev) {
     if (curr.mtime !== prev.mtime) {
         fs.readFile("./config.json", function (err, data) {
-            if (err) throw err;
+            if (err) {
+                throw err;
+            }
             config = JSON.parse(data);
         });
     }
@@ -46,7 +48,7 @@ app.post("/:key/:project", function(req, res) {
         res.send("DEPLOYING: Logfile: " + build.log.replace(__dirname, ""));
         // Run build
         builder(build);
-    }   
+    }
 
 });
 
@@ -74,14 +76,14 @@ app.get("/:project/*", expressAuth, function (req, res) {
                     path = req.params[0] ? req.params[0] : deploy.default;
                 // Send default file by... well, default.
                 res.sendfile( path, { root: dir } );
-            }    
+            }
         });
     }
 });
 
 // Admin UI
 app.get("/", function (req, res) {
-    res.sendfile( "index.html", { root: "./ui/src/" }); 
+    res.sendfile( "index.html", { root: "./ui/src/" });
 });
 
 /**
