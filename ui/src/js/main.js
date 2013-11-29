@@ -1,7 +1,13 @@
 require.config({
     baseUrl: "js",
+    paths: {
+        "jquery": "vendor/jquery/jquery.min",
+        "app": "app"
+    }
 });
 
-define([], function () {
+define(["app"], function (app) {
+    
+    app.init();
     
 });

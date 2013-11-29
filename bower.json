@@ -2,6 +2,7 @@
     "name": "Vouch",
     "version": "0.0.1",
     "dependencies": {
-        "requirejs": "~2.1.8"
+        "requirejs": "~2.1.8",
+        "jquery": "~2.0.0"
     }
 }
