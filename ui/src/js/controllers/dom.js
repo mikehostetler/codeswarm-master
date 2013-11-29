@@ -1,7 +1,11 @@
 define([
-    "jquery"
+    "jquery",
+    "handlebars",
+    "text!templates/header.tpl",
+    "text!templates/login.tpl",
+    "text!templates/menu.tpl"
 ],
-function ($) {
+function ($, Handlebars, header, login, menu) {
    
     var dom = {
         
@@ -10,6 +14,7 @@ function ($) {
         $menu: null,
         $menubutton: null,
         $shadowblock: null,
+        $main: null,
         
         init: function () {
             
@@ -19,11 +24,38 @@ function ($) {
             this.$menu = $("aside");
             this.$menubutton = this.$header.find(".menu-button");
             this.$shadowblock = this.$header.find("#shadow-block");
+            this.$main = $("#main");
             
             // Initialize methods
+            this.loadHeader();
             this.floatHeader();
-            this.bindMenu();
             
+        },
+        
+        /**
+         * Load the header contents
+         */
+        loadHeader: function (auth) {
+            this.$header.html(Handlebars.compile(header, { auth: auth }));
+            this.bindMenu();
+        },
+        
+        /**
+         * Load the menu contents
+         */
+        loadMenu: function () {
+            this.$menu.html(Handlebars.compile(menu));
+        },
+        
+        /**
+         * Load the login form
+         */
+        loadLogin: function () {
+            this.$main
+                .html(login)
+                .find("input:first-of-type")
+                .focus();
+            this.loadHeader(false);
         },
         
         /**
