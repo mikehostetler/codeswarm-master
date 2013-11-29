@@ -80,8 +80,8 @@ app.get("/:project/*", expressAuth, function (req, res) {
 });
 
 // Admin UI
-app.get("/admin", function (req, res) {
-    res.sendfile( "index.html", { root: "./admin/src/" }); 
+app.get("/", function (req, res) {
+    res.sendfile( "index.html", { root: "./ui/src/" }); 
 });
 
 /**
