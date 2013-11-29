@@ -1,11 +1,11 @@
 define([
-    "controllers/effects"
-], function (effects) {
+    "controllers/dom"
+], function (dom) {
     
     var app = {
         
         init: function () {
-            effects.init();
+            dom.init();
         }
     
     };
