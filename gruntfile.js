@@ -36,7 +36,6 @@ module.exports = function ( grunt ) {
                     baseUrl: "ui/src/js",
                     mainConfigFile: "ui/src/js/main.js",
                     out: "ui/dist/js/main.js",
-                    // include: ...
                     logLevel: 2
                 }
             }
@@ -75,13 +74,13 @@ module.exports = function ( grunt ) {
          * Watch
          */
         watch: {
-          scripts: {
-            files: ["ui/src/js/**/*.js"],
-            tasks: ["jshint"],
-            options: {
-               spawn: false
-            },
-          },
+            scripts: {
+                files: ["ui/src/js/**/*.js"],
+                tasks: ["jshint"],
+                options: {
+                    spawn: false
+                }
+            }
         }
     });
     
