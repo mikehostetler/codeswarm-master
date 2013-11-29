@@ -3,8 +3,10 @@ var fs = require("fs"),
     app = express(),
     expressAuth = require("./lib/express-auth.js"),
     builder = require("./lib/builder.js"),
-    slashes = require("connect-slashes"),
-    config = require("./config.json");
+    slashes = require("connect-slashes");
+
+// Set global config    
+config = require("./config.json");
     
 /**
  * Watch config for changes ##########################################
@@ -60,10 +62,10 @@ app.post("/:key/:project", function(req, res) {
 app.use(slashes());
 
 // Get by project route 
-app.get("/:project/*", expressAuth, function (req, res) {
+app.get("/view/:project/*", expressAuth, function (req, res) {
     var project = req.params.project;
-    if(!config.builds.hasOwnProperty(project)) {
-        res.send("Missing configuration");
+    if(!config.builds.hasOwnProperty(project) || project === "dashboard") {
+        res.sendfile( "index.html", { root: "./ui/src" });
     } else {
         // Get .vouch.json from build
         fs.readFile(config.app.builds + config.builds[project].dir + "/.vouch.json", function (err, data) {
@@ -82,8 +84,9 @@ app.get("/:project/*", expressAuth, function (req, res) {
 });
 
 // Admin UI
-app.get("/", function (req, res) {
-    res.sendfile( "index.html", { root: "./ui/src/" });
+app.get("/dashboard/*", function (req, res) {
+    var path = req.params[0] ? req.params[0] : "index.html";
+    res.sendfile( path, { root: "./ui/src/" });
 });
 
 /**
