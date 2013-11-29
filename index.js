@@ -84,7 +84,7 @@ app.get("/view/:project/*", expressAuth, function (req, res) {
 // Admin UI
 app.get("/dashboard/*", function (req, res) {
     var path = req.params[0] ? req.params[0] : "index.html";
-    res.sendfile( path, { root: "./ui/dist/" });
+    res.sendfile( path, { root: "./ui/src/" });
 });
 
 /**
