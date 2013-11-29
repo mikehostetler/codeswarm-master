@@ -4,5 +4,7 @@
 </a>
 <div id="shadow-block"></div>
 {{else}}
-<div>Vouch</div>
+<a>
+    <i class="fa fa-lock"></i>Vouch
+</a>
 {{/if}}

@@ -190,7 +190,7 @@
         top: 0;
         left: 0;
         width: 100%;
-        padding: 20px;
+        padding: 25px 20px 20px 20px;
         background: #333;
         font-size: 3em;
         color: #fff;
@@ -198,10 +198,6 @@
         z-index: 999;
         height: 90px;
         border-bottom: 1px solid #424242;
-    }
-    
-    header div {
-        padding-top: 12px;
     }
     
     header.floating {
@@ -217,8 +213,8 @@
     }
     
     header a i {
-        font-size: 1.1em;
-        padding: 0 .3em 0 0;
+        font-size: 1em;
+        padding: 0 .35em 0 0;
     }
     
     header #shadow-block {

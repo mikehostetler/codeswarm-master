@@ -3,9 +3,10 @@ define([
     "handlebars",
     "text!templates/header.tpl",
     "text!templates/login.tpl",
-    "text!templates/menu.tpl"
+    "text!templates/menu.tpl",
+    "text!templates/projects.tpl"
 ],
-function ($, Handlebars, header, login, menu) {
+function ($, Handlebars, header, login, menu, projects) {
    
     var dom = {
         
@@ -22,7 +23,6 @@ function ($, Handlebars, header, login, menu) {
             this.$window = $(window);
             this.$header = $("header");
             this.$menu = $("aside");
-            this.$menubutton = this.$header.find(".menu-button");
             this.$shadowblock = this.$header.find("#shadow-block");
             this.$main = $("#main");
             
@@ -37,7 +37,9 @@ function ($, Handlebars, header, login, menu) {
          */
         loadHeader: function (auth) {
             this.$header.html(Handlebars.compile(header, { auth: auth }));
-            this.bindMenu();
+            if (auth) {
+                this.bindMenu();
+            }
         },
         
         /**
@@ -56,6 +58,15 @@ function ($, Handlebars, header, login, menu) {
                 .find("input:first-of-type")
                 .focus();
             this.loadHeader(false);
+        },
+        
+        /**
+         * Load the app
+         */
+        loadApp: function () {
+            this.$main
+                .html(projects);
+            this.loadHeader(true);
         },
         
         /**
@@ -79,7 +90,8 @@ function ($, Handlebars, header, login, menu) {
          */
         bindMenu: function () {
             var self = this;
-            self.$menubutton.on("click", function () {
+            self.$header.off().on("click", ".menu-button", function () {
+                console.log("clicked");
                 self.$menu.toggleClass("menu-open");
                 self.$shadowblock.toggleClass("menu-open");
             });
