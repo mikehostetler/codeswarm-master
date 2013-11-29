@@ -27,21 +27,19 @@ fs.watchFile("./config.json", { persistent: true, interval: 500 }, function (cur
  * Build/Deploy Listener #############################################
  */
 
-app.post("/:key/:project", function(req, res) {
-    
+app.post("/:project", function(req, res) {
+    // Get project
+    var project = req.params.project;
     // Ensure the project has been config'd
-    if (!config.builds.hasOwnProperty(req.params.project)) {
+    if (!config.builds.hasOwnProperty(project)) {
         // Nope, send an error
         res.send("ERROR: Configuration.");
-    } else if (config.builds[req.params.project].key !== req.params.key) {
-        // Incorrect build key
-        res.send("ERROR: Build Key.");
     } else {
         // Set build
-        var build = config.builds[req.params.project],
+        var build = config.builds[project],
             stamp = new Date().getTime();
         // Set name
-        build.name = req.params.project + ", Build " + stamp;
+        build.name = project + ", Build " + stamp;
         // Set log
         build.log = config.app.logs + build.dir + "/" + stamp +".log";
         // Set status

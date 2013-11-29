@@ -12,7 +12,7 @@ itself can be started by calling `node index.js`.
 The server will build a project from a Git repo when the URL is triggered with a `POST`:
 
 ```html
-http(s)://yourserver.com:{APP-PORT}/{BUILD-KEY}/{PROJECT-NAME}
+http(s)://yourserver.com:{APP-PORT}/{PROJECT-NAME}
 ```
 
 ### Configuration
@@ -49,7 +49,6 @@ The second section is `builds` which sets the parameters for build projects:
     "{PROJECT-NAME}" : {
         "dir": "{PROJECT-DIRECTORY}",
         "repo": "{PROJECT-REPO}",
-        "key": "{BUILD-KEY}",
         "auth": {
             "user": "{VIEW-USER}",
             "pass": "{VIEW-PASS}"
@@ -62,7 +61,6 @@ The second section is `builds` which sets the parameters for build projects:
 * `PROJECT-NAME` is a reference to the project (and the trigger)
 * `PROJECT-DIRECTORY` is the directory (inside `/builds`) where the project will reside
 * `PROJECT-REPO` is the SSH URL to the repository
-* `BUILD-KEY` is a key value string in the trigger URL that is checked before build
 * HTTP Build-View Authentication, set to `false` for no authentication
     * `VIEW-USER` is the username for accessing the completed build
     * `VIEW-PASS` is the password for accessing the completed build
