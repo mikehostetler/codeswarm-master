@@ -1,6 +1,6 @@
 node_modules/
 builds/
 logs/
-admin/src/js/vendor
-admin/dist/
+ui/src/js/vendor
+ui/dist/
 config.json
