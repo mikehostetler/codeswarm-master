@@ -54,7 +54,9 @@ function ($, Handlebars, header, login, menu, projects) {
          * Load the menu contents
          */
         loadMenu: function () {
-            this.$menu.html(Handlebars.compile(menu));
+            var template = Handlebars.compile(menu),
+                html = template({});
+            this.$menu.html(html);
         },
         
         /**
@@ -82,6 +84,7 @@ function ($, Handlebars, header, login, menu, projects) {
             this.$main
                 .html(projects);
             this.loadHeader(true);
+            this.loadMenu();
         },
         
         /**

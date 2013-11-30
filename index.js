@@ -42,7 +42,7 @@ app.post("/deploy/:project", function(req, res) {
         // Set log
         build.log = config.app.logs + build.dir + "/" + stamp +".log";
         // Set status
-        build.status = "Running";
+        build.status = "running";
         // Send deploy response
         res.send("DEPLOYING: Logfile: " + build.log.replace(__dirname, ""));
         // Run build
