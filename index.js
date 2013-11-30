@@ -3,6 +3,7 @@ var fs = require("fs"),
     app = express(),
     expressAuth = require("./lib/express-auth.js"),
     builder = require("./lib/builder.js"),
+    api = require("./lib/api.js"),
     slashes = require("connect-slashes");
 
 // Set global config    
@@ -85,6 +86,23 @@ app.get("/view/:project/*", expressAuth, function (req, res) {
 app.get("/dashboard/*", function (req, res) {
     var path = req.params[0] ? req.params[0] : "index.html";
     res.sendfile( path, { root: "./ui/src/" });
+});
+
+// API
+app.get("/api/:type/*", function (req, res) {
+    api.get(req, res);
+});
+
+app.post("/api/:type/*", function (req, res) {
+    api.post(req, res);
+});
+
+app.put("/api/:type", function (req, res) {
+    api.put(req, res);
+});
+
+app.del("/api/:type/*", function (req, res) {
+    api.del(req, res);
 });
 
 /**
