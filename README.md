@@ -12,7 +12,7 @@ itself can be started by calling `node index.js`.
 The server will build a project from a Git repo when the URL is triggered with a `POST`:
 
 ```html
-http(s)://yourserver.com:{APP-PORT}/{PROJECT-NAME}
+http(s)://yourserver.com:{APP-PORT}/deploy/{PROJECT-NAME}
 ```
 
 ### Configuration

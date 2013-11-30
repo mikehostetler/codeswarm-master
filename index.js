@@ -35,6 +35,8 @@ app.post("/deploy/:project", function(req, res) {
         // Set build
         var build = config.builds[project],
             stamp = new Date().getTime();
+        // Set ID
+        build.id = stamp;
         // Set name
         build.name = project + ", Build " + stamp;
         // Set log
