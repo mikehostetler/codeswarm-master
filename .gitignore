@@ -4,3 +4,4 @@ logs/
 ui/src/js/vendor
 ui/dist/
 config.json
+.sessions
