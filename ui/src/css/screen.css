@@ -100,11 +100,15 @@
         font-style: italic;
     }
     
+    i.fa {
+        padding: 0 .2em;
+    }
+    
 /* FORM ELEMENTS */
     
     label { 
         display: inline-block;
-        padding: 0 0 10px 2px;
+        padding: 0 0 15px 2px;
         margin: 10px 0 0 0;
         font-size: 1.4em;
         font-weight: bold;
@@ -113,7 +117,7 @@
     input, select, textarea {
         display: block;
         width: 100%;
-        margin: -1px 0 15px 0;
+        margin: -1px 0 10px 0;
         padding: 8px 12px;
         color: #333;
         font-size: 1.2em;
@@ -271,7 +275,7 @@
     
     #login {
         position: absolute;
-        top: 30%;
+        top: 40%;
         left: 50%;
         width: 300px;
         margin: 0 0 0 -150px;

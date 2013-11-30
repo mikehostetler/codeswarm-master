@@ -36,11 +36,14 @@ The first section is the `app` configuration:
             "user": "user@yourserver.com",
             "pass": "password"
         }
-    }
+    },
+    "tokens": [
+        "1234567890"
+    ]
 }
 ```
 
-Which sets the port, log directory, build directory and mailer configuration.
+Which sets the port, log directory, build directory, mailer configuration and UI access tokens.
 
 The second section is `builds` which sets the parameters for build projects:
 
