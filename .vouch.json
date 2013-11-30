@@ -1,0 +1,11 @@
+{
+    "dir": "ui/dist",
+    "default": "index.html",
+    "run": [
+        "npm install",
+        "grunt"
+    ],
+    "notify": [
+        "ksafranski@appendto.com"
+    ]
+}
