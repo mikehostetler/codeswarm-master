@@ -15,6 +15,7 @@ require.config({
 
 define(["app"], function (app) {
     
+    //Start the application
     app.init();
     
 });

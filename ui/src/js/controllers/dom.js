@@ -10,12 +10,16 @@ function ($, Handlebars, header, login, menu, projects) {
    
     var dom = {
         
+        // Cached els
         $window: null,
         $header: null,
         $menu: null,
         $menubutton: null,
         $shadowblock: null,
         $main: null,
+        
+        // Named els
+        login: "#login",
         
         init: function () {
             
@@ -58,6 +62,13 @@ function ($, Handlebars, header, login, menu, projects) {
                 .find("input:first-of-type")
                 .focus();
             this.loadHeader(false);
+        },
+        
+        /**
+         * Get input from form element by name
+         */
+        getValue: function (form, name) {
+            return form.find("[name=\""+name+"\"]").val();
         },
         
         /**

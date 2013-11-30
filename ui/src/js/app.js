@@ -15,6 +15,7 @@ define([
                 dom.loadApp();
             } else {
                 dom.loadLogin();
+                session.getLogin();
             }
         }
     

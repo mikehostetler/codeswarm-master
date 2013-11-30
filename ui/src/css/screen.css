@@ -253,6 +253,9 @@
     }
     
     #login {
-        max-width: 300px;
-        margin: 15% auto;
+        position: absolute;
+        top: 30%;
+        left: 50%;
+        width: 300px;
+        margin: 0 0 0 -150px;
     }
