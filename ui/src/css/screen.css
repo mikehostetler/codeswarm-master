@@ -32,7 +32,7 @@
         width: 100%;
         height: 100%;
         overflow: scroll;
-        font: normal 15px 'Duru Sans', 'Helvetica Neue', Helvetica, Arial, serif;
+        font: normal 15px 'Roboto', 'Helvetica Neue', Helvetica, Arial, serif;
         color: #6d6d6d;
         background: #ededed; 
     }
@@ -105,7 +105,7 @@
         border-radius: 3px;
     }
     
-    textarea { font-family: Arial, Helvetica, sans-serif; min-height: 150px; }
+    textarea { font-family: "Roboto", Arial, Helvetica, sans-serif; min-height: 150px; }
     
     input:focus, select:focus, textarea:focus{
         border: 1px solid #999; outline: none;
