@@ -102,18 +102,22 @@
     
 /* FORM ELEMENTS */
     
-    label { display: block; margin: 10px 0 10px 0; font-size: 1.2em; font-weight: bold; }        
+    label { 
+        display: inline-block;
+        padding: 0 0 10px 2px;
+        margin: 10px 0 0 0;
+        font-size: 1.4em;
+        font-weight: bold;
+    }        
     
     input, select, textarea {
         display: block;
         width: 100%;
-        margin: 5px 0 15px 0;
-        padding: 8px 10px;
+        margin: -1px 0 15px 0;
+        padding: 8px 12px;
         color: #333;
         font-size: 1.2em;
         font-weight: normal;
-        background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.25, rgb(250,250,250)), color-stop(0.75, rgb(255,255,255)));
-        background-image: -moz-linear-gradient(center bottom, rgb(250,250,250) 25%, rgb(255,255,255) 75%);
         border: 1px solid #ccc;
         border-radius: 3px;
     }
