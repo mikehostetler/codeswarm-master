@@ -32,8 +32,8 @@ define([
                     dom.loadApp();
                 });
                 
-                req.fail(function (xhr, err) {
-                    dom.showError(err);
+                req.fail(function (xhr) {
+                    dom.showError(xhr.responseText);
                 });
             });
         }
