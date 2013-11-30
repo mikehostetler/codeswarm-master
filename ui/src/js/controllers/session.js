@@ -33,7 +33,7 @@ define([
                 });
                 
                 req.fail(function (xhr, err) {
-                    console.log(err);
+                    dom.showError(err);
                 });
             });
         }

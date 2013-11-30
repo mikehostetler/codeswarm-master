@@ -280,3 +280,58 @@
         width: 300px;
         margin: 0 0 0 -150px;
     }
+    
+    #notification {
+        position: fixed;
+        bottom: -100px;
+        left: 50%;
+        width: 400px;
+        margin-left: -200px;
+        padding: 15px;
+        background: #333;
+        z-index: 99999;
+        color: #fff;
+        font-weight: normal;
+        font-size: 1.1em;
+        text-shadow: none;
+        border-radius: 5px;
+        box-shadow: 0 0 25px 0 rgba(0, 0, 0, .7);
+        opacity: 0;
+        transition: bottom .5s, opacity .5s;
+    }
+    
+    #notification div {
+        width: 85%;
+        word-wrap: break-all;
+        -webkit-hyphens: auto;
+        -moz-hyphens: auto;
+        -ms-hyphens: auto;
+        hyphens: auto;
+    }
+    
+    #notification a {
+        float: right;
+        display: inline-block;
+        font-size: 1.2em;
+        color: #fff;
+        padding: 1px 0 0 0;
+        margin: 0 0 0 10px;
+        opacity: 0.5;
+        transition: opacity .3s;
+    }
+    
+    #notification a:hover {
+        opacity: 1;
+    }
+    
+    #notification.error {
+        border-top: 5px solid #ff0000;
+        bottom: 100px;
+        opacity: 1;
+    }
+    
+    #notification.success {
+        border-top: 5px solid #00ff00;
+        bottom: 100px;
+        opacity: 1;
+    }

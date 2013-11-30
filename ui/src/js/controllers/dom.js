@@ -17,6 +17,7 @@ function ($, Handlebars, header, login, menu, projects) {
         $menubutton: null,
         $shadowblock: null,
         $main: null,
+        $notification: null,
         
         // Named els
         login: "#login",
@@ -29,6 +30,7 @@ function ($, Handlebars, header, login, menu, projects) {
             this.$menu = $("aside");
             this.$shadowblock = this.$header.find("#shadow-block");
             this.$main = $("#main");
+            this.$notification = $("#notification");
             
             // Initialize methods
             this.loadHeader();
@@ -107,6 +109,31 @@ function ($, Handlebars, header, login, menu, projects) {
                 self.$menu.toggleClass("menu-open");
                 self.$shadowblock.toggleClass("menu-open");
             });
+        },
+        
+        /**
+         * Shows notification pop-up
+         */
+        showNotification: function (type, message) {
+            var self = this;
+            self.$notification.addClass(type).children("div").html(message);
+            // Auto-close after timeout
+            var closer = setTimeout(function () {
+                self.$notification.removeClass(type);
+            }, 3000);
+            // Bind close button
+            self.$notification.find("a").click(function () {
+                self.$notification.removeClass(type);
+                window.clearTimeout(closer);
+            });
+        },
+        
+        showError: function (message) {
+            this.showNotification("error", message);
+        },
+        
+        showSuccess: function (message) {
+            this.showNotification("success", message);
         }
     };
    
