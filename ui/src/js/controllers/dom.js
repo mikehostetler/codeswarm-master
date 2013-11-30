@@ -40,7 +40,9 @@ function ($, Handlebars, header, login, menu, projects) {
          * Load the header contents
          */
         loadHeader: function (auth) {
-            this.$header.html(Handlebars.compile(header, { auth: auth }));
+            var template = Handlebars.compile(header),
+                html = template({auth: auth});
+            this.$header.html(html);
             if (auth) {
                 this.bindMenu();
             }
@@ -102,7 +104,6 @@ function ($, Handlebars, header, login, menu, projects) {
         bindMenu: function () {
             var self = this;
             self.$header.off().on("click", ".menu-button", function () {
-                console.log("clicked");
                 self.$menu.toggleClass("menu-open");
                 self.$shadowblock.toggleClass("menu-open");
             });

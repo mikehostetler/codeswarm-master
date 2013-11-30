@@ -4,43 +4,37 @@ define([
     
     var requests = {
         
-        // No-payload requests (GET, DELETE)
-        nopayload: function (url, type) {
-            return $.ajax({
-                type: type,
+        get: function (url) {
+            var get = $.ajax({
+                type: "GET",
                 url: url
             });
+            
+            return get;
         },
         
-        // Payload request (PUT, POST)
-        payload: function (url, payload, type) {
+        put: function (url, payload) {
             return $.ajax({
-                type: type,
+                type: "PUT",
                 url: url,
                 data: payload
             });
         },
         
-        /**
-         * Proxy functions
-         */
-        
-        get: function (url) {
-            this.nopayload(url, "GET");
-        },
-        
-        put: function (url, payload) {
-            this.payload(url, payload, "PUT");
-        },
-        
         post: function (url, payload) {
-            this.payload(url, payload, "POST");
+            return $.ajax({
+                type: "POST",
+                url: url,
+                data: payload
+            });
         },
         
         delete: function (url) {
-            this.nopayload(url, "DELETE");
+            return $.ajax({
+                type: "DELETE",
+                url: url
+            });
         }
-        
     };
     
     return requests;

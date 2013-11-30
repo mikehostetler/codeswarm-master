@@ -1,6 +1,7 @@
 define([
-    "controllers/dom"
-], function (dom) {
+    "controllers/dom",
+    "controllers/requests"
+], function (dom, requests) {
     
     var session = {
         
@@ -17,13 +18,23 @@ define([
         },
         
         getLogin: function () {
+            
+            var self = this;
+            
             $(dom.login).on("submit", function (e) {
                 e.preventDefault();
                 var $this = $(this),
-                    email = dom.getValue($this, "email"),
-                    password = dom.getValue($this, "password");
+                    token = dom.getValue($this, "token"),
+                    req = requests.get("/api/token/"+token);
                     
-                console.log(email + " " + password);
+                req.done(function (session) {
+                    self.set(session);
+                    dom.loadApp();
+                });
+                
+                req.fail(function (xhr, err) {
+                    console.log(err);
+                });
             });
         }
     };
