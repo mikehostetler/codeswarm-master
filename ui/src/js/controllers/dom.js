@@ -28,7 +28,6 @@ function ($, Handlebars, header, login, menu, projects) {
             this.$window = $(window);
             this.$header = $("header");
             this.$menu = $("aside");
-            this.$shadowblock = this.$header.find("#shadow-block");
             this.$main = $("#main");
             this.$notification = $("#notification");
             
@@ -48,6 +47,7 @@ function ($, Handlebars, header, login, menu, projects) {
             if (auth) {
                 this.bindMenu();
             }
+            this.$shadowblock = this.$header.find("#shadow-block");
         },
         
         /**
