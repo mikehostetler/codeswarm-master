@@ -283,10 +283,10 @@
     
     #notification {
         position: fixed;
-        bottom: -100px;
+        top: -100px;
         left: 50%;
-        width: 400px;
-        margin-left: -200px;
+        width: 350px;
+        margin-left: -175px;
         padding: 15px;
         background: #333;
         z-index: 99999;
@@ -297,7 +297,7 @@
         border-radius: 5px;
         box-shadow: 0 0 25px 0 rgba(0, 0, 0, .7);
         opacity: 0;
-        transition: bottom .5s, opacity .5s;
+        transition: top .5s, opacity .5s;
     }
     
     #notification div {
@@ -326,12 +326,12 @@
     
     #notification.error {
         border-top: 5px solid #ff0000;
-        bottom: 100px;
+        top: 20%;
         opacity: 1;
     }
     
     #notification.success {
         border-top: 5px solid #00ff00;
-        bottom: 100px;
+        top: 20%;
         opacity: 1;
     }

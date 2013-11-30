@@ -128,10 +128,12 @@ function ($, Handlebars, header, login, menu, projects) {
             });
         },
         
+        // Proxy for showNotifcation
         showError: function (message) {
             this.showNotification("error", message);
         },
         
+        // Proxy for showNotification
         showSuccess: function (message) {
             this.showNotification("success", message);
         }

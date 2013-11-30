@@ -1,13 +1,14 @@
-var fs = require("fs"),
+var configuration = require("./lib/configuration.js"),
+    fs = require("fs"),
     express = require("express"),
     app = express(),
     expressAuth = require("./lib/express-auth.js"),
     builder = require("./lib/builder.js"),
     api = require("./lib/api.js"),
     slashes = require("connect-slashes");
-
-// Set global config    
-config = require("./config.json");
+    
+// Set global config
+config = configuration.get();
     
 /**
  * Watch config for changes ##########################################
@@ -15,12 +16,7 @@ config = require("./config.json");
  
 fs.watchFile("./config.json", { persistent: true, interval: 500 }, function (curr, prev) {
     if (curr.mtime !== prev.mtime) {
-        fs.readFile("./config.json", function (err, data) {
-            if (err) {
-                throw err;
-            }
-            config = JSON.parse(data);
-        });
+        config = configuration.get();
     }
 });
 
@@ -28,7 +24,7 @@ fs.watchFile("./config.json", { persistent: true, interval: 500 }, function (cur
  * Build/Deploy Listener #############################################
  */
 
-app.post("/:project", function(req, res) {
+app.post("/deploy/:project", function(req, res) {
     // Get project
     var project = req.params.project;
     // Ensure the project has been config'd
