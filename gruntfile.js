@@ -51,6 +51,8 @@ module.exports = function ( grunt ) {
                     { expand: true, cwd: "ui/src/js/vendor/", src: [ "**" ], dest: "ui/dist/js/vendor/" },
                     // CSS files
                     { expand: true, cwd: "ui/src/css/", src: [ "**" ], dest: "ui/dist/css/" },
+                    // Fonts
+                    { expand: true, cwd: "ui/src/fonts/", src: [ "**" ], dest: "ui/dist/fonts/" },
                     // Index
                     { expand: true, cwd: "ui/src/", src: [ "index.html" ], dest: "ui/dist/" }
                 ]
