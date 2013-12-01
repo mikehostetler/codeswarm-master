@@ -2,8 +2,9 @@ define([
     "controllers/dom",
     "controllers/session",
     "controllers/router",
-    "controllers/projects"
-], function (dom, session, Router, projects) {
+    "controllers/projects",
+    "controllers/logs"
+], function (dom, session, Router, projects, logs) {
     
     var app = {
         
@@ -14,6 +15,7 @@ define([
             // Routing
             var router = new Router();
             
+            // Home
             router.on("/", function () {
                 if (!session.get()) {
                     dom.loadLogin();
@@ -23,12 +25,23 @@ define([
                 }
             });
             
+            // Projects list
             router.on("/projects", function () {
                 if (!session.get()) {
                     router.go("/");
                 } else {
                     dom.loadApp();
                     projects.showList();
+                }
+            });
+            
+            // Logs list
+            router.on("/logs/:project", function (project) {
+                if (!session.get()) {
+                    router.go("/");
+                } else {
+                    dom.loadApp();
+                    logs.showList(project);
                 }
             });
             

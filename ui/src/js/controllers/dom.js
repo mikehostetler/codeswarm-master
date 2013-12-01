@@ -4,9 +4,10 @@ define([
     "text!templates/header.tpl",
     "text!templates/login.tpl",
     "text!templates/menu.tpl",
-    "text!templates/projects.tpl"
+    "text!templates/projects.tpl",
+    "text!templates/logs.tpl"
 ],
-function ($, Handlebars, header, login, menu, projects) {
+function ($, Handlebars, header, login, menu, projects, logs) {
    
     var dom = {
         
@@ -95,6 +96,15 @@ function ($, Handlebars, header, login, menu, projects) {
         },
         
         /**
+         * Load logs
+         */
+        loadLogs: function (project, data) {
+            var template = Handlebars.compile(logs),
+                html = template({ project: project, logs: data });
+            this.$main.html(html);
+        },
+        
+        /**
          * Applies floating property to fixed header
          */
         floatHeader: function () {
@@ -179,6 +189,19 @@ function ($, Handlebars, header, login, menu, projects) {
             return options.inverse(this);
         }
     
+    });
+    
+    Handlebars.registerHelper("key_value", function(obj, options) {
+        var buffer = "",
+            key;
+     
+        for (key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                buffer += options.fn({key: key, value: obj[key]});
+            }
+        }
+     
+        return buffer;
     });
    
     return dom;
