@@ -9,7 +9,6 @@ define([
             var req = requests.get("/api/logs/"+project);
             
             req.done(function (data) {
-                console.log(data);
                 dom.loadLogs(project, data);
             });
             
