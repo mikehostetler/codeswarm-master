@@ -45,6 +45,12 @@ define([
                 }
             });
             
+            // Logout
+            router.on("/logout", function () {
+                session.unset();
+                router.go("/");
+            });
+            
             // Kick off process
             router.process();
             

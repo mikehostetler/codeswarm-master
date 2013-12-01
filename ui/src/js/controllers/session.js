@@ -18,6 +18,10 @@ define([
             localStorage.setItem("session", JSON.stringify(data));
         },
         
+        unset: function () {
+            localStorage.removeItem("session");
+        },
+        
         getLogin: function () {
             
             var self = this,

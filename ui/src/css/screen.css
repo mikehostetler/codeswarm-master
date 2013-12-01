@@ -280,7 +280,7 @@
         list-style: none;
     }
     
-    aside a {
+    aside a, aside a:link, aside a:visited {
         display: block;
         padding: 5px;
         color: #fff;

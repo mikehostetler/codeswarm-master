@@ -47,6 +47,10 @@ function ($, Handlebars, header, login, menu, projects, logs) {
             this.$header.html(html);
             if (auth) {
                 this.bindMenu();
+            } else {
+                this.$menu.removeClass("menu-open");
+                this.$shadowblock = this.$header.find("#shadow-block");
+                this.$shadowblock.removeClass("menu-open");
             }
             this.$shadowblock = this.$header.find("#shadow-block");
         },
