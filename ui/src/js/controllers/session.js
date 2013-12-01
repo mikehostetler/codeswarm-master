@@ -1,7 +1,8 @@
 define([
     "controllers/dom",
-    "controllers/requests"
-], function (dom, requests) {
+    "controllers/requests",
+    "controllers/router"
+], function (dom, requests, Router) {
     
     var session = {
         
@@ -19,7 +20,8 @@ define([
         
         getLogin: function () {
             
-            var self = this;
+            var self = this,
+                router = new Router();
             
             $(dom.login).on("submit", function (e) {
                 e.preventDefault();
@@ -29,7 +31,7 @@ define([
                     
                 req.done(function (session) {
                     self.set(session);
-                    dom.loadApp();
+                    router.go("/projects");
                 });
                 
                 req.fail(function (xhr) {
