@@ -1,8 +1,9 @@
 define([
     "controllers/dom",
     "controllers/session",
-    "controllers/router"
-], function (dom, session, Router) {
+    "controllers/router",
+    "controllers/projects"
+], function (dom, session, Router, projects) {
     
     var app = {
         
@@ -27,6 +28,7 @@ define([
                     router.go("/");
                 } else {
                     dom.loadApp();
+                    projects.getList();
                 }
             });
             

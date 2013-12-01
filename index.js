@@ -35,16 +35,18 @@ app.post("/deploy/:project", function(req, res) {
         // Set build
         var build = config.builds[project],
             stamp = new Date().getTime();
+        // Set state object
+        build.state = {};
         // Set ID
-        build.id = stamp;
+        build.state.id = stamp;
         // Set name
-        build.name = project + ", Build " + stamp;
+        build.state.name = project + ", Build " + stamp;
         // Set log
-        build.log = config.app.logs + build.dir + "/" + stamp +".log";
+        build.state.log = config.app.logs + build.dir + "/" + stamp +".log";
         // Set status
-        build.status = "running";
+        build.state.status = "running";
         // Send deploy response
-        res.send("DEPLOYING: Logfile: " + build.log.replace(__dirname, ""));
+        res.send("DEPLOYING: Logfile: " + build.state.log.replace(__dirname, ""));
         // Run build
         builder(build);
     }

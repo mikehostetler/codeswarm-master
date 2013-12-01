@@ -81,10 +81,18 @@ function ($, Handlebars, header, login, menu, projects) {
          * Load the app
          */
         loadApp: function () {
-            this.$main
-                .html(projects);
             this.loadHeader(true);
             this.loadMenu();
+        },
+        
+        /**
+         * Load projects
+         */
+        loadProjects: function (data) {
+            var template = Handlebars.compile(projects),
+                html = template({ projects: data });
+                console.log("HTML: " + html);
+            this.$main.html(html);
         },
         
         /**
