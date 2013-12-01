@@ -1,6 +1,8 @@
 <ul>
+    <!--
     <li><a><i class="fa fa-cogs"></i>Running Builds (0)</a></li>
     <li><hr></li>
+    -->
     <li><a href="#/projects"><i class="fa fa-list-ul"></i>Projects</a></li>
     <li><a href="#/projects/new"><i class="fa fa-plus-square"></i>New Project</a></li>
     <li><hr></li>
