@@ -28,7 +28,7 @@ define([
                     router.go("/");
                 } else {
                     dom.loadApp();
-                    projects.getList();
+                    projects.showList();
                 }
             });
             

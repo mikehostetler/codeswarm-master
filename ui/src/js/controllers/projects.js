@@ -5,7 +5,7 @@ define([
     
     var projects = {
     
-        getList: function (fn) {
+        showList: function () {
             
             var req = requests.get("/api/projects");
             
