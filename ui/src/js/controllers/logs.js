@@ -31,8 +31,8 @@ define([
                 dom.loadLogs(project, output);
             });
             
-            req.fail(function (xhr) {
-                dom.showError(xhr.responseTest);
+            req.fail(function () {
+                dom.showError("Could not load logs");
             });
         },
         

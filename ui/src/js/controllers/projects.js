@@ -13,8 +13,8 @@ define([
                 dom.loadProjects(data);
             });
             
-            req.fail(function (xhr) {
-                dom.showError(xhr.responseTest);
+            req.fail(function () {
+                dom.showError("Could not load projects");
             });
         }
     
