@@ -10,13 +10,24 @@ define([
                 req = requests.get("/api/logs/"+project);
             
             req.done(function (data) {
-                var output = {};
-                for (var log in data) {
-                    output[log] = {
-                        "date": self.formatTimestamp(log),
-                        "status": data[log]
-                    };
+                function reverseForIn(obj, f) {
+                    var arr = [];
+                    for (var key in obj) {
+                        arr.push(key);
+                    }
+                    for (var i=arr.length-1; i>=0; i--) {
+                        f.call(obj, arr[i]);
+                    }
                 }
+                var output = {};
+                // Build formatted, reversed output
+                reverseForIn(data, function(key){ 
+                    output[key] = {
+                        date: self.formatTimestamp(parseInt(key,10)),
+                        status: this[key],
+                        project: project
+                    };
+                });
                 dom.loadLogs(project, output);
             });
             

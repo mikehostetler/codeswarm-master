@@ -13,18 +13,18 @@
     <tr>
         <td class="center">
             {{#compare value.status "fail" operator="==="}}
-            <a href="#/logs/{{this.dir}}/{{this.state.id}}" title="Build Failed"><i class="fa fa-circle red"></i></a>
+            <a href="#/logs/{{value.project}}/{{key}}" title="Build Failed"><i class="fa fa-circle red"></i></a>
             {{/compare}}
             
             {{#compare value.status "pass" operator="==="}}
-            <a href="#/logs/{{this.dir}}/{{this.state.id}}" title="Build Passed"><i class="fa fa-circle green"></i></a>
+            <a href="#/logs/{{value.project}}/{{key}}" title="Build Passed"><i class="fa fa-circle green"></i></a>
             {{/compare}}
         </td>
         <td>
             {{value.date}}
         </td>
         <td class="center">
-            <a href="#/config/{{this.dir}}"><i class="fa fa-cog"></i></a>
+            <a href="#/logs/{{value.project}}/{{key}}"><i class="fa fa-clipboard"></i></a>
         </td>
     </tr>
     {{/key_value}}
