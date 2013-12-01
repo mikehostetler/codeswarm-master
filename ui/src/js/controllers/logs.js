@@ -21,7 +21,7 @@ define([
                 }
                 var output = {};
                 // Build formatted, reversed output
-                reverseForIn(data, function(key){ 
+                reverseForIn(data, function (key) {
                     output[key] = {
                         date: self.formatTimestamp(parseInt(key,10)),
                         status: this[key],

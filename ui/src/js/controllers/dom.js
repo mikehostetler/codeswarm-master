@@ -11,6 +11,8 @@ function ($, Handlebars, header, login, menu, projects, logs) {
    
     var dom = {
         
+        loaded: false,
+        
         // Cached els
         $window: null,
         $header: null,
@@ -68,6 +70,7 @@ function ($, Handlebars, header, login, menu, projects, logs) {
          * Load the login form
          */
         loadLogin: function () {
+            this.loaded = false;
             this.$main
                 .html(login)
                 .find("input:first-of-type")
@@ -86,8 +89,11 @@ function ($, Handlebars, header, login, menu, projects, logs) {
          * Load the app
          */
         loadApp: function () {
-            this.loadHeader(true);
-            this.loadMenu();
+            if (!this.loaded) {
+                this.loadHeader(true);
+                this.loadMenu();
+                this.loaded = true;
+            }
         },
         
         /**
