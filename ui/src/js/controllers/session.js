@@ -1,50 +1,50 @@
 define([
-	"controllers/dom",
-	"controllers/requests",
-	"controllers/router"
+    "controllers/dom",
+    "controllers/requests",
+    "controllers/router"
 ], function (dom, requests, Router) {
 
-	var session = {
+    var session = {
 
-		get: function () {
-			if (localStorage.getItem("session")) {
-				return JSON.parse(localStorage.getItem("session"));
-			} else {
-				return false;
-			}
-		},
+        get: function () {
+            if (localStorage.getItem("session")) {
+                return JSON.parse(localStorage.getItem("session"));
+            } else {
+                return false;
+            }
+        },
 
-		set: function (data) {
-			localStorage.setItem("session", JSON.stringify(data));
-		},
+        set: function (data) {
+            localStorage.setItem("session", JSON.stringify(data));
+        },
 
-		unset: function () {
-			localStorage.removeItem("session");
-		},
+        unset: function () {
+            localStorage.removeItem("session");
+        },
 
-		getLogin: function () {
+        getLogin: function () {
 
-			var self = this,
-				router = new Router();
+            var self = this,
+                router = new Router();
 
-			$(dom.login).on("submit", function (e) {
-				e.preventDefault();
-				var $this = $(this),
-					token = dom.getValue($this, "token"),
-					req = requests.get("/api/token/" + token);
+            $(dom.login).on("submit", function (e) {
+                e.preventDefault();
+                var $this = $(this),
+                    token = dom.getValue($this, "token"),
+                    req = requests.get("/api/token/" + token);
 
-				req.done(function (session) {
-					self.set(session);
-					router.go("/projects");
-				});
+                req.done(function (session) {
+                    self.set(session);
+                    router.go("/projects");
+                });
 
-				req.fail(function (xhr) {
-					dom.showError(xhr.responseText);
-				});
-			});
-		}
-	};
+                req.fail(function (xhr) {
+                    dom.showError(xhr.responseText);
+                });
+            });
+        }
+    };
 
-	return session;
+    return session;
 
 });
