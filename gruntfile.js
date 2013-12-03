@@ -2,11 +2,30 @@ module.exports = function ( grunt ) {
 
     grunt.initConfig({
         pkg: grunt.file.readJSON("package.json"),
+        
+        /**
+         * JSBeautifier
+         */
+        jsbeautifier: {
+            ui: {
+                src: ["ui/src/js/**/*.js", "!src/js/vendor/**/*.js"],
+                options: {
+                    config: ".jsbeautifyrc"
+                }
+            },
+            server: {
+                src: ["index.js", "lib/**/*.js"],
+                options: {
+                    config: ".jsbeautifyrc"
+                }
+            }
+        },
+        
         /**
          * JSHint
          */
         jshint: {
-            dev: {
+            ui: {
                 options: {
                     jshintrc: ".jshintrc",
                     jshintignore: ".jshintignore"
@@ -87,13 +106,14 @@ module.exports = function ( grunt ) {
     });
     
     // Load NPM Tasks
+    grunt.loadNpmTasks("grunt-jsbeautifier");
     grunt.loadNpmTasks("grunt-contrib-jshint");
     grunt.loadNpmTasks("grunt-contrib-requirejs");
-    grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-cssmin');
-    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks("grunt-contrib-copy");
+    grunt.loadNpmTasks("grunt-contrib-cssmin");
+    grunt.loadNpmTasks("grunt-contrib-watch");
     
     // Register Tasks
-    grunt.registerTask("default", ["jshint", "requirejs", "copy", "cssmin"]);
+    grunt.registerTask("default", ["jsbeautifier", "jshint", "requirejs", "copy", "cssmin"]);
     
 };
