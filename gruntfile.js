@@ -8,7 +8,7 @@ module.exports = function ( grunt ) {
          */
         jsbeautifier: {
             ui: {
-                src: ["ui/src/js/**/*.js", "!src/js/vendor/**/*.js"],
+                src: ["ui/src/js/**/*.js", "!ui/src/js/vendor/**/*.js"],
                 options: {
                     config: ".jsbeautifyrc"
                 }
