@@ -44,7 +44,7 @@ app.post("/deploy/:project", function(req, res) {
         // Set log
         build.state.log = config.app.logs + build.dir + "/" + stamp +".log";
         // Set status
-        build.state.status = "running";
+        build.state.status = "processing";
         // Send deploy response
         res.send("DEPLOYING: Logfile: " + build.state.log.replace(__dirname, ""));
         // Run build
@@ -61,24 +61,35 @@ app.post("/deploy/:project", function(req, res) {
 app.use(slashes());
 
 // Get by project route 
-app.get("/view/:project/*", expressAuth, function (req, res) {
+app.get("/:project/*", expressAuth, function (req, res) {
     var project = req.params.project;
     if(!config.builds.hasOwnProperty(project) || project === "dashboard") {
         res.sendfile( "index.html", { root: "./ui/src" });
     } else {
-        // Get .vouch.json from build
-        fs.readFile(config.app.builds + config.builds[project].dir + "/.vouch.json", function (err, data) {
-            if (err) {
-                // Problem reading deploy config
-                res.send(err);
-            } else {
-                var deploy = JSON.parse(data),
-                    dir = config.app.builds + config.builds[project].dir + "/" + deploy.dir,
-                    path = req.params[0] ? req.params[0] : deploy.default;
-                // Send default file by... well, default.
-                res.sendfile( path, { root: dir } );
-            }
-        });
+        // Check if build is running
+        if (config.builds[project].hasOwnProperty("state") && config.builds[project].state.status === "processing") {
+            // Build is processing
+            res.send("<html><head><meta http-equiv=\"refresh\" content=\"5\"></head><body>Build processing, please wait...</body></html>");
+        } else {
+            // Get .vouch.json from build
+            fs.readFile(config.app.builds + config.builds[project].dir + "/.vouch.json", function (err, data) {
+                if (err) {
+                    // Problem reading deploy config
+                    res.send("Missing deploy script.");
+                } else {
+                    // Check that build status is passing
+                    if (config.builds[project].hasOwnProperty("state") && config.builds[project].state.status === "pass") {
+                        var deploy = JSON.parse(data),
+                            dir = config.app.builds + config.builds[project].dir + "/" + deploy.dir,
+                            path = req.params[0] ? req.params[0] : deploy.default;
+                        // Send default file by... well, default.
+                        res.sendfile( path, { root: dir } );
+                    } else {
+                        res.send("Build failed.");
+                    }
+                }
+            });
+        }
     }
 });
 
