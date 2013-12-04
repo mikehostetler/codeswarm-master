@@ -44,16 +44,15 @@ define([
 					logs.showList(project);
 				}
 			});
-			
+
 			// Log output
 			router.on("/logs/:project/:log", function (project, log) {
-			    console.log(arguments);
-                if (!session.get()) {
-                    router.go("/");
-                } else {
-                    dom.loadApp();
-                    logs.showLog(project, log);
-                }
+				if (!session.get()) {
+					router.go("/");
+				} else {
+					dom.loadApp();
+					logs.showLog(project, log);
+				}
 			});
 
 			// Logout

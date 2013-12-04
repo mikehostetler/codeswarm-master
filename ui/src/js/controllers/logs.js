@@ -35,15 +35,15 @@ define([
 				dom.showError("Could not load logs");
 			});
 		},
-		
+
 		showLog: function (project, log) {
 			var self = this,
 				req = requests.get("/api/log/" + project + "/" + log);
-			
+
 			req.done(function (data) {
-				dom.loadLogOutput(project, log, formatTimestamp(log), data);	
+				dom.loadLogOutput(project, log, self.formatTimestamp(log), data);
 			});
-			
+
 			req.fail(function () {
 				dom.showError("Could not load log file");
 			});

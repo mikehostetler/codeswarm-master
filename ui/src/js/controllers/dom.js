@@ -6,9 +6,9 @@ define([
 		"text!templates/menu.tpl",
 		"text!templates/projects.tpl",
 		"text!templates/logs.tpl",
-		"text!templates/log_output.tpl"
+		"text!templates/logview.tpl"
 	],
-	function ($, Handlebars, header, login, menu, projects, logs, log_output) {
+	function ($, Handlebars, header, login, menu, projects, logs, logview) {
 
 		var dom = {
 
@@ -135,19 +135,19 @@ define([
 					});
 				this.$main.html(html);
 			},
-			
+
 			/**
 			 * Load log output
 			 */
-			loadLogOutput: function (project, log, timestamp, data) {
-                var template = Handlebar.compile(log_output),
-                    html = template({
-                        project: project,
-                        log: log,
-                        timestamp: timestamp,
-                        data: data
-                    });
-                this.$main.html(html);
+			loadLogOutput: function (project, log, timestamp, output) {
+				var template = Handlebars.compile(logview),
+					html = template({
+						project: project,
+						logid: log,
+						timestamp: timestamp,
+						file: output
+					});
+				this.$main.html(html);
 			},
 
 			/**

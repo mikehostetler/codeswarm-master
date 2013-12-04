@@ -45,7 +45,8 @@ define(function () {
 		var self = this,
 			fragment = window.location.hash.replace("#", ""),
 			matcher,
-			args = [];
+			args = [],
+			matched;
 
 		// Match root
 		if (fragment === "/" || fragment === "" && self.routes.hasOwnProperty("/")) {
@@ -55,16 +56,17 @@ define(function () {
 			for (var route in self.routes) {
 				matcher = fragment.match(new RegExp(route.replace(/:[^\s/]+/g, "([\\w-]+)")));
 				if (matcher !== null && route !== "/") {
-				    args = [];
+					args = [];
 					// Get args
 					if (matcher.length > 1) {
 						for (var i = 1, z = matcher.length; i < z; i++) {
 							args.push(matcher[i]);
 						}
 					}
-					self.routes[route].apply(this, args);
+					matched = route;
 				}
 			}
+			self.routes[matched].apply(this, args);
 		}
 
 	};
