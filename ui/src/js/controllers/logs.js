@@ -41,7 +41,7 @@ define([
 				req = requests.get("/api/log/" + project + "/" + log);
 
 			req.done(function (data) {
-				dom.loadLogOutput(project, log, self.formatTimestamp(log), data);
+				dom.loadLogOutput(project, log, self.formatTimestamp(parseInt(log, 10)), data);
 			});
 
 			req.fail(function () {
