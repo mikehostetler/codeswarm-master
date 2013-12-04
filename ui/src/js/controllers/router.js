@@ -55,6 +55,7 @@ define(function () {
 			for (var route in self.routes) {
 				matcher = fragment.match(new RegExp(route.replace(/:[^\s/]+/g, "([\\w-]+)")));
 				if (matcher !== null && route !== "/") {
+				    args = [];
 					// Get args
 					if (matcher.length > 1) {
 						for (var i = 1, z = matcher.length; i < z; i++) {
