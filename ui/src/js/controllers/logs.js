@@ -35,6 +35,19 @@ define([
 				dom.showError("Could not load logs");
 			});
 		},
+		
+		showLog: function (project, log) {
+			var self = this,
+				req = requests.get("/api/log/" + project + "/" + log);
+			
+			req.done(function (data) {
+				dom.loadLogOutput(project, log, formatTimestamp(log), data);	
+			});
+			
+			req.fail(function () {
+				dom.showError("Could not load log file");
+			});
+		},
 
 		formatTimestamp: function (timestamp) {
 			var format = "{{month}}/{{day}}/{{year}} at {{hour}}:{{minute}}{{ampm}}",
