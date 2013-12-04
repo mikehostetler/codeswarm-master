@@ -99,7 +99,7 @@ in the HTTP response when the build is triggered.
 Once a build passes it is served through Express at the following URL:
 
 ```html
-http(s)://yourserver.com:{BUILD-PORT}/{PROJECT-NAME}
+http(s)://yourserver.com:{BUILD-PORT}/view/{PROJECT-NAME}
 ```
 
 It runs off the configuration set in the `.vouch.json` file to load the appropriate distribution 

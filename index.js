@@ -63,13 +63,19 @@ app.post("/deploy/:project", function (req, res) {
 // Fix trailing slashes (or lack there of)  
 app.use(slashes());
 
+// Admin UI
+app.get("/dashboard/*", function (req, res) {
+    var path = req.params[0] ? req.params[0] : "index.html";
+    res.sendfile(path, {
+        root: "./ui/src/"
+    });
+});
+
 // Get by project route 
-app.get("/:project/*", expressAuth, function (req, res) {
+app.get("/view/:project/*", expressAuth, function (req, res) {
     var project = req.params.project;
-    if (!config.builds.hasOwnProperty(project) || project === "dashboard") {
-        res.sendfile("index.html", {
-            root: "./ui/src"
-        });
+    if (!config.builds.hasOwnProperty(project)) {
+        res.send(404);
     } else {
         // Check if build is running
         if (config.builds[project].hasOwnProperty("state") && config.builds[project].state.status === "processing") {
@@ -99,14 +105,6 @@ app.get("/:project/*", expressAuth, function (req, res) {
             });
         }
     }
-});
-
-// Admin UI
-app.get("/dashboard/*", function (req, res) {
-    var path = req.params[0] ? req.params[0] : "index.html";
-    res.sendfile(path, {
-        root: "./ui/src/"
-    });
 });
 
 // API

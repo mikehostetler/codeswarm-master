@@ -8,7 +8,7 @@ define([
         "text!templates/logs.tpl"
     ],
     function ($, Handlebars, header, login, menu, projects, logs) {
-    
+
         var dom = {
 
             loaded: false,
@@ -52,9 +52,7 @@ define([
                 if (auth) {
                     this.bindMenu();
                 } else {
-                    this.$menu.removeClass("menu-open");
-                    this.$shadowblock = this.$header.find("#shadow-block");
-                    this.$shadowblock.removeClass("menu-open");
+                    this.hideMenu();
                 }
                 this.$shadowblock = this.$header.find("#shadow-block");
             },
@@ -63,9 +61,25 @@ define([
              * Load the menu contents
              */
             loadMenu: function () {
-                var template = Handlebars.compile(menu),
+                var self = this,
+                    template = Handlebars.compile(menu),
                     html = template({});
                 this.$menu.html(html);
+                this.$menu.on("click", function () {
+                    self.hideMenu();
+                });
+                this.$main.on("click", function () {
+                    self.hideMenu();
+                });
+            },
+
+            /**
+             * Hide the menu
+             */
+            hideMenu: function () {
+                this.$menu.removeClass("menu-open");
+                this.$shadowblock = this.$header.find("#shadow-block");
+                this.$shadowblock.removeClass("menu-open");
             },
 
             /**
