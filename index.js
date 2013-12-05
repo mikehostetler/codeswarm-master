@@ -49,7 +49,7 @@ app.post("/deploy/:project", function (req, res) {
 		// Set status
 		build.state.status = "processing";
 		// Send deploy response
-		res.send("DEPLOYING: Logfile: " + build.state.log.replace(__dirname, ""));
+		res.send("DEPLOYING: Log ID: " + build.state.id);
 		// Run build
 		builder(build);
 	}
