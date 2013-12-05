@@ -31,12 +31,12 @@ app.post("/deploy/:project", function (req, res) {
 	// Get project
 	var project = req.params.project;
 	// Ensure the project has been config'd
-	if (!config.builds.hasOwnProperty(project)) {
+	if (!config.projects.hasOwnProperty(project)) {
 		// Nope, send an error
 		res.send("ERROR: Configuration.");
 	} else {
 		// Set build
-		var build = config.builds[project],
+		var build = config.projects[project],
 			stamp = new Date().getTime();
 		// Set state object
 		build.state = {};
@@ -74,24 +74,24 @@ app.get("/dashboard/*", function (req, res) {
 // Get by project route 
 app.get("/view/:project/*", expressAuth, function (req, res) {
 	var project = req.params.project;
-	if (!config.builds.hasOwnProperty(project)) {
+	if (!config.projects.hasOwnProperty(project)) {
 		res.send(404);
 	} else {
 		// Check if build is running
-		if (config.builds[project].hasOwnProperty("state") && config.builds[project].state.status === "processing") {
+		if (config.projects[project].hasOwnProperty("state") && config.projects[project].state.status === "processing") {
 			// Build is processing
 			res.send("<html><head><meta http-equiv=\"refresh\" content=\"5\"></head><body>Build processing, please wait...</body></html>");
 		} else {
 			// Get .vouch.json from build
-			fs.readFile(config.app.builds + config.builds[project].dir + "/.vouch.json", function (err, data) {
+			fs.readFile(config.app.builds + config.projects[project].dir + "/.vouch.json", function (err, data) {
 				if (err) {
 					// Problem reading deploy config
 					res.send("Missing deploy script.");
 				} else {
 					// Check that build status is passing
-					if (config.builds[project].hasOwnProperty("state") && config.builds[project].state.status === "pass") {
+					if (config.projects[project].hasOwnProperty("state") && config.projects[project].state.status === "pass") {
 						var deploy = JSON.parse(data),
-							dir = config.app.builds + config.builds[project].dir + "/" + deploy.dir,
+							dir = config.app.builds + config.projects[project].dir + "/" + deploy.dir,
 							path = req.params[0] ? req.params[0] : deploy.
 						default;
 						// Send default file by... well, default.

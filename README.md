@@ -45,10 +45,10 @@ The first section is the `app` configuration:
 
 Which sets the port, log directory, build directory, mailer configuration and UI access tokens.
 
-The second section is `builds` which sets the parameters for build projects:
+The second section is `projects` which sets the parameters for build projects:
 
 ```json
-"builds": {
+"projects": {
     "{PROJECT-NAME}" : {
         "dir": "{PROJECT-DIRECTORY}",
         "repo": "{PROJECT-REPO}",
@@ -67,6 +67,10 @@ The second section is `builds` which sets the parameters for build projects:
 * HTTP Build-View Authentication, set to `false` for no authentication
     * `VIEW-USER` is the username for accessing the completed build
     * `VIEW-PASS` is the password for accessing the completed build
+
+The `projects.{PROJECT-NAME}` object is also automatically populated with a `state` child object 
+once (and every subsequent time) a project is run through the build/deploy process. The `state` 
+child object contains information about the last build like the status, scripts run, and log name.
 
 **Project Configuration**
 
