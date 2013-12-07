@@ -13,7 +13,19 @@ define([
 			dom.init();
 
 			// Routing
-			var router = new Router();
+			var router = new Router(),
+				// Ensures authentication on routed tasks
+				checkedRun = function (fn) {
+					if (!session.get()) {
+						// Not logged in? Go home.
+						router.go("/");
+					} else {
+						if (typeof fn === "function") {
+							dom.loadApp();
+							fn.call();
+						}
+					}
+				};
 
 			// Home
 			router.on("/", function () {
@@ -27,32 +39,23 @@ define([
 
 			// Projects list
 			router.on("/projects", function () {
-				if (!session.get()) {
-					router.go("/");
-				} else {
-					dom.loadApp();
+				checkedRun(function () {
 					projects.showList();
-				}
+				});
 			});
 
 			// Logs list
 			router.on("/logs/:project", function (project) {
-				if (!session.get()) {
-					router.go("/");
-				} else {
-					dom.loadApp();
+				checkedRun(function () {
 					logs.showList(project);
-				}
+				});
 			});
 
 			// Log output
 			router.on("/logs/:project/:log", function (project, log) {
-				if (!session.get()) {
-					router.go("/");
-				} else {
-					dom.loadApp();
+				checkedRun(function () {
 					logs.showLog(project, log);
-				}
+				});
 			});
 
 			// Logout
