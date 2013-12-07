@@ -5,10 +5,11 @@ define([
 		"text!templates/login.tpl",
 		"text!templates/menu.tpl",
 		"text!templates/projects.tpl",
+		"text!templates/project.tpl",
 		"text!templates/logs.tpl",
 		"text!templates/logview.tpl"
 	],
-	function ($, Handlebars, header, login, menu, projects, logs, logview) {
+	function ($, Handlebars, header, login, menu, projects, project, logs, logview) {
 
 		var dom = {
 
@@ -121,6 +122,15 @@ define([
 					html = template({
 						projects: data
 					});
+				this.$main.html(html);
+			},
+
+			/**
+			 * Load individual project
+			 */
+			loadProject: function (data) {
+				var template = Handlebars.compile(project),
+					html = template(data);
 				this.$main.html(html);
 			},
 

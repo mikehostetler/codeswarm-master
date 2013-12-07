@@ -58,6 +58,13 @@ define([
 				});
 			});
 
+			// Show Project
+			router.on("/project/:project", function (project) {
+				checkedRun(function () {
+					projects.showProject(project);
+				});
+			});
+
 			// Logout
 			router.on("/logout", function () {
 				session.unset();

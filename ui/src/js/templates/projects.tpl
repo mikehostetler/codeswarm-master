@@ -36,7 +36,7 @@
             <a href="#/logs/{{this.dir}}"><i class="fa fa-th-list"></i></a>
         </td>
         <td class="center">
-            <a href="#/config/{{this.dir}}"><i class="fa fa-cog"></i></a>
+            <a href="#/project/{{this.dir}}"><i class="fa fa-cog"></i></a>
         </td>
     </tr>
     {{/each}}
