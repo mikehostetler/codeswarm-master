@@ -261,7 +261,7 @@
     header a i {
         color: #fff;
         font-size: 1em;
-        padding: 0 .35em 0 0;
+        padding-right: .35em !important;
     }
     
     header a i:hover {
