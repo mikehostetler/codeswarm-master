@@ -13,12 +13,17 @@
     {{#each projects}}
     <tr>
         <td class="center">
+        
             {{#compare this.state.status "fail" operator="==="}}
             <a href="#/logs/{{this.dir}}/{{this.state.id}}" title="Build Failing"><i class="fa fa-circle red"></i></a>
             {{/compare}}
             
             {{#compare this.state.status "pass" operator="==="}}
             <a href="#/logs/{{this.dir}}/{{this.state.id}}" title="Build Passing"><i class="fa fa-circle green"></i></a>
+            {{/compare}}
+            
+            {{#compare this.state.status "processing" operator="==="}}
+            <a title="Processing"><i class="fa fa-refresh fa-spin"></i></a>
             {{/compare}}
             
             {{#compare this.state.status undefined operator="==="}}
@@ -33,7 +38,11 @@
             {{this.repo}}
         </td>
         <td class="center">
+        	{{#if this.state}}
             <a href="#/logs/{{this.dir}}"><i class="fa fa-th-list"></i></a>
+            {{else}}
+            N/A
+            {{/if}}
         </td>
         <td class="center">
             <a href="#/project/{{this.dir}}"><i class="fa fa-cog"></i></a>
