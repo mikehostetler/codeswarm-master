@@ -20,29 +20,41 @@ define([
 
 		showProject: function (project) {
 
-			var data;
+			var data,
+				reqKey = requests.get("/api/deploykey"),
+				hook = location.protocol + "//" + location.hostname + (location.port ? ":" + location.port : "");
 
-			if (project !== "new") {
+			reqKey.done(function (key) {
 
-				var req = requests.get("/api/project/" + project);
+				if (project !== "new") {
 
-				req.done(function (data) {
+					var req = requests.get("/api/project/" + project);
+
+					req.done(function (data) {
+						data.hook = hook + "/deploy/" + data.dir;
+						// Add key to data
+						data.key = key;
+						// Load project
+						dom.loadProject(data);
+					});
+
+					req.fail(function () {
+						dom.showError("Could not load project");
+					});
+
+				} else {
+					data = {
+						dir: "",
+						repo: "",
+						auth: false,
+						state: false,
+						hook: hook + "/deploy/",
+						key: key
+					};
 					dom.loadProject(data);
-				});
+				}
 
-				req.fail(function () {
-					dom.showError("Could not load project");
-				});
-
-			} else {
-				data = {
-					dir: "",
-					repo: "",
-					auth: false,
-					state: false
-				};
-				dom.loadProject(data);
-			}
+			});
 
 		}
 

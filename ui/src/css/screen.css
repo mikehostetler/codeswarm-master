@@ -82,7 +82,7 @@
     h1 { font-size: 3em; }
     h2 { font-size: 2.5em; }
     h3 { font-size: 2em; }
-    h4 { font-size: 1.5em; }
+    h4 { font-size: 1.5em; margin-bottom: 10px; }
 
     a,a:link,a:visited { 
         display: inline;
@@ -110,6 +110,7 @@
     
     em {
         font-style: italic;
+        color: #999;
     }
     
     i.fa {
@@ -202,10 +203,10 @@
     
 /* PRE/CODE */
 
-    pre code {
+    pre {
         display: block;
         overflow: scroll;
-        margin: 20px 0;
+        margin: 5px 0;
         padding: 15px;
         border: 1px solid #ccc;
         font-family: 'Ubuntu-Mono', 'monospace', sans-serif;

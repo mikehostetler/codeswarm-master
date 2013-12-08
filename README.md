@@ -45,6 +45,8 @@ The first section is the `app` configuration:
 
 Which sets the port, log directory, build directory, mailer configuration and UI access tokens.
 
+Add your server's public key to the `/deploy_key` file to make the deploy key available in the UI.
+
 The second section is `projects` which sets the parameters for build projects:
 
 ```json
