@@ -175,6 +175,10 @@ define([
 					e.preventDefault();
 					controller.addToken($(this).serializeArray());
 				});
+				// Bind delete
+				this.$main.find(".delete-token").click(function () {
+					controller.deleteToken($(this).data("token"));
+				});
 			},
 
 			/**

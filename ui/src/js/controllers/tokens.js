@@ -20,8 +20,30 @@ define([
 		},
 
 		addToken: function (data) {
-			var token = data[0].value;
-			console.log(token);
+			var token = data[0].value,
+				req = requests.put("/api/token", {
+					token: token
+				});
+
+			req.done(function () {
+				alert("Added!");
+			});
+
+			req.fail(function () {
+				dom.showError("Could not add token");
+			});
+		},
+
+		deleteToken: function (token) {
+			var req = requests.delete("/api/token/" + token);
+
+			req.done(function () {
+				alert("Deleted!");
+			});
+
+			req.fail(function () {
+				dom.showError("Could not delete token");
+			});
 		}
 
 	};

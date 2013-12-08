@@ -10,6 +10,9 @@ var configuration = require("./lib/configuration.js"),
 // Set global config
 config = configuration.get();
 
+// Use bodyParser
+app.use(express.bodyParser());
+
 /**
  * Watch config for changes ##########################################
  */
@@ -62,9 +65,6 @@ app.post("/deploy/:project", function (req, res) {
 
 // Fix trailing slashes (or lack there of)  
 app.use(slashes());
-
-// Body parser
-app.use(express.bodyParser());
 
 // Admin UI
 app.get("/dashboard/*", function (req, res) {
