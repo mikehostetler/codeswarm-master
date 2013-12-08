@@ -18,7 +18,11 @@
 	
 	<input name="id" type="hidden" value="{{dir}}">
 	
-	<input name="repo" type="text" value="{{repo}}">
+	{{#if repo}}
+	<p>{{repo}}</p>
+	{{else}}
+	<input name="repo" type="text" placeholder="git://path-to-git-repo.git">
+	{{/if}}
 	
 	<hr>
 	

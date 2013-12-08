@@ -43,11 +43,11 @@ define([
 
 				} else {
 					data = {
-						dir: "",
+						dir: "new-project",
 						repo: "",
 						auth: false,
 						state: false,
-						hook: hook + "/deploy/",
+						hook: hook + "/deploy/new-project",
 						key: key
 					};
 					dom.loadProject(data);
