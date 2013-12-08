@@ -8,9 +8,18 @@ module.exports = function ( grunt ) {
          */
         jsbeautifier: {
             ui: {
-                src: ["ui/src/js/**/*.js", "!ui/src/js/vendor/**/*.js"],
+                src: ["ui/src/js/**/*.js", "ui/src/css/screen.css", "!ui/src/js/vendor/**/*.js"],
                 options: {
-                    config: ".jsbeautifyrc"
+                    config: ".jsbeautifyrc",
+                    js: {
+                        fileTypes: [".js"]
+                    },
+                    css: {
+                        fileTypes: ['.css']
+                    },
+                    html: {
+                        fileTypes: ['.tpl']
+                    }
                 }
             },
             server: {

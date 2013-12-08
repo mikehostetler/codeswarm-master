@@ -14,14 +14,10 @@
 
 <form id="project-config">
 
-	<h4>Configuration</h4>
+	<h4>Repository</h4>
 	
 	<input name="id" type="hidden" value="{{dir}}">
 	
-	<label>Name:</label>
-	<input name="dir" type="text" value="{{dir}}">
-	
-	<label>Repository</label>
 	<input name="repo" type="text" value="{{repo}}">
 	
 	<hr>
