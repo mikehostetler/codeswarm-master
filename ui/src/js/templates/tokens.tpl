@@ -3,7 +3,7 @@
 <hr>
 
 {{#each tokens}}
-<h4><a class="right delete-token" data-token="{{this}}" title="Delete Token"><i class="fa fa-times"></i></a>{{this}}</h4>
+<h4 class="token-list-item"><a class="right delete-token" data-token="{{this}}" title="Delete Token"><i class="fa fa-times"></i></a>{{this}}</h4>
 <hr>
 {{/each}}
 

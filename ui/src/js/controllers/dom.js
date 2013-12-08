@@ -165,7 +165,8 @@ define([
 			 * Load tokens
 			 */
 			loadTokens: function (data, controller) {
-				var template = Handlebars.compile(tokens),
+				var self = this,
+					template = Handlebars.compile(tokens),
 					html = template({
 						tokens: data
 					});
@@ -177,7 +178,12 @@ define([
 				});
 				// Bind delete
 				this.$main.find(".delete-token").click(function () {
-					controller.deleteToken($(this).data("token"));
+					// Ensure at least one token is present
+					if (self.$main.find(".token-list-item").length === 1) {
+						self.showError("Must maintain at least one token");
+					} else {
+						controller.deleteToken($(this).data("token"));
+					}
 				});
 			},
 
