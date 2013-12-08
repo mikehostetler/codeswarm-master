@@ -7,6 +7,8 @@
 <hr>
 {{/each}}
 
-<label>New Token:</label>
-<input type="text" name="token" placeholder="New Token">
-<button>Add</button>
+<form id="add-token">
+	<label>New Token:</label>
+	<input type="text" name="token" placeholder="New Token">
+	<button>Add</button>
+</form>

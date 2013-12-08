@@ -164,12 +164,17 @@ define([
 			/**
 			 * Load tokens
 			 */
-			loadTokens: function (data) {
+			loadTokens: function (data, controller) {
 				var template = Handlebars.compile(tokens),
 					html = template({
 						tokens: data
 					});
 				this.$main.html(html);
+				// Bind new-token form
+				this.$main.find("#add-token").submit(function (e) {
+					e.preventDefault();
+					controller.addToken($(this).serializeArray());
+				});
 			},
 
 			/**

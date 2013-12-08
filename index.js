@@ -63,6 +63,9 @@ app.post("/deploy/:project", function (req, res) {
 // Fix trailing slashes (or lack there of)  
 app.use(slashes());
 
+// Body parser
+app.use(express.bodyParser());
+
 // Admin UI
 app.get("/dashboard/*", function (req, res) {
 	var path = req.params[0] ? req.params[0] : "index.html";

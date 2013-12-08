@@ -4,7 +4,7 @@
     "description": "A simple server for node-based continuous integration and deployment",
     "readmeFilename": "README.md",
     "dependencies": {
-        "express": "~3.4.0",
+        "express": "~3.3.0",
         "gift": "~0.1.0",
         "fs-extra": "~0.8.0",
         "async": "~0.2.5",

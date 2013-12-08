@@ -114,6 +114,16 @@
     
     i.fa {
         padding: 0 .2em;
+        padding: 3px 5px;
+    }
+    
+    a > i {
+        color: #999;
+        transition: .3s color;
+    }
+    
+    a > i:hover {
+        color: #333;
     }
     
 /* FORM ELEMENTS */
@@ -249,8 +259,13 @@
     }
     
     header a i {
+        color: #fff;
         font-size: 1em;
         padding: 0 .35em 0 0;
+    }
+    
+    header a i:hover {
+        color: #fff;
     }
     
     header #shadow-block {
@@ -310,6 +325,11 @@
     aside i {
         display: inline-block;
         width: 30px;
+        color: #fff;
+    }
+    
+    aside i:hover {
+        color: #fff;
     }
     
     aside hr {
