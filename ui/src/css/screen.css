@@ -394,6 +394,10 @@
         opacity: 1;
     }
     
+    #notification a:hover i {
+        color: #fff;
+    }
+    
     #notification.error {
         border-top: 5px solid #ff0000;
         top: 20%;
