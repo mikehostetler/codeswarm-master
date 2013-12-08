@@ -97,7 +97,7 @@
     .right { float: right; }
     .left { float: left; }
     
-    hr { border: 0; height: 1px; margin: 35px 0;
+    hr { border: 0; height: 1px; margin: 25px 0;
         background-image: -webkit-linear-gradient(left, rgba(120,120,120,0), rgba(200,200,200,0.75), rgba(120,120,120,0)); 
         background-image:    -moz-linear-gradient(left, rgba(120,120,120,0), rgba(200,200,200,0.75), rgba(120,120,120,0)); 
         background-image:     -ms-linear-gradient(left, rgba(120,120,120,0), rgba(200,200,200,0.75), rgba(120,120,120,0)); 
