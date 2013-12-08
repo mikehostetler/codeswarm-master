@@ -1,9 +1,9 @@
-<h1>{{dir}}</h1>
+<h1 id="project-id">{{dir}}</h1>
 
 <hr>
 
 <label>Deploy Hook URL (POST)</label>
-<pre>{{hook}}</pre>
+<pre id="project-hook">{{hook}}</pre>
 
 {{#if key}}
 <label>Server Deploy Key</label>
@@ -21,7 +21,7 @@
 	{{#if repo}}
 	<p>{{repo}}</p>
 	{{else}}
-	<input name="repo" type="text" placeholder="git://path-to-git-repo.git">
+	<input id="project-repo" name="repo" type="text" placeholder="git://path-to-git-repo.git">
 	{{/if}}
 	
 	<hr>

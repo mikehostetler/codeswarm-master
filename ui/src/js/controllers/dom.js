@@ -130,9 +130,28 @@ define([
 			 * Load individual project
 			 */
 			loadProject: function (data) {
-				var template = Handlebars.compile(project),
+				var self = this,
+					template = Handlebars.compile(project),
 					html = template(data);
 				this.$main.html(html);
+				// On repo change, modify hook and dir/name
+				this.$main.find("#project-repo").off().on("input", function () {
+					var val = $(this).val(),
+						deployUrl = location.protocol + "//" + location.hostname + (location.port ? ":" + location.port : ""),
+						id = self.$main.find("#project-id"),
+						hook = self.$main.find("#project-hook"),
+						name = val.split("/");
+
+					// Get last item
+					name = name[name.length - 1];
+
+					if (name.indexOf(".git") !== -1) {
+						name = name.replace(".git", "");
+						id.text(name);
+						hook.text(deployUrl + "/deploy/" + name);
+					}
+
+				});
 			},
 
 			/**
