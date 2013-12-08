@@ -4,7 +4,7 @@ define([
 	"controllers/router"
 ], function (dom, requests, Router) {
 
-    var router = new Router();
+	var router = new Router();
 
 	var tokens = {
 

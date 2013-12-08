@@ -70,9 +70,9 @@ define(function () {
 		}
 
 	};
-	
+
 	Router.prototype.reload = function () {
-		this.process();	
+		this.process();
 	};
 
 	/**
