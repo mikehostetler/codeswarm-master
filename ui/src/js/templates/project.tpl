@@ -5,8 +5,10 @@
 <label>Deploy Hook URL (POST)</label>
 <pre>{{hook}}</pre>
 
+{{#if key}}
 <label>Server Deploy Key</label>
 <pre>{{key}}</pre>
+{{/if}}
 
 <hr>
 

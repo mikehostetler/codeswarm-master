@@ -24,8 +24,7 @@ define([
 				reqKey = requests.get("/api/deploykey"),
 				hook = location.protocol + "//" + location.hostname + (location.port ? ":" + location.port : "");
 
-			reqKey.done(function (key) {
-
+			var loadProject = function (hook, key) {
 				if (project !== "new") {
 
 					var req = requests.get("/api/project/" + project);
@@ -53,7 +52,14 @@ define([
 					};
 					dom.loadProject(data);
 				}
+			};
 
+			reqKey.done(function (key) {
+				loadProject(hook, key);
+			});
+
+			reqKey.fail(function () {
+				loadProject(hook, false);
 			});
 
 		}
