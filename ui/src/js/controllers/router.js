@@ -70,6 +70,10 @@ define(function () {
 		}
 
 	};
+	
+	Router.prototype.reload = function () {
+		this.process();	
+	};
 
 	/**
 	 * Method for binding route to callback

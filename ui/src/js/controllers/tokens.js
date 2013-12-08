@@ -1,7 +1,10 @@
 define([
 	"controllers/dom",
-	"controllers/requests"
-], function (dom, requests) {
+	"controllers/requests",
+	"controllers/router"
+], function (dom, requests, Router) {
+
+    var router = new Router();
 
 	var tokens = {
 
@@ -26,7 +29,8 @@ define([
 				});
 
 			req.done(function () {
-				alert("Added!");
+				router.reload();
+				dom.showSuccess("Token successfully added");
 			});
 
 			req.fail(function () {
@@ -38,7 +42,8 @@ define([
 			var req = requests.delete("/api/token/" + token);
 
 			req.done(function () {
-				alert("Deleted!");
+				router.reload();
+				dom.showSuccess("Token successfully deleted");
 			});
 
 			req.fail(function () {
