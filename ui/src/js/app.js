@@ -3,8 +3,9 @@ define([
 	"controllers/session",
 	"controllers/router",
 	"controllers/projects",
-	"controllers/logs"
-], function (dom, session, Router, projects, logs) {
+	"controllers/logs",
+	"controllers/tokens"
+], function (dom, session, Router, projects, logs, tokens) {
 
 	var app = {
 
@@ -62,6 +63,13 @@ define([
 			router.on("/project/:project", function (project) {
 				checkedRun(function () {
 					projects.showProject(project);
+				});
+			});
+
+			// Show tokens
+			router.on("/tokens", function () {
+				checkedRun(function () {
+					tokens.showList();
 				});
 			});
 

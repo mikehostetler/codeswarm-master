@@ -7,9 +7,10 @@ define([
 		"text!templates/projects.tpl",
 		"text!templates/project.tpl",
 		"text!templates/logs.tpl",
-		"text!templates/logview.tpl"
+		"text!templates/logview.tpl",
+		"text!templates/tokens.tpl"
 	],
-	function ($, Handlebars, header, login, menu, projects, project, logs, logview) {
+	function ($, Handlebars, header, login, menu, projects, project, logs, logview, tokens) {
 
 		var dom = {
 
@@ -156,6 +157,17 @@ define([
 						logid: log,
 						timestamp: timestamp,
 						file: output
+					});
+				this.$main.html(html);
+			},
+
+			/**
+			 * Load tokens
+			 */
+			loadTokens: function (data) {
+				var template = Handlebars.compile(tokens),
+					html = template({
+						tokens: data
 					});
 				this.$main.html(html);
 			},
