@@ -20,15 +20,29 @@ define([
 
 		showProject: function (project) {
 
-			var req = requests.get("/api/project/" + project);
+			var data;
 
-			req.done(function (data) {
+			if (project !== "new") {
+
+				var req = requests.get("/api/project/" + project);
+
+				req.done(function (data) {
+					dom.loadProject(data);
+				});
+
+				req.fail(function () {
+					dom.showError("Could not load project");
+				});
+
+			} else {
+				data = {
+					dir: "",
+					repo: "",
+					auth: false,
+					state: false
+				};
 				dom.loadProject(data);
-			});
-
-			req.fail(function () {
-				dom.showError("Could not load project");
-			});
+			}
 
 		}
 
