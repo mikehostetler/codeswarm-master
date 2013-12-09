@@ -21,7 +21,7 @@
 	{{#if repo}}
 	<p>{{repo}}</p>
 	{{else}}
-	<input id="project-repo" name="repo" type="text" placeholder="git://path-to-git-repo.git">
+	<input id="project-repo" name="repo" type="text" placeholder="user@path-to-git/repo.git">
 	{{/if}}
 	
 	<hr>

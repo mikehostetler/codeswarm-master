@@ -127,30 +127,49 @@ define([
 			},
 
 			/**
-			 * Load individual project
+			 * Load individual project (config)
 			 */
-			loadProject: function (data) {
+			loadProject: function (data, controller) {
 				var self = this,
 					template = Handlebars.compile(project),
 					html = template(data);
 				this.$main.html(html);
+
+				// Validate repo
+				var validateRepo = function (str) {
+					var name = str.split("/");
+					// Check extension
+					if (name[name.length - 1].indexOf(".git") !== -1) {
+						return name[name.length - 1].replace(".git", "");
+					}
+					return false;
+				};
+
 				// On repo change, modify hook and dir/name
 				this.$main.find("#project-repo").off().on("input", function () {
 					var val = $(this).val(),
 						deployUrl = location.protocol + "//" + location.hostname + (location.port ? ":" + location.port : ""),
 						id = self.$main.find("#project-id"),
 						hook = self.$main.find("#project-hook"),
-						name = val.split("/");
+						name = validateRepo(val);
 
-					// Get last item
-					name = name[name.length - 1];
-
-					if (name.indexOf(".git") !== -1) {
-						name = name.replace(".git", "");
+					if (name) {
 						id.text(name);
 						hook.text(deployUrl + "/deploy/" + name);
 					}
+				});
 
+				// Handle form submission
+				$("#project-config").submit(function (e) {
+					e.preventDefault();
+					var data = $(this).serializeObject(),
+						name = validateRepo(data.repo);
+					if (name) {
+						data.name = name;
+						controller.saveProject(data);
+					} else {
+						self.showError("Invalid project repository");
+					}
 				});
 			},
 
@@ -322,6 +341,28 @@ define([
 
 			return buffer;
 		});
+
+		$.fn.serializeObject = function () {
+			"use strict";
+
+			var result = {};
+			var extend = function (i, element) {
+				var node = result[element.name];
+
+				if ("undefined" !== typeof node && node !== null) {
+					if ($.isArray(node)) {
+						node.push(element.value);
+					} else {
+						result[element.name] = [node, element.value];
+					}
+				} else {
+					result[element.name] = element.value;
+				}
+			};
+
+			$.each(this.serializeArray(), extend);
+			return result;
+		};
 
 		return dom;
 

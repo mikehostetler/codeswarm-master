@@ -20,7 +20,8 @@ define([
 
 		showProject: function (project) {
 
-			var data,
+			var self = this,
+				data,
 				reqKey = requests.get("/api/deploykey"),
 				hook = location.protocol + "//" + location.hostname + (location.port ? ":" + location.port : "");
 
@@ -34,7 +35,7 @@ define([
 						// Add key to data
 						data.key = key;
 						// Load project
-						dom.loadProject(data);
+						dom.loadProject(data, self);
 					});
 
 					req.fail(function () {
@@ -50,7 +51,7 @@ define([
 						hook: hook + "/deploy/new-project",
 						key: key
 					};
-					dom.loadProject(data);
+					dom.loadProject(data, self);
 				}
 			};
 
@@ -62,6 +63,11 @@ define([
 				loadProject(hook, false);
 			});
 
+		},
+
+		saveProject: function (data) {
+			console.log("SAVE:");
+			console.log(data);
 		}
 
 	};
