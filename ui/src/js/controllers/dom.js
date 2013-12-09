@@ -162,13 +162,20 @@ define([
 				// Handle form submission
 				$("#project-config").submit(function (e) {
 					e.preventDefault();
-					var data = $(this).serializeObject(),
-						name = validateRepo(data.repo);
-					if (name) {
-						data.name = name;
-						controller.saveProject(data);
+					var data = $(this).serializeObject();
+
+					if (data.hasOwnProperty("repo")) {
+						// Validate repo before creating
+						var name = validateRepo(data.repo);
+						if (name) {
+							data.name = name;
+							controller.saveProject(data);
+						} else {
+							self.showError("Invalid project repository");
+						}
 					} else {
-						self.showError("Invalid project repository");
+						// This is a modification, repo already valid
+						controller.saveProject(data);
 					}
 				});
 			},

@@ -66,8 +66,46 @@ define([
 		},
 
 		saveProject: function (data) {
-			console.log("SAVE:");
-			console.log(data);
+			var req;
+			// Set auth object
+			if (data.user.length > 0 || data.pass.length > 0) {
+				data.auth = {
+					user: data.user,
+					pass: data.pass
+				};
+			} else {
+				data.auth = false;
+			}
+			// Send to API
+			if (data.id === "new-project") {
+				// Create new (PUT)
+				req = requests.put("/api/project", {
+					dir: data.name,
+					repo: data.repo,
+					auth: data.auth
+				});
+
+				req.done(function () {
+					dom.showSuccess("Project successfully created");
+					// Update ID field
+					dom.$main.find("input[name=\"id\"]").val(data.name);
+				});
+
+				req.fail(function () {
+					dom.showError("Project could not be created");
+				});
+			} else {
+				// Modify object
+				req = requests.post("/api/project/" + data.id, data.auth);
+
+				req.done(function () {
+					dom.showSuccess("Project successfully saved");
+				});
+
+				req.fail(function () {
+					dom.showError("Project could not be saved");
+				});
+			}
 		}
 
 	};
