@@ -178,6 +178,27 @@ define([
 						controller.saveProject(data);
 					}
 				});
+
+				// Handle delete request
+				this.$main.find("#project-delete").click(function () {
+					// Hide delete button
+					$(this).hide();
+					// Show confirm/cancel
+					self.$main.find("#project-confirm-delete, #project-cancel-delete").show();
+				});
+
+				// Confirm and process delete
+				this.$main.find("#project-confirm-delete").click(function () {
+					controller.deleteProject(self.$main.find("input[name=\"id\"]").val());
+				});
+
+				// Cancel delete
+				this.$main.find("#project-cancel-delete").click(function () {
+					// Show delete button
+					self.$main.find("#project-delete").show();
+					// Hide confirm/cancel
+					self.$main.find("#project-confirm-delete, #project-cancel-delete").hide();
+				});
 			},
 
 			/**

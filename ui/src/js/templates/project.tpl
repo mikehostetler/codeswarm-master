@@ -49,4 +49,6 @@
 
 <br>
 
-<button id="delete-project">Delete Project</button>
+<button id="project-confirm-delete" class="hide btn-left">Confirm Delete</button>
+<button id="project-cancel-delete" class="hide btn-right">Cancel</button>
+<button id="project-delete">Delete Project</button>

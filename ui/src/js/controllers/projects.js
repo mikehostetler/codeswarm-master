@@ -106,6 +106,10 @@ define([
 					dom.showError("Project could not be saved");
 				});
 			}
+		},
+
+		deleteProject: function (name) {
+			console.log(name);
 		}
 
 	};
