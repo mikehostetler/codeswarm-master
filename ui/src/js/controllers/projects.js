@@ -1,7 +1,10 @@
 define([
 	"controllers/dom",
-	"controllers/requests"
-], function (dom, requests) {
+	"controllers/requests",
+	"controllers/router"
+], function (dom, requests, Router) {
+
+	var router = new Router();
 
 	var projects = {
 
@@ -109,7 +112,16 @@ define([
 		},
 
 		deleteProject: function (name) {
-			console.log(name);
+			var req = requests.delete("/api/project/" + name);
+
+			req.done(function () {
+				router.go("/projects");
+				dom.showSuccess("Project successfully deleted");
+			});
+
+			req.fail(function () {
+				dom.showError("Could not delete project");
+			});
 		}
 
 	};
