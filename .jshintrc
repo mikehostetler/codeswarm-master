@@ -97,6 +97,7 @@
     "module": true,
     "__dirname": true,
     "config": true,
+    "io": true,
     "socket": true
   }
 }

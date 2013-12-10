@@ -128,8 +128,18 @@ app.del("/api/:type/*", function (req, res) {
 });
 
 /**
- * Start App #########################################################
+ * Sockets ###########################################################
  */
 
-app.listen(config.app.port);
-console.log("Service running over " + config.app.port);
+io = require("socket.io").listen(app.listen(config.app.port));
+io.sockets.on("connection", function (socket) {
+	socket.emit("system", {
+		message: "Socket connection established"
+	});
+});
+
+/**
+ * Start Msg #########################################################
+ */
+
+console.log("Vouch Service running over " + config.app.port);

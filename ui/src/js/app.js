@@ -4,7 +4,8 @@ define([
 	"controllers/router",
 	"controllers/projects",
 	"controllers/logs",
-	"controllers/tokens"
+	"controllers/tokens",
+	"controllers/socket"
 ], function (dom, session, Router, projects, logs, tokens) {
 
 	var app = {
