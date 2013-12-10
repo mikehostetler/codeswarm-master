@@ -82,17 +82,23 @@ The second configration is in the project repository itself in the `.vouch.json`
 {
     "dir": "{DIST-DIRECTORY}",
     "default": "{DEFAULT-FILE}",
-    "run": {
+    "run": [
         "{COMMAND}",
         "{COMMAND}",
         ...
-    }
+    ],
+    "notify": [
+        "{USER_EMAIL}",
+        "{USER_EMAIL}",
+        ...
+    ]
 }
 ```
 
 * `DIST-DIRECTORY` is the directory of the build to run, leave empty for root
 * `DEFAULT-FILE` is the default file to serve when serving the build over http
 * `COMMAND` is any task or command to run in order to build the project
+* `USER_EMAIL` is any email address you would like to recieve a notification if the build fails
 
 ### Logging
 

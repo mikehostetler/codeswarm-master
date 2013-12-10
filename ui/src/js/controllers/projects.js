@@ -26,7 +26,6 @@ define([
 			var req = requests.post("/deploy/" + project);
 
 			req.done(function (data) {
-				console.log(data);
 				dom.showSuccess("Starting build...");
 				// Pause to allow build to start, then redirect
 				setTimeout(function () {
