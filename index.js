@@ -6,7 +6,7 @@ var configuration = require("./lib/configuration.js"),
 	builder = require("./lib/builder.js"),
 	api = require("./lib/api.js"),
 	slashes = require("connect-slashes"),
-	env;
+	env, socket_log = false;
 
 /**
  * Handle "dev" argument
@@ -14,6 +14,8 @@ var configuration = require("./lib/configuration.js"),
 if (process.argv[2] && process.argv[2] === "dev") {
 	// Load static server from /src directory
 	env = "src";
+	// Show socket logs
+	socket_log = true;
 } else {
 	env = "dist";
 }
@@ -63,7 +65,9 @@ app.post("/deploy/:project", function (req, res) {
 		// Set status
 		build.state.status = "processing";
 		// Send deploy response
-		res.send(200, build.state.id);
+		res.send({
+			build: build.state.id
+		});
 		// Run build
 		builder(build);
 	}
@@ -142,7 +146,9 @@ app.del("/api/:type/*", function (req, res) {
  * Sockets ###########################################################
  */
 
-io = require("socket.io").listen(app.listen(config.app.port));
+io = require("socket.io").listen(app.listen(config.app.port), {
+	log: socket_log
+});
 io.sockets.on("connection", function (socket) {
 	socket.emit("system", {
 		message: "Socket connection established"
