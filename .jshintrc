@@ -96,6 +96,7 @@
     "define": true,
     "module": true,
     "__dirname": true,
-    "config": true
+    "config": true,
+    "socket": true
   }
 }

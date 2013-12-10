@@ -10,7 +10,8 @@
         "async": "~0.2.5",
         "nodemailer": "~0.5.0",
         "connect-slashes": "~1.0.0",
-        "ansi_up": "~1.0.0"
+        "ansi_up": "~1.0.0",
+        "socket.io": "~0.9.0"
     },
     "devDependencies": {
         "bower": "~1.2.7",
