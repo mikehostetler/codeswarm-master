@@ -5,7 +5,18 @@ var configuration = require("./lib/configuration.js"),
 	expressAuth = require("./lib/express-auth.js"),
 	builder = require("./lib/builder.js"),
 	api = require("./lib/api.js"),
-	slashes = require("connect-slashes");
+	slashes = require("connect-slashes"),
+	env;
+
+/**
+ * Handle "dev" argument
+ */
+if (process.argv[2] && process.argv[2] === "dev") {
+	// Load static server from /src directory
+	env = "src";
+} else {
+	env = "dist";
+}
 
 // Set global config
 config = configuration.get();
@@ -70,7 +81,7 @@ app.use(slashes());
 app.get("/dashboard/*", function (req, res) {
 	var path = req.params[0] ? req.params[0] : "index.html";
 	res.sendfile(path, {
-		root: "./ui/src/"
+		root: "./ui/" + env
 	});
 });
 
@@ -142,4 +153,4 @@ io.sockets.on("connection", function (socket) {
  * Start Msg #########################################################
  */
 
-console.log("Vouch Service running over " + config.app.port);
+console.log("Vouch Service running over " + config.app.port + " from /" + env);
