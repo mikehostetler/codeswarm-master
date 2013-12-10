@@ -6,6 +6,7 @@ define([
 
 	socket.on("build", function (data) {
 		dom.updateStatus(data.project, data.id, data.status);
+		dom.updateLog(data.id, data.log);
 	});
 
 });

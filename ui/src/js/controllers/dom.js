@@ -139,9 +139,22 @@ define([
 					el.html("<a href=\"#/logs/" + project + "/" + log + "\" title=\"Build Failing\"><i class=\"fa fa-circle red\"></i></a>");
 					break;
 				case "processing":
-					el.html("<a href=\"#/logs/" + project + "/" + log + "\" title=\"Processing\"><i class=\"fa fa-refresh fa-circle yellow\"></i></a>");
+					// Don't keep replacing, just check state
+					if (!el.find("i").hasClass("yellow")) {
+						el.html("<a href=\"#/logs/" + project + "/" + log + "\" title=\"Processing\"><i class=\"fa fa-refresh fa-circle yellow\"></i></a>");
+					}
 					break;
 				}
+			},
+
+			/**
+			 * Update active log
+			 */
+			updateLog: function (log, content) {
+				var el = this.$main.find("[data-log=\"" + log + "\"]");
+				el.append(content);
+				// Scroll!
+				$("html, body").scrollTop($(document).height());
 			},
 
 			/**
