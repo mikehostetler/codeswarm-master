@@ -23,7 +23,7 @@
             {{/compare}}
             
             {{#compare this.state.status "processing" operator="==="}}
-            <a title="Processing"><i class="fa fa-refresh fa-circle yellow"></i></a>
+            <a href="#/logs/{{this.dir}}/{{this.state.id}}" title="Processing"><i class="fa fa-refresh fa-circle yellow"></i></a>
             {{/compare}}
             
             {{#compare this.state.status undefined operator="==="}}

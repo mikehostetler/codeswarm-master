@@ -139,10 +139,8 @@ define([
 					el.html("<a href=\"#/logs/" + project + "/" + log + "\" title=\"Build Failing\"><i class=\"fa fa-circle red\"></i></a>");
 					break;
 				case "processing":
-					el.html("<a title=\"Processing\"><i class=\"fa fa-refresh fa-circle yellow\"></i></a>");
+					el.html("<a href=\"#/logs/" + project + "/" + log + "\" title=\"Processing\"><i class=\"fa fa-refresh fa-circle yellow\"></i></a>");
 					break;
-				default:
-
 				}
 			},
 
