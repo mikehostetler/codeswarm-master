@@ -12,7 +12,7 @@
     <tbody>
     {{#each projects}}
     <tr>
-        <td class="center">
+        <td class="center" data-status="{{this.dir}}">
         
             {{#compare this.state.status "fail" operator="==="}}
             <a href="#/logs/{{this.dir}}/{{this.state.id}}" title="Build Failing"><i class="fa fa-circle red"></i></a>
@@ -23,11 +23,11 @@
             {{/compare}}
             
             {{#compare this.state.status "processing" operator="==="}}
-            <a title="Processing"><i class="fa fa-refresh fa-spin"></i></a>
+            <a title="Processing"><i class="fa fa-refresh fa-circle yellow"></i></a>
             {{/compare}}
             
             {{#compare this.state.status undefined operator="==="}}
-            <a title="No Builds"><i class="fa fa-circle yellow"></i></a>
+            <a title="No Builds"><i class="fa fa-circle"></i></a>
             {{/compare}}
             
         </td>

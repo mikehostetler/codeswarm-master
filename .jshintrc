@@ -31,7 +31,7 @@
   "maxdepth":       5,      //control how nested do you want your blocks to be
   //"maxstatements":  0,    //set the max number of statements allowed per function
   //"maxcomplexity":  0,    //control cyclomatic complexity throughout your code
-  "maxlen":         140,    //set the maximum length of a line
+  "maxlen":         180,    //set the maximum length of a line
 
   // RELAXING OPTIONS
   // These options allow you to suppress certain types of warnings. Use them

@@ -127,6 +127,26 @@ define([
 			},
 
 			/**
+			 * Update project status
+			 */
+			updateStatus: function (project, log, status) {
+				var el = this.$main.find("[data-status=\"" + project + "\"]");
+				switch (status) {
+				case "pass":
+					el.html("<a href=\"#/logs/" + project + "/" + log + "\" title=\"Build Passing\"><i class=\"fa fa-circle green\"></i></a>");
+					break;
+				case "fail":
+					el.html("<a href=\"#/logs/" + project + "/" + log + "\" title=\"Build Failing\"><i class=\"fa fa-circle red\"></i></a>");
+					break;
+				case "processing":
+					el.html("<a title=\"Processing\"><i class=\"fa fa-refresh fa-circle yellow\"></i></a>");
+					break;
+				default:
+
+				}
+			},
+
+			/**
 			 * Load individual project (config)
 			 */
 			loadProject: function (data, controller) {
