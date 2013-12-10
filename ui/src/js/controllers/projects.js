@@ -10,15 +10,34 @@ define([
 
 		showList: function () {
 
-			var req = requests.get("/api/projects");
+			var self = this,
+				req = requests.get("/api/projects");
 
 			req.done(function (data) {
-				dom.loadProjects(data);
+				dom.loadProjects(data, self);
 			});
 
 			req.fail(function () {
 				dom.showError("Could not load projects");
 			});
+		},
+
+		runBuild: function (project) {
+			var req = requests.post("/deploy/" + project);
+
+			req.done(function (data) {
+				console.log(data);
+				dom.showSuccess("Starting build...");
+				// Pause to allow build to start, then redirect
+				setTimeout(function () {
+					router.go("/logs/" + project + "/" + data.build);
+				}, 2000);
+			});
+
+			req.fail(function () {
+				dom.showError("Could not start build");
+			});
+
 		},
 
 		showProject: function (project) {

@@ -2,11 +2,12 @@
 <table class="datatable">
     <thead>
         <tr>
-            <th width="75">Status</th>
+            <th class="center" width="75">Status</th>
+            <th class="center" width="65">Build</th>
             <th>Project</th>
             <th>Repository</th>
-            <th width="60">Logs</th>
-            <th width="75">Config</th>
+            <th class="center" width="60">Logs</th>
+            <th class="center" width="75">Config</th>
         </tr>
     </thead>
     <tbody>
@@ -30,6 +31,9 @@
             <a title="No Builds"><i class="fa fa-circle"></i></a>
             {{/compare}}
             
+        </td>
+        <td class="center">
+        	<a class="project-run-build" data-project="{{this.dir}}"><i class="fa fa-repeat"></i></a>
         </td>
         <td title="{{this.dir}}">
             {{this.dir}}

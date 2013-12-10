@@ -118,12 +118,19 @@ define([
 			/**
 			 * Load projects
 			 */
-			loadProjects: function (data) {
+			loadProjects: function (data, controller) {
 				var template = Handlebars.compile(projects),
 					html = template({
 						projects: data
 					});
 				this.$main.html(html);
+				// Watch for build trigger
+				this.$main.find(".project-run-build").click(function () {
+					// Spin teh icon!
+					$(this).find("i").addClass("fa-spin");
+					var project = $(this).data("project");
+					controller.runBuild(project);
+				});
 			},
 
 			/**

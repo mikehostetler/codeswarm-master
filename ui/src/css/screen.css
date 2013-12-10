@@ -226,7 +226,7 @@
         background-image: -moz-linear-gradient(center bottom, rgb(224,224,224) 25%, rgb(240,240,240) 75%);
     }   
     .datatable tr.empty-set td { text-align: center; font-style: italic; color: #999; padding: 25px 0; }  
-    .datatable td.center { text-align: center; }
+    .datatable td.center, .datatable th.center { text-align: center; }
     .datatable tr:first-child th:first-child { border-top-left-radius:3px; }   
     .datatable tr:first-child th:last-child { border-top-right-radius:3px; }
 
