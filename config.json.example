@@ -13,11 +13,10 @@
             }
         }
     },
-    "builds": {
+    "projects": {
         "project-one" : {
             "dir": "project-one",
             "repo": "git@github.com:organization/project-one.git",
-            "key": "56A7BEE90CF3",
             "auth": {
                 "user": "test",
                 "pass": "password"
@@ -26,7 +25,6 @@
         "project-two" : {
             "dir": "project-two",
             "repo": "git@github.com:organization/project-two.git",
-            "key": "86AC4EE93BF1",
             "auth": {
                 "user": "test",
                 "pass": "password"

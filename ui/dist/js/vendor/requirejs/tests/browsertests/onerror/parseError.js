@@ -1,0 +1,3 @@
+funktion = foo() {
+	return 'funky';
+}

@@ -2,6 +2,5 @@ node_modules/
 builds/
 logs/
 ui/src/js/vendor
-ui/dist/
 config.json
 .sessions

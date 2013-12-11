@@ -1,0 +1,3 @@
+var globalFoo = {
+	name: 'globalFoo'
+};

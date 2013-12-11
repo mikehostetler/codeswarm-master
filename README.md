@@ -1,11 +1,12 @@
 # Vouch-CD
 
-A simple coninuous integration and deployment server for building and deploying apps through Node.
+A simple coninuous integration and deployment server for building and deploying apps through NodeJS.
 
 ## Installation & Startup
 
-Run the `npm install` command in the project directory to install all dependencies. The application 
-itself can be started by calling `node index.js`.
+Run the `npm install` command in the project directory to install all dependencies, then `grunt` to 
+build the application. The application itself can be started by calling `node index.js`. It is recommended 
+you use [forever](https://github.com/nodejitsu/forever) for running the server long term.
 
 ## Usage
 
