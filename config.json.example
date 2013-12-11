@@ -11,7 +11,10 @@
                 "user": "user@yourserver.com",
                 "pass": "password"
             }
-        }
+        },
+        "tokens": [
+            "12345"
+        ]
     },
     "projects": {
         "project-one" : {
