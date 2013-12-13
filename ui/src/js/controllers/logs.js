@@ -67,7 +67,7 @@ define([
 				};
 
 			// Set AM/PM time format
-			if (parts.hour >= 12) {
+			if (parts.hour > 12) {
 				parts.hour -= 12;
 				parts.ampm = "pm";
 			}
