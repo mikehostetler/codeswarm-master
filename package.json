@@ -1,6 +1,6 @@
 {
     "name": "VouchCD",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "description": "A simple server for node-based continuous integration and deployment",
     "readmeFilename": "README.md",
     "dependencies": {
