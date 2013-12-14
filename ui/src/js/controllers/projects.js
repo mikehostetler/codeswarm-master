@@ -1,8 +1,9 @@
 define([
 	"controllers/dom",
 	"controllers/requests",
-	"controllers/router"
-], function (dom, requests, Router) {
+	"controllers/router",
+	"controllers/timestamp"
+], function (dom, requests, Router, timestamp) {
 
 	var router = new Router();
 
@@ -14,6 +15,12 @@ define([
 				req = requests.get("/api/projects");
 
 			req.done(function (data) {
+				// Check for state and format timestamp
+				for (var proj in data) {
+					if (data[proj].state) {
+						data[proj].state.timestamp = timestamp(data[proj].state.id);
+					}
+				}
 				dom.loadProjects(data, self);
 			});
 

@@ -4,6 +4,7 @@
         <tr>
             <th class="center" width="75">Status</th>
             <th class="center" width="65">Build</th>
+            <th>Last Build</th>
             <th>Project</th>
             <th>Repository</th>
             <th class="center" width="60">Logs</th>
@@ -34,6 +35,13 @@
         </td>
         <td class="center">
         	<a class="project-run-build" data-project="{{this.dir}}"><i class="fa fa-repeat"></i></a>
+        </td>
+        <td>
+            {{#if this.state}}
+            {{this.state.timestamp}}
+            {{else}}
+            Never
+            {{/if}}
         </td>
         <td title="{{this.dir}}">
             {{this.dir}}
