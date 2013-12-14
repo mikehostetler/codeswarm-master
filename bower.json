@@ -1,6 +1,6 @@
 {
-    "name": "Vouch",
-    "version": "0.0.1",
+    "name": "VouchCD",
+    "version": "0.0.5",
     "dependencies": {
         "requirejs": "~2.1.8",
         "requirejs-text": "~2.0.0",
