@@ -1,25 +1,23 @@
 var configuration = require("./lib/configuration.js"),
-    fs = require("fs"),
-    express = require("express"),
-    app = express(),
-    expressAuth = require("./lib/express-auth.js"),
-    builder = require("./lib/builder.js"),
-    api = require("./lib/api.js"),
-    slashes = require("connect-slashes"),
-    socket_log = false,
-    config,
-    env;
+	fs = require("fs"),
+	express = require("express"),
+	app = express(),
+	expressAuth = require("./lib/express-auth.js"),
+	builder = require("./lib/builder.js"),
+	api = require("./lib/api.js"),
+	slashes = require("connect-slashes"),
+	env, socket_log = false;
 
 /**
  * Handle "dev" argument
  */
 if (process.argv[2] && process.argv[2] === "dev") {
-    // Load static server from /src directory
-    env = "src";
-    // Show socket logs
-    socket_log = true;
+	// Load static server from /src directory
+	env = "src";
+	// Show socket logs
+	socket_log = true;
 } else {
-    env = "dist";
+	env = "dist";
 }
 
 // Set global config
@@ -33,12 +31,12 @@ app.use(express.bodyParser());
  */
 
 fs.watchFile("./config.json", {
-    persistent: true,
-    interval: 500
+	persistent: true,
+	interval: 500
 }, function (curr, prev) {
-    if (curr.mtime !== prev.mtime) {
-        config = configuration.get();
-    }
+	if (curr.mtime !== prev.mtime) {
+		config = configuration.get();
+	}
 });
 
 /**
@@ -46,33 +44,33 @@ fs.watchFile("./config.json", {
  */
 
 app.post("/deploy/:project", function (req, res) {
-    // Get project
-    var project = req.params.project;
-    // Ensure the project has been config'd
-    if (!config.projects.hasOwnProperty(project)) {
-        // Nope, send an error
-        res.send("ERROR: Configuration.");
-    } else {
-        // Set build
-        var build = config.projects[project],
-            stamp = new Date().getTime();
-        // Set state object
-        build.state = {};
-        // Set ID
-        build.state.id = stamp;
-        // Set name
-        build.state.name = project + ", Build " + stamp;
-        // Set log
-        build.state.log = config.app.logs + build.dir + "/" + stamp + ".log";
-        // Set status
-        build.state.status = "processing";
-        // Send deploy response
-        res.send({
-            build: build.state.id
-        });
-        // Run build
-        builder(build);
-    }
+	// Get project
+	var project = req.params.project;
+	// Ensure the project has been config'd
+	if (!config.projects.hasOwnProperty(project)) {
+		// Nope, send an error
+		res.send("ERROR: Configuration.");
+	} else {
+		// Set build
+		var build = config.projects[project],
+			stamp = new Date().getTime();
+		// Set state object
+		build.state = {};
+		// Set ID
+		build.state.id = stamp;
+		// Set name
+		build.state.name = project + ", Build " + stamp;
+		// Set log
+		build.state.log = config.app.logs + build.dir + "/" + stamp + ".log";
+		// Set status
+		build.state.status = "processing";
+		// Send deploy response
+		res.send({
+			build: build.state.id
+		});
+		// Run build
+		builder(build);
+	}
 
 });
 
@@ -85,63 +83,63 @@ app.use(slashes());
 
 // Admin UI
 app.get("/dashboard/*", function (req, res) {
-    var path = req.params[0] ? req.params[0] : "index.html";
-    res.sendfile(path, {
-        root: "./ui/" + env
-    });
+	var path = req.params[0] ? req.params[0] : "index.html";
+	res.sendfile(path, {
+		root: "./ui/" + env
+	});
 });
 
 // Get by project route 
 app.get("/view/:project/*", expressAuth, function (req, res) {
-    var project = req.params.project;
-    if (!config.projects.hasOwnProperty(project)) {
-        res.send(404);
-    } else {
-        // Check if build is running
-        if (config.projects[project].hasOwnProperty("state") && config.projects[project].state.status === "processing") {
-            // Build is processing
-            res.send("<html><head><meta http-equiv=\"refresh\" content=\"5\"></head><body>Build processing, please wait...</body></html>");
-        } else {
-            // Get .vouch.json from build
-            fs.readFile(config.app.builds + config.projects[project].dir + "/.vouch.json", function (err, data) {
-                if (err) {
-                    // Problem reading deploy config
-                    res.send("Missing deploy script.");
-                } else {
-                    // Check that build status is passing
-                    if (config.projects[project].hasOwnProperty("state") && config.projects[project].state.status === "pass") {
-                        var deploy = JSON.parse(data),
-                            dir = config.app.builds + config.projects[project].dir + "/" + deploy.dir,
-                            path = req.params[0] ? req.params[0] : deploy.
-                        default;
-                        // Send default file by... well, default.
-                        res.sendfile(path, {
-                            root: dir
-                        });
-                    } else {
-                        res.send("Build failed.");
-                    }
-                }
-            });
-        }
-    }
+	var project = req.params.project;
+	if (!config.projects.hasOwnProperty(project)) {
+		res.send(404);
+	} else {
+		// Check if build is running
+		if (config.projects[project].hasOwnProperty("state") && config.projects[project].state.status === "processing") {
+			// Build is processing
+			res.send("<html><head><meta http-equiv=\"refresh\" content=\"5\"></head><body>Build processing, please wait...</body></html>");
+		} else {
+			// Get .vouch.json from build
+			fs.readFile(config.app.builds + config.projects[project].dir + "/.vouch.json", function (err, data) {
+				if (err) {
+					// Problem reading deploy config
+					res.send("Missing deploy script.");
+				} else {
+					// Check that build status is passing
+					if (config.projects[project].hasOwnProperty("state") && config.projects[project].state.status === "pass") {
+						var deploy = JSON.parse(data),
+							dir = config.app.builds + config.projects[project].dir + "/" + deploy.dir,
+							path = req.params[0] ? req.params[0] : deploy.
+						default;
+						// Send default file by... well, default.
+						res.sendfile(path, {
+							root: dir
+						});
+					} else {
+						res.send("Build failed.");
+					}
+				}
+			});
+		}
+	}
 });
 
 // API
 app.get("/api/:type/*", function (req, res) {
-    api.get(req, res);
+	api.get(req, res);
 });
 
 app.post("/api/:type/*", function (req, res) {
-    api.post(req, res);
+	api.post(req, res);
 });
 
 app.put("/api/:type", function (req, res) {
-    api.put(req, res);
+	api.put(req, res);
 });
 
 app.del("/api/:type/*", function (req, res) {
-    api.del(req, res);
+	api.del(req, res);
 });
 
 /**
@@ -149,16 +147,16 @@ app.del("/api/:type/*", function (req, res) {
  */
 
 io = require("socket.io").listen(app.listen(config.app.port), {
-    log: false
+	log: false
 });
 io.sockets.on("connection", function (socket) {
-    socket.emit("system", {
-        message: "Socket connection established"
-    });
+	socket.emit("system", {
+		message: "Socket connection established"
+	});
 });
 
 /**
  * Start Msg #########################################################
  */
 
-console.log("Vouch Service running over " + config.app.port +  " on " + app.settings.env + " mode from /" + env);
+console.log("Vouch Service running over " + config.app.port + " from /" + env);
