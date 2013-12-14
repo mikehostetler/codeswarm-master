@@ -159,4 +159,4 @@ io.sockets.on("connection", function (socket) {
  * Start Msg #########################################################
  */
 
-console.log("Vouch Service running over " + config.app.port + " from /" + env);
+console.log("Vouch Service running over " + config.app.port + " in " + app.settings.env + " mode from /" + env);
