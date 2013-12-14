@@ -147,7 +147,7 @@ app.del("/api/:type/*", function (req, res) {
  */
 
 io = require("socket.io").listen(app.listen(config.app.port), {
-	log: socket_log
+	log: false
 });
 io.sockets.on("connection", function (socket) {
 	socket.emit("system", {
