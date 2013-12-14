@@ -79,7 +79,7 @@ module.exports = function ( grunt ) {
                     // Fonts
                     { expand: true, cwd: "ui/src/fonts/", src: [ "**" ], dest: "ui/dist/fonts/" },
                     // Index
-                    { expand: true, cwd: "ui/src/", src: [ "index.html" ], dest: "ui/dist/" }
+                    { expand: true, cwd: "ui/src/", src: [ "index.html", "favicon.ico" ], dest: "ui/dist/" }
                 ]
             }
         },
