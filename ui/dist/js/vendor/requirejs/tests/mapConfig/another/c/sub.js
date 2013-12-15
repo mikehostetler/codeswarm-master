@@ -1,6 +1,6 @@
 define(['./dim'], function (dim) {
-	return {
-		name: 'another/c/sub',
-		dimName: dim.name
-	};
+    return {
+        name: 'another/c/sub',
+        dimName: dim.name
+    };
 });

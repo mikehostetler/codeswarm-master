@@ -1,10 +1,10 @@
 define(function (require) {
-	//Tests detecting a full URL dependency inside simplified wrapper.
-	require('https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js');
+    //Tests detecting a full URL dependency inside simplified wrapper.
+    require('https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js');
 
-	function noop() {};
+    function noop() {};
 
-	return {
-		isFunction: jQuery.isFunction(noop)
-	};
+    return {
+        isFunction: jQuery.isFunction(noop)
+    };
 });

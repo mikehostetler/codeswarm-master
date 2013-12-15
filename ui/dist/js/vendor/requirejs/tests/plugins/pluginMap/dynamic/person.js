@@ -1,3 +1,3 @@
 define('person', [], {
-	name: 'person'
+        name: 'person'
 });

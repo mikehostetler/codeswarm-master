@@ -1,5 +1,5 @@
 var B = {
-	name: 'b',
-	aValue: A.name,
-	dValue: new D()
+    name: 'b',
+    aValue: A.name,
+    dValue: new D()
 };

@@ -1,7 +1,7 @@
 var e = {
-	nested: {
-		e: {
-			name: 'e'
-		}
-	}
+    nested: {
+        e: {
+            name: 'e'
+        }
+    }
 };

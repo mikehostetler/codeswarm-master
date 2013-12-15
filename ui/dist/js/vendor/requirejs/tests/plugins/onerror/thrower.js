@@ -1,5 +1,6 @@
+
 define({
-	load: function (name, req, load, config) {
-		req(['fake'], load, load.error);
-	}
+    load: function (name, req, load, config) {
+        req(['fake'], load, load.error);
+    }
 });

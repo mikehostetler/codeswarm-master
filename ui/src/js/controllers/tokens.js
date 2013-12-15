@@ -11,7 +11,7 @@ define([
 		showList: function () {
 
 			var self = this,
-				req = requests.get("/api/tokens");
+				req = requests.get("/api/tokens/");
 
 			req.done(function (data) {
 				dom.loadTokens(data, self);
@@ -24,7 +24,7 @@ define([
 
 		addToken: function (data) {
 			var token = data[0].value,
-				req = requests.put("/api/token", {
+				req = requests.put("/api/token/", {
 					token: token
 				});
 

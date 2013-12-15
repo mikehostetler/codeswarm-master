@@ -1,9 +1,10 @@
 define(['exported'], function (exported) {
-	function func(title) {
-		return exported.makeMessage(title);
-	}
+    function func(title) {
+        return exported.makeMessage(title);
+    }
 
-	func.suffix = 'suffix';
+    func.suffix = 'suffix';
 
-	return func;
+    return func;
 });
+

@@ -5,26 +5,47 @@ var configuration = require("./lib/configuration.js"),
 	expressAuth = require("./lib/express-auth.js"),
 	builder = require("./lib/builder.js"),
 	api = require("./lib/api.js"),
-	slashes = require("connect-slashes"),
-	env, socket_log = false;
+	env = "dist",
+	socket_log = false;
 
-/**
- * Handle "dev" argument
- */
-if (process.argv[2] && process.argv[2] === "dev") {
-	// Load static server from /src directory
+app.configure(function () {
+	// use logger
+	app.use(express.logger());
+	// compress response
+	app.use(express.compress());
+	// use bodyParser
+	app.use(express.json());
+	app.use(express.urlencoded());
+	// methodOverride middleware (PUT, DELETE)
+	app.use(express.methodOverride());
+});
+
+// express setting for development environment
+app.configure("development", function () {
 	env = "src";
-	// Show socket logs
 	socket_log = true;
-} else {
-	env = "dist";
-}
+
+	app.use(express.static(__dirname + "/ui/" + env));
+	app.use(express.errorHandler({
+		dumpException: true,
+		showStack: true
+	}));
+});
+
+// express setting for production environment
+app.configure("production", function () {
+	// cache for 1 month
+	var oneMonth = 2592000;
+
+	// set static dir, and add caching setting
+	app.use(express.static(__dirname + "/ui/" + env, {
+		maxAge: oneMonth
+	}));
+	app.use(express.errorHandler());
+});
 
 // Set global config
 config = configuration.get();
-
-// Use bodyParser
-app.use(express.bodyParser());
 
 /**
  * Watch config for changes ##########################################
@@ -78,15 +99,10 @@ app.post("/deploy/:project", function (req, res) {
  * Static Server #####################################################
  */
 
-// Fix trailing slashes (or lack there of)  
-app.use(slashes());
-
 // Admin UI
 app.get("/dashboard/*", function (req, res) {
 	var path = req.params[0] ? req.params[0] : "index.html";
-	res.sendfile(path, {
-		root: "./ui/" + env
-	});
+	res.sendfile(path);
 });
 
 // Get by project route 
@@ -147,7 +163,7 @@ app.del("/api/:type/*", function (req, res) {
  */
 
 io = require("socket.io").listen(app.listen(config.app.port), {
-	log: false
+	log: socket_log
 });
 io.sockets.on("connection", function (socket) {
 	socket.emit("system", {
