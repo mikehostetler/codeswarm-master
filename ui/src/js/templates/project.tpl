@@ -23,6 +23,12 @@
 	{{else}}
 	<input id="project-repo" name="repo" type="text" placeholder="user@path-to-git/repo.git">
 	{{/if}}
+    <h4>Branch</h4>
+    {{#if branch}}
+    <p><em>{{branch}}</em></p>
+    {{else}}
+    <p><em>master</em></p>
+    {{/if}}
 	
 	<hr>
 	
