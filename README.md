@@ -10,9 +10,9 @@ you use [forever](https://github.com/nodejitsu/forever) for running the server l
 
 ### Production - Development
 The express server is configured to look for `NODE_ENV` in order to run in _porduction_ or _development_ mode.
-``bash
+```bash
 NODE_ENV=[production|development] && node index.js
-``
+```
 
 ## Usage
 
