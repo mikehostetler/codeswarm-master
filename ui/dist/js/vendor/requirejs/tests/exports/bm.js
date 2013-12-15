@@ -1,6 +1,6 @@
 define([
-	'module',
-	'exports'
+    'module',
+    'exports'
 ], function (module, exports) {
-	exports.name = 'bm';
+    exports.name = 'bm';
 });

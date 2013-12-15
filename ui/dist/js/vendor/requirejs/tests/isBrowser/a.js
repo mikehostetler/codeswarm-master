@@ -1,5 +1,5 @@
 define(function (require) {
-	return {
-		isBrowser: require.isBrowser
-	};
+    return {
+        isBrowser: require.isBrowser
+    };
 });

@@ -12,7 +12,7 @@ define([
 		showList: function () {
 
 			var self = this,
-				req = requests.get("/api/projects");
+				req = requests.get("/api/projects/");
 
 			req.done(function (data) {
 				// Check for state and format timestamp
@@ -50,7 +50,7 @@ define([
 
 			var self = this,
 				data,
-				reqKey = requests.get("/api/deploykey"),
+				reqKey = requests.get("/api/deploykey/"),
 				hook = location.protocol + "//" + location.hostname + (location.port ? ":" + location.port : "");
 
 			var loadProject = function (hook, key) {
@@ -107,7 +107,7 @@ define([
 			// Send to API
 			if (data.id === "new-project") {
 				// Create new (PUT)
-				req = requests.put("/api/project", {
+				req = requests.put("/api/project/", {
 					dir: data.name,
 					repo: data.repo,
 					auth: data.auth

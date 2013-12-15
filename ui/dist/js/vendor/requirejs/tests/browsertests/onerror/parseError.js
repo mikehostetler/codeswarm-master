@@ -1,3 +1,4 @@
+
 funktion = foo() {
-	return 'funky';
+    return 'funky';
 }

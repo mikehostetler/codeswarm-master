@@ -1,5 +1,3 @@
 define(['myShim'], function (broken) {
-	return {
-		name: 'c'
-	};
+  return { name: 'c' };
 });

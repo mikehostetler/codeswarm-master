@@ -1,3 +1,3 @@
 define('index', ['a'], function (a) {
-	a.modified = true;
+    a.modified = true;
 });

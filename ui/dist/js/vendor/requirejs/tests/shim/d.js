@@ -1,3 +1,3 @@
 function D() {
-	this.name = 'd';
+    this.name = 'd';
 };
