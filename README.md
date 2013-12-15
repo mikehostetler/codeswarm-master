@@ -8,6 +8,12 @@ Run the `npm install` command in the project directory to install all dependenci
 build the application. The application itself can be started by calling `node index.js`. It is recommended 
 you use [forever](https://github.com/nodejitsu/forever) for running the server long term.
 
+### Production - Development
+The express server is configured to look for `NODE_ENV` in order to run in _porduction_ or _development_ mode.
+``bash
+NODE_ENV=[production|development] && node index.js
+``
+
 ## Usage
 
 The server will build a project from a Git repo when the URL is triggered with a `POST`:
