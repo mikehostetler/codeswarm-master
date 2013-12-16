@@ -1,6 +1,7 @@
 define([
 		"jquery",
 		"handlebars",
+		"controllers/timestamp",
 		"text!templates/header.tpl",
 		"text!templates/login.tpl",
 		"text!templates/menu.tpl",
@@ -10,7 +11,7 @@ define([
 		"text!templates/logview.tpl",
 		"text!templates/tokens.tpl"
 	],
-	function ($, Handlebars, header, login, menu, projects, project, logs, logview, tokens) {
+	function ($, Handlebars, timestamp, header, login, menu, projects, project, logs, logview, tokens) {
 
 		var dom = {
 
@@ -137,18 +138,20 @@ define([
 			 * Update project status
 			 */
 			updateStatus: function (project, log, status) {
-				var el = this.$main.find("[data-status=\"" + project + "\"]");
+				var statusEl = this.$main.find("[data-status=\"" + project + "\"]"),
+					timestampEl = this.$main.find("[data-timestamp=\"" + project + "\"]");
 				switch (status) {
 				case "pass":
-					el.html("<a href=\"#/logs/" + project + "/" + log + "\" title=\"Build Passing\"><i class=\"fa fa-circle green\"></i></a>");
+					statusEl.html("<a href=\"#/logs/" + project + "/" + log + "\" title=\"Build Passing\"><i class=\"fa fa-circle green\"></i></a>");
 					break;
 				case "fail":
-					el.html("<a href=\"#/logs/" + project + "/" + log + "\" title=\"Build Failing\"><i class=\"fa fa-circle red\"></i></a>");
+					statusEl.html("<a href=\"#/logs/" + project + "/" + log + "\" title=\"Build Failing\"><i class=\"fa fa-circle red\"></i></a>");
 					break;
 				case "processing":
 					// Don't keep replacing, just check state
-					if (!el.find("i").hasClass("yellow")) {
-						el.html("<a href=\"#/logs/" + project + "/" + log + "\" title=\"Processing\"><i class=\"fa fa-refresh fa-circle yellow\"></i></a>");
+					if (!statusEl.find("i").hasClass("yellow")) {
+						statusEl.html("<a href=\"#/logs/" + project + "/" + log + "\" title=\"Processing\"><i class=\"fa fa-refresh fa-circle yellow\"></i></a>");
+						timestampEl.html(timestamp(log));
 					}
 					break;
 				}

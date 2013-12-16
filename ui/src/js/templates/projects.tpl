@@ -36,7 +36,7 @@
         <td class="center">
         	<a class="project-run-build" data-project="{{this.dir}}"><i class="fa fa-repeat"></i></a>
         </td>
-        <td>
+        <td data-timestamp="{{this.dir}}">
             {{#if this.state}}
             {{this.state.timestamp}}
             {{else}}
