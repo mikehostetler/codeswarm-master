@@ -107,6 +107,16 @@ All steps of the build process are stored in a log file located in the `logs` di
 in a folder matching the server config's `PROJECT-NAME`. The log file's name is returned 
 in the HTTP response when the build is triggered.
 
+### Accessing the Dashboard
+
+To access the system from your web browser, go to:
+
+```html
+http(s)://yourserver.com:{BUILD-PORT}/dashboard/
+```
+
+The token for access will be in the `tokens` section of the config.
+
 ### Accessing Builds
 
 Once a build passes it is served through Express at the following URL:
