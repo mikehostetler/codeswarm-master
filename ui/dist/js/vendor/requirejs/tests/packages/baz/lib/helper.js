@@ -1,3 +1,3 @@
 define({
-    name: "baz/helper"
+	name: "baz/helper"
 });

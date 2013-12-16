@@ -1,3 +1,3 @@
 define({
-    name: "cPrime"
+	name: "cPrime"
 });

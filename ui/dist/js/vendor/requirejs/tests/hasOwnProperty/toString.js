@@ -1,3 +1,3 @@
 define({
-    name: 'toString'
+	name: 'toString'
 });

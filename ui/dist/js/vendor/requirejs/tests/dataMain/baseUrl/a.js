@@ -1,4 +1,3 @@
 define({
-    name: 'a'
+	name: 'a'
 });
-

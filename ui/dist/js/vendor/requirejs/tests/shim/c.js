@@ -1,5 +1,5 @@
 var C = {
-    name: 'c',
-    a: A,
-    b: B
+	name: 'c',
+	a: A,
+	b: B
 };

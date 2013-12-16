@@ -1,5 +1,5 @@
 define("red", function () {
-    return {
-        name: "red"
-    };
+	return {
+		name: "red"
+	};
 });

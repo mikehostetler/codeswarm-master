@@ -1,3 +1,3 @@
 define({
-    name: 'foo2'
+	name: 'foo2'
 });

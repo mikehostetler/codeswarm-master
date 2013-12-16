@@ -1,7 +1,7 @@
 define("tres",
-  function() {
-    return {
-      name: "tres"
-    };
-  }
+	function () {
+		return {
+			name: "tres"
+		};
+	}
 );

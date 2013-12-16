@@ -1,6 +1,6 @@
 define(['a'], function (a) {
-    return {
-       name: 'c',
-       a: a
-    };
+	return {
+		name: 'c',
+		a: a
+	};
 });

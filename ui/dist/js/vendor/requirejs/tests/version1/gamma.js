@@ -1,3 +1,3 @@
 gamma = {
-  color: "green"
+	color: "green"
 }

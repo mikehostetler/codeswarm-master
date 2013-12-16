@@ -1,3 +1,3 @@
 define({
-    name: 'hasOwnProperty'
+	name: 'hasOwnProperty'
 });

@@ -1,3 +1,3 @@
 define({
-    name: 'dojox/window/pane'
+	name: 'dojox/window/pane'
 });

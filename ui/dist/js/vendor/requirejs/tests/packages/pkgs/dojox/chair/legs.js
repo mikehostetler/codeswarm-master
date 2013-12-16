@@ -1,3 +1,3 @@
 define({
-    name: 'dojox/chair/legs'
+	name: 'dojox/chair/legs'
 });

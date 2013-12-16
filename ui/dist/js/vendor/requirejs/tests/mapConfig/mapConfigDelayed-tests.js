@@ -1,39 +1,43 @@
 define('one', function () {
-    return { name: 'one' };
+	return {
+		name: 'one'
+	};
 });
 
 define('two', function () {
-    return { name: 'two' };
+	return {
+		name: 'two'
+	};
 });
 
 define('three', ['one'], function (one) {
-    return { name: 'three',
-        one: one
-    };
+	return {
+		name: 'three',
+		one: one
+	};
 });
 
-require([], function() {
-    require({
-            map : {
-                '*': {
-                    'one': 'two'
-                }
-            }
-        },
-        ['three'],
-        function (three) {
-            doh.register(
-                'mapConfigDelayed',
-                [
-                    function mapConfigDelayed(t){
-                        t.is('three', three.name);
-                        t.is('two', three.one.name);
-                    }
-                ]
-            );
-            doh.run();
-        }
-    );
+require([], function () {
+	require({
+			map: {
+				'*': {
+					'one': 'two'
+				}
+			}
+		}, ['three'],
+		function (three) {
+			doh.register(
+				'mapConfigDelayed', [
+
+					function mapConfigDelayed(t) {
+						t.is('three', three.name);
+						t.is('two', three.one.name);
+					}
+				]
+			);
+			doh.run();
+		}
+	);
 });
 
-define("app", function(){});
+define("app", function () {});

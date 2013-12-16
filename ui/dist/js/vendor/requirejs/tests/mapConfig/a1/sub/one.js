@@ -1,6 +1,6 @@
 define(['c', 'c/sub'], function (c, csub) {
-    return {
-        c: c,
-        csub: csub
-    };
+	return {
+		c: c,
+		csub: csub
+	};
 });

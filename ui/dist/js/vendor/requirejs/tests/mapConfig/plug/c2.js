@@ -1,3 +1,3 @@
 define({
-    name: 'plug!c2'
+	name: 'plug!c2'
 });

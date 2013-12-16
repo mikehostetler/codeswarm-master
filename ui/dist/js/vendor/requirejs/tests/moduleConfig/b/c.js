@@ -1,6 +1,5 @@
 define(function (require, exports, module) {
-    return {
-        food: module.config().id
-    };
+	return {
+		food: module.config().id
+	};
 });
-

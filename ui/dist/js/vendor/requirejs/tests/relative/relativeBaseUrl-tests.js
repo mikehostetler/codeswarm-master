@@ -3,22 +3,21 @@
 require.relativeBaseUrlCounter = 0;
 
 require({
-        baseUrl: requirejs.isBrowser ? "./" : "./relative/"
-    },
-    ["./top", "top"],
-    function(top1, top2) {
-        doh.register(
-            "relativeBaseUrl",
-            [
-                function relativeBaseUrl(t){
-                    t.is(top1.id, top2.id);
-                    t.is(1, require.relativeBaseUrlCounter);
+		baseUrl: requirejs.isBrowser ? "./" : "./relative/"
+	}, ["./top", "top"],
+	function (top1, top2) {
+		doh.register(
+			"relativeBaseUrl", [
 
-                    delete require.relativeBaseUrlCounter;
-                }
-            ]
-        );
+				function relativeBaseUrl(t) {
+					t.is(top1.id, top2.id);
+					t.is(1, require.relativeBaseUrlCounter);
 
-        doh.run();
-    }
+					delete require.relativeBaseUrlCounter;
+				}
+			]
+		);
+
+		doh.run();
+	}
 );

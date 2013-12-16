@@ -1,4 +1,4 @@
 define({
-    name: 'bar',
-    version: '0.4'
+	name: 'bar',
+	version: '0.4'
 });

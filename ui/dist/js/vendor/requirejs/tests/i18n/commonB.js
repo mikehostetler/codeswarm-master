@@ -1,3 +1,3 @@
 define(['i18n!nls/colors'], function (colors) {
-   return colors.blue;
+	return colors.blue;
 });

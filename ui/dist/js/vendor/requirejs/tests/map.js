@@ -1,7 +1,7 @@
 define("map",
-  function() {
-    return {
-      name: "map"
-    };
-  }
+	function () {
+		return {
+			name: "map"
+		};
+	}
 );

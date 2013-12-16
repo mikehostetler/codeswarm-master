@@ -1,5 +1,5 @@
 define(function () {
-    return {
-        name: "bPrime"
-    };
+	return {
+		name: "bPrime"
+	};
 });

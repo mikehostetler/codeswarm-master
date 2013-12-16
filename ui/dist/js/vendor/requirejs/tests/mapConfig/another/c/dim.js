@@ -1,3 +1,3 @@
 define({
-    name: 'another/c/dim'
+	name: 'another/c/dim'
 });

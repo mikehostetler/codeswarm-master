@@ -1,4 +1,3 @@
-
 if (true) {
-    throw "scriptError throwing";
+	throw "scriptError throwing";
 }

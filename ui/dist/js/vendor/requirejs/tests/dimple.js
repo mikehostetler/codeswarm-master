@@ -1,8 +1,6 @@
 //
 // this is a comment
 //
-define("dimple",
-    {
-      color: "dimple-blue"
-    }
-);
+define("dimple", {
+	color: "dimple-blue"
+});

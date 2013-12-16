@@ -1,7 +1,7 @@
 //PS3 does not have a usable Function.prototype.toString,
 //so avoid those tests.
 var hasToString = (function () {
-    var test = 'hello world';
+	var test = 'hello world';
 }).toString().indexOf('hello world') !== -1;
 
 doh.registerUrl("simple", "../simple.html");
@@ -20,12 +20,12 @@ doh.registerUrl("dataMainIndex", "../dataMain/dataMainIndex/dataMainIndex.html")
 doh.registerUrl("dataMainBaseUrl", "../dataMain/baseUrl/dataMainBaseUrl.html");
 
 if (hasToString) {
-    doh.registerUrl("anonSimple", "../anon/anonSimple.html");
-    doh.registerUrl("cjsSpace", "../cjsSpace/cjsSpace.html");
-    doh.registerUrl("cjsDotRequire", "../cjsSpace/cjsDotRequire.html");
-    doh.registerUrl("packages", "../packages/packages.html");
-    doh.registerUrl("packagesConfig", "../packages/config/config.html");
-    doh.registerUrl("specialDeps", "../specialDeps/specialDeps.html");
+	doh.registerUrl("anonSimple", "../anon/anonSimple.html");
+	doh.registerUrl("cjsSpace", "../cjsSpace/cjsSpace.html");
+	doh.registerUrl("cjsDotRequire", "../cjsSpace/cjsDotRequire.html");
+	doh.registerUrl("packages", "../packages/packages.html");
+	doh.registerUrl("packagesConfig", "../packages/config/config.html");
+	doh.registerUrl("specialDeps", "../specialDeps/specialDeps.html");
 }
 
 doh.registerUrl("simple-nohead", "../simple-nohead.html");
@@ -34,9 +34,8 @@ doh.registerUrl("hasOwnPropertyTests", "../hasOwnProperty/hasOwnProperty.html");
 
 //Only do the base test if the urls work out.
 if (location.href.indexOf('http://127.0.0.1/requirejs/') === 0) {
-    doh.registerUrl("simple-badbase", "../simple-badbase.html");
+	doh.registerUrl("simple-badbase", "../simple-badbase.html");
 }
-
 
 doh.registerUrl("circular", "../circular.html");
 doh.registerUrl("circularDupe", "../circular/dupe/dupe.html");
@@ -73,7 +72,6 @@ doh.registerUrl("i18nbundle", "../i18n/i18n.html?bundle=i18n!nls/en-us-surfer/co
 //Probably fail in PS3
 doh.registerUrl("i18ncommon", "../i18n/common.html");
 doh.registerUrl("i18ncommonlocale", "../i18n/common.html?locale=en-us-surfer");
-
 
 doh.registerUrl("shimBasic", "../shim/basic.html");
 doh.registerUrl("shimBasicBuilt", "../shim/built/basic-built.html");
@@ -151,7 +149,7 @@ doh.registerUrl("remoteUrls", "../remoteUrls/remoteUrls.html");
 // IE does not support data URIs for scripts. This is a crude exclusion test
 // but is good enough that the test is run in enough browsers to prove it works.
 if (!document.attachEvent) {
-    doh.registerUrl("datauri", "../datauri/datauri.html");
+	doh.registerUrl("datauri", "../datauri/datauri.html");
 }
 
 doh.registerUrl("queryPath", "../queryPath.html");
@@ -164,7 +162,7 @@ doh.registerUrl("exports", "../exports/exports.html");
 doh.registerUrl("moduleAndExports", "../exports/moduleAndExports.html");
 
 if (typeof Worker !== "undefined") {
-    doh.registerUrl("workers", "../workers.html");
+	doh.registerUrl("workers", "../workers.html");
 }
 
 doh.registerUrl("undef", "../undef/undef.html", 8000);

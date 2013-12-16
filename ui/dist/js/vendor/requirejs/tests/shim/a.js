@@ -1,5 +1,5 @@
 (function (root) {
-    root.A = {
-        name: 'a'
-    };
+	root.A = {
+		name: 'a'
+	};
 }(this));
