@@ -5,44 +5,47 @@ var configuration = require("./lib/configuration.js"),
 	expressAuth = require("./lib/express-auth.js"),
 	builder = require("./lib/builder.js"),
 	api = require("./lib/api.js"),
-	env = "dist",
-	socket_log = false;
+	//	slashes = require("connect-slashes"),
+	socket_log = false,
+	mode = "production",
+	root;
 
-app.configure(function () {
-	// use logger
-	app.use(express.logger());
-	// compress response
-	app.use(express.compress());
-	// use bodyParser
-	app.use(express.json());
-	app.use(express.urlencoded());
-	// methodOverride middleware (PUT, DELETE)
-	app.use(express.methodOverride());
-});
+/**
+ * Default expressjs configuration
+ */
+// use logger
+app.use(express.logger());
+// compress response
+app.use(express.compress());
+// use bodyParser
+app.use(express.json());
+app.use(express.urlencoded());
+// methodOverride middleware (PUT, DELETE)
+app.use(express.methodOverride());
 
-// express setting for development environment
-app.configure("development", function () {
-	env = "src";
+/**
+ * handle 'dev' argument
+ */
+if (process.argv[2] && process.argv[2] === "dev") {
+	// express setting for development environment
 	socket_log = true;
+	mode = "development";
+	root = __dirname + "/ui/src";
 
-	app.use(express.static(__dirname + "/ui/" + env));
 	app.use(express.errorHandler({
 		dumpException: true,
 		showStack: true
 	}));
-});
 
-// express setting for production environment
-app.configure("production", function () {
-	// cache for 1 month
-	var oneMonth = 2592000;
+} else {
 
-	// set static dir, and add caching setting
-	app.use(express.static(__dirname + "/ui/" + env, {
-		maxAge: oneMonth
-	}));
+	// express setting for production environment
+	root = __dirname + "/ui/dist";
 	app.use(express.errorHandler());
-});
+}
+
+// fix trailing slashes (or lack thereof)
+//app.use(slashes);
 
 // Set global config
 config = configuration.get();
@@ -98,13 +101,12 @@ app.post("/deploy/:project", function (req, res) {
 /**
  * Static Server #####################################################
  */
-
-// Admin UI
 app.get("/dashboard/*", function (req, res) {
 	var path = req.params[0] ? req.params[0] : "index.html";
-	res.sendfile(path);
+	res.sendfile(path, {
+		root: root
+	});
 });
-
 // Get by project route 
 app.get("/view/:project/*", expressAuth, function (req, res) {
 	var project = req.params.project;
@@ -175,4 +177,4 @@ io.sockets.on("connection", function (socket) {
  * Start Msg #########################################################
  */
 
-console.log("Vouch Service running over " + config.app.port + " in " + app.settings.env + " mode from /" + env);
+console.log("Vouch Service running over " + config.app.port + " in " + mode + " mode from " + root);
