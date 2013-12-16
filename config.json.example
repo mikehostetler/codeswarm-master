@@ -20,6 +20,7 @@
         "project-one" : {
             "dir": "project-one",
             "repo": "git@github.com:organization/project-one.git",
+            "branch": "dev",
             "auth": {
                 "user": "test",
                 "pass": "password"
@@ -28,6 +29,7 @@
         "project-two" : {
             "dir": "project-two",
             "repo": "git@github.com:organization/project-two.git",
+            "branch": "master",
             "auth": {
                 "user": "test",
                 "pass": "password"
