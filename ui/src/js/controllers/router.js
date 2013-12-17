@@ -15,11 +15,12 @@
  */
 
 define(function () {
+	var Router;
 
 	/**
 	 * Create router object
 	 */
-	var Router = function () {
+	Router = function () {
 		var self = this;
 
 		// Watch hashchange
@@ -45,21 +46,24 @@ define(function () {
 		var self = this,
 			fragment = window.location.hash.replace("#", ""),
 			matcher,
+			route,
 			args = [],
-			matched;
+			matched,
+			i,
+			z;
 
 		// Match root
 		if (fragment === "/" || fragment === "" && self.routes.hasOwnProperty("/")) {
 			self.routes["/"].apply(this);
 		} else {
 			// Match routes    
-			for (var route in self.routes) {
+			for (route in self.routes) {
 				matcher = fragment.match(new RegExp(route.replace(/:[^\s/]+/g, "([\\w-]+)")));
 				if (matcher !== null && route !== "/") {
 					args = [];
 					// Get args
 					if (matcher.length > 1) {
-						for (var i = 1, z = matcher.length; i < z; i++) {
+						for (i = 1, z = matcher.length; i < z; i++) {
 							args.push(matcher[i]);
 						}
 					}

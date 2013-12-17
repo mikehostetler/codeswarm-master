@@ -7,27 +7,30 @@ define([
 	"controllers/tokens",
 	"controllers/socket"
 ], function (dom, session, Router, projects, logs, tokens) {
+	var app;
 
-	var app = {
+	app = {
 
 		init: function () {
+			var router,
+				checkedRun;
 			// Start DOM controller
 			dom.init();
 
 			// Routing
-			var router = new Router(),
-				// Ensures authentication on routed tasks
-				checkedRun = function (fn) {
-					if (!session.get()) {
-						// Not logged in? Go home.
-						router.go("/");
-					} else {
-						if (typeof fn === "function") {
-							dom.loadApp();
-							fn.call();
-						}
+			router = new Router();
+			// Ensures authentication on routed tasks
+			checkedRun = function (fn) {
+				if (!session.get()) {
+					// Not logged in? Go home.
+					router.go("/");
+				} else {
+					if (typeof fn === "function") {
+						dom.loadApp();
+						fn.call();
 					}
-				};
+				}
+			};
 
 			// Home
 			router.on("/", function () {

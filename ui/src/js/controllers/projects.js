@@ -4,10 +4,12 @@ define([
 	"controllers/router",
 	"controllers/timestamp"
 ], function (dom, requests, Router, timestamp) {
+	var router,
+		projects;
 
-	var router = new Router();
+	router = new Router();
 
-	var projects = {
+	projects = {
 
 		showList: function () {
 
@@ -15,8 +17,9 @@ define([
 				req = requests.get("/api/projects/");
 
 			req.done(function (data) {
+				var proj;
 				// Check for state and format timestamp
-				for (var proj in data) {
+				for (proj in data) {
 					if (data[proj].state) {
 						data[proj].state.timestamp = timestamp(data[proj].state.id);
 					}
@@ -49,14 +52,16 @@ define([
 		showProject: function (project) {
 
 			var self = this,
+				loadProject,
 				data,
 				reqKey = requests.get("/api/deploykey/"),
 				hook = location.protocol + "//" + location.hostname + (location.port ? ":" + location.port : "");
 
-			var loadProject = function (hook, key) {
+			loadProject = function (hook, key) {
+				var req;
 				if (project !== "new") {
 
-					var req = requests.get("/api/project/" + project);
+					req = requests.get("/api/project/" + project);
 
 					req.done(function (data) {
 						data.hook = hook + "/deploy/" + data.dir;
