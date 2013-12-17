@@ -3,8 +3,9 @@ define([
 	"controllers/requests",
 	"controllers/router"
 ], function (dom, requests, Router) {
+	var session;
 
-	var session = {
+	session = {
 
 		get: function () {
 			if (localStorage.getItem("session")) {

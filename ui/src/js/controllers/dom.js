@@ -12,8 +12,9 @@ define([
 		"text!templates/tokens.tpl"
 	],
 	function ($, Handlebars, timestamp, header, login, menu, projects, project, logs, logview, tokens) {
+		var dom;
 
-		var dom = {
+		dom = {
 
 			loaded: false,
 
@@ -203,11 +204,12 @@ define([
 				// Handle form submission
 				$("#project-config").submit(function (e) {
 					e.preventDefault();
-					var data = $(this).serializeObject();
+					var name,
+						data = $(this).serializeObject();
 
 					if (data.hasOwnProperty("repo")) {
 						// Validate repo before creating
-						var name = validateRepo(data.repo);
+						name = validateRepo(data.repo);
 						if (name) {
 							data.name = name;
 							controller.saveProject(data);
@@ -350,14 +352,17 @@ define([
 		};
 
 		Handlebars.registerHelper("compare", function (lvalue, rvalue, options) {
+			var result,
+				operator,
+				operators;
 
 			if (arguments.length < 3) {
 				throw new Error("Handlerbars Helper compare needs 2 parameters");
 			}
 
-			var operator = options.hash.operator || "==";
+			operator = options.hash.operator || "==";
 
-			var operators = {
+			operators = {
 				"===": function (l, r) {
 					return l === r;
 				},
@@ -385,7 +390,7 @@ define([
 				throw new Error("Handlerbars Helper compare does not know the operator " + operator);
 			}
 
-			var result = operators[operator](lvalue, rvalue);
+			result = operators[operator](lvalue, rvalue);
 
 			if (result) {
 				return options.fn(this);
@@ -414,8 +419,10 @@ define([
 		$.fn.serializeObject = function () {
 			"use strict";
 
-			var result = {};
-			var extend = function (i, element) {
+			var result = {},
+				extend;
+
+			extend = function (i, element) {
 				var node = result[element.name];
 
 				if ("undefined" !== typeof node && node !== null) {

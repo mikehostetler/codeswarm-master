@@ -1,6 +1,7 @@
 define(function () {
+	var timestamp;
 
-	var timestamp = function (timestamp) {
+	timestamp = function (timestamp) {
 		var format = "{{month}}/{{day}}/{{year}} at {{hour}}:{{minute}}{{ampm}}",
 			date = new Date(timestamp),
 			parts = {

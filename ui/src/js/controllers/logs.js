@@ -3,23 +3,27 @@ define([
 	"controllers/requests",
 	"controllers/timestamp"
 ], function (dom, requests, timestamp) {
+	var logs;
 
-	var logs = {
+	logs = {
 
 		showList: function (project) {
 			var req = requests.get("/api/logs/" + project);
 
 			req.done(function (data) {
+				var output = {};
+
 				function reverseForIn(obj, f) {
-					var arr = [];
-					for (var key in obj) {
+					var arr = [],
+						key,
+						i;
+					for (key in obj) {
 						arr.push(key);
 					}
-					for (var i = arr.length - 1; i >= 0; i--) {
+					for (i = arr.length - 1; i >= 0; i--) {
 						f.call(obj, arr[i]);
 					}
 				}
-				var output = {};
 				// Build formatted, reversed output
 				reverseForIn(data, function (key) {
 					output[key] = {

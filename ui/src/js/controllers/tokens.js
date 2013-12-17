@@ -3,10 +3,12 @@ define([
 	"controllers/requests",
 	"controllers/router"
 ], function (dom, requests, Router) {
+	var router,
+		tokens;
 
-	var router = new Router();
+	router = new Router();
 
-	var tokens = {
+	tokens = {
 
 		showList: function () {
 
