@@ -4,9 +4,7 @@
         <tr>
             <th class="center" width="75">Status</th>
             <th class="center" width="65">Build</th>
-            <th>Last Build</th>
             <th>Project</th>
-            <th>Repository</th>
             <th class="center" width="60">Logs</th>
             <th class="center" width="75">Config</th>
         </tr>
@@ -36,19 +34,21 @@
         <td class="center">
         	<a class="project-run-build" data-project="{{this.dir}}"><i class="fa fa-repeat"></i></a>
         </td>
-        <td data-timestamp="{{this.dir}}">
+        
+        
+        <td>
+            <h4 class="project">{{this.dir}}</h4>
+            <em class="repo">{{this.repo}}</em><br>
+            Last Build:
+            <span data-timestamp="{{this.dir}}">
             {{#if this.state}}
             {{this.state.timestamp}}
             {{else}}
             Never
             {{/if}}
+            </span>
         </td>
-        <td title="{{this.dir}}">
-            {{this.dir}}
-        </td>
-        <td title="{{this.repo}}">
-            {{this.repo}}
-        </td>
+        
         <td class="center">
         	{{#if this.state}}
             <a href="#/logs/{{this.dir}}"><i class="fa fa-th-list"></i></a>

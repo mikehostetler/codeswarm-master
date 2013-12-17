@@ -411,6 +411,16 @@
         opacity: 1;
     }
     
+    h4.project {
+        margin: 0;
+        padding: 0;
+    }
+    
+    em.repo {
+        display: inline-block;
+        padding-bottom: 10px;
+    }
+    
     i.red, i.red:hover { color: #ad0505; }
     i.green, i.green:hover { color: #0fa80f; }
     i.yellow, i.yellow:hover { color: #ffcc00; }
