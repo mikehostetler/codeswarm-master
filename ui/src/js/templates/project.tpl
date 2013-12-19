@@ -21,13 +21,13 @@
 	{{#if repo}}
 	<p>{{repo}}</p>
 	{{else}}
-	<input id="project-repo" name="repo" type="text" placeholder="user@path-to-git/repo.git">
+	<input id="project-repo" required="true" name="repo" type="text" title="Enter the clone URL" placeholder="user@path-to-git/repo.git">
 	{{/if}}
     <h4>Branch</h4>
     {{#if branch}}
-    <p><em>{{branch}}</em></p>
+    <input id="project-branch" required="true" name="branch" type="text" title="Enter the default branch" value="{{branch}}">
     {{else}}
-    <p><em>master</em></p>
+    <input id="project-branch" name="branch" type="text" title="Default branch" placeholder="master">
     {{/if}}
 	
 	<hr>
