@@ -79,6 +79,7 @@ define([
 					data = {
 						dir: "new-project",
 						repo: "",
+						branch: "",
 						auth: false,
 						state: false,
 						hook: hook + "/deploy/new-project",
@@ -101,11 +102,14 @@ define([
 		saveProject: function (data) {
 			var req;
 			// Set auth object
-			if (data.user.length > 0 || data.pass.length > 0) {
+			if (data.user.length || data.pass.length) {
 				data.auth = {
 					user: data.user,
 					pass: data.pass
 				};
+				// remove user and pass from data
+				delete data.user;
+				delete data.pass;
 			} else {
 				data.auth = false;
 			}
@@ -115,6 +119,7 @@ define([
 				req = requests.put("/api/project/", {
 					dir: data.name,
 					repo: data.repo,
+					brach: data.branch || "master",
 					auth: data.auth
 				});
 
@@ -129,7 +134,7 @@ define([
 				});
 			} else {
 				// Modify object
-				req = requests.post("/api/project/" + data.id, data.auth);
+				req = requests.post("/api/project/" + data.id, data);
 
 				req.done(function () {
 					dom.showSuccess("Project successfully saved");
