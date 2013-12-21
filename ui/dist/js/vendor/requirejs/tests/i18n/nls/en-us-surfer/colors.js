@@ -1,6 +1,6 @@
 define({
-	red: "red, dude",
-	black: {
-		opacity: 0.5
-	}
+    red: "red, dude",
+    black: {
+        opacity: 0.5
+    }
 });

@@ -1,3 +1,3 @@
 define({
-	name: 'alpha/replace'
+    name: 'alpha/replace'
 });

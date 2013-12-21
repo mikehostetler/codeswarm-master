@@ -1,3 +1,4 @@
 var globalFoo = {
-	name: 'globalFoo'
+    name: 'globalFoo'
 };
+

@@ -1,7 +1,7 @@
 define(['./pistons', './sparkplugs'], function (pistons, sparkplugs) {
-	return {
-		name: 'engine',
-		pistonsName: pistons.name,
-		sparkplugsName: sparkplugs.name
-	};
+    return {
+        name: 'engine',
+        pistonsName: pistons.name,
+        sparkplugsName: sparkplugs.name
+    };
 });

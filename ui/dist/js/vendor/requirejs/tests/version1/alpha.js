@@ -1,7 +1,7 @@
 define("alpha",
-	function () {
-		return {
-			version: 1
-		};
-	}
+  function() {
+    return {
+      version: 1
+    };
+  }
 );

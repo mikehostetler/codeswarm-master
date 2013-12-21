@@ -1,4 +1,4 @@
-/* global config, io */
+/* global config:true, io:true */
 var configuration = require("./lib/configuration.js"),
 	fs = require("fs"),
 	express = require("express"),

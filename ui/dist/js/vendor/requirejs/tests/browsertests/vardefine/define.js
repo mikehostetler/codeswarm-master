@@ -1,7 +1,9 @@
+
 function define(message) {
-	log(message);
+    log(message);
 }
 
+
 function badDefine(message) {
-	log("BAD DEFINE! " + message);
+    log("BAD DEFINE! " + message);
 }

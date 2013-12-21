@@ -1,5 +1,5 @@
 def(function () {
-	return {
-		name: 'one'
-	};
+    return {
+        name: 'one'
+    };
 });

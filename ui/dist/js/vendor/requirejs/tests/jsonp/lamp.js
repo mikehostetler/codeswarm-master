@@ -1,3 +1,3 @@
 define("lamp", {
-	color: "blue"
+    color: "blue"
 });
