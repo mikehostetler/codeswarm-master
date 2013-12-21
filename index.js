@@ -1,3 +1,4 @@
+/* global config, io */
 var configuration = require("./lib/configuration.js"),
 	fs = require("fs"),
 	express = require("express"),
@@ -107,7 +108,7 @@ app.get("/dashboard/*", function (req, res) {
 		root: root
 	});
 });
-// Get by project route 
+// Get by project route
 app.get("/view/:project/*", expressAuth, function (req, res) {
 	var project = req.params.project;
 	if (!config.projects.hasOwnProperty(project)) {
