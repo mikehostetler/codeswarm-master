@@ -36,7 +36,14 @@ define([
 
 				req.done(function (session) {
 					self.set(session);
-					router.go("/projects");
+					if (localStorage.getItem("route")) {
+						// User has saved route, pass them there
+						router.go(localStorage.getItem("route"));
+						localStorage.removeItem("route");
+					} else {
+						// "Fresh" login, send to projects list
+						router.go("/projects");
+					}
 				});
 
 				req.fail(function (xhr) {

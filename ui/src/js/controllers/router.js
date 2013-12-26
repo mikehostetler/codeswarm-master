@@ -40,6 +40,11 @@ define(function () {
 	Router.prototype.routes = {};
 
 	/**
+	 * Holds current route
+	 */
+	Router.prototype.current = "";
+
+	/**
 	 * Processes/matches routes and fires callback
 	 */
 	Router.prototype.process = function () {
@@ -52,11 +57,14 @@ define(function () {
 			i,
 			z;
 
+		// Set current
+		self.current = fragment;
+
 		// Match root
 		if (fragment === "/" || fragment === "" && self.routes.hasOwnProperty("/")) {
 			self.routes["/"].apply(this);
 		} else {
-			// Match routes    
+			// Match routes
 			for (route in self.routes) {
 				matcher = fragment.match(new RegExp(route.replace(/:[^\s/]+/g, "([\\w-]+)")));
 				if (matcher !== null && route !== "/") {
