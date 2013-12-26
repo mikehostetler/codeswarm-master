@@ -22,7 +22,8 @@ define([
 			// Ensures authentication on routed tasks
 			checkedRun = function (fn) {
 				if (!session.get()) {
-					// Not logged in? Go home.
+					// Not logged in? Save state, Go home.
+					localStorage.setItem("route", window.location.hash.replace("#", ""));
 					router.go("/");
 				} else {
 					if (typeof fn === "function") {
