@@ -1,6 +1,6 @@
 # Vouch-CD
 
-A simple coninuous integration and deployment server for building and deploying apps through NodeJS.
+A simple continuous integration and deployment server for building and deploying apps through NodeJS.
 
 ## Installation & Startup
 
