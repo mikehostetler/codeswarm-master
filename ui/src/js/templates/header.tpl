@@ -1,12 +1,12 @@
 {{#auth}} 
 <a class="menu-button">
-    <i class="fa fa-bars"></i>Vouch
+    <i class="fa fa-check-circle"></i>Vouch
 </a>
 {{/auth}}
 
 {{^auth}}
 <a>
-    <i class="fa fa-lock"></i>Vouch
+    <i class="fa fa-check-circle"></i>Vouch
 </a>
 {{/auth}}
 <div id="shadow-block"></div>
