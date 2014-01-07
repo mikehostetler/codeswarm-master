@@ -159,19 +159,25 @@ input:focus, select:focus, textarea:focus{
 /* Buttons
 ==================================================================== */
     
-button { 
+button,
+.btn { 
     display: inline-block;      
     width: auto;
     margin: 5px 15px 15px 0;
     padding: 8px 25px 8px 25px;
     cursor: pointer;
-    color: #6d6d6d;
+    color: #fff;
     font-weight: normal;
-    font-size: 16px;
-    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.25, rgb(224,224,224)), color-stop(0.75, rgb(240,240,240)));
-    background-image: -moz-linear-gradient(center bottom, rgb(224,224,224) 25%, rgb(240,240,240) 75%);
-    border: 1px solid #ccc;
+    font-size: .875em;
     border-radius: 3px;
+    background: #ff734b; /* Old browsers */
+    background: -moz-linear-gradient(top,  #ff734b 0%, #ff734b 50%, #ff6741 50%, #ff6741 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff734b), color-stop(50%,#ff734b), color-stop(50%,#ff6741), color-stop(100%,#ff6741)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #ff734b 0%,#ff734b 50%,#ff6741 50%,#ff6741 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #ff734b 0%,#ff734b 50%,#ff6741 50%,#ff6741 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #ff734b 0%,#ff734b 50%,#ff6741 50%,#ff6741 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #ff734b 0%,#ff734b 50%,#ff6741 50%,#ff6741 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff734b', endColorstr='#ff6741',GradientType=0 ); /* IE6-9 */
 }
 
 .btn-left { 
@@ -350,10 +356,34 @@ aside hr {
 ==================================================================== */
     
 #main {
-    position: relative;
     float: left;
-    margin: 2.5em;
+    width: 100%;
+    padding: 2.5em;
+}
+
+.page-title {
+    float: left;
+    width: 100%;
+    margin: 0;
+    padding: 10px;
+    color: #f2f2f2;
+    font-size: 1.125em;
+    font-weight: 400;
+    background: #4a4f51;
+    border-radius: 3px 3px 0 0;
+}
+
+.page-title .btn {
+    margin: 0;
+    color: #fff;
+}
+
+.content-wrap {
+    float: left;
+    width: 100%;
     background: #f2f2f2;
+    padding: 1.25em;
+    border-radius: 0 0 3px 3px;
 }
 
 #login {
@@ -377,7 +407,7 @@ aside hr {
     font-weight: normal;
     font-size: 1.1em;
     text-shadow: none;
-    border-radius: 5px;
+    border-radius: 3px;
     box-shadow: 0 0 25px 0 rgba(0, 0, 0, .7);
     opacity: 0;
     transition: top .5s, opacity .5s;
