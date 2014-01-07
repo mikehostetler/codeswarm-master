@@ -83,6 +83,8 @@ app.post("/deploy/:project", function (req, res) {
 		build.state = {};
 		// Set ID
 		build.state.id = stamp;
+		// Set current working directory
+		build.state.cwd = stamp;
 		// Set name
 		build.state.name = project + ", Build " + stamp;
 		// Set log

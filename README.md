@@ -4,8 +4,8 @@ A simple coninuous integration and deployment server for building and deploying 
 
 ## Installation & Startup
 
-Run the `npm install` command in the project directory to install all dependencies, then `grunt` to 
-build the application. The application itself can be started by calling `node index.js`. It is recommended 
+Run the `npm install` command in the project directory to install all dependencies, then `grunt` to
+build the application. The application itself can be started by calling `node index.js`. It is recommended
 you use [forever](https://github.com/nodejitsu/forever) for running the server long term.
 
 ## Usage
@@ -29,6 +29,7 @@ The first section is the `app` configuration:
     "port": 8080,
     "logs": "./logs/",
     "builds": "./builds/",
+    "temp": "./temp/",
     "mailer": {
         "host": "smtp.yourserver.com",
         "secureConnection": true,
@@ -71,8 +72,8 @@ The second section is `projects` which sets the parameters for build projects:
     * `VIEW-USER` is the username for accessing the completed build
     * `VIEW-PASS` is the password for accessing the completed build
 
-The `projects.{PROJECT-NAME}` object is also automatically populated with a `state` child object 
-once (and every subsequent time) a project is run through the build/deploy process. The `state` 
+The `projects.{PROJECT-NAME}` object is also automatically populated with a `state` child object
+once (and every subsequent time) a project is run through the build/deploy process. The `state`
 child object contains information about the last build like the status, scripts run, and log name.
 
 **Project Configuration**
@@ -103,8 +104,8 @@ The second configration is in the project repository itself in the `.vouch.json`
 
 ### Logging
 
-All steps of the build process are stored in a log file located in the `logs` directory 
-in a folder matching the server config's `PROJECT-NAME`. The log file's name is returned 
+All steps of the build process are stored in a log file located in the `logs` directory
+in a folder matching the server config's `PROJECT-NAME`. The log file's name is returned
 in the HTTP response when the build is triggered.
 
 ### Accessing the Dashboard
@@ -125,7 +126,7 @@ Once a build passes it is served through Express at the following URL:
 http(s)://yourserver.com:{BUILD-PORT}/view/{PROJECT-NAME}
 ```
 
-It runs off the configuration set in the `.vouch.json` file to load the appropriate distribution 
+It runs off the configuration set in the `.vouch.json` file to load the appropriate distribution
 directory and default file.
 
 If the `auth` object in `config.json` is set for the project, the user will be prompted to enter a username and password.

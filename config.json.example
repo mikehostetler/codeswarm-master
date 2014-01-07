@@ -3,6 +3,7 @@
         "port": 8080,
         "logs": "./logs/",
         "builds": "./builds/",
+        "temp": "./temp",
         "mailer": {
             "host": "smtp.yourserver.com",
             "secureConnection": true,
