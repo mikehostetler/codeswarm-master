@@ -22,6 +22,7 @@ define([
 			$window: null,
 			$header: null,
 			$menu: null,
+			$navTrigger: null,
 			$menubutton: null,
 			$shadowblock: null,
 			$main: null,
@@ -60,6 +61,20 @@ define([
 					this.hideMenu();
 				}
 				this.$shadowblock = this.$header.find("#shadow-block");
+
+				// Fire globalNav
+				this.globalNav();
+			},
+
+			/**
+			 * Show/hide global navigation
+			 */
+			globalNav: function () {
+				this.$navTrigger = $(".nav-trigger");
+
+				this.$navTrigger.on("click", function () {
+					console.log("whatup");
+				});
 			},
 
 			/**

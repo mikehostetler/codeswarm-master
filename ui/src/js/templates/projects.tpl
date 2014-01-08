@@ -1,7 +1,7 @@
 <h1 class="page-title">
+    <i class="fa fa-folder"></i>
     Project List
-
-    <a href="/new" class="btn right">New Project</a>
+    <a href="#/project/new" class="btn right"><i class="fa fa-plus-circle"></i>New Project</a>
 </h1>
 
 <div class="content-wrap">
