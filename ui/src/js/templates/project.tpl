@@ -15,9 +15,9 @@
 <form id="project-config">
 
 	<h4>Repository</h4>
-	
+
 	<input name="id" type="hidden" value="{{dir}}">
-	
+
 	{{#if repo}}
 	<p>{{repo}}</p>
 	{{else}}
@@ -27,22 +27,22 @@
     {{#if branch}}
     <input id="project-branch" required="true" name="branch" type="text" title="Enter the default branch" value="{{branch}}">
     {{else}}
-    <input id="project-branch" name="branch" type="text" title="Default branch" placeholder="master">
+    <input id="project-branch" name="branch" type="text" title="Default branch" placeholder="master" value="master">
     {{/if}}
-	
+
 	<hr>
-	
+
 	<h4>View Authentication</h4>
 	<p><em>Leave fields blank for no authentication</em></p>
-	
+
 	<br>
-	
+
 	<label>View User</label>
 	<input name="user" type="text" value="{{auth.user}}">
-	
+
 	<label>View Password</label>
 	<input name="pass" type="text" value="{{auth.pass}}">
-	
+
 	<button>Save</button>
 
 </form>

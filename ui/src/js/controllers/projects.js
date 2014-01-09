@@ -113,6 +113,8 @@ define([
 			} else {
 				data.auth = false;
 			}
+			// Set blank branch to master
+			data.branch = (data.branch === "") ? "master" : data.branch;
 			// Send to API
 			if (data.id === "new-project") {
 				// Create new (PUT)
