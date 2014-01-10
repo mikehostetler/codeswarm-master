@@ -69,6 +69,7 @@ The second section is `projects` which sets the parameters for build projects:
 * `PROJECT-NAME` is a reference to the project (and the trigger)
 * `PROJECT-DIRECTORY` is the directory (inside `/builds`) where the project will reside
 * `PROJECT-REPO` is the SSH URL to the repository
+* `PROJECT-BRANCH` is the main development branch
 * HTTP Build-View Authentication, set to `false` for no authentication
     * `VIEW-USER` is the username for accessing the completed build
     * `VIEW-PASS` is the password for accessing the completed build
