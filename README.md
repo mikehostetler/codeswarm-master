@@ -56,6 +56,7 @@ The second section is `projects` which sets the parameters for build projects:
     "{PROJECT-NAME}" : {
         "dir": "{PROJECT-DIRECTORY}",
         "repo": "{PROJECT-REPO}",
+        "branch": "{PROJECT-BRANCH}",
         "auth": {
             "user": "{VIEW-USER}",
             "pass": "{VIEW-PASS}"
