@@ -71,6 +71,7 @@ fs.watchFile("./config.json", {
 app.post("/deploy/:project", function (req, res) {
 	// Get project
 	var project = req.params.project;
+
 	// Ensure the project has been config'd
 	if (!config.projects.hasOwnProperty(project)) {
 		// Nope, send an error
@@ -78,25 +79,49 @@ app.post("/deploy/:project", function (req, res) {
 	} else {
 		// Set build
 		var build = config.projects[project],
-			stamp = new Date().getTime();
-		// Set state object
-		build.state = {};
-		// Set ID
-		build.state.id = stamp;
-		// Set current working directory
-		build.state.cwd = stamp;
-		// Set name
-		build.state.name = project + ", Build " + stamp;
-		// Set log
-		build.state.log = config.app.logs + build.dir + "/" + stamp + ".log";
-		// Set status
-		build.state.status = "processing";
-		// Send deploy response
-		res.send({
-			build: build.state.id
-		});
-		// Run build
-		builder(build);
+			stamp = new Date().getTime(),
+			post = JSON.parse(req.body.payload),
+			run = false,
+			ref, branch;
+
+		// Check trigger condition and branch match
+		if (Object.keys(post).length === 0) {
+			// Manual trigger
+			run = true;
+		} else {
+			// Check to ensure branch match
+			if (post.hasOwnProperty("ref")) {
+				//console.log(post);
+				ref = post.ref.split("/");
+				branch = ref[ref.length - 1];
+				if (branch === build.branch) {
+					run = true;
+				}
+			}
+		}
+
+		if (run) {
+
+			// Set state object
+			build.state = {};
+			// Set ID
+			build.state.id = stamp;
+			// Set current working directory
+			build.state.cwd = stamp;
+			// Set name
+			build.state.name = project + ", Build " + stamp;
+			// Set log
+			build.state.log = config.app.logs + build.dir + "/" + stamp + ".log";
+			// Set status
+			build.state.status = "processing";
+			// Send deploy response
+			res.send({
+				build: build.state.id
+			});
+			// Run build
+			builder(build);
+
+		}
 	}
 
 });
