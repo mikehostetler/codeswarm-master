@@ -24,7 +24,7 @@
                 <a href="#/logs/{{value.project}}/{{key}}" title="Build Passed"><i class="fa fa-circle green"></i></a>
                 {{/compare}}
             </td>
-            <td>
+            <td class="logs">
                 {{value.date}}
             </td>
             <td class="center">

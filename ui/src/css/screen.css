@@ -173,6 +173,8 @@ button,
     margin: 5px 15px 15px 0;
     padding: 7px 12px;
     cursor: pointer;
+    outline: none;
+    border: none;
     color: #fff;
     font-weight: normal;
     font-size: .875em;
@@ -189,6 +191,8 @@ button,
 
 button:hover,
 .btn:hover {
+    border: none;
+    color: #fff;
     background: #ff6741; /* Old browsers */
     background: -moz-linear-gradient(top,  #ff6741 0%, #ff6741 50%, #ff6741 50%, #ff6741 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff6741), color-stop(50%,#ff6741), color-stop(50%,#ff6741), color-stop(100%,#ff6741)); /* Chrome,Safari4+ */
@@ -315,6 +319,10 @@ pre {
 
 .datatable .fa-circle:before {
     font-size: .75em;
+}
+
+.logs {
+    font-size: .938em;
 }
 
 /* Header
@@ -555,6 +563,17 @@ header #shadow-block.menu-open {
     background: #f2f2f2;
     padding: 1.25em;
     border-radius: 0 0 3px 3px;
+}
+
+.content-wrap h3 {
+    font-size: .938em;
+    padding-bottom: .5em;
+}
+
+@media (min-width: 56.25em) {
+    .content-wrap h3 {
+        font-size: 1.125em;
+    }
 }
 
 #login {
