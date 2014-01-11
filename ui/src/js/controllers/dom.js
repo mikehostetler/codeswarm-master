@@ -46,6 +46,13 @@ define([
 			},
 
 			/**
+			 * Change the body class
+			 */
+			setBodyClass: function (c) {
+				$("body").removeClass().addClass(c);
+			},
+
+			/**
 			 * Load the header contents
 			 */
 			loadHeader: function (auth) {
