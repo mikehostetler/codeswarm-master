@@ -70,8 +70,12 @@ body {
     margin: 0 auto;
     right: 0;
     padding: 0;
-    overflow: hidden;
     background: #30373a;
+    overflow-x: hidden;
+}
+
+.global-nav--open {
+    overflow: hidden;
 }
 
 /* Globals
@@ -421,7 +425,26 @@ header .fa-check-circle:hover {
 
 @media (min-width: 37.5em) {
     .global-nav {
-        display: none;
+        position: static;
+        border-left: 0;
+        float: right;
+        width: auto;
+        height: 3.75em;
+        background: none;
+        -webkit-transition: none;
+        -moz-transition: none;
+        -o-transition: none;
+        transition: none;
+    }
+
+    .global-nav li {
+        display: inline-block;
+    }
+
+    .global-nav li a {
+        height: 100%;
+        padding: 0 1em;
+        line-height: 3.5em;
     }
 }
 
