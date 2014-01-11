@@ -187,6 +187,18 @@ button,
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff734b', endColorstr='#ff6741',GradientType=0 ); /* IE6-9 */
 }
 
+button:hover,
+.btn:hover {
+    background: #ff6741; /* Old browsers */
+    background: -moz-linear-gradient(top,  #ff6741 0%, #ff6741 50%, #ff6741 50%, #ff6741 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff6741), color-stop(50%,#ff6741), color-stop(50%,#ff6741), color-stop(100%,#ff6741)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #ff6741 0%,#ff6741 50%,#ff6741 50%,#ff6741 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #ff6741 0%,#ff6741 50%,#ff6741 50%,#ff6741 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #ff6741 0%,#ff6741 50%,#ff6741 50%,#ff6741 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #ff6741 0%,#ff6741 50%,#ff6741 50%,#ff6741 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff6741', endColorstr='#ff6741',GradientType=0 ); /* IE6-9 */
+}
+
 button .fa,
 .btn .fa {
     color: #fff;
@@ -299,6 +311,10 @@ pre {
 
 .datatable tr:first-child th:last-child { 
     border-right: 0;
+}
+
+.datatable .fa-circle:before {
+    font-size: .75em;
 }
 
 /* Header
@@ -611,11 +627,24 @@ header #shadow-block.menu-open {
 h4.project {
     margin: 0;
     padding: 0;
+    padding-bottom: .125em;
+    font-size: 1em;
+    font-weight: 500;
+    color: #6d6d6d;
 }
 
 em.repo {
     display: inline-block;
     padding-bottom: 10px;
+    font-size: .938em;
+    color: #999;
+}
+
+.last-build {
+    font-size: .85em;
+    display: block;
+    padding-top: .5em;
+    color: #999;
 }
 
 i.red, i.red:hover { color: #ad0505; }

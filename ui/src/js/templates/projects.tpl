@@ -18,7 +18,9 @@
         <tbody>
         {{#each projects}}
         <tr>
-            <td class="center" data-status="{{this.dir}}">
+            <td class="center status-col" data-status="{{this.dir}}">
+
+                <br>
             
                 {{#compare this.state.status "fail" operator="==="}}
                 <a href="#/logs/{{this.dir}}/{{this.state.id}}" title="Build Failing"><i class="fa fa-circle red"></i></a>
@@ -37,32 +39,37 @@
                 {{/compare}}
                 
             </td>
-            <td class="center">
+            <td class="center run-col">
+                <br>
             	<a class="project-run-build" data-project="{{this.dir}}"><i class="fa fa-repeat"></i></a>
             </td>
             
             
             <td>
                 <h4 class="project">{{this.dir}}</h4>
-                <em class="repo">{{this.repo}}</em><br>
-                Last Build:
-                <span data-timestamp="{{this.dir}}">
-                {{#if this.state}}
-                {{this.state.timestamp}}
-                {{else}}
-                Never
-                {{/if}}
+                <em class="repo">{{this.repo}}</em>
+                <span class="last-build">
+                    Last Build:
+                    <span data-timestamp="{{this.dir}}">
+                    {{#if this.state}}
+                    {{this.state.timestamp}}
+                    {{else}}
+                    Never
+                    {{/if}}
+                    </span>
                 </span>
             </td>
             
-            <td class="center">
+            <td class="center logs-col">
+                <br>
             	{{#if this.state}}
                 <a href="#/logs/{{this.dir}}"><i class="fa fa-th-list"></i></a>
                 {{else}}
                 N/A
                 {{/if}}
             </td>
-            <td class="center">
+            <td class="center settings-col">
+                <br>
                 <a href="#/project/{{this.dir}}"><i class="fa fa-cog"></i></a>
             </td>
         </tr>
