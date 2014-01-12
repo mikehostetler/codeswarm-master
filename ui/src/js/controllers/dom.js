@@ -183,15 +183,15 @@ define([
 					timestampEl = this.$main.find("[data-timestamp=\"" + project + "\"]");
 				switch (status) {
 				case "pass":
-					statusEl.html("<a href=\"#/logs/" + project + "/" + log + "\" title=\"Build Passing\"><i class=\"fa fa-circle green\"></i></a>");
+					statusEl.html("<br><a href=\"#/logs/" + project + "/" + log + "\" title=\"Build Passing\"><i class=\"fa fa-circle green\"></i></a>");
 					break;
 				case "fail":
-					statusEl.html("<a href=\"#/logs/" + project + "/" + log + "\" title=\"Build Failing\"><i class=\"fa fa-circle red\"></i></a>");
+					statusEl.html("<br><a href=\"#/logs/" + project + "/" + log + "\" title=\"Build Failing\"><i class=\"fa fa-circle red\"></i></a>");
 					break;
 				case "processing":
 					// Don't keep replacing, just check state
 					if (!statusEl.find("i").hasClass("yellow")) {
-						statusEl.html("<a href=\"#/logs/" + project + "/" + log + "\" title=\"Processing\"><i class=\"fa fa-refresh fa-circle yellow\"></i></a>");
+						statusEl.html("<br><a href=\"#/logs/" + project + "/" + log + "\" title=\"Processing\"><i class=\"fa fa-refresh fa-circle yellow\"></i></a>");
 						timestampEl.html(timestamp(log));
 					}
 					break;
@@ -205,7 +205,7 @@ define([
 				var el = this.$main.find("[data-log=\"" + log + "\"]");
 				el.append(content);
 				// Scroll!
-				$("html, body").scrollTop($(document).height());
+				$("body").scrollTop($(document).height());
 			},
 
 			/**
