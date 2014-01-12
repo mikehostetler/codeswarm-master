@@ -8,10 +8,9 @@ define([
 		"text!templates/projects.tpl",
 		"text!templates/project.tpl",
 		"text!templates/logs.tpl",
-		"text!templates/logview.tpl",
-		"text!templates/tokens.tpl"
+		"text!templates/logview.tpl"
 	],
-	function ($, Handlebars, timestamp, header, login, menu, projects, project, logs, logview, tokens) {
+	function ($, Handlebars, timestamp, header, login, menu, projects, project, logs, logview) {
 		var dom;
 
 		dom = {
@@ -308,32 +307,6 @@ define([
 						file: output
 					});
 				this.$main.html(html);
-			},
-
-			/**
-			 * Load tokens
-			 */
-			loadTokens: function (data, controller) {
-				var self = this,
-					template = Handlebars.compile(tokens),
-					html = template({
-						tokens: data
-					});
-				this.$main.html(html);
-				// Bind new-token form
-				this.$main.find("#add-token").submit(function (e) {
-					e.preventDefault();
-					controller.addToken($(this).serializeArray());
-				});
-				// Bind delete
-				this.$main.find(".delete-token").click(function () {
-					// Ensure at least one token is present
-					if (self.$main.find(".token-list-item").length === 1) {
-						self.showError("Must maintain at least one token");
-					} else {
-						controller.deleteToken($(this).data("token"));
-					}
-				});
 			},
 
 			/**
