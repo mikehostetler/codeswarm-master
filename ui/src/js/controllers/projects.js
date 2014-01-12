@@ -121,7 +121,7 @@ define([
 				req = requests.put("/api/project/", {
 					dir: data.name,
 					repo: data.repo,
-					brach: data.branch || "master",
+					branch: data.branch || "master",
 					auth: data.auth
 				});
 
