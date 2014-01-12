@@ -39,6 +39,8 @@ define([
 				this.$menu = $("aside");
 				this.$main = $("#main");
 				this.$notification = $("#notification");
+				this.$body = $("body");
+				this.$document = $(document);
 
 				// Initialize methods
 				this.loadHeader();
@@ -70,18 +72,23 @@ define([
 			 * Show/hide global navigation
 			 */
 			globalNav: function () {
-				this.$body = $("body");
-				this.$document = $(document);
+				var self = this;
 
-				this.$document
+				$(".nav-trigger").click(function (e) {
+					e.stopPropagation();
+
+					if (!self.$body.hasClass("global-nav--open")) {
+						self.$body.addClass("global-nav--open");
+						console.log("doesn't have class");
+					} else {
+						self.$body.removeClass("global-nav--open");
+						console.log("has class");
+					}
+				});
+
+				self.$document
 					.on("click", function () {
-						this.$body.removeClass("global-nav--open");
-					})
-					.on("click", ".nav-trigger", function (e) {
-						e.stopPropagation();
-
-						// toggleClass is not working for some reason. NEED TO FIGURE OUT WHY
-						this.$body.addClass("global-nav--open");
+						self.$body.removeClass("global-nav--open");
 					})
 					.on("click", ".global-nav", function (e) {
 						e.stopPropagation();

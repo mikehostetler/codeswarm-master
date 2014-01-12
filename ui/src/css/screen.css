@@ -69,6 +69,7 @@ body {
     height: 100%;
     margin: 0 auto;
     right: 0;
+    left: 0;
     padding: 0;
     background: #30373a;
     overflow-x: hidden;
@@ -137,11 +138,12 @@ a > i:hover {
 /* Form elements
 ==================================================================== */
     
-label { 
+label,
+h4 { 
     display: inline-block;
     padding: 0 0 15px 2px;
     margin: 10px 0 0 0;
-    font-size: 1.4em;
+    font-size: 1em;
     font-weight: bold;
 }        
 
