@@ -127,10 +127,27 @@ app.post("/deploy/:project", function (req, res) {
 
 });
 
+// API
+app.get("/api/:type/*", function (req, res) {
+	api.get(req, res);
+});
+
+app.post("/api/:type/*", function (req, res) {
+	api.post(req, res);
+});
+
+app.put("/api/:type", function (req, res) {
+	api.put(req, res);
+});
+
+app.del("/api/:type/*", function (req, res) {
+	api.del(req, res);
+});
+
 /**
  * Static Server #####################################################
  */
-app.get("/dashboard/*", function (req, res) {
+app.get("/*", function (req, res) {
 	var path = req.params[0] ? req.params[0] : "index.html";
 	res.sendfile(path, {
 		root: root
@@ -170,23 +187,6 @@ app.get("/view/:project/*", expressAuth, function (req, res) {
 			});
 		}
 	}
-});
-
-// API
-app.get("/api/:type/*", function (req, res) {
-	api.get(req, res);
-});
-
-app.post("/api/:type/*", function (req, res) {
-	api.post(req, res);
-});
-
-app.put("/api/:type", function (req, res) {
-	api.put(req, res);
-});
-
-app.del("/api/:type/*", function (req, res) {
-	api.del(req, res);
 });
 
 /**
