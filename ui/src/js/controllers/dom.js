@@ -57,12 +57,12 @@ define([
 						auth: auth
 					});
 				this.$header.html(html);
-				if (auth) {
-					this.bindMenu();
-				} else {
-					this.hideMenu();
-				}
-				this.$shadowblock = this.$header.find("#shadow-block");
+				// if (auth) {
+				// 	this.bindMenu();
+				// } else {
+				// 	this.hideMenu();
+				// }
+				//this.$shadowblock = this.$header.find("#shadow-block");
 
 				// Fire globalNav
 				this.globalNav();

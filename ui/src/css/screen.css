@@ -142,10 +142,17 @@ label,
 h4 { 
     display: inline-block;
     padding: 0 0 15px 2px;
-    margin: 10px 0 0 0;
+    margin: 20px 0 0 0;
     font-size: 1em;
     font-weight: bold;
-}        
+}
+
+@media (min-width: 37.5em) {
+    label,
+    h4 {
+        font-size: 1.25em;
+    }
+}
 
 input, select, textarea {
     display: block;
@@ -153,7 +160,7 @@ input, select, textarea {
     margin: -1px 0 10px 0;
     padding: 8px 12px;
     color: #333;
-    font-size: 1.2em;
+    font-size: .938em;
     font-weight: normal;
     border: 1px solid #ccc;
     border-radius: 3px;
@@ -193,8 +200,8 @@ button,
 
 button:hover,
 .btn:hover {
-    border: none;
-    color: #fff;
+    border: none !important;
+    color: #fff !important;
     background: #ff6741; /* Old browsers */
     background: -moz-linear-gradient(top,  #ff6741 0%, #ff6741 50%, #ff6741 50%, #ff6741 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff6741), color-stop(50%,#ff6741), color-stop(50%,#ff6741), color-stop(100%,#ff6741)); /* Chrome,Safari4+ */
@@ -578,12 +585,24 @@ header #shadow-block.menu-open {
     }
 }
 
-#login {
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    width: 300px;
-    margin: 0 0 0 -150px;
+#login label {
+    float: left;
+    width: 100%;
+}
+
+#login input {
+    float: left;
+    max-width: 300px;
+}
+
+#login button {
+    float: left;
+}
+
+@media (min-width: 37.5em) {
+    #login button {
+        margin: 0 0 0 1em;
+    }
 }
 
 #notification {

@@ -13,7 +13,7 @@
 {{/auth}}
 
 {{^auth}}
-<a>
+<a class="menu-button">
     <i class="fa fa-check-circle"></i>Vouch
 </a>
 {{/auth}}
