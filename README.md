@@ -115,7 +115,7 @@ in the HTTP response when the build is triggered.
 To access the system from your web browser, go to:
 
 ```html
-http(s)://yourserver.com:{BUILD-PORT}/dashboard/
+http(s)://yourserver.com:{BUILD-PORT}/
 ```
 
 The token for access will be in the `tokens` section of the config.
