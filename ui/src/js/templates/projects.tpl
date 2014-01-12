@@ -79,6 +79,10 @@
             </td>
             {{/unless}}
         </tr>
+        {{else}}
+        <tr>
+        	<td class="center" colspan="5"><br><br><em>No projects currently exist. <a href="#/project/new">Create One &raquo;</a></em><br><br></td>
+        </tr>
         {{/each}}
         </tbody>
     </table>
