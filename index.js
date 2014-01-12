@@ -109,6 +109,8 @@ app.post("/deploy/:project", function (req, res) {
 			build.state.id = stamp;
 			// Set current working directory
 			build.state.cwd = stamp;
+			// Set log URL
+			build.state.logURL = req.protocol + "://" + req.get("host") + "/#/logs/" + build.dir + "/" + stamp;
 			// Set name
 			build.state.name = project + ", Build " + stamp;
 			// Set log
