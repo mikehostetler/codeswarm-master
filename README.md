@@ -92,3 +92,26 @@ added to the `/config.json` under the `app` properties:
         }
     }
 ```
+
+## Run Modes
+
+When you are running Vouch in production mode there are no flags/arguments
+required, however, if you are modifying the server or the contents of `/src` you
+can run the server in development mode via:
+
+```
+node index.js dev
+```
+
+The above will run the server in a verbose mode and serve the UI from the `/src`
+directory.
+
+## License
+
+Vouch is released under the MIT License.
+
+Disclaimer: This is an appendTo Labs project and as such there is no promise of
+support or even future development of this project. We are working on this project
+to meet a need at appendTo and sharing it in the spirit of open source software.
+If it helps you or your team meet needs as well, that is awesome – however, use
+at your own risk.
