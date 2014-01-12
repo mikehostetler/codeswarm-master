@@ -80,19 +80,20 @@ app.post("/deploy/:project", function (req, res) {
 		// Set build
 		var build = config.projects[project],
 			stamp = new Date().getTime(),
-			post = JSON.parse(req.body.payload),
+			post = req.body,
 			run = false,
-			ref, branch;
+			payload, ref, branch;
 
 		// Check trigger condition and branch match
-		if (Object.keys(post).length === 0) {
+		if (!post.hasOwnProperty("payload")) {
 			// Manual trigger
 			run = true;
 		} else {
+			payload = JSON.parse(post.payload);
 			// Check to ensure branch match
-			if (post.hasOwnProperty("ref")) {
+			if (payload.hasOwnProperty("ref")) {
 				//console.log(post);
-				ref = post.ref.split("/");
+				ref = payload.ref.split("/");
 				branch = ref[ref.length - 1];
 				if (branch === build.branch) {
 					run = true;
