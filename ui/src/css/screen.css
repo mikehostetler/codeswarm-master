@@ -271,6 +271,8 @@ pre {
     padding: 15px;
     border: 1px solid #ccc;
     font-family: 'Ubuntu-Mono', 'monospace', sans-serif;
+    font-size: 13px;
+    line-height: 140%;
     box-shadow: inset 0 0 10px 0 rgba(0, 0, 0, .1);
     border-radius: 5px;
     background: #1a1a1a;
@@ -610,8 +612,8 @@ header #shadow-block.menu-open {
     left: 50%;
     width: 350px;
     margin-left: -175px;
-    padding: 15px;
-    background: #333;
+    padding: 12px 15px 15px 15px;
+    background: #262d31;
     z-index: 99999;
     color: #fff;
     font-weight: normal;
@@ -630,6 +632,7 @@ header #shadow-block.menu-open {
     -moz-hyphens: auto;
     -ms-hyphens: auto;
     hyphens: auto;
+    margin-top: 5px;
 }
 
 #notification a {

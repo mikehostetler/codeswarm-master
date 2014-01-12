@@ -159,10 +159,11 @@ define([
 			/**
 			 * Load projects
 			 */
-			loadProjects: function (data, controller) {
+			loadProjects: function (data, controller, restricted) {
 				var template = Handlebars.compile(projects),
 					html = template({
-						projects: data
+						projects: data,
+						restricted: restricted || false
 					});
 				this.$main.html(html);
 				// Watch for build trigger
