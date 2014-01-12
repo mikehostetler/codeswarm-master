@@ -71,6 +71,7 @@ fs.watchFile("./config.json", {
 app.post("/deploy/:project", function (req, res) {
 	// Get project
 	var project = req.params.project;
+
 	// Ensure the project has been config'd
 	if (!config.projects.hasOwnProperty(project)) {
 		// Nope, send an error
@@ -78,31 +79,78 @@ app.post("/deploy/:project", function (req, res) {
 	} else {
 		// Set build
 		var build = config.projects[project],
-			stamp = new Date().getTime();
-		// Set state object
-		build.state = {};
-		// Set ID
-		build.state.id = stamp;
-		// Set name
-		build.state.name = project + ", Build " + stamp;
-		// Set log
-		build.state.log = config.app.logs + build.dir + "/" + stamp + ".log";
-		// Set status
-		build.state.status = "processing";
-		// Send deploy response
-		res.send({
-			build: build.state.id
-		});
-		// Run build
-		builder(build);
+			stamp = new Date().getTime(),
+			post = req.body,
+			run = false,
+			payload, ref, branch;
+
+		// Check trigger condition and branch match
+		if (!post.hasOwnProperty("payload")) {
+			// Manual trigger
+			run = true;
+		} else {
+			payload = JSON.parse(post.payload);
+			// Check to ensure branch match
+			if (payload.hasOwnProperty("ref")) {
+				//console.log(post);
+				ref = payload.ref.split("/");
+				branch = ref[ref.length - 1];
+				if (branch === build.branch) {
+					run = true;
+				}
+			}
+		}
+
+		if (run) {
+
+			// Set state object
+			build.state = {};
+			// Set ID
+			build.state.id = stamp;
+			// Set current working directory
+			build.state.cwd = stamp;
+			// Set name
+			build.state.name = project + ", Build " + stamp;
+			// Set log
+			build.state.log = config.app.logs + build.dir + "/" + stamp + ".log";
+			// Set status
+			build.state.status = "processing";
+			// Send deploy response
+			res.send({
+				build: build.state.id
+			});
+			// Run build
+			builder(build);
+
+		}
 	}
 
 });
 
 /**
+ * API ##############################################################
+ */
+
+app.get("/api/:type/*", function (req, res) {
+	api.get(req, res);
+});
+
+app.post("/api/:type/*", function (req, res) {
+	api.post(req, res);
+});
+
+app.put("/api/:type", function (req, res) {
+	api.put(req, res);
+});
+
+app.del("/api/:type/*", function (req, res) {
+	api.del(req, res);
+});
+
+/**
  * Static Server #####################################################
  */
-app.get("/dashboard/*", function (req, res) {
+app.get("/*", function (req, res) {
 	var path = req.params[0] ? req.params[0] : "index.html";
 	res.sendfile(path, {
 		root: root
@@ -142,23 +190,6 @@ app.get("/view/:project/*", expressAuth, function (req, res) {
 			});
 		}
 	}
-});
-
-// API
-app.get("/api/:type/*", function (req, res) {
-	api.get(req, res);
-});
-
-app.post("/api/:type/*", function (req, res) {
-	api.post(req, res);
-});
-
-app.put("/api/:type", function (req, res) {
-	api.put(req, res);
-});
-
-app.del("/api/:type/*", function (req, res) {
-	api.del(req, res);
 });
 
 /**

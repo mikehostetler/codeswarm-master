@@ -49,6 +49,13 @@ define([
 			},
 
 			/**
+			 * Change the body class
+			 */
+			setBodyClass: function (c) {
+				$("body").removeClass().addClass(c);
+			},
+
+			/**
 			 * Load the header contents
 			 */
 			loadHeader: function (auth) {
@@ -58,11 +65,11 @@ define([
 					});
 				this.$header.html(html);
 				// if (auth) {
-				// 	this.bindMenu();
+				// this.bindMenu();
 				// } else {
-				// 	this.hideMenu();
+				// this.hideMenu();
 				// }
-				//this.$shadowblock = this.$header.find("#shadow-block");
+				// this.$shadowblock = this.$header.find("#shadow-block");
 
 				// Fire globalNav
 				this.globalNav();

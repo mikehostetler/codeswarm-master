@@ -113,13 +113,15 @@ define([
 			} else {
 				data.auth = false;
 			}
+			// Set blank branch to master
+			data.branch = (data.branch === "") ? "master" : data.branch;
 			// Send to API
 			if (data.id === "new-project") {
 				// Create new (PUT)
 				req = requests.put("/api/project/", {
 					dir: data.name,
 					repo: data.repo,
-					brach: data.branch || "master",
+					branch: data.branch || "master",
 					auth: data.auth
 				});
 
