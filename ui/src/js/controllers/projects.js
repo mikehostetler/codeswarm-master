@@ -1,9 +1,10 @@
 define([
 	"controllers/dom",
 	"controllers/requests",
+	"controllers/session",
 	"controllers/router",
 	"controllers/timestamp"
-], function (dom, requests, Router, timestamp) {
+], function (dom, requests, session, Router, timestamp) {
 	var router,
 		projects;
 
@@ -14,7 +15,8 @@ define([
 		showList: function () {
 
 			var self = this,
-				req = requests.get("/api/projects/");
+				req = requests.get("/api/projects/"),
+				acl_data = {};
 
 			req.done(function (data) {
 				var proj;
@@ -24,7 +26,17 @@ define([
 						data[proj].state.timestamp = timestamp(data[proj].state.id);
 					}
 				}
-				dom.loadProjects(data, self);
+				// Check ACL
+				session.getACL(function (acl) {
+					if (acl.projects === "all") {
+						dom.loadProjects(data, self);
+					} else {
+						for (var i = 0, z = acl.projects.length; i < z; i++) {
+							acl_data[acl.projects[i]] = data[acl.projects[i]];
+						}
+						dom.loadProjects(acl_data, self, true);
+					}
+				});
 			});
 
 			req.fail(function () {
