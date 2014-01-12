@@ -50,7 +50,11 @@
 
 
             <td>
+            	{{#if this.view}}
+                <h4 class="project"><a target="_blank" href="{{this.view}}">{{this.dir}}</a></h4>
+                {{else}}
                 <h4 class="project">{{this.dir}}</h4>
+                {{/if}}
                 <em class="repo">{{this.repo}}</em>
                 <span class="last-build">
                     Last Build:

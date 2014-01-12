@@ -152,12 +152,6 @@ app.del("/api/:type/*", function (req, res) {
 /**
  * Static Server #####################################################
  */
-app.get("/*", function (req, res) {
-	var path = req.params[0] ? req.params[0] : "index.html";
-	res.sendfile(path, {
-		root: root
-	});
-});
 // Get by project route
 app.get("/view/:project/*", expressAuth, function (req, res) {
 	var project = req.params.project;
@@ -192,6 +186,13 @@ app.get("/view/:project/*", expressAuth, function (req, res) {
 			});
 		}
 	}
+});
+
+app.get("/*", function (req, res) {
+	var path = req.params[0] ? req.params[0] : "index.html";
+	res.sendfile(path, {
+		root: root
+	});
 });
 
 /**

@@ -16,7 +16,8 @@ define([
 
 			var self = this,
 				req = requests.get("/api/projects/"),
-				acl_data = {};
+				acl_data = {},
+				base_href = location.protocol + "//" + location.hostname + (location.port ? ":" + location.port : "");
 
 			req.done(function (data) {
 				var proj;
@@ -24,6 +25,7 @@ define([
 				for (proj in data) {
 					if (data[proj].state) {
 						data[proj].state.timestamp = timestamp(data[proj].state.id);
+						data[proj].view = base_href + "/view/" + data[proj].dir + "/";
 					}
 				}
 				// Check ACL
