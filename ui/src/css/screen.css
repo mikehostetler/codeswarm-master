@@ -26,7 +26,7 @@ del{text-decoration:line-through;}
 table{border-collapse:collapse;border-spacing:0;}
 
 * { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
-    
+
 /* Fonts
 ==================================================================== */
 
@@ -55,7 +55,7 @@ table{border-collapse:collapse;border-spacing:0;}
 /* Document
 ==================================================================== */
 
-html { 
+html {
     width: 100%;
     height: 100%;
     overflow: scroll;
@@ -63,7 +63,7 @@ html {
     color: #6d6d6d;
 }
 
-body { 
+body {
     position: absolute;
     max-width: 100%;
     height: 100%;
@@ -72,7 +72,6 @@ body {
     left: 0;
     padding: 0;
     background: #30373a;
-    overflow-x: hidden;
 }
 
 .global-nav--open {
@@ -82,9 +81,9 @@ body {
 /* Globals
 ==================================================================== */
 
-h1,h2,h3,h4 { 
-    margin: 0; 
-    font-weight: bold; 
+h1,h2,h3,h4 {
+    margin: 0;
+    font-weight: bold;
 }
 
 h1 { font-size: 3em; }
@@ -92,7 +91,7 @@ h2 { font-size: 2.5em; }
 h3 { font-size: 2em; }
 h4 { font-size: 1.5em; margin-bottom: 10px; }
 
-a,a:link,a:visited { 
+a,a:link,a:visited {
     display: inline;
     cursor: pointer;
     text-decoration: none;
@@ -106,10 +105,10 @@ a:hover,a:active { color: #000; }
 .left { float: left; }
 
 hr { border: 0; height: 1px; margin: 1.5625em 0;
-    background-image: -webkit-linear-gradient(left, rgba(120,120,120,0), rgba(200,200,200,0.75), rgba(120,120,120,0)); 
-    background-image:    -moz-linear-gradient(left, rgba(120,120,120,0), rgba(200,200,200,0.75), rgba(120,120,120,0)); 
-    background-image:     -ms-linear-gradient(left, rgba(120,120,120,0), rgba(200,200,200,0.75), rgba(120,120,120,0)); 
-    background-image:      -o-linear-gradient(left, rgba(120,120,120,0), rgba(200,200,200,0.75), rgba(120,120,120,0));    
+    background-image: -webkit-linear-gradient(left, rgba(120,120,120,0), rgba(200,200,200,0.75), rgba(120,120,120,0));
+    background-image:    -moz-linear-gradient(left, rgba(120,120,120,0), rgba(200,200,200,0.75), rgba(120,120,120,0));
+    background-image:     -ms-linear-gradient(left, rgba(120,120,120,0), rgba(200,200,200,0.75), rgba(120,120,120,0));
+    background-image:      -o-linear-gradient(left, rgba(120,120,120,0), rgba(200,200,200,0.75), rgba(120,120,120,0));
 }
 
 strong {
@@ -134,12 +133,12 @@ a > i {
 a > i:hover {
     color: #333;
 }
-    
+
 /* Form elements
 ==================================================================== */
-    
+
 label,
-h4 { 
+h4 {
     display: inline-block;
     padding: 0 0 15px 2px;
     margin: 20px 0 0 0;
@@ -171,13 +170,13 @@ textarea { font-family: "Roboto", Arial, Helvetica, sans-serif; min-height: 150p
 input:focus, select:focus, textarea:focus{
     border: 1px solid #999; outline: none;
 }
-    
+
 /* Buttons
 ==================================================================== */
-    
+
 button,
-.btn { 
-    display: inline-block;      
+.btn {
+    display: inline-block;
     width: auto;
     margin: 5px 15px 15px 0;
     padding: 7px 12px;
@@ -233,7 +232,7 @@ button .fa,
     }
 }
 
-.btn-left { 
+.btn-left {
     margin-right: 0;
     border-radius: 3px 0 0 3px;
 }
@@ -261,7 +260,7 @@ button:hover, button:hover{
 ::-webkit-input-placeholder {color: #b0b0b0; }
 :-moz-placeholder { color: #b0b0b0; }
 :placeholder { color: #b0b0b0; }
-    
+
 /* Pre/Code
 ==================================================================== */
 
@@ -278,51 +277,51 @@ pre {
     color: #fff;
     text-shadow: none;
 }
-    
+
 /* Tables
 ==================================================================== */
 
-.datatable { 
-    width: 100%; 
-    border-spacing: 0; 
+.datatable {
+    width: 100%;
+    border-spacing: 0;
     table-layout: fixed;
     border-radius: 3px;
     overflow: hidden;
 }
 
-.datatable th, 
-.datatable td { 
-    padding: 12px; 
-    white-space: nowrap; 
-    overflow: hidden; 
+.datatable th,
+.datatable td {
+    padding: 12px;
+    white-space: nowrap;
+    overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .datatable td {
     background: #fff;
-    border: 1px solid #e2e2e2; 
+    border: 1px solid #e2e2e2;
 }
 
-.datatable th { 
-    text-align: left; 
+.datatable th {
+    text-align: left;
     background: #e2e2e2;
     border: 1px solid #e2e2e2;
     border-right: 1px solid #ccc;
 }
 
-.datatable tr.empty-set td { 
-    text-align: center; 
-    font-style: italic; 
-    color: #999; 
+.datatable tr.empty-set td {
+    text-align: center;
+    font-style: italic;
+    color: #999;
     padding: 25px 0;
 }
 
-.datatable td.center, 
-.datatable th.center { 
-    text-align: center; 
+.datatable td.center,
+.datatable th.center {
+    text-align: center;
 }
 
-.datatable tr:first-child th:last-child { 
+.datatable tr:first-child th:last-child {
     border-right: 0;
 }
 
@@ -497,7 +496,7 @@ header #shadow-block.menu-open {
 
 /* Content
 ==================================================================== */
-    
+
 #main {
     float: left;
     width: 100%;
@@ -693,7 +692,7 @@ i.yellow, i.yellow:hover { color: #ffcc00; }
 
 /* Aside
 ==================================================================== */
-    
+
 aside {
     position: fixed;
     top: 0;

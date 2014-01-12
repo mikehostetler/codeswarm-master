@@ -205,7 +205,7 @@ define([
 				var el = this.$main.find("[data-log=\"" + log + "\"]");
 				el.append(content);
 				// Scroll!
-				$("body").scrollTop($(document).height());
+				$("html, body").scrollTop($(document).height());
 			},
 
 			/**
