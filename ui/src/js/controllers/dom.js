@@ -22,7 +22,6 @@ define([
 			$window: null,
 			$header: null,
 			$menu: null,
-			$navTrigger: null,
 			$globalNav: null,
 			$menubutton: null,
 			$shadowblock: null,
@@ -71,23 +70,22 @@ define([
 			 * Show/hide global navigation
 			 */
 			globalNav: function () {
-				$navTrigger = $(".nav-trigger");
-				$body = $("body");
-				$document = $(document);
+				this.$body = $("body");
+				this.$document = $(document);
 
-				$document
+				this.$document
 					.on("click", function () {
-						$body.removeClass("global-nav--open");
+						this.$body.removeClass("global-nav--open");
 					})
 					.on("click", ".nav-trigger", function (e) {
 						e.stopPropagation();
 
 						// toggleClass is not working for some reason. NEED TO FIGURE OUT WHY
-						$body.addClass("global-nav--open");
+						this.$body.addClass("global-nav--open");
 					})
 					.on("click", ".global-nav", function (e) {
 						e.stopPropagation();
-					});				
+					});
 			},
 
 			/**
