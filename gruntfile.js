@@ -107,6 +107,11 @@ module.exports = function ( grunt ) {
                 options: {
                     spawn: false
                 }
+            },
+            css: {
+                files: [ "ui/src/css/*.css" ],
+                tasks: [ "cssmin:minify" ],
+                options: { nospawn: true }
             }
         }
     });

@@ -22,6 +22,7 @@ define([
 			$window: null,
 			$header: null,
 			$menu: null,
+			$globalNav: null,
 			$menubutton: null,
 			$shadowblock: null,
 			$main: null,
@@ -38,6 +39,8 @@ define([
 				this.$menu = $("aside");
 				this.$main = $("#main");
 				this.$notification = $("#notification");
+				this.$body = $("body");
+				this.$document = $(document);
 
 				// Initialize methods
 				this.loadHeader();
@@ -61,12 +64,42 @@ define([
 						auth: auth
 					});
 				this.$header.html(html);
-				if (auth) {
-					this.bindMenu();
-				} else {
-					this.hideMenu();
-				}
-				this.$shadowblock = this.$header.find("#shadow-block");
+				// if (auth) {
+				// this.bindMenu();
+				// } else {
+				// this.hideMenu();
+				// }
+				// this.$shadowblock = this.$header.find("#shadow-block");
+
+				// Fire globalNav
+				this.globalNav();
+			},
+
+			/**
+			 * Show/hide global navigation
+			 */
+			globalNav: function () {
+				var self = this;
+
+				$(".nav-trigger").click(function (e) {
+					e.stopPropagation();
+
+					if (!self.$body.hasClass("global-nav--open")) {
+						self.$body.addClass("global-nav--open");
+						console.log("doesn't have class");
+					} else {
+						self.$body.removeClass("global-nav--open");
+						console.log("has class");
+					}
+				});
+
+				self.$document
+					.on("click", function () {
+						self.$body.removeClass("global-nav--open");
+					})
+					.on("click", ".global-nav", function (e) {
+						e.stopPropagation();
+					});
 			},
 
 			/**
