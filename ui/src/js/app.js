@@ -70,8 +70,15 @@ define([
 			// Show Project
 			router.on("/project/:project", function (project) {
 				checkedRun(function () {
-					projects.showProject(project);
-					dom.setBodyClass("view-project");
+					// Ensure administrative login
+					session.getACL(function (acl) {
+						if (acl.projects === "all") {
+							projects.showProject(project);
+							dom.setBodyClass("view-project");
+						} else {
+							router.go("/");
+						}
+					});
 				});
 			});
 
