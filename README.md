@@ -63,7 +63,7 @@ This file serves several important purposes:
 
 When the build is successful it will be available through the browser at
 `http://yourserver.com/view/PROJECT_NAME` and the server will load `dir` as the
-`default` is the default file to serve.
+root and `default` as the default file to serve.
 
 **The `run` commands are fired during build**
 
