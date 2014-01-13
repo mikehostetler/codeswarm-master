@@ -4,9 +4,8 @@ define([
 	"controllers/router",
 	"controllers/projects",
 	"controllers/logs",
-	"controllers/tokens",
 	"controllers/socket"
-], function (dom, session, Router, projects, logs, tokens) {
+], function (dom, session, Router, projects, logs) {
 	var app;
 
 	app = {
@@ -71,15 +70,15 @@ define([
 			// Show Project
 			router.on("/project/:project", function (project) {
 				checkedRun(function () {
-					projects.showProject(project);
-					dom.setBodyClass("view-project");
-				});
-			});
-
-			// Show tokens
-			router.on("/tokens", function () {
-				checkedRun(function () {
-					tokens.showList();
+					// Ensure administrative login
+					session.getACL(function (acl) {
+						if (acl.projects === "all") {
+							projects.showProject(project);
+							dom.setBodyClass("view-project");
+						} else {
+							router.go("/");
+						}
+					});
 				});
 			});
 

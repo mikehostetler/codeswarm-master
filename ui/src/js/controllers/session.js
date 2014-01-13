@@ -34,8 +34,8 @@ define([
 					token = dom.getValue($this, "token"),
 					req = requests.get("/api/token/" + token);
 
-				req.done(function (session) {
-					self.set(session);
+				req.done(function () {
+					self.set(token);
 					if (localStorage.getItem("route")) {
 						// User has saved route, pass them there
 						router.go(localStorage.getItem("route"));
@@ -50,6 +50,20 @@ define([
 					dom.showError(xhr.responseText);
 				});
 			});
+		},
+
+		getACL: function (fn) {
+			// Ensure session is set
+			var token = this.get(),
+				req;
+			if (token) {
+				req = requests.get("/api/token/" + token);
+				req.done(function (projects) {
+					if (fn && typeof fn === "function") {
+						fn(projects);
+					}
+				});
+			}
 		}
 	};
 

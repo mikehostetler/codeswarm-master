@@ -6,12 +6,12 @@
 <div class="content-wrap">
 
 	<form id="login">
-    
+
 	    <label>Token</label>
-	    <input type="text" placeholder="Enter Access Token" name="token">
-	    
+	    <input type="text" placeholder="Token or Email Address" name="token">
+
 	    <button>Login</button>
-	    
+
 	</form>
 
 </div>

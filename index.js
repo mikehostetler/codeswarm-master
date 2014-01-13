@@ -109,6 +109,8 @@ app.post("/deploy/:project", function (req, res) {
 			build.state.id = stamp;
 			// Set current working directory
 			build.state.cwd = stamp;
+			// Set log URL
+			build.state.logURL = req.protocol + "://" + req.get("host") + "/#/logs/" + build.dir + "/" + stamp;
 			// Set name
 			build.state.name = project + ", Build " + stamp;
 			// Set log
@@ -150,12 +152,6 @@ app.del("/api/:type/*", function (req, res) {
 /**
  * Static Server #####################################################
  */
-app.get("/*", function (req, res) {
-	var path = req.params[0] ? req.params[0] : "index.html";
-	res.sendfile(path, {
-		root: root
-	});
-});
 // Get by project route
 app.get("/view/:project/*", expressAuth, function (req, res) {
 	var project = req.params.project;
@@ -190,6 +186,13 @@ app.get("/view/:project/*", expressAuth, function (req, res) {
 			});
 		}
 	}
+});
+
+app.get("/*", function (req, res) {
+	var path = req.params[0] ? req.params[0] : "index.html";
+	res.sendfile(path, {
+		root: root
+	});
 });
 
 /**
