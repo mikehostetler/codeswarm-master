@@ -330,6 +330,51 @@ pre {
     font-size: .75em;
 }
 
+@media (max-width: 56.25em) {
+
+    .datatable td {
+        position: relative;
+        display: block;
+        white-space: inherit;
+    }
+
+    .datatable thead tr {
+        display: none;
+    }
+
+    .datatable .status-col,
+    .datatable .run-col,
+    .datatable .logs-col,
+    .datatable .settings-col {
+        display: none;
+    }
+
+    .datatable tr:nth-child(even) td {
+        background: #f8f8f8;
+        border-top: 0;
+        border-bottom: 0;
+    }
+}
+
+.table-actions {
+    display: table;
+    width: 100%;
+    margin-top: 1em;
+    border-top: solid 1px #e2e2e2;
+}
+
+.table-actions li {
+    display: table-cell;
+    text-align: center;
+    padding-top: .75em;
+}
+
+@media (min-width: 56.25em) {
+    .table-actions {
+        display: none;
+    }
+}
+
 .logs {
     font-size: .938em;
 }
@@ -433,6 +478,7 @@ header .fa-check-circle:hover {
     width: 75%;
     height: 100%;
     background: #30373a;
+    z-index: 100;
     border-left: solid 1px #262d31;
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;

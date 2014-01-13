@@ -58,6 +58,39 @@
                     {{/if}}
                     </span>
                 </span>
+
+                <ul class="table-actions">
+                    <li>
+                        {{#compare this.state.status "fail" operator="==="}}
+                        <a href="#/logs/{{this.dir}}/{{this.state.id}}" title="Build Failing"><i class="fa fa-circle red"></i></a>
+                        {{/compare}}
+                        
+                        {{#compare this.state.status "pass" operator="==="}}
+                        <a href="#/logs/{{this.dir}}/{{this.state.id}}" title="Build Passing"><i class="fa fa-circle green"></i></a>
+                        {{/compare}}
+                        
+                        {{#compare this.state.status "processing" operator="==="}}
+                        <a href="#/logs/{{this.dir}}/{{this.state.id}}" title="Processing"><i class="fa fa-refresh fa-circle yellow"></i></a>
+                        {{/compare}}
+                        
+                        {{#compare this.state.status undefined operator="==="}}
+                        <a title="No Builds"><i class="fa fa-circle"></i></a>
+                        {{/compare}}
+                    </li>
+                    <li>
+                        <a class="project-run-build" data-project="{{this.dir}}"><i class="fa fa-repeat"></i></a>
+                    </li>
+                    <li>
+                        {{#if this.state}}
+                        <a href="#/logs/{{this.dir}}"><i class="fa fa-th-list"></i></a>
+                        {{else}}
+                        N/A
+                        {{/if}}
+                    </li>
+                    <li>
+                        <a href="#/project/{{this.dir}}"><i class="fa fa-cog"></i></a>
+                    </li>
+                </ul>
             </td>
             
             <td class="center logs-col">
