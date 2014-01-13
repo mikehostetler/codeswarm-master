@@ -72,7 +72,6 @@ body {
     left: 0;
     padding: 0;
     background: #30373a;
-    overflow-x: hidden;
 }
 
 .global-nav--open {

@@ -202,10 +202,14 @@ define([
 			 * Update active log
 			 */
 			updateLog: function (log, content) {
-				var el = this.$main.find("[data-log=\"" + log + "\"]");
+				var el = this.$main.find("[data-log=\"" + log + "\"]"),
+					curScroll = $("body").scrollTop(),
+					docHeight = ($(document).height() - $(window).height());
 				el.append(content);
-				// Scroll!
-				$("html, body").scrollTop($(document).height());
+				// Scroll if on view-log and "locked" to bottom of scrolling window
+				if ($("body").hasClass("view-log") && (curScroll + 30) > docHeight) {
+					$("html, body").scrollTop($(document).height());
+				}
 			},
 
 			/**
