@@ -3,10 +3,10 @@ var configuration = require("./lib/configuration.js"),
 	fs = require("fs"),
 	express = require("express"),
 	app = express(),
+	redirect = require("express-redirect"),
 	expressAuth = require("./lib/express-auth.js"),
 	builder = require("./lib/builder.js"),
 	api = require("./lib/api.js"),
-	//	slashes = require("connect-slashes"),
 	socket_log = false,
 	mode = "production",
 	root;
@@ -45,11 +45,11 @@ if (process.argv[2] && process.argv[2] === "dev") {
 	app.use(express.errorHandler());
 }
 
-// fix trailing slashes (or lack thereof)
-//app.use(slashes);
-
 // Set global config
 config = configuration.get();
+
+// Mount redirect plugin
+redirect(app);
 
 /**
  * Watch config for changes ##########################################
@@ -152,6 +152,9 @@ app.del("/api/:type/*", function (req, res) {
 /**
  * Static Server #####################################################
  */
+
+app.redirect("/view/:project/?", "/view/:project/", 301);
+
 // Get by project route
 app.get("/view/:project/*", expressAuth, function (req, res) {
 	var project = req.params.project;
