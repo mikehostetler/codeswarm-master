@@ -1,8 +1,33 @@
 module.exports = function ( grunt ) {
+    var TESTS = {
+        base: "test/",
+        coverage: 90
+    };
 
     grunt.initConfig({
         pkg: grunt.file.readJSON("package.json"),
-        
+
+        /**
+         * Unit Tests
+         */
+        mocha: {
+            all: [TESTS.base + "**/*.html"],
+            options: {
+                run: false
+            }
+        },
+
+        /**
+         * Code coverage and unit tests
+         */
+        blanket_mocha: {
+            all: [TESTS.base + "**/*.html"],
+            options: {
+                threshold: TESTS.coverage,
+                run: false
+            }
+        },
+
         /**
          * JSBeautifier
          */
@@ -15,7 +40,7 @@ module.exports = function ( grunt ) {
                         fileTypes: [".js"]
                     },
                     html: {
-                        fileTypes: ['.tpl']
+                        fileTypes: [".tpl"]
                     }
                 }
             },
@@ -26,7 +51,7 @@ module.exports = function ( grunt ) {
                 }
             }
         },
-        
+
         /**
          * JSHint
          */
@@ -50,7 +75,7 @@ module.exports = function ( grunt ) {
                 }
             }
         },
-        
+
         /**
          * RequireJS
          */
@@ -65,7 +90,7 @@ module.exports = function ( grunt ) {
                 }
             }
         },
-        
+
         /**
          * Copy files into dist from src
          */
@@ -83,7 +108,7 @@ module.exports = function ( grunt ) {
                 ]
             }
         },
-        
+
         /**
          * Minify CSS file
          */
@@ -96,7 +121,7 @@ module.exports = function ( grunt ) {
                 ext: ".css"
             }
         },
-        
+
         /**
          * Watch
          */
@@ -115,7 +140,7 @@ module.exports = function ( grunt ) {
             }
         }
     });
-    
+
     // Load NPM Tasks
     grunt.loadNpmTasks("grunt-jsbeautifier");
     grunt.loadNpmTasks("grunt-contrib-jshint");
@@ -123,8 +148,12 @@ module.exports = function ( grunt ) {
     grunt.loadNpmTasks("grunt-contrib-copy");
     grunt.loadNpmTasks("grunt-contrib-cssmin");
     grunt.loadNpmTasks("grunt-contrib-watch");
-    
+    grunt.loadNpmTasks("grunt-blanket-mocha");
+
     // Register Tasks
-    grunt.registerTask("default", ["jsbeautifier", "jshint", "requirejs", "copy", "cssmin"]);
-    
+    // Test
+    grunt.registerTask("test", "Beautify js files and run mocha unit tests and blanket code coverage." , ["jsbeautifier", "jshint", "blanket_mocha"]);
+    // Default 
+    grunt.registerTask("default", "Build project for production.",  ["jsbeautifier", "jshint", "blanket_mocha", "requirejs", "copy", "cssmin"]);
+
 };
