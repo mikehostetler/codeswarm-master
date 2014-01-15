@@ -74,6 +74,10 @@ body {
     background: #30373a;
 }
 
+@media (max-width: 37.5em) {
+	body { overflow-x: hidden; }
+}
+
 .global-nav--open {
     overflow: hidden;
 }
