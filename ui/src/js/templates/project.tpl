@@ -23,7 +23,7 @@
 		{{#if repo}}
 		<p>{{repo}}</p>
 		{{else}}
-		<input id="project-repo" required="true" name="repo" type="text" title="Enter the clone URL" placeholder="user@path-to-git/repo.git">
+		<input id="project-repo" required="true" name="repo" type="text" title="Enter the clone URL" placeholder="git://github.com/username/project.git">
 		{{/if}}
 	    <h4>Branch</h4>
 	    {{#if branch}}

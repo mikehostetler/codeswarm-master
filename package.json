@@ -12,7 +12,10 @@
     "ansi_up": "~1.0.0",
     "bower": "~1.2.7",
     "socket.io": "~0.9.0",
-    "express-redirect": "~1.1.0"
+    "express-redirect": "~1.1.0",
+    "underscore": "~1.5.2",
+    "underscore.deferred": "~0.4.0",
+    "forever-monitor": "~1.2.3"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
