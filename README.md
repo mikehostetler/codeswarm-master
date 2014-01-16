@@ -116,8 +116,8 @@ http://yourserver.com/statusicon/{PROJECT}.png
 
 Which will return one of the following based on the current status:
 
-![Passing](lib/status_icons/build-passing.png)
-![Passing](lib/status_icons/build-pending.png)
+![Passing](lib/status_icons/build-passing.png)&nbsp;&nbsp;
+![Passing](lib/status_icons/build-pending.png)&nbsp;&nbsp;
 ![Passing](lib/status_icons/build-failing.png)
 
 
