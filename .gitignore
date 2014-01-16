@@ -5,3 +5,4 @@ temp/
 ui/src/js/vendor
 config.json
 .sessions
+/deploy_key

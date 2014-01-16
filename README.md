@@ -15,7 +15,7 @@ and once running administration is extremely minimal.
 3. Run `grunt` to build the application
 4. Rename `/config.json.example` to `/config.json`
 5. Edit any settings in `/config.json`, specifically change the default `token`
-6. (Optional) Copy the contents of your servers pub-key into `/deploy_key`
+6. (Optional) Copy the contents of your server's private SSH key into `/deploy_key`
 7. Start the service via `node index.js`
 
 You can then navigate to the dashboard by opening the following in your browser:
@@ -105,6 +105,36 @@ node index.js dev
 
 The above will run the server in a verbose mode and serve the UI from the `/src`
 directory.
+
+## Advanced Express Support
+
+A repo can request that a separate instance of Express be created to serve its content.
+To enable this functionality, the repo's `.vouch.json` file must include an "express" object
+with the following information:
+
+```javascript
+{
+	"express": {
+		"script": "express.vouch.js", // A file within the root of the repo
+		"port": 8085 // The desired port
+	}
+}
+```
+
+The `express.vouch.js` file that our configuration referenced is a Node script responsible
+for creating the Express instance. The important thing to note is that this script should
+determine the port to be used by referencing `process.argv[2]`. An example follows:
+
+```javascript
+var port = process.argv[2];
+var express = require('express');
+var server = express(); // better instead
+server.configure(function(){
+	server.use('/', express.static(__dirname + '/src'));
+	server.use(express.static(__dirname + '/example'));
+});
+server.listen(port);
+```
 
 ## Status Icons
 
