@@ -106,6 +106,21 @@ node index.js dev
 The above will run the server in a verbose mode and serve the UI from the `/src`
 directory.
 
+## Status Icons
+
+The system provides status icons for embedding on sites / repos:
+
+```
+http://yourserver.com/statusicon/{PROJECT}.png
+```
+
+Which will return one of the following based on the current status:
+
+![Passing](lib/status_icons/build-passing.png)
+![Passing](lib/status_icons/build-pending.png)
+![Passing](lib/status_icons/build-failing.png)
+
+
 ## License
 
 Vouch is released under the MIT License.

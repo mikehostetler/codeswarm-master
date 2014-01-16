@@ -130,6 +130,30 @@ app.post("/deploy/:project", function (req, res) {
 });
 
 /**
+ * Status icons
+ */
+app.get("/statusicon/*", function (req, res) {
+	var project = req.params[0].replace(".png", ""),
+		statusicon;
+	if (!config.projects.hasOwnProperty(project)) {
+		res.send(404, "Project not found");
+	} else {
+		if (!config.projects[project].hasOwnProperty("state") || config.projects[project].state.status === "processing") {
+			statusicon = fs.readFileSync(__dirname + "/lib/status_icons/build-pending.png");
+		} else if (config.projects[project].state.status === "fail") {
+			statusicon = fs.readFileSync(__dirname + "/lib/status_icons/build-failing.png");
+		} else {
+			statusicon = fs.readFileSync(__dirname + "/lib/status_icons/build-passing.png");
+		}
+		// Respond with image
+		res.writeHead(200, {
+			"Content-Type": "image/png"
+		});
+		res.end(statusicon, "binary");
+	}
+});
+
+/**
  * API ##############################################################
  */
 
