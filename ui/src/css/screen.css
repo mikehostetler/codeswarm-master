@@ -415,7 +415,7 @@ header {
 .menu-button {
     float: left;
     margin: .938em 0 0;
-    color: #f2f2f2;
+    color: #f2f2f2 !important;
     font-size: 1em;
 }
 

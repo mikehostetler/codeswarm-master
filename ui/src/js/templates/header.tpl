@@ -1,5 +1,5 @@
 {{#auth}}
-<a class="menu-button">
+<a class="menu-button" href="#/projects">
     <i class="fa fa-check-circle"></i>Vouch
 </a>
 
