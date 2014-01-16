@@ -1,0 +1,2 @@
+Optional: Rename this file to `deploy_key` and place the contents of your server's
+private SSH key into it.
