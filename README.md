@@ -128,7 +128,7 @@ determine the port to be used by referencing `process.argv[2]`. An example follo
 ```javascript
 var port = process.argv[2];
 var express = require('express');
-var server = express(); // better instead
+var server = express();
 server.configure(function(){
 	server.use('/', express.static(__dirname + '/src'));
 	server.use(express.static(__dirname + '/example'));
