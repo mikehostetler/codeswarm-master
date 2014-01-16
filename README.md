@@ -15,7 +15,7 @@ and once running administration is extremely minimal.
 3. Run `grunt` to build the application
 4. Rename `/config.json.example` to `/config.json`
 5. Edit any settings in `/config.json`, specifically change the default `token`
-6. (Optional) Copy the contents of your server's private into `/deploy_key`
+6. (Optional) Copy the contents of your server's private SSH key into `/deploy_key`
 7. Start the service via `node index.js`
 
 You can then navigate to the dashboard by opening the following in your browser:
