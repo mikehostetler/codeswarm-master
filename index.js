@@ -165,7 +165,7 @@ app.del("/api/:type/*", function (req, res) {
  * Sockets ###########################################################
  */
 
-io = require("socket.io").listen(app.listen(config.app.port), {
+io = require("socket.io").listen(app.listen(config.app.port, onListen), {
 	log: socket_log
 });
 io.sockets.on("connection", function (socket) {
@@ -178,4 +178,6 @@ io.sockets.on("connection", function (socket) {
  * Start Msg #########################################################
  */
 
-console.log("Vouch Service running over " + config.app.port + " in " + mode + " mode from " + root);
+function onListen() {
+	console.log("Vouch Service running over " + config.app.port + " in " + mode + " mode from " + root);
+}
