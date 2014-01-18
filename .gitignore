@@ -2,6 +2,7 @@ node_modules/
 builds/
 logs/
 temp/
+ui/dist/
 ui/src/js/vendor
 config.json
 .sessions
