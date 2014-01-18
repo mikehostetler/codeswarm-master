@@ -9,7 +9,7 @@ var configuration = require("./lib/configuration.js"),
 	api = require("./lib/api.js"),
 	socket_log = false,
 	mode = "production",
-	root;
+	root, onListen;
 
 /**
  * Default expressjs configuration
@@ -236,6 +236,6 @@ io.sockets.on("connection", function (socket) {
  * Start Msg #########################################################
  */
 
-function onListen() {
+onListen = function () {
 	console.log("Vouch Service running over " + config.app.port + " in " + mode + " mode from " + root);
-}
+};
