@@ -1,7 +1,6 @@
 # Vouch-CD
 
-Vouch is a simple, [NodeJS](http://www.nodejs.org) server that provides continuous
-integration and deployment/staging.
+A simple continuous integration and deployment server for building and deploying apps through NodeJS.
 
 ## Getting Started
 
