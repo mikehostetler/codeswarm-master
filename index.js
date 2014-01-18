@@ -24,8 +24,7 @@ app.use(express.urlencoded());
 // methodOverride middleware (PUT, DELETE)
 app.use(express.methodOverride());
 
-
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
 	// express setting for development environment
 	socket_log = true;
 	mode = "development";
