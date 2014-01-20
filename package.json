@@ -1,29 +1,32 @@
 {
-    "name": "VouchCD",
-    "version": "0.0.7",
-    "description": "A simple server for node-based continuous integration and deployment",
-    "readmeFilename": "README.md",
-    "dependencies": {
-        "express": "~3.3.0",
-        "gift": "~0.1.0",
-        "fs-extra": "~0.8.0",
-        "async": "~0.2.5",
-        "nodemailer": "~0.5.0",
-        "connect-slashes": "~1.0.0",
-        "ansi_up": "~1.0.0",
-        "bower": "~1.2.7",
-        "socket.io": "~0.9.0"
-    },
-    "devDependencies": {
-        "grunt": "~0.4.1",
-        "grunt-jsbeautifier": "~0.2.0",
-        "grunt-contrib-jshint": "~0.6.4",
-        "grunt-contrib-requirejs": "~0.4.1",
-        "grunt-contrib-copy": "~0.4.1",
-        "grunt-contrib-cssmin": "~0.7.0",
-        "grunt-contrib-watch": "~0.5.1"
-    },
-    "scripts": {
-        "postinstall": "./node_modules/.bin/bower install"
-    }
+  "name": "VouchCD",
+  "version": "0.0.7",
+  "description": "A simple server for node-based continuous integration and deployment",
+  "readmeFilename": "README.md",
+  "dependencies": {
+    "express": "~3.3.0",
+    "gift": "~0.1.0",
+    "fs-extra": "~0.8.0",
+    "async": "~0.2.5",
+    "nodemailer": "~0.5.0",
+    "connect-slashes": "~1.0.0",
+    "ansi_up": "~1.0.0",
+    "bower": "~1.2.7",
+    "socket.io": "~0.9.0",
+    "nano": "~4.3.0",
+    "cookie": "~0.1.0"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-jsbeautifier": "~0.2.0",
+    "grunt-contrib-jshint": "~0.6.4",
+    "grunt-contrib-requirejs": "~0.4.1",
+    "grunt-contrib-copy": "~0.4.1",
+    "grunt-contrib-cssmin": "~0.7.0",
+    "grunt-contrib-watch": "~0.5.1",
+    "tap": "~0.4.8"
+  },
+  "scripts": {
+    "postinstall": "./node_modules/.bin/bower install"
+  }
 }
