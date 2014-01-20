@@ -31,7 +31,6 @@ function createUser(user, cb) {
   };
 
   db.privileged('_users', function(err, db) {
-    console.log('privileged:', err);
     if (err) cb(err);
     else {
       db.insert(user, id, replied);
