@@ -1,9 +1,10 @@
 define([
 	"controllers/dom",
 	"controllers/requests",
+	"controllers/session",
 	"controllers/router",
 	"controllers/timestamp"
-], function (dom, requests, Router, timestamp) {
+], function (dom, requests, session, Router, timestamp) {
 	var router,
 		projects;
 
@@ -14,7 +15,9 @@ define([
 		showList: function () {
 
 			var self = this,
-				req = requests.get("/api/projects/");
+				req = requests.get("/api/projects/"),
+				acl_data = {},
+				base_href = location.protocol + "//" + location.hostname + (location.port ? ":" + location.port : "");
 
 			req.done(function (data) {
 				var proj;
@@ -22,9 +25,20 @@ define([
 				for (proj in data) {
 					if (data[proj].state) {
 						data[proj].state.timestamp = timestamp(data[proj].state.id);
+						data[proj].view = base_href + "/view/" + data[proj].dir + "/";
 					}
 				}
-				dom.loadProjects(data, self);
+				// Check ACL
+				session.getACL(function (acl) {
+					if (acl.projects === "all") {
+						dom.loadProjects(data, self);
+					} else {
+						for (var i = 0, z = acl.projects.length; i < z; i++) {
+							acl_data[acl.projects[i]] = data[acl.projects[i]];
+						}
+						dom.loadProjects(acl_data, self, true);
+					}
+				});
 			});
 
 			req.fail(function () {
@@ -113,13 +127,15 @@ define([
 			} else {
 				data.auth = false;
 			}
+			// Set blank branch to master
+			data.branch = (data.branch === "") ? "master" : data.branch;
 			// Send to API
 			if (data.id === "new-project") {
 				// Create new (PUT)
 				req = requests.put("/api/project/", {
 					dir: data.name,
 					repo: data.repo,
-					brach: data.branch || "master",
+					branch: data.branch || "master",
 					auth: data.auth
 				});
 

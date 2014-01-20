@@ -2,33 +2,85 @@
 
 A simple continuous integration and deployment server for building and deploying apps through NodeJS.
 
-## Installation & Startup
+## Getting Started
 
-Run the `npm install` command in the project directory to install all dependencies, then `grunt` to 
-build the application. The application itself can be started by calling `node index.js`. It is recommended 
-you use [forever](https://github.com/nodejitsu/forever) for running the server long term.
+Installation of Vouch is meant to be very simple, there is no database to configure
+and once running administration is extremely minimal.
 
-## Usage
+### System Installation & Startup
 
-The server will build a project from a Git repo when the URL is triggered with a `POST`:
+1. Clone the repo to your server
+2. Run `npm install` to pull the dependencies
+3. Run `grunt` to build the application
+4. Rename `/config.json.example` to `/config.json`
+5. Edit any settings in `/config.json`, specifically change the default `token`
+6. (Optional) Copy the contents of your server's private SSH key into `/deploy_key`
+7. Start the service via `node index.js`
+
+You can then navigate to the dashboard by opening the following in your browser:
 
 ```html
-http(s)://yourserver.com:{APP-PORT}/deploy/{PROJECT-NAME}
+http(s)://yourserver.com:{BUILD-PORT}/
 ```
 
-### Configuration
+Once logged in you can setup a project by clicking the *New Project* button. The
+creation process is as simple as putting in the address of the Git repo. The system
+will automatically generate the Deploy Hook URL when creating the project.
 
-**Server Configuration**
+You can also set which branch the server should build from as well as an (optional)
+username and password for viewing the build.
 
-The server uses `config.json` to set application runtime params as well as build projects.
+### Project Setup
 
-The first section is the `app` configuration:
+The Deploy Hook URL generated when the project is created can be added to the
+[Github Post-Receive Hooks](https://help.github.com/articles/post-receive-hooks)
+and the Deploy Key added to the project's [Github Deploy Keys](https://help.github.com/articles/managing-deploy-keys#deploy-keys).
+This will allow the project to trigger the build process whenever a push is made
+to the repository.
+
+In order for projects to build properly, they must have a `.vouch.json` config file
+in their root. An example of this file is:
 
 ```json
-"app": {
-    "port": 8080,
-    "logs": "./logs/",
-    "builds": "./builds/",
+{
+    "dir": "/dist",
+    "default": "index.html",
+    "run": [
+        "npm install",
+        "grunt"
+    ],
+    "notify": [
+        "jsmith@email.com",
+        "fbar@email.com"
+    ]
+}
+```
+
+This file serves several important purposes:
+
+**The `dir` and `default` establish the staging configuration**
+
+When the build is successful it will be available through the browser at
+`http://yourserver.com/view/PROJECT_NAME` and the server will load `dir` as the
+root and `default` as the default file to serve.
+
+**The `run` commands are fired during build**
+
+These commands will be called by the system once the repository is successfully
+pulled and setup.
+
+**The `notify` array contains those working on the project**
+
+Not only will these email addresses recieve notifications on build failures, they
+are also able to access the logs for this (and any other projects) they are listed
+on.
+
+### Mail Configuration
+
+In order to receive email notifications from the system, the following must be
+added to the `/config.json` under the `app` properties:
+
+```json
     "mailer": {
         "host": "smtp.yourserver.com",
         "secureConnection": true,
@@ -37,96 +89,73 @@ The first section is the `app` configuration:
             "user": "user@yourserver.com",
             "pass": "password"
         }
-    },
-    "tokens": [
-        "1234567890"
-    ]
-}
+    }
 ```
 
-Which sets the port, log directory, build directory, mailer configuration and UI access tokens.
+## Run Modes
 
-Add your server's public key to the `/deploy_key` file to make the deploy key available in the UI.
+When you are running Vouch in production mode there are no flags/arguments
+required, however, if you are modifying the server or the contents of `/src` you
+can run the server in development mode via:
 
-The second section is `projects` which sets the parameters for build projects:
-
-```json
-"projects": {
-    "{PROJECT-NAME}" : {
-        "dir": "{PROJECT-DIRECTORY}",
-        "repo": "{PROJECT-REPO}",
-        "auth": {
-            "user": "{VIEW-USER}",
-            "pass": "{VIEW-PASS}"
-        }
-    },
-    {...}
-}
+```
+node index.js dev
 ```
 
-* `PROJECT-NAME` is a reference to the project (and the trigger)
-* `PROJECT-DIRECTORY` is the directory (inside `/builds`) where the project will reside
-* `PROJECT-REPO` is the SSH URL to the repository
-* HTTP Build-View Authentication, set to `false` for no authentication
-    * `VIEW-USER` is the username for accessing the completed build
-    * `VIEW-PASS` is the password for accessing the completed build
+The above will run the server in a verbose mode and serve the UI from the `/src`
+directory.
 
-The `projects.{PROJECT-NAME}` object is also automatically populated with a `state` child object 
-once (and every subsequent time) a project is run through the build/deploy process. The `state` 
-child object contains information about the last build like the status, scripts run, and log name.
+## Advanced Express Support
 
-**Project Configuration**
+A repo can request that a separate instance of Express be created to serve its content.
+To enable this functionality, the repo's `.vouch.json` file must include an "express" object
+with the following information:
 
-The second configration is in the project repository itself in the `.vouch.json` file:
-
-```json
+```javascript
 {
-    "dir": "{DIST-DIRECTORY}",
-    "default": "{DEFAULT-FILE}",
-    "run": [
-        "{COMMAND}",
-        "{COMMAND}",
-        ...
-    ],
-    "notify": [
-        "{USER_EMAIL}",
-        "{USER_EMAIL}",
-        ...
-    ]
+	"express": {
+		"script": "express.vouch.js", // A file within the root of the repo
+		"port": 8085 // The desired port
+	}
 }
 ```
 
-* `DIST-DIRECTORY` is the directory of the build to run, leave empty for root
-* `DEFAULT-FILE` is the default file to serve when serving the build over http
-* `COMMAND` is any task or command to run in order to build the project
-* `USER_EMAIL` is any email address you would like to recieve a notification if the build fails
+The `express.vouch.js` file that our configuration referenced is a Node script responsible
+for creating the Express instance. The important thing to note is that this script should
+determine the port to be used by referencing `process.argv[2]`. An example follows:
 
-### Logging
-
-All steps of the build process are stored in a log file located in the `logs` directory 
-in a folder matching the server config's `PROJECT-NAME`. The log file's name is returned 
-in the HTTP response when the build is triggered.
-
-### Accessing the Dashboard
-
-To access the system from your web browser, go to:
-
-```html
-http(s)://yourserver.com:{BUILD-PORT}/dashboard/
+```javascript
+var port = process.argv[2];
+var express = require('express');
+var server = express();
+server.configure(function(){
+	server.use('/', express.static(__dirname + '/src'));
+	server.use(express.static(__dirname + '/example'));
+});
+server.listen(port);
 ```
 
-The token for access will be in the `tokens` section of the config.
+## Status Icons
 
-### Accessing Builds
+The system provides status icons for embedding on sites / repos:
 
-Once a build passes it is served through Express at the following URL:
-
-```html
-http(s)://yourserver.com:{BUILD-PORT}/view/{PROJECT-NAME}
+```
+http://yourserver.com/statusicon/{PROJECT}.png
 ```
 
-It runs off the configuration set in the `.vouch.json` file to load the appropriate distribution 
-directory and default file.
+Which will return one of the following based on the current status:
 
-If the `auth` object in `config.json` is set for the project, the user will be prompted to enter a username and password.
+![Passing](lib/status_icons/build-passing.png)&nbsp;&nbsp;
+![Passing](lib/status_icons/build-pending.png)&nbsp;&nbsp;
+![Passing](lib/status_icons/build-failing.png)
 
+
+## License
+
+Vouch is released under the MIT License.
+
+Disclaimer: This is an appendTo Labs project and as such there is no promise of
+support or even future development of this project. We are working on this project
+to meet a need at appendTo and sharing it in the spirit of open source software.
+If it helps you or your team meet needs as well, that is awesome – however, use
+at your own risk.

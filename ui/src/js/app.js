@@ -4,9 +4,8 @@ define([
 	"controllers/router",
 	"controllers/projects",
 	"controllers/logs",
-	"controllers/tokens",
 	"controllers/socket"
-], function (dom, session, Router, projects, logs, tokens) {
+], function (dom, session, Router, projects, logs) {
 	var app;
 
 	app = {
@@ -37,6 +36,7 @@ define([
 			router.on("/", function () {
 				if (!session.get()) {
 					dom.loadLogin();
+					dom.setBodyClass("login");
 					session.getLogin();
 				} else {
 					router.go("/projects");
@@ -47,6 +47,7 @@ define([
 			router.on("/projects", function () {
 				checkedRun(function () {
 					projects.showList();
+					dom.setBodyClass("project-list");
 				});
 			});
 
@@ -54,6 +55,7 @@ define([
 			router.on("/logs/:project", function (project) {
 				checkedRun(function () {
 					logs.showList(project);
+					dom.setBodyClass("project-logs");
 				});
 			});
 
@@ -61,20 +63,22 @@ define([
 			router.on("/logs/:project/:log", function (project, log) {
 				checkedRun(function () {
 					logs.showLog(project, log);
+					dom.setBodyClass("view-log");
 				});
 			});
 
 			// Show Project
 			router.on("/project/:project", function (project) {
 				checkedRun(function () {
-					projects.showProject(project);
-				});
-			});
-
-			// Show tokens
-			router.on("/tokens", function () {
-				checkedRun(function () {
-					tokens.showList();
+					// Ensure administrative login
+					session.getACL(function (acl) {
+						if (acl.projects === "all") {
+							projects.showProject(project);
+							dom.setBodyClass("view-project");
+						} else {
+							router.go("/");
+						}
+					});
 				});
 			});
 
