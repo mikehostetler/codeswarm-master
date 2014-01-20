@@ -9,9 +9,7 @@
 
 var extend  = require('util')._extend;
 var cookie  = require('cookie');
-var couch   = require('./');
-var _users  = couch.db.use('_users');
-
+var db      = require('./');
 
 /// create
 
@@ -19,24 +17,26 @@ exports.create = createUser;
 
 function createUser(user, cb) {
   if (! user) throw new Error('Need user');
-  if (! user._id) throw new Error('Need user._id');
+  if (! user.name) throw new Error('Need user.name');
   if (! user.password) throw new Error('Need user.password');
 
-  var id = 'org.couchdb.user:' + user._id;
-
-  // Unfortunately can't seam to be able to use nano here
-  // since couchdb is expecting a non-escaped ':' character in the URL...
+  var id = userId(user.name);
 
   user = {
     _id: id,
-    name:     user._id,
+    name:     user.name,
     type:     'user',
     roles:    [],
     password: user.password
   };
 
-  _users.insert(user, id, replied);
-
+  db.privileged('_users', function(err, db) {
+    console.log('privileged:', err);
+    if (err) cb(err);
+    else {
+      db.insert(user, id, replied);
+    }
+  });
 
   function replied(err) {
     if (err && err.status_code == '409')
@@ -51,7 +51,7 @@ function createUser(user, cb) {
 exports.authenticate = authenticate;
 
 function authenticate(username, password, callback) {
-  couch.auth(username, password, replied);
+  db.public.auth(username, password, replied);
 
   function replied(err, body, headers) {
     if (err) callback(err);
@@ -59,8 +59,39 @@ function authenticate(username, password, callback) {
       var sessionId;
       var header = headers['set-cookie'][0];
       if (header) sessionId = cookie.parse(header).AuthSession;
-      callback(null, sessionId);
+      callback(null, sessionId, username);
     }
   }
 }
 
+
+/// session-protected:
+
+exports.session = session;
+
+function session(db, username, sessionId) {
+  var ret = {};
+  var _users = db.use('_users');
+
+  ret.remove = removeUser;
+
+  return ret;
+
+  function removeUser(cb) {
+      var id = userId(username);
+    _users.get(id, got);
+
+    function got(err, user) {
+      if (err) cb(err);
+      else _users.destroy(id, user._rev, cb);
+    }
+  }
+
+}
+
+
+//// Common
+
+function userId(id) {
+  return 'org.couchdb.user:' + id;
+}

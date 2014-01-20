@@ -27,6 +27,7 @@
     "tap": "~0.4.8"
   },
   "scripts": {
-    "postinstall": "./node_modules/.bin/bower install"
+    "postinstall": "./node_modules/.bin/bower install",
+    "test": "node_modules/.bin/tap tests/unit/db/*.test.js"
   }
 }
