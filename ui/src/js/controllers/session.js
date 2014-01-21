@@ -31,11 +31,15 @@ define([
 			$(dom.login).on("submit", function (e) {
 				e.preventDefault();
 				var $this = $(this),
-					token = dom.getValue($this, "token"),
-					req = requests.get("/api/token/" + token);
+					username = dom.getValue($this, "username"),
+					password = dom.getValue($this, "password"),
+					req = requests.post("/api/sessions", {
+						username: username,
+						password: password
+					});
 
-				req.done(function () {
-					self.set(token);
+				req.done(function (response) {
+					self.set(response.session);
 					if (localStorage.getItem("route")) {
 						// User has saved route, pass them there
 						router.go(localStorage.getItem("route"));

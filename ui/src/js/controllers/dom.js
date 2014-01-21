@@ -3,6 +3,7 @@ define([
 		"handlebars",
 		"controllers/timestamp",
 		"text!templates/header.tpl",
+		"text!templates/signup.tpl",
 		"text!templates/login.tpl",
 		"text!templates/menu.tpl",
 		"text!templates/projects.tpl",
@@ -10,7 +11,7 @@ define([
 		"text!templates/logs.tpl",
 		"text!templates/logview.tpl"
 	],
-	function ($, Handlebars, timestamp, header, login, menu, projects, project, logs, logview) {
+	function ($, Handlebars, timestamp, header, signup, login, menu, projects, project, logs, logview) {
 		var dom;
 
 		dom = {
@@ -28,7 +29,8 @@ define([
 			$notification: null,
 
 			// Named els
-			login: "#login",
+			login:  "#login",
+			signup: "#signup",
 
 			init: function () {
 
@@ -124,6 +126,18 @@ define([
 				this.$menu.removeClass("menu-open");
 				this.$shadowblock = this.$header.find("#shadow-block");
 				this.$shadowblock.removeClass("menu-open");
+			},
+
+			/**
+			 * Load the signup form
+			 */
+			loadSignup: function () {
+				this.loaded = false;
+				this.$main
+					.html(signup)
+					.find("input:first-of-type")
+					.focus();
+				this.loadHeader(false);
 			},
 
 			/**
@@ -360,7 +374,7 @@ define([
 
 			// Proxy for showNotifcation
 			showError: function (message) {
-				this.showNotification("error", message);
+				this.showNotification("error", message || 'Unknown Error');
 			},
 
 			// Proxy for showNotification

@@ -1,11 +1,12 @@
 define([
 	"controllers/dom",
 	"controllers/session",
+	"controllers/users",
 	"controllers/router",
 	"controllers/projects",
 	"controllers/logs",
 	"controllers/socket"
-], function (dom, session, Router, projects, logs) {
+], function (dom, session, users, Router, projects, logs) {
 	var app;
 
 	app = {
@@ -41,6 +42,13 @@ define([
 				} else {
 					router.go("/projects");
 				}
+			});
+
+			// Home
+			router.on("/users/new", function () {
+				dom.loadSignup();
+				dom.setBodyClass("signup");
+				users.getSignup();
 			});
 
 			// Projects list

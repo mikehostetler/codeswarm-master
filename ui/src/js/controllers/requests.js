@@ -7,7 +7,8 @@ define([
 		get: function (url) {
 			var get = $.ajax({
 				type: "GET",
-				url: url
+				url: url,
+				dataType: 'json'
 			});
 
 			return get;
@@ -17,7 +18,8 @@ define([
 			return $.ajax({
 				type: "PUT",
 				url: url,
-				data: payload
+				data: payload,
+				dataType: 'json'
 			});
 		},
 
@@ -25,14 +27,16 @@ define([
 			return $.ajax({
 				type: "POST",
 				url: url,
-				data: payload
+				data: payload,
+				dataType: 'json'
 			});
 		},
 
 		delete: function (url) {
 			return $.ajax({
 				type: "DELETE",
-				url: url
+				url: url,
+				dataType: 'json'
 			});
 		}
 	};

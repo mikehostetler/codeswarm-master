@@ -18,7 +18,8 @@
     "forever-monitor": "~1.2.3",
     "underscore.deferred": "~0.4.0",
     "nano": "~4.3.0",
-    "cookie": "~0.1.0"
+    "cookie": "~0.1.0",
+    "joi": "~2.3.1"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

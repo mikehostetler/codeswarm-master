@@ -7,11 +7,16 @@
 
 	<form id="login">
 
-	    <label>Token</label>
-	    <input type="text" placeholder="Token or Email Address" name="token">
+	    <label>User name</label>
+	    <input type="text" placeholder="User name" name="username">
+
+      <label>Password</label>
+      <input type="password" placeholder="Password" name="password">
 
 	    <button>Login</button>
 
 	</form>
+
+  <p style="clear:both"><a href="#/users/new">Create new account</a>
 
 </div>

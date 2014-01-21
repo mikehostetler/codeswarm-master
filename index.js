@@ -11,6 +11,12 @@ var configuration = require("./lib/configuration.js"),
 	mode = "production",
 	root, onListen;
 
+/// Controllers
+
+var users    = require('./controllers/users');
+var sessions = require('./controllers/sessions');
+
+
 /**
  * Default expressjs configuration
  */
@@ -153,6 +159,18 @@ app.get("/statusicon/*", function (req, res) {
 /**
  * API ##############################################################
  */
+
+/// Users
+
+app.post("/api/users", users.create.validate, users.create);
+
+
+/// Sessions
+
+app.post("/api/sessions", sessions.create.validate, sessions.create);
+
+
+/// Others
 
 app.get("/api/:type/*", function (req, res) {
 	api.get(req, res);
