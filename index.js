@@ -11,6 +11,13 @@ var configuration = require("./lib/configuration.js"),
 	mode = "production",
 	root, onListen;
 
+
+/// Middleware
+
+var sessionMW   = require('./lib/session');
+var requireUser = require('./lib/require_user');
+
+
 /// Controllers
 
 var users    = require('./controllers/users');
@@ -173,7 +180,11 @@ app.post("/api/sessions", sessions.create.validate, sessions.create);
 
 /// Projects
 
-app.post('/api/projects', projects.create.validate, projects.create);
+app.post('/api/projects',
+	sessionMW,
+	requireUser,
+	projects.create.validate,
+	projects.create);
 
 /// Others
 

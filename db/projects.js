@@ -10,7 +10,8 @@ function createProject(project, cb) {
 
   project = {
     repo:   project.repo,
-    branch: project.branch
+    branch: project.branch,
+    owners: project.owners
   };
 
   ( function _createProject() {

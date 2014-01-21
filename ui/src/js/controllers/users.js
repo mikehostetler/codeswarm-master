@@ -27,12 +27,7 @@ define([
           router.go("/");
         });
 
-        req.fail(function (xhr) {
-          var err = xhr.responseText;
-          if (err && err.message) err = err.message;
-
-          dom.showError(err);
-        });
+        req.fail(dom.showXhrError);
       });
     }
   };

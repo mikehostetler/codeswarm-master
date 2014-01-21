@@ -1,4 +1,5 @@
 var Joi      = require('joi');
+var extend   = require('util')._extend;
 var projects = require('../../db/projects');
 
 exports = module.exports = createProject;
@@ -22,7 +23,9 @@ function validate(req, res, next) {
 /// Create
 
 function createProject(req, res, next) {
-  projects.create(req.body, replied);
+  var project = extend({}, req.body);
+  project.owners = [ req.session.userCtx.name ];
+  projects.create(project, replied);
 
   function replied(err, reply) {
     if (err) res.send(err.status_code || 500, err);

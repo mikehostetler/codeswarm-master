@@ -28,10 +28,10 @@ function createUser(user, cb) {
     }
   });
 
-  function replied(err) {
+  function replied(err, res, body) {
     if (err && err.status_code == '409')
       err.message = 'User already exists';
-    cb(err);
+    cb(err, body);
   }
 }
 
