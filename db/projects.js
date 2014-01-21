@@ -14,7 +14,7 @@ function createProject(project, cb) {
     owners: project.owners
   };
 
-  ( function _createProject() {
+  (function _createProject() {
     db.privileged('projects', function(err, db) {
       if (err) cb(err);
       else db.insert(project, project.repo, replied);
@@ -31,7 +31,6 @@ function createProject(project, cb) {
           err.message = 'Project already exists';
         cb(err, reply);
       }
-
     }
   })();
 }
