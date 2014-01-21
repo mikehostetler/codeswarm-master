@@ -378,6 +378,14 @@ define([
 				this.showNotification("error", message || 'Unknown Error');
 			},
 
+			showXhrError: function (xhr) {
+				var message = xhr.responseJSON && xhr.responseJSON.message ||
+				  xhr.responseText ||
+				  "Unknown error";
+
+				dom.showError(message);
+			},
+
 			// Proxy for showNotification
 			showSuccess: function (message) {
 				this.showNotification("success", message);

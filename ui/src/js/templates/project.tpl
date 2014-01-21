@@ -18,7 +18,7 @@
 
 		<h4>Repository</h4>
 
-		<input name="id" type="hidden" value="{{dir}}">
+		<input name="_id" type="hidden" value="{{_id}}">
 
 		{{#if repo}}
 		<p>{{repo}}</p>

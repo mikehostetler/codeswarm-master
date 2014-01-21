@@ -120,23 +120,19 @@ define([
 				req.done(function () {
 					dom.showSuccess("Project successfully created");
 					// Update ID field
-					dom.$main.find("input[name=\"id\"]").val(data.name);
+					dom.$main.find("input[name=\"_id\"]").val(data.name);
 				});
 
-				req.fail(function () {
-					dom.showError("Project could not be created");
-				});
+				req.fail(dom.showXhrError);
 			} else {
 				// Modify object
-				req = requests.post("/api/projects/" + data.id, data);
+				req = requests.post("/api/projects/" + data._id, data);
 
 				req.done(function () {
 					dom.showSuccess("Project successfully saved");
 				});
 
-				req.fail(function (xhr) {
-					dom.showError(xhr.responseText || "Project could not be saved");
-				});
+				req.fail(dom.showXhrError);
 			}
 		},
 

@@ -8,7 +8,6 @@ exports.validate = validate;
 
 /// PENDING: do a proper schema here
 var schema = {
-  dir:    Joi.string(),
   repo:   Joi.string().required().min(3),
   branch: Joi.string().required().min(1),
 };
