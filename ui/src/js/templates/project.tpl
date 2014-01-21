@@ -25,39 +25,32 @@
 		{{else}}
 		<input id="project-repo" required="true" name="repo" type="text" title="Enter the clone URL" placeholder="git://github.com/username/project.git">
 		{{/if}}
-	    <h4>Branch</h4>
-	    {{#if branch}}
-	    <input id="project-branch" required="true" name="branch" type="text" title="Enter the default branch" value="{{branch}}">
-	    {{else}}
-	    <input id="project-branch" name="branch" type="text" title="Default branch" placeholder="master" value="master">
-	    {{/if}}
 
-		<hr>
+    <h4>Branch</h4>
+    {{#if branch}}
+    <input id="project-branch" required="true" name="branch" type="text" title="Enter the default branch" value="{{branch}}">
+    {{else}}
+    <input id="project-branch" name="branch" type="text" title="Default branch" placeholder="master" value="master">
+    {{/if}}
 
-		<h4>View Authentication</h4>
-		<p><em>Leave fields blank for no authentication</em></p>
-
-		<br>
-
-		<label>View User</label>
-		<input name="user" type="text" value="{{auth.user}}">
-
-		<label>View Password</label>
-		<input name="pass" type="text" value="{{auth.pass}}">
-
-		<button>Save</button>
+    {{#unless _id}}
+    	<button class="btn-left">Create</button>
+    {{/unless}}
 
 	</form>
 
 	<hr>
 
-	<h4>Delete This Project</h4>
+	{{#if _id}}
+		<h4>Delete This Project</h4>
 
-	<p>Deleting the project will remove it, all logs, and the current build from the system.</p>
+		<p>Deleting the project will remove it, all logs, and the current build from the system.</p>
 
-	<br>
+		<button id="project-confirm-delete" class="hide btn-left">Confirm Delete</button>
+		<button id="project-cancel-delete" class="hide btn-right">Cancel</button>
+		<button id="project-delete">Delete Project</button>
 
-	<button id="project-confirm-delete" class="hide btn-left">Confirm Delete</button>
-	<button id="project-cancel-delete" class="hide btn-right">Cancel</button>
-	<button id="project-delete">Delete Project</button>
+	{{/if}}
+
+
 </div>

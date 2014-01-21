@@ -15,6 +15,7 @@ var configuration = require("./lib/configuration.js"),
 
 var users    = require('./controllers/users');
 var sessions = require('./controllers/sessions');
+var projects = require('./controllers/projects');
 
 
 /**
@@ -169,6 +170,10 @@ app.post("/api/users", users.create.validate, users.create);
 
 app.post("/api/sessions", sessions.create.validate, sessions.create);
 
+
+/// Projects
+
+app.post('/api/projects', projects.create.validate, projects.create);
 
 /// Others
 

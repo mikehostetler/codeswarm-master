@@ -10,10 +10,18 @@ var loggingIn = false;
 var queue = [];
 
 function privileged(dbName, cb) {
-  if (privilegedCouch) cb(null, privilegedCouch.use(dbName));
-  else {
+  if (! cb && 'function' == typeof dbName) {
+    cb = dbName;
+    dbName = undefined;
+  }
+
+  if (privilegedCouch) {
+    var db = dbName ? privilegedCouch.use(dbName) : privilegedCouch.db;
+    cb(null, db);
+  } else {
     login(function(err, db) {
-      cb(err, db && db.use(dbName));
+      db = dbName ? db.use(dbName) : db.db;
+      cb(err, db);
     });
   }
 }

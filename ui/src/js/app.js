@@ -13,14 +13,14 @@ define([
 
 		init: function () {
 			var router,
-				checkedRun;
+				authenticated;
 			// Start DOM controller
 			dom.init();
 
 			// Routing
 			router = new Router();
 			// Ensures authentication on routed tasks
-			checkedRun = function (fn) {
+			function authenticated(fn) {
 				if (!session.get()) {
 					// Not logged in? Save state, Go home.
 					localStorage.setItem("route", window.location.hash.replace("#", ""));
@@ -53,7 +53,7 @@ define([
 
 			// Projects list
 			router.on("/projects", function () {
-				checkedRun(function () {
+				authenticated(function () {
 					projects.showList();
 					dom.setBodyClass("project-list");
 				});
@@ -61,7 +61,7 @@ define([
 
 			// Logs list
 			router.on("/logs/:project", function (project) {
-				checkedRun(function () {
+				authenticated(function () {
 					logs.showList(project);
 					dom.setBodyClass("project-logs");
 				});
@@ -69,7 +69,7 @@ define([
 
 			// Log output
 			router.on("/logs/:project/:log", function (project, log) {
-				checkedRun(function () {
+				authenticated(function () {
 					logs.showLog(project, log);
 					dom.setBodyClass("view-log");
 				});
@@ -77,7 +77,7 @@ define([
 
 			// Show Project
 			router.on("/project/:project", function (project) {
-				checkedRun(function () {
+				authenticated(function () {
 					// Ensure administrative login
 					session.getACL(function (acl) {
 						if (acl.projects === "all") {
@@ -87,6 +87,13 @@ define([
 							router.go("/");
 						}
 					});
+				});
+			});
+
+			router.on("/project/new", function() {
+				console.log('new project');
+				authenticated(function () {
+					dom.loadProject({}, projects);
 				});
 			});
 

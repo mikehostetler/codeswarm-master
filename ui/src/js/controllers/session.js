@@ -67,6 +67,9 @@ define([
 						fn(projects);
 					}
 				});
+				req.fail(function (xhr) {
+					dom.showError(xhr.responseText);
+				});
 			}
 		}
 	};

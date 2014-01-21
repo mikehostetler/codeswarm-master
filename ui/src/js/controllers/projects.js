@@ -28,17 +28,8 @@ define([
 						data[proj].view = base_href + "/view/" + data[proj].dir + "/";
 					}
 				}
-				// Check ACL
-				session.getACL(function (acl) {
-					if (acl.projects === "all") {
-						dom.loadProjects(data, self);
-					} else {
-						for (var i = 0, z = acl.projects.length; i < z; i++) {
-							acl_data[acl.projects[i]] = data[acl.projects[i]];
-						}
-						dom.loadProjects(acl_data, self, true);
-					}
-				});
+
+				dom.loadProjects(data, self);
 			});
 
 			req.fail(function () {
@@ -116,27 +107,14 @@ define([
 		saveProject: function (data) {
 			var req;
 			// Set auth object
-			if (data.user.length || data.pass.length) {
-				data.auth = {
-					user: data.user,
-					pass: data.pass
-				};
-				// remove user and pass from data
-				delete data.user;
-				delete data.pass;
-			} else {
-				data.auth = false;
-			}
 			// Set blank branch to master
 			data.branch = (data.branch === "") ? "master" : data.branch;
 			// Send to API
-			if (data.id === "new-project") {
-				// Create new (PUT)
-				req = requests.put("/api/project/", {
-					dir: data.name,
+			if (!data._id) {
+
+				req = requests.post("/api/projects", {
 					repo: data.repo,
-					branch: data.branch || "master",
-					auth: data.auth
+					branch: data.branch || "master"
 				});
 
 				req.done(function () {
@@ -150,14 +128,14 @@ define([
 				});
 			} else {
 				// Modify object
-				req = requests.post("/api/project/" + data.id, data);
+				req = requests.post("/api/projects/" + data.id, data);
 
 				req.done(function () {
 					dom.showSuccess("Project successfully saved");
 				});
 
-				req.fail(function () {
-					dom.showError("Project could not be saved");
+				req.fail(function (xhr) {
+					dom.showError(xhr.responseText || "Project could not be saved");
 				});
 			}
 		},

@@ -261,6 +261,7 @@ define([
 
 				// Handle form submission
 				$("#project-config").submit(function (e) {
+					console.log('SUBMIT NEW PROJECT');
 					e.preventDefault();
 					var name,
 						data = $(this).serializeObject();

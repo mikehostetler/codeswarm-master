@@ -8,3 +8,4 @@ ui/dist
 config.json
 .sessions
 /deploy_key
+npm-debug.log
