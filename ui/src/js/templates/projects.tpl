@@ -96,7 +96,7 @@
                         {{/if}}
                     </li>
                     <li>
-                        <a href="#/project/{{this._id}}"><i class="fa fa-cog"></i></a>
+                        <a href="#/{{this._id}}/config"><i class="fa fa-cog"></i></a>
                     </li>
                 </ul>
             </td>
@@ -112,7 +112,7 @@
             {{#unless ../restricted}}
             <td class="center settings-col">
                 <br>
-                <a href="#/project/{{this._id}}"><i class="fa fa-cog"></i></a>
+                <a href="#/{{this._id}}/config"><i class="fa fa-cog"></i></a>
             </td>
             {{/unless}}
         </tr>

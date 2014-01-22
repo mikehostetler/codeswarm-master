@@ -28,7 +28,7 @@ define([
 					if (project.state) {
 						project.state.timestamp = timestamp(data[proj].state.id);
 					}
-					project.view = base_href + "/view/" + project._id;
+					project.view = base_href + "/" + project._id;
 				});
 				dom.loadProjects(projects, self);
 			});
@@ -53,54 +53,56 @@ define([
 
 		},
 
-		showProject: function (project) {
+		viewProject: function (project) {
 
 			var self = this,
 				loadProject,
 				data,
-				reqKey = requests.get("/api/deploykey/"),
 				hook = location.protocol + "//" + location.hostname + (location.port ? ":" + location.port : "");
 
-			loadProject = function (hook, key) {
-				var req;
-				if (project !== "new") {
+			var req;
+			if (project !== "new") {
 
-					req = requests.get("/api/project/" + project);
+				req = requests.get("/api/projects/" + project);
 
-					req.done(function (data) {
-						data.hook = hook + "/deploy/" + data.dir;
-						// Add key to data
-						data.key = key;
-						// Load project
-						dom.loadProject(data, self);
-					});
+				req.done(function (data) {
+					data.hook = hook + "/deploy/" + data.dir;
+					// Add key to data
+					data.key = key;
+					// Load project
+					dom.viewProject(data, self);
+				});
 
-					req.fail(function () {
-						dom.showError("Could not load project");
-					});
+				req.fail(error.handleXhrError);
 
-				} else {
-					data = {
-						dir: "new-project",
-						repo: "",
-						branch: "",
-						auth: false,
-						state: false,
-						hook: hook + "/deploy/new-project",
-						key: key
-					};
+			} else {
+				dom.loadProject({}, self);
+			}
+		},
+
+		configProject: function (project) {
+
+			var self = this,
+				loadProject,
+				data,
+				hook = location.protocol + "//" + location.hostname + (location.port ? ":" + location.port : "");
+
+			var req;
+			if (project !== "new") {
+
+				req = requests.get("/api/projects/" + project);
+
+				req.done(function (data) {
+					data.hook = hook + '/' + data._id + '/deploy';
+					// Load project
 					dom.loadProject(data, self);
-				}
-			};
+				});
 
-			reqKey.done(function (key) {
-				loadProject(hook, key);
-			});
+				req.fail(error.handleXhrError);
 
-			reqKey.fail(function () {
-				loadProject(hook, false);
-			});
-
+			} else {
+				dom.loadProject({}, self);
+			}
 		},
 
 		saveProject: function (data) {

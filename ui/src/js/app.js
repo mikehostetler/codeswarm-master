@@ -78,7 +78,7 @@ define([
 			});
 
 			// Logs list
-			router.on("/logs/:project", function (project) {
+			router.on("/:project/logs", function (project) {
 				authenticated(function () {
 					logs.showList(project);
 					dom.setBodyClass("project-logs");
@@ -86,32 +86,16 @@ define([
 			});
 
 			// Log output
-			router.on("/logs/:project/:log", function (project, log) {
+			router.on("/:project/logs/:log", function (project, log) {
 				authenticated(function () {
 					logs.showLog(project, log);
 					dom.setBodyClass("view-log");
 				});
 			});
 
-			// Show Project
-			router.on("/project/:project", function (project) {
-				authenticated(function () {
-					// Ensure administrative login
-					session.getACL(function (acl) {
-						if (acl.projects === "all") {
-							projects.showProject(project);
-							dom.setBodyClass("view-project");
-						} else {
-							router.go("/");
-						}
-					});
-				});
-			});
-
 			router.on("/project/new", function() {
-				console.log('new project');
 				authenticated(function () {
-					dom.loadProject({}, projects);
+					projects.configProject();
 				});
 			});
 
@@ -120,6 +104,20 @@ define([
 				session.unset();
 				router.go("/");
 			});
+
+			router.on("/:owner/:repo", function(owner, repo) {
+				authenticated(function () {
+					projects.viewProject(owner + '/' + repo);
+				});
+			});
+
+			router.on("/:owner/:repo/config", function(owner, repo) {
+				authenticated(function () {
+					projects.configProject(owner + '/' + repo);
+				});
+			});
+
+
 
 			// Kick off process
 			router.process();

@@ -105,6 +105,17 @@ function createProjectsOwnedByView(cb) {
 }
 
 
+/// get
+
+exports.get = getProject;
+
+function getProject(id, cb) {
+  db.privileged('projects', function(err, projects) {
+    if (err) cb(err);
+    else projects.get(id, cb);
+  });
+}
+
 function prop(p) {
   return function(o) {
     return o[p];
