@@ -3,8 +3,9 @@ define([
 	"controllers/requests",
 	"controllers/session",
 	"controllers/router",
-	"controllers/timestamp"
-], function (dom, requests, session, Router, timestamp) {
+	"controllers/timestamp",
+	"controllers/error"
+], function (dom, requests, session, Router, timestamp, error) {
 	var router,
 		projects;
 
@@ -123,7 +124,7 @@ define([
 					dom.$main.find("input[name=\"_id\"]").val(data.name);
 				});
 
-				req.fail(dom.showXhrError);
+				req.fail(error.handleXhrError);
 			} else {
 				// Modify object
 				req = requests.post("/api/projects/" + data._id, data);
@@ -132,7 +133,7 @@ define([
 					dom.showSuccess("Project successfully saved");
 				});
 
-				req.fail(dom.showXhrError);
+				req.fail(error.handleXhrError);
 			}
 		},
 
@@ -152,5 +153,4 @@ define([
 	};
 
 	return projects;
-
 });

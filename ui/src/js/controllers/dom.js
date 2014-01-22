@@ -361,7 +361,7 @@ define([
 			 */
 			showNotification: function (type, message) {
 				var self = this;
-				self.$notification.addClass(type).children("div").text(message);
+				self.$notification.addClass(type).children("div").html(message);
 				// Auto-close after timeout
 				var closer = setTimeout(function () {
 					self.$notification.removeClass(type);

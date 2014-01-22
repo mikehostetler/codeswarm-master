@@ -1,18 +1,17 @@
 define([
 	"controllers/dom",
 	"controllers/requests",
-	"controllers/router"
-], function (dom, requests, Router) {
+	"controllers/router",
+	"controllers/error"
+], function (dom, requests, Router, error) {
 	var session;
 
 	session = {
 
 		get: function () {
-			if (localStorage.getItem("session")) {
-				return JSON.parse(localStorage.getItem("session"));
-			} else {
-				return false;
-			}
+			var session = localStorage.getItem("session");
+			if (session) session = JSON.parse(session);
+			return session;
 		},
 
 		set: function (data) {
@@ -50,7 +49,7 @@ define([
 					}
 				});
 
-				req.fail(dom.showXhrError);
+				req.fail(error.handleXhrError);
 			});
 		},
 
@@ -65,9 +64,7 @@ define([
 						fn(projects);
 					}
 				});
-				req.fail(function (xhr) {
-					dom.showError(xhr.responseText);
-				});
+				req.fail(error.handleXhrError);
 			}
 		}
 	};
