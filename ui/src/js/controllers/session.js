@@ -21,6 +21,19 @@ define([
 			localStorage.removeItem("session");
 		},
 
+		check: function(cb) {
+			requests.get('/api/session').
+
+			  done(function(sess) {
+			  	session.set(sess.session);
+			  	cb(null, sess.session);
+			  }).
+
+			  fail(function(xhr) {
+			  	cb(xhr.responseJSON || (new Error('Failed')));
+			  });
+		},
+
 		getLogin: function () {
 
 			var self = this,

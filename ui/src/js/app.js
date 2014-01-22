@@ -19,6 +19,8 @@ define([
 
 			// Routing
 			router = new Router();
+
+			var lastAuthenticatedBackendCheck;
 			// Ensures authentication on routed tasks
 			function authenticated(fn) {
 				if (!session.get()) {
@@ -26,12 +28,28 @@ define([
 					localStorage.setItem("route", window.location.hash.replace("#", ""));
 					router.go("/");
 				} else {
-					if (typeof fn === "function") {
+					if (needsSessionRecheck()) {
+						session.check(function(err, sid) {
+							if (err) dom.showError(err.message);
+							else {
+								lastAuthenticatedBackendCheck = Date.now();
+								dom.loadApp();
+								fn.call();
+							}
+						});
+					} else if (typeof fn === "function") {
 						dom.loadApp();
 						fn.call();
 					}
 				}
 			};
+
+			var maxRecheckCacheMs = 1000 * 60;
+
+			function needsSessionRecheck() {
+				return (!lastAuthenticatedBackendCheck ||
+					Date.now() - lastAuthenticatedBackendCheck > maxRecheckCacheMs);
+			}
 
 			// Home
 			router.on("/", function () {

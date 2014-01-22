@@ -120,6 +120,8 @@ function routes(app, root) {
 
   app.post("/api/sessions", sessions.create.validate, sessions.create);
 
+  app.get("/api/session", sessions.get);
+
 
   /// Projects
 

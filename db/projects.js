@@ -6,8 +6,6 @@ exports.create = createProject;
 
 function createProject(project, cb) {
 
-  console.log('project:', project);
-
   project = {
     repo:   project.repo,
     branch: project.branch,
