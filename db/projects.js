@@ -7,6 +7,7 @@ exports.create = createProject;
 function createProject(project, cb) {
 
   project = {
+    _id:    project._id,
     repo:   project.repo,
     branch: project.branch,
     owners: project.owners
@@ -15,7 +16,7 @@ function createProject(project, cb) {
   (function _createProject() {
     db.privileged('projects', function(err, db) {
       if (err) cb(err);
-      else db.insert(project, project.repo, replied);
+      else db.insert(project, project._id, replied);
     });
 
     function replied(err, reply) {

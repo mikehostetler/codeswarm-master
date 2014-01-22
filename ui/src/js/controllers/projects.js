@@ -20,17 +20,17 @@ define([
 				acl_data = {},
 				base_href = location.protocol + "//" + location.hostname + (location.port ? ":" + location.port : "");
 
-			req.done(function (data) {
+			req.done(function (projects) {
 				var proj;
 				// Check for state and format timestamp
-				for (proj in data) {
-					if (data[proj].state) {
-						data[proj].state.timestamp = timestamp(data[proj].state.id);
-						data[proj].view = base_href + "/view/" + data[proj].dir + "/";
-					}
-				}
 
-				dom.loadProjects(data, self);
+				projects.forEach(function(project) {
+					if (project.state) {
+						project.state.timestamp = timestamp(data[proj].state.id);
+					}
+					project.view = base_href + "/view/" + project._id;
+				});
+				dom.loadProjects(projects, self);
 			});
 
 			req.fail(error.handleXhrError);

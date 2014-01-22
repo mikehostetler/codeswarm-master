@@ -7,10 +7,12 @@ exports.validate = validate;
 
 /// Validate
 
+var repoRegexp = /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?\.git$/;
+
 /// PENDING: do a proper schema here
 var schema = {
-  repo:   Joi.string().required().min(3),
-  branch: Joi.string().required().min(1),
+  repo:   Joi.string().required().regex(repoRegexp),
+  branch: Joi.string().required(),
 };
 
 function validate(req, res, next) {
@@ -24,6 +26,9 @@ function validate(req, res, next) {
 
 function createProject(req, res, next) {
   var project = extend({}, req.body);
+  var match = project.repo.match(repoRegexp);
+  var id = match[5];
+  project._id = id;
   project.owners = [ req.session.userCtx.name ];
   projects.create(project, replied);
 
