@@ -1,8 +1,7 @@
 define([
 	"controllers/dom",
 	"controllers/requests",
-	"controllers/router",
-	"controllers/error"
+	"controllers/router"
 ], function (dom, requests, Router, error) {
 	var session;
 
@@ -49,7 +48,7 @@ define([
 					}
 				});
 
-				req.fail(error.handleXhrError);
+				req.fail(dom.showXhrError);
 			});
 		},
 
@@ -64,7 +63,7 @@ define([
 						fn(projects);
 					}
 				});
-				req.fail(error.handleXhrError);
+				req.fail(dom.showXhrError);
 			}
 		}
 	};
