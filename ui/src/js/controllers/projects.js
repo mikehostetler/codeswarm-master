@@ -16,7 +16,7 @@ define([
 		showList: function () {
 
 			var self = this,
-				req = requests.get("/api/projects/"),
+				req = requests.get("/api/projects"),
 				acl_data = {},
 				base_href = location.protocol + "//" + location.hostname + (location.port ? ":" + location.port : "");
 
@@ -33,9 +33,7 @@ define([
 				dom.loadProjects(data, self);
 			});
 
-			req.fail(function () {
-				dom.showError("Could not load projects");
-			});
+			req.fail(error.handleXhrError);
 		},
 
 		runBuild: function (project) {

@@ -16,11 +16,11 @@ function privileged(dbName, cb) {
   }
 
   if (privilegedCouch) {
-    var db = dbName ? privilegedCouch.use(dbName) : privilegedCouch.db;
+    var db = dbName ? privilegedCouch.use(dbName) : privilegedCouch;
     cb(null, db);
   } else {
     login(function(err, db) {
-      db = dbName ? db.use(dbName) : db.db;
+      db = dbName ? db.use(dbName) : db;
       cb(err, db);
     });
   }

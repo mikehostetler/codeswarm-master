@@ -29,6 +29,6 @@ function createProject(req, res, next) {
 
   function replied(err, reply) {
     if (err) res.send(err.status_code || 500, err);
-    else res.send(reply);
+    else res.send(201, reply);
   }
 }
