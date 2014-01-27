@@ -1,6 +1,6 @@
 <h1 class="page-title">
     <i class="fa fa-th-list"></i>
-    Logs for <a href="#/{{project}}">{{project}}</a>
+    Builds for <a href="#/{{project}}">{{project}}</a>
 </h1>
 
 <div class="content-wrap">

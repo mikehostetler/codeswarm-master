@@ -8,10 +8,10 @@ define([
 		"text!templates/menu.tpl",
 		"text!templates/projects.tpl",
 		"text!templates/project.tpl",
-		"text!templates/logs.tpl",
+		"text!templates/builds.tpl",
 		"text!templates/logview.tpl"
 	],
-	function ($, Handlebars, timestamp, header, signup, login, menu, projects, project, logs, logview) {
+	function ($, Handlebars, timestamp, header, signup, login, menu, projects, project, builds, logview) {
 		var dom;
 
 		dom = {
@@ -197,15 +197,15 @@ define([
 					timestampEl = this.$main.find("[data-timestamp=\"" + project + "\"]");
 				switch (status) {
 				case "pass":
-					statusEl.html("<br><a href=\"#/logs/" + project + "/" + log + "\" title=\"Build Passing\"><i class=\"fa fa-circle green\"></i></a>");
+					statusEl.html("<br><a href=\"#/" + project + "/builds/" + log + "\" title=\"Build Passing\"><i class=\"fa fa-circle green\"></i></a>");
 					break;
 				case "fail":
-					statusEl.html("<br><a href=\"#/logs/" + project + "/" + log + "\" title=\"Build Failing\"><i class=\"fa fa-circle red\"></i></a>");
+					statusEl.html("<br><a href=\"#/" + project + "/builds/" + log + "\" title=\"Build Failing\"><i class=\"fa fa-circle red\"></i></a>");
 					break;
 				case "processing":
 					// Don't keep replacing, just check state
 					if (!statusEl.find("i").hasClass("yellow")) {
-						statusEl.html("<br><a href=\"#/logs/" + project + "/" + log + "\" title=\"Processing\"><i class=\"fa fa-refresh fa-circle yellow\"></i></a>");
+						statusEl.html("<br><a href=\"#/" + project + "/builds/" + log + "\" title=\"Processing\"><i class=\"fa fa-refresh fa-circle yellow\"></i></a>");
 						timestampEl.html(timestamp(log));
 					}
 					break;
@@ -304,10 +304,10 @@ define([
 			},
 
 			/**
-			 * Load logs
+			 * Load builds
 			 */
-			loadLogs: function (project, data) {
-				var template = Handlebars.compile(logs),
+			loadBuilds: function (project, data) {
+				var template = Handlebars.compile(builds),
 					html = template({
 						project: project,
 						logs: data

@@ -32,7 +32,7 @@ define([
 						project: project
 					};
 				});
-				dom.loadLogs(project, output);
+				dom.loadBuilds(project, output);
 			});
 
 			req.fail(function () {
