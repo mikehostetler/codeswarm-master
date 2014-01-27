@@ -28,7 +28,7 @@ define([
 					if (project.state) {
 						project.state.timestamp = timestamp(data[proj].state.id);
 					}
-					project.view = base_href + "/" + project._id;
+					project.view = base_href + "/#/" + project._id;
 				});
 				dom.loadProjects(projects, self);
 			});
@@ -43,7 +43,7 @@ define([
 				dom.showSuccess("Starting build...");
 				// Pause to allow build to start, then redirect
 				setTimeout(function () {
-					router.go(project + "/logs/" + data.build);
+					router.go('/' + project + '/builds/' + data.build);
 				}, 2000);
 			});
 
@@ -67,10 +67,8 @@ define([
 
 				req.done(function (data) {
 					data.hook = hook + "/deploy/" + data.dir;
-					// Add key to data
-					data.key = key;
 					// Load project
-					dom.viewProject(data, self);
+					dom.loadProject(data, self);
 				});
 
 				req.fail(error.handleXhrError);

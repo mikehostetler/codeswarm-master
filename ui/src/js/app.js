@@ -4,9 +4,9 @@ define([
 	"controllers/users",
 	"controllers/router",
 	"controllers/projects",
-	"controllers/logs",
+	"controllers/builds",
 	"controllers/socket"
-], function (dom, session, users, Router, projects, logs) {
+], function (dom, session, users, Router, projects, builds) {
 	var app;
 
 	app = {
@@ -77,18 +77,35 @@ define([
 				});
 			});
 
-			// Logs list
-			router.on("/:project/logs", function (project) {
+			router.on("/:owner/:repo", function(owner, repo) {
+				console.log('REPO', arguments);
+				var project = owner + '/' + repo;
 				authenticated(function () {
-					logs.showList(project);
+					projects.viewProject(project);
+				});
+			});
+
+			router.on("/:owner/:repo/config", function(owner, repo) {
+				console.log('CONFIG', arguments);
+				authenticated(function () {
+					projects.configProject(owner + '/' + repo);
+				});
+			});
+
+			// Build list
+			router.on("/:owner/:repo/builds", function (owner, repo) {
+				var project = owner + '/' + repo;
+				authenticated(function () {
+					builds.list(project);
 					dom.setBodyClass("project-logs");
 				});
 			});
 
 			// Log output
-			router.on("/:project/logs/:log", function (project, log) {
+			router.on("/:owner/:repo/builds/:log", function (owner, repo, log) {
+				var project = owner + '/' + repo;
 				authenticated(function () {
-					logs.showLog(project, log);
+					builds.show(project, log);
 					dom.setBodyClass("view-log");
 				});
 			});
@@ -104,19 +121,6 @@ define([
 				session.unset();
 				router.go("/");
 			});
-
-			router.on("/:owner/:repo", function(owner, repo) {
-				authenticated(function () {
-					projects.viewProject(owner + '/' + repo);
-				});
-			});
-
-			router.on("/:owner/:repo/config", function(owner, repo) {
-				authenticated(function () {
-					projects.configProject(owner + '/' + repo);
-				});
-			});
-
 
 
 			// Kick off process

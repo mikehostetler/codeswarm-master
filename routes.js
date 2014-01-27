@@ -11,6 +11,7 @@ var requireUser = require('./lib/require_user');
 var users    = require('./controllers/users');
 var sessions = require('./controllers/sessions');
 var projects = require('./controllers/projects');
+var builds   = require('./controllers/builds');
 
 
 module.exports = routes;
@@ -59,12 +60,16 @@ function routes(app, root) {
 
   /// Users
 
-  app.post("/api/users", users.create.validate, users.create);
+  app.post("/api/users",
+    users.create.validate,
+    users.create);
 
 
   /// Sessions
 
-  app.post("/api/sessions", sessions.create.validate, sessions.create);
+  app.post("/api/sessions",
+    sessions.create.validate,
+    sessions.create);
 
   app.get("/api/session", sessions.get);
 
@@ -86,23 +91,33 @@ function routes(app, root) {
     requireUser,
     projects.get);
 
+  app.get('/api/projects/:owner/:repo/builds',
+    sessionMW,
+    requireUser,
+    builds.list);
+
+  app.get('/api/projects/:owner/:repo/builds/:build',
+    sessionMW,
+    requireUser,
+    builds.get);
+
   /// Others
 
-  app.get("/api/:type/*", function (req, res) {
-    api.get(req, res);
-  });
+  // app.get("/api/:type/*", function (req, res) {
+  //   api.get(req, res);
+  // });
 
-  app.post("/api/:type/*", function (req, res) {
-    api.post(req, res);
-  });
+  // app.post("/api/:type/*", function (req, res) {
+  //   api.post(req, res);
+  // });
 
-  app.put("/api/:type", function (req, res) {
-    api.put(req, res);
-  });
+  // app.put("/api/:type", function (req, res) {
+  //   api.put(req, res);
+  // });
 
-  app.del("/api/:type/*", function (req, res) {
-    api.del(req, res);
-  });
+  // app.del("/api/:type/*", function (req, res) {
+  //   api.del(req, res);
+  // });
 
   /**
    * Static Server #####################################################

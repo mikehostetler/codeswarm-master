@@ -1,6 +1,6 @@
 <h1 class="page-title">
     <i class="fa fa-th-list"></i>
-    Logs for {{project}}
+    Logs for <a href="#/{{project}}">{{project}}</a>
 </h1>
 
 <div class="content-wrap">
@@ -19,7 +19,7 @@
                 {{#compare value.status "fail" operator="==="}}
                 <a href="#/logs/{{value.project}}/{{key}}" title="Build Failed"><i class="fa fa-circle red"></i></a>
                 {{/compare}}
-                
+
                 {{#compare value.status "pass" operator="==="}}
                 <a href="#/logs/{{value.project}}/{{key}}" title="Build Passed"><i class="fa fa-circle green"></i></a>
                 {{/compare}}
@@ -32,7 +32,7 @@
                         {{#compare value.status "fail" operator="==="}}
                         <a href="#/logs/{{value.project}}/{{key}}" title="Build Failed"><i class="fa fa-circle red"></i></a>
                         {{/compare}}
-                        
+
                         {{#compare value.status "pass" operator="==="}}
                         <a href="#/logs/{{value.project}}/{{key}}" title="Build Passed"><i class="fa fa-circle green"></i></a>
                         {{/compare}}

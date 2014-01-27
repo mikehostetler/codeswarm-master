@@ -3,12 +3,12 @@ define([
 	"controllers/requests",
 	"controllers/timestamp"
 ], function (dom, requests, timestamp) {
-	var logs;
+	var builds;
 
-	logs = {
+	builds = {
 
-		showList: function (project) {
-			var req = requests.get("/api/logs/" + project);
+		list: function (project) {
+			var req = requests.get("/api/projects/" + project + '/builds');
 
 			req.done(function (data) {
 				var output = {};
@@ -40,8 +40,8 @@ define([
 			});
 		},
 
-		showLog: function (project, log) {
-			var req = requests.get("/api/log/" + project + "/" + log);
+		show: function (project, log) {
+			var req = requests.get("/api/projects/" + project + "/builds/" + log);
 
 			req.done(function (data) {
 				dom.loadLogOutput(project, log, timestamp(parseInt(log, 10)), data);
@@ -54,6 +54,6 @@ define([
 
 	};
 
-	return logs;
+	return builds;
 
 });
