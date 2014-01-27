@@ -37,13 +37,13 @@ define([
 		},
 
 		runBuild: function (project) {
-			var req = requests.post("/deploy/" + project);
+			var req = requests.post(project + '/deploy');
 
 			req.done(function (data) {
 				dom.showSuccess("Starting build...");
 				// Pause to allow build to start, then redirect
 				setTimeout(function () {
-					router.go("/logs/" + project + "/" + data.build);
+					router.go(project + "/logs/" + data.build);
 				}, 2000);
 			});
 

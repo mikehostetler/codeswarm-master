@@ -21,7 +21,12 @@ function routes(app, root) {
    * Build/Deploy Listener #############################################
    */
 
-  app.post("/:owner/:repo/deploy", projects.deploy);
+  app.post("/:owner/:repo/deploy",
+    sessionMW,
+    requireUser,
+    projects.load,
+    projects.checkOwnerOrPublic,
+    projects.deploy);
 
 
   /**

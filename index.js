@@ -4,8 +4,6 @@ var configuration = require("./lib/configuration.js"),
 	express = require("express"),
 	app = express(),
 	redirect = require("express-redirect"),
-	builder = require("./lib/builder.js"),
-	api = require("./lib/api.js"),
 	socket_log = false,
 	mode = "production",
 	root, onListen;
