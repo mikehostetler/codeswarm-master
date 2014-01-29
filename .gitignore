@@ -9,3 +9,4 @@ config.json
 .sessions
 /deploy_key
 npm-debug.log
+.tmp

@@ -29,7 +29,7 @@ module.exports = {
    * Action blueprints:
    *    `POST /projects`
    */
-   create: ['isAuthenticated', function (req, res) {
+   create: function (req, res) {
 
     var project = extend({}, req.body);
     var match = project.repo.match(repoRegexp);
@@ -42,7 +42,7 @@ module.exports = {
       if (err) res.send(err.status_code || 500, err);
       else res.json(reply);
     }
-  }],
+  },
 
 
   /**
@@ -75,7 +75,7 @@ module.exports = {
   /**
    *    `GET /projects`
    */
-  list: ['isAuthenticated', function (req, res) {
+  list: function (req, res) {
     var user = req.session.username();
     if (user) {
       projects.listFor(user, replied);
@@ -87,13 +87,13 @@ module.exports = {
       if (err) res.send(err.status_code || 500, err);
       else res.send(projects);
     }
-  }],
+  },
 
 
   /**
    *     `POST /:owner/:repo/deploy`
    */
-  deploy: ['isAuthenticated', function(req, res) {
+  deploy: function(req, res) {
     var project = req.param('owner') + '/' + req.param('repo');
 
     // Set build
@@ -146,7 +146,7 @@ module.exports = {
       // Run build
       builder(build);
     }
-  }],
+  },
 
 
 
