@@ -11,7 +11,10 @@
     "optimist": "0.3.4",
     "cookie": "~0.1.0",
     "nano": "~4.4.0",
-    "cqs": "~0.8.1"
+    "cqs": "~0.8.1",
+    "async": "~0.2.10",
+    "vouch-node": "*",
+    "colors": "~0.6.2"
   },
   "scripts": {
     "start": "node app.js",

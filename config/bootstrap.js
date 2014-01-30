@@ -8,27 +8,38 @@
  * http://sailsjs.org/#documentation
  */
 
+var async = require('async');
 var queue = require('../lib/queue');
 
 module.exports.bootstrap = function (cb) {
 
-  queue.init(initializedQueue);
+  async.series([
+      initQueue,
+      initPlugins,
+      startWorker,
+    ], initialized);
 
-  function initializedQueue(err) {
-    if (err) throw err;
-    else {
+  function initQueue(cb) {
+    queue.init(cb);
+  }
 
-      if (process.env.NODE_ENV != 'production') {
-        console.log('Since we\'re not in production mode, I\'m going to start a worker right here...');
-        startWorker();
-      }
+  function initPlugins(cb) {
+    require('../lib/plugins').init(cb);
+  }
 
-      cb();
+  function startWorker(cb) {
+    if (process.env.NODE_ENV != 'production') {
+      console.log('Since we\'re not in production mode, I\'m going to start a worker right here...');
+      var worker = require('../lib/worker');
+      worker.start();
     }
+
+    process.nextTick(cb);
+  }
+
+  function initialized(err) {
+    if (err) throw err;
+    cb();
   }
 };
 
-function startWorker() {
-  var worker = require('../lib/worker');
-  worker.start();
-}
