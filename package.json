@@ -14,7 +14,8 @@
     "cqs": "~0.8.1",
     "async": "~0.2.10",
     "vouch-node": "*",
-    "colors": "~0.6.2"
+    "colors": "~0.6.2",
+    "eventemitter2": "~0.4.13"
   },
   "scripts": {
     "start": "node app.js",
