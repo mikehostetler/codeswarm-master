@@ -1,34 +1,24 @@
 {
-    "name": "VouchCD",
-    "version": "0.0.7",
-    "description": "A simple server for node-based continuous integration and deployment",
-    "readmeFilename": "README.md",
-    "dependencies": {
-        "express": "~3.3.0",
-        "gift": "~0.1.0",
-        "fs-extra": "~0.8.0",
-        "async": "~0.2.5",
-        "nodemailer": "~0.5.0",
-        "connect-slashes": "~1.0.0",
-        "ansi_up": "~1.0.0",
-        "bower": "~1.2.7",
-        "socket.io": "~0.9.0",
-        "express-redirect": "~1.1.0",
-        "underscore": "~1.5.2",
-        "forever-monitor": "~1.2.3",
-        "underscore.deferred": "~0.4.0"
-    },
-    "devDependencies": {
-        "grunt": "~0.4.1",
-        "grunt-jsbeautifier": "~0.2.0",
-        "grunt-contrib-jshint": "~0.6.4",
-        "grunt-contrib-requirejs": "~0.4.1",
-        "grunt-contrib-copy": "~0.4.1",
-        "grunt-contrib-cssmin": "~0.7.0",
-        "grunt-contrib-watch": "~0.5.1"
-    },
-    "scripts": {
-        "postinstall": "./node_modules/.bin/bower install",
-        "start": "node index.js"
-    }
+  "name": "test-sails",
+  "private": true,
+  "version": "0.0.0",
+  "description": "a Sails application",
+  "dependencies": {
+    "sails": "0.9.8",
+    "grunt": "0.4.1",
+    "sails-disk": "~0.9.0",
+    "ejs": "0.8.4",
+    "optimist": "0.3.4",
+    "cookie": "~0.1.0",
+    "nano": "~4.4.0",
+    "cqs": "~0.8.1"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "debug": "node debug app.js"
+  },
+  "main": "app.js",
+  "repository": "",
+  "author": "",
+  "license": ""
 }

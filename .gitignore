@@ -4,6 +4,7 @@ logs/
 temp/
 ui/dist/
 ui/src/js/vendor
+ui/dist
 config.json
 .sessions
 /deploy_key
