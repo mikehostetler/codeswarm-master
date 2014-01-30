@@ -17,7 +17,7 @@
 
 var extend   = require('util')._extend;
 var projects = require('../db/projects');
-var builder  = require('../../lib/builder');
+var Build    = require('../../lib/build');
 
 
 var repoRegexp = /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?\.git$/;
@@ -94,58 +94,70 @@ module.exports = {
    *     `POST /:owner/:repo/deploy`
    */
   deploy: function(req, res) {
-    var project = req.param('owner') + '/' + req.param('repo');
+    var projectName = req.param('owner') + '/' + req.param('repo');
 
-    // Set build
-    var build = project;
-    var stamp = new Date().getTime();
-    var post = req.body;
-    var run = false;
-    var payload, ref, branch;
+    projects.get(projectName, gotProject);
 
-    // Check trigger condition and branch match
-    if (!post.hasOwnProperty("payload")) {
-      // Manual trigger
-      run = true;
-    } else {
-      payload = JSON.parse(post.payload);
-      // Check to ensure branch match
-      if (payload.hasOwnProperty("ref")) {
-        //console.log(post);
-        ref = payload.ref.split("/");
-        branch = ref[ref.length - 1];
-        run = branch === project.branch;
+    function gotProject(err, project) {
+      if (! err && ! project) {
+        err = new Error('Could not find project');
+        err.status_code = 404;
+      }
+
+      if (err) return res.send(err.status_code || 500, err);
+
+      // Set build
+      var build = project;
+      var stamp = new Date().getTime();
+      var post = req.body;
+      var run = false;
+      var payload, ref, branch;
+
+      // Check trigger condition and branch match
+      if (!post.hasOwnProperty("payload")) {
+        // Manual trigger
+        run = true;
+      } else {
+        payload = JSON.parse(post.payload);
+        // Check to ensure branch match
+        if (payload.hasOwnProperty("ref")) {
+          //console.log(post);
+          ref = payload.ref.split("/");
+          branch = ref[ref.length - 1];
+          run = branch === project.branch;
+        }
+      }
+
+      if (run) {
+
+        // Set state object
+        build.state = {
+          // Set ID
+          id:     stamp,
+          // Set current working directory
+          cwd:    stamp,
+          // Set log URL
+          logURL: req.protocol + "://" + req.get("host") + "/#/logs/" + build.dir + "/" + stamp,
+          // Set name
+          name:   project + ", Build " + stamp,
+          // Set log
+          //log:    config.app.logs + build.dir + "/" + stamp + ".log",
+          // Set status
+          status: "processing"
+
+        };
+
+        console.log('build:', build);
+
+        // Run build
+        Build(build, function(err) {
+          if (err) res.send(err.status_code || 500, err);
+          else res.json({build: stamp});
+        });
       }
     }
 
-    if (run) {
 
-      // Set state object
-      build.state = {
-        // Set ID
-        id:     stamp,
-        // Set current working directory
-        cwd:    stamp,
-        // Set log URL
-        logURL: req.protocol + "://" + req.get("host") + "/#/logs/" + build.dir + "/" + stamp,
-        // Set name
-        name:   project + ", Build " + stamp,
-        // Set log
-        //log:    config.app.logs + build.dir + "/" + stamp + ".log",
-        // Set status
-        status: "processing"
-
-      };
-
-      console.log('build:', build);
-
-      // Send deploy response
-      res.send({
-        build: stamp
-      });
-      // Run build
-      builder(build);
-    }
   },
 
 

@@ -8,10 +8,27 @@
  * http://sailsjs.org/#documentation
  */
 
+var queue = require('../lib/queue');
+
 module.exports.bootstrap = function (cb) {
 
-  console.log('BOOTSTRAP!!!');
-  // It's very important to trigger this callack method when you are finished
-  // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
-  cb();
+  queue.init(initializedQueue);
+
+  function initializedQueue(err) {
+    if (err) throw err;
+    else {
+
+      if (process.env.NODE_ENV != 'production') {
+        console.log('Since we\'re not in production mode, I\'m going to start a worker right here...');
+        startWorker();
+      }
+
+      cb();
+    }
+  }
 };
+
+function startWorker() {
+  var worker = require('../lib/worker');
+  worker.start();
+}
