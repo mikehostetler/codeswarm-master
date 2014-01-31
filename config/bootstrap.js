@@ -30,8 +30,8 @@ module.exports.bootstrap = function (cb) {
   function startWorker(cb) {
     if (process.env.NODE_ENV != 'production') {
       console.log('Since we\'re not in production mode, I\'m going to start a worker right here...');
-      var worker = require('../lib/worker');
-      worker.start();
+      var runner = require('../lib/runner');
+      runner.start();
     }
 
     process.nextTick(cb);
