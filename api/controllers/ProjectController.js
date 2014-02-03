@@ -17,6 +17,7 @@
 
 var extend   = require('util')._extend;
 var projects = require('../db/projects');
+var builds   = require('../db/builds');
 var Build    = require('../../lib/build');
 
 
@@ -106,9 +107,14 @@ module.exports = {
 
       if (err) return res.send(err.status_code || 500, err);
 
-      // Set build
-      var build = project;
-      var stamp = new Date().getTime();
+      var time = Date.now();
+
+      var build = {
+        project: project._id,
+        created_at: time,
+        triggered_by: req.session.username()
+      };
+
       var post = req.body;
       var run = false;
       var payload, ref, branch;
@@ -130,29 +136,26 @@ module.exports = {
 
       if (run) {
 
+        build.branch = project.branch;
+
         // Set state object
-        build.state = {
-          // Set ID
-          id:     stamp,
-          // Set current working directory
-          cwd:    stamp,
-          // Set log URL
-          logURL: req.protocol + "://" + req.get("host") + "/#/logs/" + build.dir + "/" + stamp,
-          // Set name
-          name:   project + ", Build " + stamp,
-          // Set log
-          //log:    config.app.logs + build.dir + "/" + stamp + ".log",
-          // Set status
-          status: "processing"
+        build.state = 'pending';
 
-        };
+        builds.create(build, createdBuild);
 
-        console.log('build:', build);
+      } else {
+        res.json({});
+      }
+    }
 
+    function createdBuild(err, build) {
+      if (err) {
+        res.send(err.status_code || 500, err);
+      } else {
         // Run build
         Build(build, function(err) {
           if (err) res.send(err.status_code || 500, err);
-          else res.json({build: stamp});
+          else res.json(build);
         });
       }
     }

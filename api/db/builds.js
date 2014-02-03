@@ -73,13 +73,24 @@ function createByProjectView(cb) {
 exports.get = getBuild;
 
 function getBuild(project, build, cb) {
-  db.privileged('builds', function(err, builds) {
-    if (err) cb(err);
-    else builds.get(build, replied);
-  });
+
+  _getBuild();
+
+  function _getBuild() {
+    db.privileged('builds', function(err, builds) {
+      if (err) cb(err);
+      else builds.get(build, replied);
+    });
+  }
 
   function replied(err, build) {
-    if (err) cb(err);
+    if (err && err.status_code == 404 && err.reason == 'no_db_file') {
+      createBuildsDB(function(err) {
+        if (err) cb(err);
+        else _getBuild();
+      });
+    }
+    else if (err) cb(err);
     else {
       if (build && build.project != project)
         build = undefined;
@@ -87,6 +98,42 @@ function getBuild(project, build, cb) {
     }
   }
 }
+
+
+/// create
+
+exports.create = createBuild;
+
+function createBuild(build, cb) {
+
+  _createBuild();
+
+  function _createBuild() {
+    db.privileged('builds', function(err, builds) {
+      if (err) cb(err);
+      else {
+        builds.insert(build, inserted);
+      }
+    });
+
+    function inserted(err, reply) {
+      if (err && err.status_code == 404 && err.reason == 'no_db_file') {
+        createBuildsDB(function(err) {
+          if (err) cb(err);
+          else _createBuild();
+        });
+      } else {
+        console.log()
+        build._id = reply.id;
+        build._rev = reply.rev;
+        cb(null, build);
+      }
+    }
+  }
+}
+
+
+/// utils
 
 function prop(p) {
   return function(o) {
