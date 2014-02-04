@@ -133,6 +133,19 @@ function createBuild(build, cb) {
 }
 
 
+/// update
+
+exports.update = updateBuild;
+
+function updateBuild(build, cb) {
+  db.privileged('builds', function(err, builds) {
+    if (err) cb(err);
+    else
+      builds.insert(build, cb);
+  });
+}
+
+
 /// utils
 
 function prop(p) {
