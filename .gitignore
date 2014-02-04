@@ -10,3 +10,5 @@ config.json
 /deploy_key
 npm-debug.log
 .tmp
+.vagrant
+.DS_Store
