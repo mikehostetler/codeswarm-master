@@ -5,8 +5,8 @@ define([
 	var socket = io.connect(location.protocol + "//" + location.hostname + (location.port ? ":" + location.port : ""));
 
 	socket.on("build", function (data) {
-		dom.updateStatus(data.project, data.id, data.status);
-		dom.updateLog(data.id, data.log);
+		dom.updateStatus(data.project, data._id, data.status);
+		dom.updateLog(data._id, data.log);
 	});
 
 });

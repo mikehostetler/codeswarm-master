@@ -15,7 +15,9 @@
     "async": "~0.2.10",
     "vouch-node": "*",
     "colors": "~0.6.2",
-    "eventemitter2": "~0.4.13"
+    "eventemitter2": "~0.4.13",
+    "mkdirp": "~0.3.5",
+    "node-uuid": "~1.4.1"
   },
   "scripts": {
     "start": "node app.js",

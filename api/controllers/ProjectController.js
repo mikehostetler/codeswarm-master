@@ -15,6 +15,7 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
+var uuid     = require('node-uuid').v4;
 var extend   = require('util')._extend;
 var projects = require('../db/projects');
 var builds   = require('../db/builds');
@@ -107,12 +108,16 @@ module.exports = {
 
       if (err) return res.send(err.status_code || 500, err);
 
+      var id = uuid();
       var time = Date.now();
 
       var build = {
+        _id: id,
         project: project._id,
         created_at: time,
-        triggered_by: req.session.username()
+        triggered_by: req.session.username(),
+        repo: project.repo,
+        dir: id
       };
 
       var post = req.body;
