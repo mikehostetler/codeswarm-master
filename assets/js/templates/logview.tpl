@@ -1,6 +1,6 @@
 <h1 class="page-title">
     <i class="fa fa-th-list"></i>
-    {{project}} - {{logid}}
+    <span><a href="#!/{{project}}">{{project}}</a> - {{logid}}</span>
 </h1>
 
 <div class="content-wrap">
