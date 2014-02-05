@@ -22,23 +22,23 @@
         <tbody>
         {{#each projects}}
         <tr>
-            <td class="center status-col" data-status="{{this._id}}">
+            <td class="center status-col" data-status="{{_id}}">
 
                 <br>
 
-                {{#compare this.state.status "fail" operator="==="}}
-                <a href="#/logs/{{this._id}}/{{this.state.id}}" title="Build Failing"><i class="fa fa-circle red"></i></a>
+                {{#compare state "failed" operator="==="}}
+                <a href="#/{{_id}}/{{last_build}}" title="Build Failing"><i class="fa fa-circle red"></i></a>
                 {{/compare}}
 
-                {{#compare this.state.status "pass" operator="==="}}
-                <a href="#/logs/{{this._id}}/{{this.state.id}}" title="Build Passing"><i class="fa fa-circle green"></i></a>
+                {{#compare state "passed" operator="==="}}
+                <a href="#/{{_id}}/builds/{{last_build}}" title="Build Passing"><i class="fa fa-circle green"></i></a>
                 {{/compare}}
 
-                {{#compare this.state.status "processing" operator="==="}}
-                <a href="#/logs/{{this._id}}/{{this.state.id}}" title="Processing"><i class="fa fa-refresh fa-circle yellow"></i></a>
+                {{#compare state "running" operator="==="}}
+                <a href="#/{{_id}}/builds/{{last_build}}" title="Processing"><i class="fa fa-refresh fa-circle yellow"></i></a>
                 {{/compare}}
 
-                {{#compare this.state.status undefined operator="==="}}
+                {{#compare this.state undefined operator="==="}}
                 <a title="No Builds"><i class="fa fa-circle"></i></a>
                 {{/compare}}
 

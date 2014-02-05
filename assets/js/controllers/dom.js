@@ -192,21 +192,23 @@ define([
 			/**
 			 * Update project status
 			 */
-			updateStatus: function (project, log, status) {
-				var statusEl = this.$main.find("[data-status=\"" + project + "\"]"),
-					timestampEl = this.$main.find("[data-timestamp=\"" + project + "\"]");
-				switch (status) {
-				case "pass":
-					statusEl.html("<br><a href=\"#/" + project + "/builds/" + log + "\" title=\"Build Passing\"><i class=\"fa fa-circle green\"></i></a>");
+			updateProject: function (project) {
+				console.log('DOM is updating project', project);
+				var statusEl = this.$main.find("[data-status=\"" + project._id + "\"]"),
+					timestampEl = this.$main.find("[data-timestamp=\"" + project._id + "\"]");
+
+				switch (project.state) {
+				case "passed":
+					statusEl.html("<br><a href=\"#/" + project + "/builds/" + project.last_build + "\" title=\"Build Passing\"><i class=\"fa fa-circle green\"></i></a>");
 					break;
-				case "fail":
-					statusEl.html("<br><a href=\"#/" + project + "/builds/" + log + "\" title=\"Build Failing\"><i class=\"fa fa-circle red\"></i></a>");
+				case "failed":
+					statusEl.html("<br><a href=\"#/" + project + "/builds/" + project.last_build + "\" title=\"Build Failing\"><i class=\"fa fa-circle red\"></i></a>");
 					break;
-				case "processing":
+				case "running":
 					// Don't keep replacing, just check state
 					if (!statusEl.find("i").hasClass("yellow")) {
-						statusEl.html("<br><a href=\"#/" + project + "/builds/" + log + "\" title=\"Processing\"><i class=\"fa fa-refresh fa-circle yellow\"></i></a>");
-						timestampEl.html(timestamp(log));
+						statusEl.html("<br><a href=\"#/" + project + "/builds/" + project.last_build + "\" title=\"Processing\"><i class=\"fa fa-refresh fa-circle yellow\"></i></a>");
+						timestampEl.html(project.ended_at);
 					}
 					break;
 				}

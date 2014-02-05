@@ -116,6 +116,45 @@ function getProject(id, cb) {
   });
 }
 
+
+/// update
+
+exports.update = updateProject;
+
+function updateProject(id, attrs, cb) {
+  console.log('UPDATE PROJECT', arguments);
+  db.privileged('projects', function(err, projects) {
+    if (err) cb(err);
+    else {
+      projects.get(id, gotProject);
+    }
+
+    function gotProject(err, project) {
+      if (err) cb(err);
+      else {
+        for(var attr in attrs)
+          project[attr] = attrs[attr];
+
+        projects.insert(project, updatedProject);
+      }
+    }
+  });
+
+  function updatedProject(err) {
+    if (err && err.status_code != 409) cb(err);
+    else if (err) cb();
+    else {
+      var sockets = sails.io.sockets.in(id);
+      for(var attr in attrs) {
+        console.log('EMITTING', attr, attrs[attr]);
+        sockets.emit('update', id, attr, attrs[attr]);
+      }
+      cb();
+    }
+  }
+}
+
+
 function prop(p) {
   return function(o) {
     return o[p];

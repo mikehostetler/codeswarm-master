@@ -15,7 +15,7 @@
         <tbody>
         {{#each builds}}
         <tr>
-            <td class="center status-col">
+            <td class="center status-col" data-status="{{_id}}">
                 {{#compare status "fail" operator="==="}}
                 <a href="#/logs/{{value.project}}/{{key}}" title="Build Failed"><i class="fa fa-circle red"></i></a>
                 {{/compare}}

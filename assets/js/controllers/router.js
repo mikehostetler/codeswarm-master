@@ -23,6 +23,8 @@ define(function () {
 	Router = function () {
 		var self = this;
 
+		this.afterChange = undefined;
+
 		// Watch hashchange
 		window.onhashchange = function () {
 			self.process();
@@ -80,6 +82,8 @@ define(function () {
 			}
 			self.routes[matched].apply(this, args);
 		}
+
+		if (this.afterChange) this.afterChange();
 
 	};
 

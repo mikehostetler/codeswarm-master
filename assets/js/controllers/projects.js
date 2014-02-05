@@ -4,8 +4,9 @@ define([
 	"controllers/session",
 	"controllers/router",
 	"controllers/timestamp",
-	"controllers/error"
-], function (dom, requests, session, Router, timestamp, error) {
+	"controllers/error",
+	"controllers/socket"
+], function (dom, requests, session, Router, timestamp, error, socket) {
 	var router,
 		projects;
 
@@ -25,10 +26,8 @@ define([
 				// Check for state and format timestamp
 
 				projects.forEach(function(project) {
-					if (project.state) {
-						project.state.timestamp = timestamp(data[proj].state.id);
-					}
 					project.view = base_href + "/#/" + project._id;
+					socket.addProject(project);
 				});
 				dom.loadProjects(projects, self);
 			});
@@ -43,10 +42,6 @@ define([
 			req.done(function (build) {
 				console.log('DONE! build:', build);
 				dom.showSuccess("Starting build...");
-				// Pause to allow build to start, then redirect
-				setTimeout(function () {
-					router.go('/' + project + '/builds/' + build._id);
-				}, 2000);
 			});
 
 			req.fail(function () {
