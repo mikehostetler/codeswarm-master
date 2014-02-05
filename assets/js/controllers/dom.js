@@ -87,10 +87,8 @@ define([
 
 					if (!self.$body.hasClass("global-nav--open")) {
 						self.$body.addClass("global-nav--open");
-						console.log("doesn't have class");
 					} else {
 						self.$body.removeClass("global-nav--open");
-						console.log("has class");
 					}
 				});
 
@@ -193,24 +191,33 @@ define([
 			 * Update project status
 			 */
 			updateProject: function (project) {
-				console.log('DOM is updating project', project);
-				var statusEl = this.$main.find("[data-status=\"" + project._id + "\"]"),
-					timestampEl = this.$main.find("[data-timestamp=\"" + project._id + "\"]");
+				var statusEl = this.$main.find("[data-status=\"" + project._id + "\"]");
+				var timestampEl = this.$main.find("[data-timestamp=\"" + project._id + "\"]");
+				var lightEl = this.$main.find("[data-light=\"" + project._id + "\"]");
+
+				var lastBuild = project.ended_at || project.started_at;
 
 				switch (project.state) {
 				case "passed":
-					statusEl.html("<br><a href=\"#/" + project + "/builds/" + project.last_build + "\" title=\"Build Passing\"><i class=\"fa fa-circle green\"></i></a>");
+					updateStatus('Passed', 'green');
+					lightEl.find("i").removeClass("fa-spin");
+					timestampEl.html('Last Build: ' + (project.ended_at || 'Never'));
 					break;
 				case "failed":
-					statusEl.html("<br><a href=\"#/" + project + "/builds/" + project.last_build + "\" title=\"Build Failing\"><i class=\"fa fa-circle red\"></i></a>");
+					updateStatus('Failed', 'red');
+					lightEl.find("i").removeClass("fa-spin");
+					timestampEl.html('Last Build: ' + (project.ended_at || 'Never'));
 					break;
 				case "running":
+					updateStatus('Running', 'yellow');
+					lightEl.find("i").addClass("fa-spin");
+					timestampEl.html('Started at: ' + (project.started_at));
 					// Don't keep replacing, just check state
-					if (!statusEl.find("i").hasClass("yellow")) {
-						statusEl.html("<br><a href=\"#/" + project + "/builds/" + project.last_build + "\" title=\"Processing\"><i class=\"fa fa-refresh fa-circle yellow\"></i></a>");
-						timestampEl.html(project.ended_at);
-					}
 					break;
+				}
+
+				function updateStatus(expression, color) {
+					statusEl.html("<br><a href=\"#/" + project + "/builds/" + project.last_build + "\" title=\"Build " + expression + "\"><i class=\"fa fa-circle " + color + "\"></i></a>");
 				}
 			},
 
@@ -263,7 +270,6 @@ define([
 
 				// Handle form submission
 				$("#project-config").submit(function (e) {
-					console.log('SUBMIT NEW PROJECT');
 					e.preventDefault();
 					var name,
 						data = $(this).serializeObject();

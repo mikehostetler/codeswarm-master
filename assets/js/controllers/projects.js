@@ -27,6 +27,8 @@ define([
 
 				projects.forEach(function(project) {
 					project.view = base_href + "/#/" + project._id;
+					if (project.started_at) project.started_at = timestamp(project.started_at);
+					if (project.ended_at) project.ended_at = timestamp(project.ended_at);
 					socket.addProject(project);
 				});
 				dom.loadProjects(projects, self);

@@ -146,7 +146,6 @@ function updateProject(id, attrs, cb) {
     else {
       var sockets = sails.io.sockets.in(id);
       for(var attr in attrs) {
-        console.log('EMITTING', attr, attrs[attr]);
         sockets.emit('update', id, attr, attrs[attr]);
       }
       cb();

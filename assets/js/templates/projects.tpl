@@ -43,7 +43,7 @@
                 {{/compare}}
 
             </td>
-            <td class="center run-col">
+            <td class="center run-col" data-light="{{_id}}">
                 <br>
             	<a class="project-run-build" data-project="{{this._id}}"><i class="fa fa-repeat"></i></a>
             </td>
@@ -56,15 +56,13 @@
                 <h4 class="project">{{this._id}}</h4>
                 {{/if}}
                 <em class="repo">{{this.repo}}</em>
-                <span class="last-build">
+                <span class="last-build" data-timestamp="{{this._id}}">
                     Last Build:
-                    <span data-timestamp="{{this._id}}">
-                    {{#if this.state}}
-                    {{this.state.timestamp}}
+                    {{#if this.ended_at}}
+                      {{ended_at}}
                     {{else}}
-                    Never
+                      Never
                     {{/if}}
-                    </span>
                 </span>
 
                 <ul class="table-actions">

@@ -1,6 +1,7 @@
 define([
-	"controllers/dom"
-], function (dom) {
+	"controllers/dom",
+  "controllers/timestamp"
+], function (dom, timestamp) {
 
 	var socket = io.connect(location.protocol + "//" + location.hostname + (location.port ? ":" + location.port : ""));
 
@@ -44,6 +45,12 @@ define([
     if (attr) {
       value[attr] = val;
     } else return;
+
+    /// TODO: normalize at the model layer, not here
+    if (typeof project.started_at == 'number')
+      project.started_at = timestamp(project.started_at);
+    if (typeof project.ended_at == 'number')
+      project.ended_at = timestamp(project.ended_at);
 
     dom.updateProject(project);
   }
