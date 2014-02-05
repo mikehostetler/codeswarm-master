@@ -16,7 +16,8 @@
     "vouch-node": "*",
     "colors": "~0.6.2",
     "eventemitter2": "~0.4.13",
-    "mkdirp": "~0.3.5"
+    "mkdirp": "~0.3.5",
+    "ansi_up": "~1.0.0"
   },
   "scripts": {
     "start": "node app.js",
