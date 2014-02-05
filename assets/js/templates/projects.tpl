@@ -45,7 +45,7 @@
             </td>
             <td class="center run-col" data-light="{{_id}}">
                 <br>
-            	<a class="project-run-build" data-project="{{this._id}}"><i class="fa fa-repeat"></i></a>
+            	<a class="project-run-build" data-project="{{this._id}}"><i class="fa fa-repeat {{#compare this.state 'running' operator="==="}}fa-spin{{/compare}}"></i></a>
             </td>
 
 
@@ -102,7 +102,7 @@
             <td class="center logs-col">
                 <br>
             	{{#if this.state}}
-                <a href="#/logs/{{this._id}}"><i class="fa fa-th-list"></i></a>
+                <a href="#/{{this._id}}/builds"><i class="fa fa-th-list"></i></a>
                 {{else}}
                 N/A
                 {{/if}}
