@@ -33,8 +33,15 @@ define([
 		show: function (project, build) {
 			var req = requests.get("/projects/" + project + "/builds/" + build);
 
-			req.done(function (data) {
-				dom.loadLogOutput(project, log, timestamp(parseInt(log, 10)), data);
+			req.done(function (build) {
+				console.log('BUILD 3:', build);
+				build.created_at = timestamp(build.started_at);
+				build.stages.forEach(function(stage) {
+					stage.commands.forEach(function(command) {
+						command.args = command.args.join(' ');
+					});
+				});
+				dom.loadLogOutput(project, build);
 			});
 
 			req.fail(function () {

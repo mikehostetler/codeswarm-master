@@ -319,14 +319,9 @@ define([
 			/**
 			 * Load log output
 			 */
-			loadLogOutput: function (project, log, timestamp, output) {
+			loadLogOutput: function (project, build) {
 				var template = Handlebars.compile(logview),
-					html = template({
-						project: project,
-						logid: log,
-						timestamp: timestamp,
-						file: output
-					});
+					html = template(build);
 				this.$main.html(html);
 			},
 
