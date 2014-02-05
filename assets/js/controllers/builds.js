@@ -15,7 +15,6 @@ define([
 
 				// Build formatted, reversed output
 				var output = builds.map(function (build) {
-					console.log('buikd:', build);
 					return {
 						id: build._id,
 						date: timestamp(build.started_at),
