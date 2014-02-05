@@ -15,7 +15,7 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
-var uuid     = require('node-uuid').v4;
+var uuid     = require('../../lib/uuid');
 var extend   = require('util')._extend;
 var projects = require('../db/projects');
 var builds   = require('../db/builds');

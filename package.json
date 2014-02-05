@@ -17,7 +17,7 @@
     "colors": "~0.6.2",
     "eventemitter2": "~0.4.13",
     "mkdirp": "~0.3.5",
-    "node-uuid": "~1.4.1",
+    "ansi_up": "~1.0.0",
     "remote-test": "git+ssh://git@github.com:BrowserSwarm/remote-test.git"
   },
   "scripts": {

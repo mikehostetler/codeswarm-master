@@ -4,6 +4,7 @@ require.config({
 		"jquery": "vendor/jquery/jquery.min",
 		"text": "vendor/requirejs-text/text",
 		"handlebars": "vendor/handlebars/handlebars.min",
+		"ansi_up": "vendor/ansi_up/ansi_up",
 		"app": "app"
 	},
 	shim: {

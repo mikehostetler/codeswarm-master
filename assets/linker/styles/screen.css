@@ -92,6 +92,8 @@ h1,h2,h3,h4 {
 
 h1 { font-size: 3em; }
 h2 { font-size: 2.5em; }
+h2.failed { color: red; }
+h2.passed { color: green; }
 h3 { font-size: 2em; }
 h4 { font-size: 1.5em; margin-bottom: 10px; }
 
@@ -268,7 +270,7 @@ button:hover, button:hover{
 /* Pre/Code
 ==================================================================== */
 
-pre {
+code {
     display: block;
     overflow: scroll;
     margin: 5px 0;
@@ -284,6 +286,21 @@ pre {
     text-shadow: none;
 }
 
+code .annotation {
+    float: right;
+}
+
+code .annotation.pass {
+    color: green;
+}
+code .annotation.fail {
+    color: red;
+}
+
+/*code span {
+    display: block;
+}
+*/
 /* Tables
 ==================================================================== */
 
@@ -576,6 +593,10 @@ header #shadow-block.menu-open {
     font-weight: 400;
     background: #4a4f51;
     border-radius: 3px 3px 0 0;
+}
+
+.page-title a {
+    color: #f2f2f2;
 }
 
 .page-title .fa {
