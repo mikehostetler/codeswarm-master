@@ -8,7 +8,7 @@
         <thead>
             <tr>
                 <th width="75">Status</th>
-                <th>Timestamp</th>
+                <th>Data</th>
                 <th width="70">Open</th>
             </tr>
         </thead>
@@ -16,34 +16,28 @@
         {{#each builds}}
         <tr>
             <td class="center status-col" data-status="{{_id}}">
-                {{#compare status "fail" operator="==="}}
-                <a href="#/logs/{{value.project}}/{{key}}" title="Build Failed"><i class="fa fa-circle red"></i></a>
+                {{#compare state "failed" operator="==="}}
+                <a href="#/{{project}}/builds/{{_id}}" title="Build Failed"><i class="fa fa-circle red"></i></a>
                 {{/compare}}
 
-                {{#compare status "pass" operator="==="}}
-                <a href="#/logs/{{value.project}}/{{key}}" title="Build Passed"><i class="fa fa-circle green"></i></a>
+                {{#compare state "passed" operator="==="}}
+                <a href="#/{{project}}/builds/{{_id}}" title="Build Passed"><i class="fa fa-circle green"></i></a>
                 {{/compare}}
+
+                {{#compare state "running" operator="==="}}
+                <a href="#/{{project}}/builds/{{_id}}" title="Running"><i class="fa fa-circle yellow"></i></a>
+                {{/compare}}
+
+                {{#compare state "pending" operator="==="}}
+                <a href="#/{{project}}/builds/{{_id}}" title="Pending"><i class="fa fa-circle yellow"></i></a>
+                {{/compare}}
+
             </td>
             <td class="logs">
-                {{date}}
-
-                <ul class="table-actions">
-                    <li>
-                        {{#compare status "fail" operator="==="}}
-                        <a href="#/logs/{{value.project}}/{{key}}" title="Build Failed"><i class="fa fa-circle red"></i></a>
-                        {{/compare}}
-
-                        {{#compare status "pass" operator="==="}}
-                        <a href="#/logs/{{value.project}}/{{key}}" title="Build Passed"><i class="fa fa-circle green"></i></a>
-                        {{/compare}}
-                    </li>
-                    <li>
-                        <a href="#/logs/{{project}}/{{key}}"><i class="fa fa-clipboard"></i></a>
-                    </li>
-                </ul>
+                Started at {{created_at}}, Triggered by {{triggered_by}}
             </td>
             <td class="center logs-col">
-                <a href="#/{{project}}/builds/{{id}}"><i class="fa fa-clipboard"></i></a>
+                <a href="#/{{project}}/builds/{{_id}}"><i class="fa fa-clipboard"></i></a>
             </td>
         </tr>
         {{/each}}

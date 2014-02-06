@@ -14,17 +14,13 @@ define([
 			req.done(function (builds) {
 				var output = [];
 
-				// Build formatted, reversed output
-				var output = builds.map(function (build) {
-					return {
-						id: build._id,
-						date: timestamp(build.started_at),
-						status: build.state,
-						project: build.project
-					};
+				builds.sort(sortByDesc('created_at'));
+
+				builds.forEach(function (build) {
+					build.created_at = timestamp(build.created_at);
 				});
 
-				dom.loadBuilds(project, output);
+				dom.loadBuilds(project, builds);
 			});
 
 			req.fail(function () {
@@ -71,4 +67,10 @@ define([
 
 function decorateLine(line) {
 	return '<p>' + line + '</p>';
+}
+
+function sortByDesc(prop) {
+	return function(a, b) {
+		return b[prop] - a[prop];
+	}
 }
