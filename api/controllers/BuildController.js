@@ -73,8 +73,10 @@ function forList(build) {
   return {
     _id: build._id,
     created_at: build.created_at,
-    state: build.state,
-    branch: build.branch,
+    started_at: build.started_at,
+    ended_at:   build.ended_at,
+    state:      build.state,
+    branch:     build.branch,
     triggered_by: build.triggered_by,
     project: build.project
   }

@@ -34,7 +34,7 @@
 
             </td>
             <td class="logs">
-                Started at {{created_at}}, Triggered by {{triggered_by}}
+                Started at {{started_at}}, Triggered by {{triggered_by}}
             </td>
             <td class="center logs-col">
                 <a href="#/{{project}}/builds/{{_id}}"><i class="fa fa-clipboard"></i></a>

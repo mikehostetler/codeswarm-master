@@ -17,8 +17,11 @@ define([
 				builds.sort(sortByDesc('created_at'));
 
 				builds.forEach(function (build) {
-					build.created_at = timestamp(build.created_at);
+					if (build.started_at) build.started_at = timestamp(build.started_at);
+					if (build.ended_at) build.ended_at = timestamp(build.ended_at);
 				});
+
+				console.log('BUILDS', builds);
 
 				dom.loadBuilds(project, builds);
 			});

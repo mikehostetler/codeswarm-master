@@ -315,7 +315,6 @@ define([
 			 * Load builds
 			 */
 			loadBuilds: function (project, data) {
-				console.log('loadBuilds:', data);
 				var template = Handlebars.compile(builds),
 					html = template({
 						project: project,
