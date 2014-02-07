@@ -87,10 +87,8 @@ define([
 
 					if (!self.$body.hasClass("global-nav--open")) {
 						self.$body.addClass("global-nav--open");
-						console.log("doesn't have class");
 					} else {
 						self.$body.removeClass("global-nav--open");
-						console.log("has class");
 					}
 				});
 
@@ -192,23 +190,34 @@ define([
 			/**
 			 * Update project status
 			 */
-			updateStatus: function (project, log, status) {
-				var statusEl = this.$main.find("[data-status=\"" + project + "\"]"),
-					timestampEl = this.$main.find("[data-timestamp=\"" + project + "\"]");
-				switch (status) {
-				case "pass":
-					statusEl.html("<br><a href=\"#/" + project + "/builds/" + log + "\" title=\"Build Passing\"><i class=\"fa fa-circle green\"></i></a>");
+			updateProject: function (project) {
+				var statusEl = this.$main.find("[data-status=\"" + project._id + "\"]");
+				var timestampEl = this.$main.find("[data-timestamp=\"" + project._id + "\"]");
+				var lightEl = this.$main.find("[data-light=\"" + project._id + "\"]");
+
+				var lastBuild = project.ended_at || project.started_at;
+
+				switch (project.state) {
+				case "passed":
+					updateStatus('Passed', 'green');
+					lightEl.find("i").removeClass("fa-spin");
+					timestampEl.html('Last Build: ' + (project.ended_at || 'Never'));
 					break;
-				case "fail":
-					statusEl.html("<br><a href=\"#/" + project + "/builds/" + log + "\" title=\"Build Failing\"><i class=\"fa fa-circle red\"></i></a>");
+				case "failed":
+					updateStatus('Failed', 'red');
+					lightEl.find("i").removeClass("fa-spin");
+					timestampEl.html('Last Build: ' + (project.ended_at || 'Never'));
 					break;
-				case "processing":
+				case "running":
+					updateStatus('Running', 'yellow');
+					lightEl.find("i").addClass("fa-spin");
+					timestampEl.html('Started at: ' + (project.started_at));
 					// Don't keep replacing, just check state
-					if (!statusEl.find("i").hasClass("yellow")) {
-						statusEl.html("<br><a href=\"#/" + project + "/builds/" + log + "\" title=\"Processing\"><i class=\"fa fa-refresh fa-circle yellow\"></i></a>");
-						timestampEl.html(timestamp(log));
-					}
 					break;
+				}
+
+				function updateStatus(expression, color) {
+					statusEl.html("<br><a href=\"#/" + project + "/builds/" + project.last_build + "\" title=\"Build " + expression + "\"><i class=\"fa fa-circle " + color + "\"></i></a>");
 				}
 			},
 
@@ -261,7 +270,6 @@ define([
 
 				// Handle form submission
 				$("#project-config").submit(function (e) {
-					console.log('SUBMIT NEW PROJECT');
 					e.preventDefault();
 					var name,
 						data = $(this).serializeObject();

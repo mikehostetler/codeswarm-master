@@ -1,3 +1,4 @@
+var extend  = require('util')._extend;
 var db      = require('./');
 
 /// list
@@ -141,8 +142,46 @@ function updateBuild(build, cb) {
   db.privileged('builds', function(err, builds) {
     if (err) cb(err);
     else
-      builds.insert(build, cb);
+      builds.insert(build, replied);
   });
+
+  function replied(err, reply) {
+    if (err && err.status_code != 409) cb(err);
+    else if (err) cb();
+    else {
+      build._id = reply.id;
+      build._rev = reply.rev;
+      cb(null, build);
+    }
+
+  }
+}
+
+
+/// forShow
+
+exports.forShow = forShow;
+
+function forShow(build) {
+  build = extend({}, build);
+  var stages = build.stages;
+  if (! stages) return build;
+  var stageArray = [];
+  Object.keys(stages).forEach(function(stageName) {
+    var stage = stages[stageName];
+    if (stage.commands && stage.commands.length) {
+      stageArray.push({
+        name: stageName,
+        commands: stage.commands,
+        ended: stage.ended,
+        ended_at: stage.ended_at
+      });
+    }
+  });
+
+  build.stages = stageArray;
+
+  return build;
 }
 
 

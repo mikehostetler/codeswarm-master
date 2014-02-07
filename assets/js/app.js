@@ -6,12 +6,15 @@ define([
 	"controllers/projects",
 	"controllers/builds",
 	"controllers/socket"
-], function (dom, session, users, Router, projects, builds) {
+], function (dom, session, users, Router, projects, builds, socket) {
 	var app;
 
 	app = {
 
 		init: function () {
+
+			socket.reset();
+
 			var router,
 				authenticated;
 			// Start DOM controller
@@ -121,6 +124,10 @@ define([
 				session.unset();
 				router.go("/");
 			});
+
+			router.beforeChange = function() {
+				socket.reset();
+			};
 
 
 			// Kick off process
