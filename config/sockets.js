@@ -27,6 +27,16 @@ module.exports.sockets = {
       socket.leave(project);
     });
 
+    socket.on('join builds', function(project) {
+      console.log('socket joining builds for project', project);
+      socket.join(project + ' builds');
+    });
+
+    socket.on('leave builds', function(project) {
+      console.log('socket leaving builds for project', project);
+      socket.leave(project + ' builds');
+    });
+
     // By default: do nothing
     // This is a good place to subscribe a new socket to a room, inform other users that
     // someone new has come online, or any other custom socket.io logic

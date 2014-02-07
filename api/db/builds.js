@@ -141,8 +141,19 @@ function updateBuild(build, cb) {
   db.privileged('builds', function(err, builds) {
     if (err) cb(err);
     else
-      builds.insert(build, cb);
+      builds.insert(build, replied);
   });
+
+  function replied(err, reply) {
+    if (err && err.status_code != 409) cb(err);
+    else if (err) cb();
+    else {
+      build._id = reply.id;
+      build._rev = reply.rev;
+      cb(null, build);
+    }
+
+  }
 }
 
 

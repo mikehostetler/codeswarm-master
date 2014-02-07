@@ -14,8 +14,8 @@
         </thead>
         <tbody>
         {{#each builds}}
-        <tr>
-            <td class="center status-col" data-status="{{_id}}">
+        <tr data-build={{_id}}>
+            <td class="center status-col"">
                 {{#compare state "failed" operator="==="}}
                 <a href="#/{{project}}/builds/{{_id}}" title="Build Failed"><i class="fa fa-circle red"></i></a>
                 {{/compare}}

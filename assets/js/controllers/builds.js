@@ -2,8 +2,9 @@ define([
 	"controllers/dom",
 	"controllers/requests",
 	"controllers/timestamp",
+	"controllers/socket",
 	"ansi_up"
-], function (dom, requests, timestamp, ansi_up) {
+], function (dom, requests, timestamp, socket, ansi_up) {
 	var builds;
 
 	builds = {
@@ -21,7 +22,7 @@ define([
 					if (build.ended_at) build.ended_at = timestamp(build.ended_at);
 				});
 
-				console.log('BUILDS', builds);
+				socket.addBuilds(project, builds);
 
 				dom.loadBuilds(project, builds);
 			});
