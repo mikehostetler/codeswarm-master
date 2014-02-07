@@ -3,8 +3,8 @@ var Url = require('url');
 exports = module.exports = {
   "url": "http://localhost:5984",
   "admin": {
-      "username": "pgte",
-      "password": "pgtepgte"
+      "username": "admin",
+      "password": "admin"
   }
 };
 
