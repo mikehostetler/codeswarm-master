@@ -35,6 +35,8 @@ module.exports = {
 
     var project = extend({}, req.body);
     var match = project.repo.match(repoRegexp);
+    if (! match) return res.send(409, new Error('Invalid repo URL'));
+
     var id = match[5];
     project._id = id;
     project.owners = [ req.session.username() ];

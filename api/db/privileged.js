@@ -20,6 +20,10 @@ function privileged(dbName, cb) {
     cb(null, db);
   } else {
     login(function(err, db) {
+      if (err) {
+        console.error(err.stack || err);
+        return cb(err);
+      };
       db = dbName ? db.use(dbName) : db;
       cb(err, db);
     });
