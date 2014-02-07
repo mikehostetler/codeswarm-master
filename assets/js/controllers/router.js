@@ -80,6 +80,7 @@ define(function () {
 					matched = route;
 				}
 			}
+			if (this.beforeChange) this.beforeChange();
 			self.routes[matched].apply(this, args);
 		}
 

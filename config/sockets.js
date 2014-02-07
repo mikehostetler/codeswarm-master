@@ -37,6 +37,25 @@ module.exports.sockets = {
       socket.leave(project + ' builds');
     });
 
+    socket.on('watch build', function(build) {
+      console.log('socket watching build', build);
+      socket.join('build ' + build);
+    });
+
+    socket.on('unwatch build', function(build) {
+      console.log('socket stopped watching build', build);
+      socket.leave('build ' + build);
+    });
+
+    socket.on('reset', function() {
+      var rooms = sails.io.sockets.manager.roomClients[socket.id];
+      for(var room in rooms) {
+        console.log('socket is leaving %j', room);
+        room = room.substring(1);
+        if (room) socket.leave(room);
+      };
+    });
+
     // By default: do nothing
     // This is a good place to subscribe a new socket to a room, inform other users that
     // someone new has come online, or any other custom socket.io logic

@@ -51,11 +51,9 @@ module.exports = {
     function replied(err, build) {
       if (err) res.send(err.status_code || 500, err);
       else if (! build) res.send(404, new Error('Build not found'));
-      else res.json(forShow(build));
+      else res.json(builds.forShow(build));
     }
   },
-
-
 
 
   /**
@@ -80,26 +78,4 @@ function forList(build) {
     triggered_by: build.triggered_by,
     project: build.project
   }
-}
-
-function forShow(build) {
-  build = extend({}, build);
-  var stages = build.stages;
-  if (! stages) return build;
-  var stageArray = [];
-  Object.keys(stages).forEach(function(stageName) {
-    var stage = stages[stageName];
-    if (stage.commands && stage.commands.length) {
-      stageArray.push({
-        name: stageName,
-        commands: stage.commands,
-        ended: stage.ended,
-        ended_at: stage.ended_at
-      });
-    }
-  });
-
-  build.stages = stageArray;
-
-  return build;
 }

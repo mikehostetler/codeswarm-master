@@ -1,7 +1,8 @@
 define([
 	"controllers/dom",
-  "controllers/timestamp"
-], function (dom, timestamp) {
+  "controllers/timestamp",
+  "controllers/build"
+], function (dom, timestamp, Build) {
 
 	var socket = io.connect(location.protocol + "//" + location.hostname + (location.port ? ":" + location.port : ""));
 
@@ -9,13 +10,15 @@ define([
 
   socket.on('update', onProjectUpdate);
   socket.on('build', onBuild);
+  socket.on('build detail', onBuildDetail);
 
   var projects = {};
-  var project, builds;
+  var project, builds, watchingBuild;
 
   return {
     addProject: addProject,
     addBuilds: addBuilds,
+    watchBuild: watchBuild,
     reset: reset
   };
 
@@ -30,15 +33,19 @@ define([
     socket.emit('join builds', project);
   }
 
-  function reset() {
-    for(var project in projects)
-      socket.emit('leave project', project);
-    projects = {};
+  function watchBuild(build) {
+    watchingBuild = build;
+    socket.emit('watch build', build);
+  }
 
-    for(var project in builds)
-      socket.emit('leave builds', project);
+  function reset() {
+    console.log('reset');
+    socket.emit('reset');
+
+    projects = {};
     builds = [];
     project = undefined;
+    watchingBuild = undefined;
   }
 
   function onProjectUpdate(projectName, attribute, val) {
@@ -75,7 +82,7 @@ define([
 
     for(i = 0 ; i < builds.length; i ++) {
       if (builds[i]._id == build._id) {
-        found = builds[i];
+        found = true;
         break;
       }
     }
@@ -86,6 +93,10 @@ define([
     if (build.ended_at) build.ended_at = timestamp(build.ended_at);
 
     dom.loadBuilds(project, builds);
+  }
+
+  function onBuildDetail(project, build) {
+    dom.loadLogOutput(project, Build.forShow(build));
   }
 
 });

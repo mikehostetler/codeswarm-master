@@ -12,6 +12,9 @@ define([
 	app = {
 
 		init: function () {
+
+			socket.reset();
+
 			var router,
 				authenticated;
 			// Start DOM controller
@@ -122,7 +125,7 @@ define([
 				router.go("/");
 			});
 
-			router.afterChange = function() {
+			router.beforeChange = function() {
 				socket.reset();
 			};
 
