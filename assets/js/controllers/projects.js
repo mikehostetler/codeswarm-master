@@ -77,7 +77,6 @@ define([
 		},
 
 		newProject: function() {
-			console.log('NEW PROJECTY');
 			var req = requests.get('/tokens/github');
 
 			req.done(function(token) {

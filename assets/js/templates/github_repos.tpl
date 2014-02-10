@@ -4,9 +4,9 @@
 
 <div class="content-wrap">
 
-  <ul>
+  <ul class="repos">
     {{#each repos}}
-      <li class="repo">
+      <li class="remote-repo">
         {{full_name}}
       </li>
     {{/each}}
