@@ -46,6 +46,13 @@ function replied(err, res, headers) {
 
   if (err) globalError(err);
   else {
+
+    // HACK: use basic auth in URL all the time
+    // because I think cookies are not working in nano
+    privilegedCouch = nano(config.admin_url);
+    replyAll(null, privilegedCouch);
+    return;
+
     header = headers['set-cookie'][0];
     if (header) sessionId = cookie.parse(header).AuthSession;
     if (! sessionId) globalError(new Error('no AuthSession cookie found'));
