@@ -10,9 +10,10 @@ define([
 		"text!templates/project.tpl",
 		"text!templates/builds.tpl",
 		"text!templates/logview.tpl",
-		"text!templates/tokens.tpl"
+		"text!templates/tokens.tpl",
+		"text!templates/github_repos.tpl"
 	],
-	function ($, Handlebars, timestamp, header, signup, login, menu, projects, project, builds, logview, tokens) {
+	function ($, Handlebars, timestamp, header, signup, login, menu, projects, project, builds, logview, tokens, github_repos) {
 		var dom;
 
 		dom = {
@@ -315,9 +316,20 @@ define([
 			/**
 			 * Request Github Token
 			 */
-
 			requestGithubToken: function() {
 				this.$main.html(tokens);
+			},
+
+
+			/**
+			 * List Github Repos
+			 */
+			listGithubRepos: function(repos) {
+				var template = Handlebars.compile(github_repos),
+					html = template({
+						repos: repos
+					});
+				this.$main.html(html);
 			},
 
 			/**
