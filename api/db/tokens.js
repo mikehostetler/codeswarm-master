@@ -10,11 +10,13 @@ function getToken(user, provider, cb) {
     if (err) cb(err);
     else {
       var username = users.userId(user); // internal couchdb username
+      console.log('GETTING', username);
       _users.get(username, replied);
     }
   });
 
   function replied(err, user) {
+    console.log('REPLIED:', user);
     if (err) cb(err);
     else {
       var token = user.tokens && user.tokens[provider];

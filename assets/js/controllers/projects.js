@@ -77,6 +77,7 @@ define([
 		},
 
 		newProject: function() {
+			console.log('NEW PROJECTY');
 			var req = requests.get('/tokens/github');
 
 			req.done(function(token) {
@@ -86,7 +87,7 @@ define([
 				});
 				var user = github.getUser();
 				user.repos(function(err, repos) {
-					if (err) err.handleError(err);
+					if (err) error.handleError(err);
 					else dom.listGithubRepos(repos);
 				});
 			});

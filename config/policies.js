@@ -44,7 +44,7 @@ module.exports.policies = {
 
 	TokenController: {
 		create: 'isAuthenticated',
-		get: 'isAuthenticated'
+		find: 'isAuthenticated'
 	}
 };
 

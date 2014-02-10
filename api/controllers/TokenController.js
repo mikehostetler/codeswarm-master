@@ -75,6 +75,8 @@ module.exports = {
   find: function (req, res) {
 
     var user = req.session.username();
+    if (! user) throw new Error('No username????');
+
     var provider = req.param('provider');
 
     tokens.get(user, provider, replied);

@@ -4,20 +4,14 @@
 // For all details and documentation:
 // http://substance.io/michael/github
 
-(function() {
+define([
+  'base64'
+  ],
+  function(Base64) {
 
   // Initial Setup
   // -------------
 
-  var XMLHttpRequest, Base64, _;
-  if (typeof exports !== 'undefined') {
-      XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
-      _ = require('underscore');
-      Base64 = require('./lib/base64.js');
-  }else{
-      _ = window._;
-      Base64 = window.Base64;
-  }
   //prefer native XMLHttpRequest always
   if (typeof window !== 'undefined' && typeof window.XMLHttpRequest !== 'undefined'){
       XMLHttpRequest = window.XMLHttpRequest;
@@ -252,18 +246,18 @@
         _request("DELETE", repoPath + "/git/refs/"+ref, options, cb);
       };
 
-      // Create a repo  
+      // Create a repo
       // -------
 
       this.createRepo = function(options, cb) {
         _request("POST", "/user/repos", options, cb);
       };
 
-      // Delete a repo  
-      // --------  
+      // Delete a repo
+      // --------
 
-      this.deleteRepo = function(cb) {  
-        _request("DELETE", repoPath, options, cb);  
+      this.deleteRepo = function(cb) {
+        _request("DELETE", repoPath, options, cb);
       };
 
       // List all tags of a repository
@@ -450,9 +444,9 @@
         _request("POST", repoPath + "/forks", null, cb);
       };
 
-      // Branch repository  
-      // --------  
- 
+      // Branch repository
+      // --------
+
       this.branch = function(oldBranch,newBranch,cb) {
         if(arguments.length === 2 && typeof arguments[1] === "function") {
           cb = newBranch;
@@ -544,24 +538,24 @@
           });
         });
       };
-      
+
       // Delete a file from the tree
       // -------
-      
+
       this.delete = function(branch, path, cb) {
         that.getSha(branch, path, function(err, sha) {
           if (!sha) return cb("not found", null);
           var delPath = repoPath + "/contents/" + path;
           var params = {
             "message": "Deleted " + path,
-            "sha": sha 
+            "sha": sha
           };
           delPath += "?message=" + encodeURIComponent(params.message);
           delPath += "&sha=" + encodeURIComponent(params.sha);
           _request("DELETE", delPath, null, cb);
         })
       }
-      
+
       // Move a file to a new location
       // -------
 
@@ -762,11 +756,6 @@
     };
   };
 
+  return Github;
 
-  if (typeof exports !== 'undefined') {
-    // Github = exports;
-    module.exports = Github;
-  } else {
-    window.Github = Github;
-  }
-}).call(this);
+});
