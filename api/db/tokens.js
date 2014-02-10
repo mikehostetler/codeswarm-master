@@ -6,7 +6,6 @@ var users   = require('./users');
 exports.get = getToken;
 
 function getToken(user, provider, cb) {
-  console.log('getToken', arguments);
   db.privileged('_users', function(err, _users) {
     if (err) cb(err);
     else {
@@ -18,7 +17,6 @@ function getToken(user, provider, cb) {
   function replied(err, user) {
     if (err) cb(err);
     else {
-      console.log('GIT USER tokens', user.tokens);
       var token = user.tokens && user.tokens[provider];
       cb(null, token);
     }
