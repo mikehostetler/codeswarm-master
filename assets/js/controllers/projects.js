@@ -39,11 +39,9 @@ define([
 		},
 
 		runBuild: function (project) {
-			console.log('RUNNING BUILD for PROJECT', project);
 			var req = requests.post(project + '/deploy');
 
 			req.done(function (build) {
-				console.log('DONE! build:', build);
 				dom.showSuccess("Starting build...");
 			});
 
@@ -94,8 +92,9 @@ define([
 			});
 
 			req.fail(function(xhr) {
-				console.log(xhr);
-				dom.requestGithubToken();
+				if (xhr.status == 404)
+					dom.requestGithubToken();
+				else error.handleXhrError(xhr);
 			});
 		},
 
