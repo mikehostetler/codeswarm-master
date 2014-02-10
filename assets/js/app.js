@@ -115,7 +115,7 @@ define([
 
 			router.on("/project/new", function() {
 				authenticated(function () {
-					projects.configProject();
+					projects.newProject();
 				});
 			});
 

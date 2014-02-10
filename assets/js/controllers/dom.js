@@ -9,9 +9,10 @@ define([
 		"text!templates/projects.tpl",
 		"text!templates/project.tpl",
 		"text!templates/builds.tpl",
-		"text!templates/logview.tpl"
+		"text!templates/logview.tpl",
+		"text!templates/tokens.tpl"
 	],
-	function ($, Handlebars, timestamp, header, signup, login, menu, projects, project, builds, logview) {
+	function ($, Handlebars, timestamp, header, signup, login, menu, projects, project, builds, logview, tokens) {
 		var dom;
 
 		dom = {
@@ -309,6 +310,14 @@ define([
 					// Hide confirm/cancel
 					self.$main.find("#project-confirm-delete, #project-cancel-delete").hide();
 				});
+			},
+
+			/**
+			 * Request Github Token
+			 */
+
+			requestGithubToken: function() {
+				this.$main.html(tokens);
 			},
 
 			/**

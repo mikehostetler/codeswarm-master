@@ -96,12 +96,21 @@ module.exports.routes = {
 
   'get /session': 'SessionController.get',
 
+
+  /// Projects
+
   'get /projects': 'ProjectController.list',
   'get /projects/:owner/:repo': 'ProjectController.find',
   'post /projects': 'ProjectController.create',
   'post /:owner/:repo/deploy': 'ProjectController.deploy',
   'get /projects/:owner/:repo/builds': 'BuildController.index',
-  'get /projects/:owner/:repo/builds/:build': 'BuildController.find'
+  'get /projects/:owner/:repo/builds/:build': 'BuildController.find',
+
+  /// Tokens
+
+  'get /tokens/:provider': 'TokenController.find',
+  'post /tokens/:provider': 'TokenController.create',
+  'get /tokens/:provider/callback': 'TokenController.callback'
 };
 
 

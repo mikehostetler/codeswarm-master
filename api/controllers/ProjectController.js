@@ -68,11 +68,6 @@ module.exports = {
         else res.send(404, new Error('Not Found'));
       }
     }
-
-    // Send a JSON response
-    return res.json({
-      hello: 'world'
-    });
   },
 
 

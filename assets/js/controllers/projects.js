@@ -5,8 +5,9 @@ define([
 	"controllers/router",
 	"controllers/timestamp",
 	"controllers/error",
-	"controllers/socket"
-], function (dom, requests, session, Router, timestamp, error, socket) {
+	"controllers/socket",
+	"github"
+], function (dom, requests, session, Router, timestamp, error, socket, Github) {
 	var router,
 		projects;
 
@@ -75,6 +76,27 @@ define([
 			} else {
 				dom.loadProject({}, self);
 			}
+		},
+
+		newProject: function() {
+			var req = requests.get('/tokens/github');
+
+			req.done(function(token) {
+				var github = new Github({
+					token: token,
+					auth: 'oauth'
+				});
+				var user = github.getUser();
+				user.repos(function(err, repos) {
+					if (err) err.handleError(err);
+					else dom.listGithubRepos(repos);
+				});
+			});
+
+			req.fail(function(xhr) {
+				console.log(xhr);
+				dom.requestGithubToken();
+			});
 		},
 
 		configProject: function (project) {

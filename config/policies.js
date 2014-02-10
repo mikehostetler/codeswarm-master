@@ -36,10 +36,15 @@ module.exports.policies = {
 	}
 	*/
 
-	ProjectsController: {
+	ProjectController: {
 		create: 'isAuthenticated',
 		list: 'isAuthenticated',
 		deploy: 'isAuthenticated'
+	},
+
+	TokenController: {
+		create: 'isAuthenticated',
+		get: 'isAuthenticated'
 	}
 };
 
