@@ -1,6 +1,6 @@
 {{#auth}}
 <a class="menu-button" href="#/projects">
-    <i class="fa fa-check-circle"></i>Vouch
+    <i class="fa fa-check-circle"></i>CodeSwarm
 </a>
 
 <a class="fa fa-bars nav-trigger"></a>
@@ -13,6 +13,6 @@
 
 {{^auth}}
 <a class="menu-button">
-    <i class="fa fa-check-circle"></i>Vouch
+    <i class="fa fa-check-circle"></i>CodeSwarm
 </a>
 {{/auth}}

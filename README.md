@@ -1,26 +1,26 @@
-# Vouch-CD
+# CodeSwarm
 
 ## Install
 
-Checkout plugin `vouch-node`:
+Checkout plugin `codeswarm-node`:
 
 ```
 $ cd projects
-$ git clone git@github.com:BrowserSwarm/vouch-node.git
-$ cd vouch-node
+$ git clone git@github.com:CodeSwarm/codeswarm-node.git
+$ cd codeswarm-node
 $ npm link
 ```
 
 Link it:
 
 ```
-$ cd  projects/vouch-cd
-$ npm link vouch-node
+$ cd  projects/codeswarm
+$ npm link codeswarm-node
 ```
 
 ## Run
 
-Start Vouch-CD in dev mode (uses nodemon to restart when JS changes are made):
+Start CodeSwarm in dev mode (uses nodemon to restart when JS changes are made):
 
 ```bash
 $ npm run mon
