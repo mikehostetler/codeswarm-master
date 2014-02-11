@@ -13,14 +13,13 @@
     "nano": "~4.4.0",
     "cqs": "~0.8.1",
     "async": "~0.2.10",
-    "codeswarm-node": "git+ssh://git@github.com:CodeSwarm/codeswarm-node.git",
+    "codeswarm-node": "*",
     "colors": "~0.6.2",
     "eventemitter2": "~0.4.13",
     "mkdirp": "~0.3.5",
     "ansi_up": "~1.0.0",
     "passport": "~0.2.0",
-    "passport-github": "~0.1.5",
-    "remote-test": "git+ssh://git@github.com:CodeSwarm/remote-test.git"
+    "passport-github": "~0.1.5"
   },
   "scripts": {
     "start": "node app.js",
