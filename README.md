@@ -1,161 +1,38 @@
 # Vouch-CD
 
-A simple continuous integration and deployment server for building and deploying apps through NodeJS.
+## Install
 
-## Getting Started
-
-Installation of Vouch is meant to be very simple, there is no database to configure
-and once running administration is extremely minimal.
-
-### System Installation & Startup
-
-1. Clone the repo to your server
-2. Run `npm install` to pull the dependencies
-3. Run `grunt` to build the application
-4. Rename `/config.json.example` to `/config.json`
-5. Edit any settings in `/config.json`, specifically change the default `token`
-6. (Optional) Copy the contents of your server's private SSH key into `/deploy_key`
-7. Start the service via `node index.js`
-
-You can then navigate to the dashboard by opening the following in your browser:
-
-```html
-http(s)://yourserver.com:{BUILD-PORT}/
-```
-
-Once logged in you can setup a project by clicking the *New Project* button. The
-creation process is as simple as putting in the address of the Git repo. The system
-will automatically generate the Deploy Hook URL when creating the project.
-
-You can also set which branch the server should build from as well as an (optional)
-username and password for viewing the build.
-
-### Project Setup
-
-The Deploy Hook URL generated when the project is created can be added to the
-[Github Post-Receive Hooks](https://help.github.com/articles/post-receive-hooks)
-and the Deploy Key added to the project's [Github Deploy Keys](https://help.github.com/articles/managing-deploy-keys#deploy-keys).
-This will allow the project to trigger the build process whenever a push is made
-to the repository.
-
-In order for projects to build properly, they must have a `.vouch.json` config file
-in their root. An example of this file is:
-
-```json
-{
-    "dir": "/dist",
-    "default": "index.html",
-    "run": [
-        "npm install",
-        "grunt"
-    ],
-    "notify": [
-        "jsmith@email.com",
-        "fbar@email.com"
-    ]
-}
-```
-
-This file serves several important purposes:
-
-**The `dir` and `default` establish the staging configuration**
-
-When the build is successful it will be available through the browser at
-`http://yourserver.com/view/PROJECT_NAME` and the server will load `dir` as the
-root and `default` as the default file to serve.
-
-**The `run` commands are fired during build**
-
-These commands will be called by the system once the repository is successfully
-pulled and setup.
-
-**The `notify` array contains those working on the project**
-
-Not only will these email addresses recieve notifications on build failures, they
-are also able to access the logs for this (and any other projects) they are listed
-on.
-
-### Mail Configuration
-
-In order to receive email notifications from the system, the following must be
-added to the `/config.json` under the `app` properties:
-
-```json
-    "mailer": {
-        "host": "smtp.yourserver.com",
-        "secureConnection": true,
-        "port": 465,
-        "auth": {
-            "user": "user@yourserver.com",
-            "pass": "password"
-        }
-    }
-```
-
-## Run Modes
-
-When you are running Vouch in production mode there are no flags/arguments
-required, however, if you are modifying the server or the contents of `/src` you
-can run the server in development mode via:
+Checkout plugin `vouch-node`:
 
 ```
-node index.js dev
+$ cd projects
+$ git clone git@github.com:BrowserSwarm/vouch-node.git
+$ cd vouch-node
+$ npm link
 ```
 
-The above will run the server in a verbose mode and serve the UI from the `/src`
-directory.
-
-## Advanced Express Support
-
-A repo can request that a separate instance of Express be created to serve its content.
-To enable this functionality, the repo's `.vouch.json` file must include an "express" object
-with the following information:
-
-```javascript
-{
-	"express": {
-		"script": "express.vouch.js", // A file within the root of the repo
-		"port": 8085 // The desired port
-	}
-}
-```
-
-The `express.vouch.js` file that our configuration referenced is a Node script responsible
-for creating the Express instance. The important thing to note is that this script should
-determine the port to be used by referencing `process.argv[2]`. An example follows:
-
-```javascript
-var port = process.argv[2];
-var express = require('express');
-var server = express();
-server.configure(function(){
-	server.use('/', express.static(__dirname + '/src'));
-	server.use(express.static(__dirname + '/example'));
-});
-server.listen(port);
-```
-
-## Status Icons
-
-The system provides status icons for embedding on sites / repos:
+Link it:
 
 ```
-http://yourserver.com/statusicon/{PROJECT}.png
+$ cd  projects/vouch-cd
+$ npm link vouch-node
 ```
 
-Which will return one of the following based on the current status:
+## Run
 
-![Passing](lib/status_icons/build-passing.png)&nbsp;&nbsp;
-![Passing](lib/status_icons/build-pending.png)&nbsp;&nbsp;
-![Passing](lib/status_icons/build-failing.png)
+Start Vouch-CD in dev mode (uses nodemon to restart when JS changes are made):
+
+```bash
+$ npm run mon
+```
 
 
-## License
+## CouchDB Setup
 
-Vouch is released under the MIT License.
+You have to create the admin user with the `admin` password. You can override this with the COUCHDB_USERNAME and COUCHDB_PASSWORD env vars though.
 
-Disclaimer: This is an appendTo Labs project and as such there is no promise of
-support or even future development of this project. We are working on this project
-to meet a need at appendTo and sharing it in the spirit of open source software.
-If it helps you or your team meet needs as well, that is awesome – however, use
-at your own risk.
+To add the couchdb admin user go to futon (the couchdb admin interface), and click on the `Setup more admins` on the bottom right side.
+On the couchdb configuration, set couchdb_httpd_auth=> allow_pesistent_cookies to true
+Make sure the admin user is listed on the config `admins` section
+
+Using a different user on the fronted than the admin user and also the persistent cookie session should prevent you from being logged out.

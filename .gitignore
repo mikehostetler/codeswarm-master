@@ -4,6 +4,11 @@ logs/
 temp/
 ui/dist/
 ui/src/js/vendor
+ui/dist
 config.json
 .sessions
 /deploy_key
+npm-debug.log
+.tmp
+.vagrant
+.DS_Store
