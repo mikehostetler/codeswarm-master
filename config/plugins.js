@@ -1,1 +1,1 @@
-exports.modules = ['vouch-node'];
+exports.modules = ['codeswarm-node'];

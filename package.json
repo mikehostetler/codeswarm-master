@@ -13,12 +13,12 @@
     "nano": "~4.4.0",
     "cqs": "~0.8.1",
     "async": "~0.2.10",
-    "vouch-node": "git+ssh://git@github.com:BrowserSwarm/vouch-node.git",
+    "codeswarm-node": "git+ssh://git@github.com:codeswarm/codeswarm-node.git",
     "colors": "~0.6.2",
     "eventemitter2": "~0.4.13",
     "mkdirp": "~0.3.5",
     "ansi_up": "~1.0.0",
-    "remote-test": "git+ssh://git@github.com:BrowserSwarm/remote-test.git"
+    "remote-test": "git+ssh://git@github.com:codeswarm/remote-test.git"
   },
   "scripts": {
     "start": "node app.js",
