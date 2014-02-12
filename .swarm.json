@@ -6,6 +6,7 @@
         "grunt"
     ],
     "notify": [
-        "ksafranski@appendto.com"
+        "ksafranski@appendto.com",
+				"mike@appendto.com"
     ]
 }

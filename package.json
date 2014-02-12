@@ -1,5 +1,5 @@
 {
-  "name": "test-sails",
+  "name": "CodeSwarm",
   "private": true,
   "version": "0.0.0",
   "description": "a Sails application",
@@ -13,7 +13,7 @@
     "nano": "~4.4.0",
     "cqs": "~0.8.1",
     "async": "~0.2.10",
-    "codeswarm-node": "git+ssh://git@github.com:codeswarm/codeswarm-node.git",
+    "codeswarm-node": "*",
     "colors": "~0.6.2",
     "eventemitter2": "~0.4.13",
     "mkdirp": "~0.3.5",
