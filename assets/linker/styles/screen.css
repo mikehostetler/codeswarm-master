@@ -764,6 +764,14 @@ i.red, i.red:hover { color: #ad0505; }
 i.green, i.green:hover { color: #0fa80f; }
 i.yellow, i.yellow:hover { color: #ffcc00; }
 
+.remote-repo {
+    width: 100%;
+    background: #B0CFB0;
+    margin: 0.5em;
+    padding: 1em;
+    border-radius: 3px;
+}
+
 /* Aside
 ==================================================================== */
 

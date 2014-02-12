@@ -48,6 +48,7 @@ module.exports = function (grunt) {
 
     // Bring in the socket.io client
     '/js/socket.io.js',
+    '/js/vendor/underscore/underscore-min.js'
 
     // 'linker/js/vendor/requirejs/require.js',
 

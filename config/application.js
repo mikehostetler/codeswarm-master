@@ -1,6 +1,7 @@
-var extend = require('util')._extend;
-var Cookie = require('cookie');
-var db     = require('../api/db');
+var extend   = require('util')._extend;
+var Cookie   = require('cookie');
+var passport = require('../lib/passport');
+var db       = require('../api/db');
 
 module.exports = {
 
@@ -8,6 +9,7 @@ module.exports = {
   express: {
     customMiddleware: function(app) {
       app.use(session);
+      app.use(passport.initialize());
     }
   }
 
@@ -36,8 +38,11 @@ function session(req, res, next) {
     if (err) err.send(err.status_code || 500, err);
     else {
       if (! req.session) req.session = {};
+      if (! session || ! session.userCtx || ! session.userCtx.name)
+        session = null;
       req.session.couchdb = session;
       req.session.username = getUsername;
+      console.log('COUCHDB USER:', req.session.username());
       next();
     }
   }

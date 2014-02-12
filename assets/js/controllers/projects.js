@@ -5,8 +5,9 @@ define([
 	"controllers/router",
 	"controllers/timestamp",
 	"controllers/error",
-	"controllers/socket"
-], function (dom, requests, session, Router, timestamp, error, socket) {
+	"controllers/socket",
+	"github"
+], function (dom, requests, session, Router, timestamp, error, socket, Github) {
 	var router,
 		projects;
 
@@ -38,11 +39,9 @@ define([
 		},
 
 		runBuild: function (project) {
-			console.log('RUNNING BUILD for PROJECT', project);
 			var req = requests.post(project + '/deploy');
 
 			req.done(function (build) {
-				console.log('DONE! build:', build);
 				dom.showSuccess("Starting build...");
 			});
 
@@ -75,6 +74,28 @@ define([
 			} else {
 				dom.loadProject({}, self);
 			}
+		},
+
+		newProject: function() {
+			var req = requests.get('/tokens/github');
+
+			req.done(function(token) {
+				var github = new Github({
+					token: token,
+					auth: 'oauth'
+				});
+				var user = github.getUser();
+				user.repos(function(err, repos) {
+					if (err) error.handleError(err);
+					else dom.listGithubRepos(repos);
+				});
+			});
+
+			req.fail(function(xhr) {
+				if (xhr.status == 404)
+					dom.requestGithubToken();
+				else error.handleXhrError(xhr);
+			});
 		},
 
 		configProject: function (project) {

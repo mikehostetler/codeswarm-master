@@ -82,6 +82,8 @@ function session(db, username, sessionId) {
 
 //// Common
 
+exports.userId = userId;
+
 function userId(id) {
   return 'org.couchdb.user:' + id;
 }

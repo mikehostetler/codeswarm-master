@@ -9,6 +9,9 @@
  */
 module.exports = function(req, res, next) {
 
-  if (req.session.username()) next();
+  var username = req.session.username();
+  console.log('isAuthenticated?: %j', !! username);
+
+  if (username) next();
   else res.forbidden('You are not permitted to perform this action.');
 };

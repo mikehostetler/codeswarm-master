@@ -18,11 +18,13 @@
     "eventemitter2": "~0.4.13",
     "mkdirp": "~0.3.5",
     "ansi_up": "~1.0.0",
-    "remote-test": "git+ssh://git@github.com:codeswarm/remote-test.git"
+    "passport": "~0.2.0",
+    "passport-github": "~0.1.5",
+    "remote-test": "git+ssh://git@github.com:BrowserSwarm/remote-test.git"
   },
   "scripts": {
     "start": "node app.js",
-    "mon":   "node_modules/.bin/nodemon app.js --dev",
+    "mon": "node_modules/.bin/nodemon app.js --dev",
     "debug": "node debug app.js"
   },
   "main": "app.js",
