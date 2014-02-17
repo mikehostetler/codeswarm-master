@@ -770,6 +770,20 @@ i.yellow, i.yellow:hover { color: #ffcc00; }
     margin: 0.5em;
     padding: 1em;
     border-radius: 3px;
+    clear: both;
+    height: 3em;
+}
+
+button.remove-repo, button.add-repo {
+    float: right;
+    padding: 1em;
+    border-radius: 3px;
+    margin-top: -1em;
+    margin-right: -1em;
+}
+
+button.remove-repo {
+    background: red;
 }
 
 /* Aside

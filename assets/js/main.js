@@ -7,6 +7,7 @@ require.config({
 		"ansi_up": "vendor/ansi_up/ansi_up",
 		"github": "vendor/github/github",
 		"base64": "vendor/base64/base64",
+		"async": "vendor/async/async",
 		"app": "app"
 	},
 	shim: {

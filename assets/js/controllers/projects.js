@@ -6,8 +6,9 @@ define([
 	"controllers/timestamp",
 	"controllers/error",
 	"controllers/socket",
-	"github"
-], function (dom, requests, session, Router, timestamp, error, socket, Github) {
+	"github",
+	"async"
+], function (dom, requests, session, Router, timestamp, error, socket, Github, async) {
 	var router,
 		projects;
 
@@ -77,25 +78,91 @@ define([
 		},
 
 		newProject: function() {
-			var req = requests.get('/tokens/github');
 
-			req.done(function(token) {
-				var github = new Github({
-					token: token,
-					auth: 'oauth'
-				});
-				var user = github.getUser();
-				user.repos(function(err, repos) {
-					if (err) error.handleError(err);
-					else dom.listGithubRepos(repos);
-				});
-			});
+			async.series([
+				requestGithubToken,
+				getAvailableRepos
+				], done);
 
-			req.fail(function(xhr) {
-				if (xhr.status == 404)
-					dom.requestGithubToken();
-				else error.handleXhrError(xhr);
-			});
+			var githubToken;
+
+			function requestGithubToken(cb) {
+				requests.get('/tokens/github').
+					done(function(_token) {
+						token = _token;
+						cb();
+					}).
+					fail(error.xhrToCallback(cb));
+			}
+
+			function getAvailableRepos(cb) {
+				async.parallel({
+					githubRepos: getGithubRepos,
+					userRepos: getUserRepos
+				}, gotRepos);
+
+				function getGithubRepos(cb) {
+					var github = new Github({
+						token: token,
+						auth: 'oauth'
+					});
+					var user = github.getUser();
+					user.repos(cb);
+				}
+
+				function getUserRepos(cb) {
+					requests.get('/projects').
+					  done(function(repos) {
+					  	cb(null, repos);
+					  }).
+					  fail(error.xhrToCallback(cb));
+				}
+
+				function gotRepos(err, results) {
+					if (results) {
+						var githubRepos = results.githubRepos;
+						var userRepos = results.userRepos;
+					}
+
+					if (githubRepos)
+						githubRepos.sort(sortGithubRepos);
+
+					if (githubRepos && userRepos) {
+						var userReposMap = {};
+						userRepos.forEach(function(userRepo) {
+							userReposMap[userRepo._id] = userRepo;
+						});
+
+						var repos = githubRepos.map(function(githubRepo) {
+							var repoId = githubRepo.full_name;
+							var userRepo = userReposMap[repoId];
+							return {
+								github: githubRepo,
+								userRepo: userRepo,
+								userHasRepo: !! userRepo
+							}
+						});
+					}
+
+					cb(err, repos);
+				}
+			}
+
+			function done(err, results) {
+				var repos = results[1];
+				if (err) {
+					if (err.status == 404) dom.requestGithubToken();
+					else dom.showError(err.message);
+				} else if (! repos) {
+					dom.showError('Could not retrieve repos');
+				} else {
+					showRepos(repos);
+				}
+			}
+
+			function showRepos(repos) {
+				dom.listGithubRepos(repos);
+			}
 		},
 
 		configProject: function (project) {
@@ -171,4 +238,10 @@ define([
 	};
 
 	return projects;
+
+	/// Misc
+
+	function sortGithubRepos(a, b) {
+		return a.full_name < b.full_name ? -1 : 1;
+	}
 });

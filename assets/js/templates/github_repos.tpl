@@ -7,7 +7,12 @@
   <ul class="repos">
     {{#each repos}}
       <li class="remote-repo">
-        {{full_name}}
+        {{github.full_name}}
+        {{#if userHasRepo}}
+          <button class="remove-repo" data-target="{{userRepo.repo}}">Remove</button>
+        {{else}}
+          <button class="add-repo" data-target="{{userRepo.repo}}">Add</button>
+        {{/if}}
       </li>
     {{/each}}
   </ul>
