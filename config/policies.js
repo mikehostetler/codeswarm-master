@@ -37,7 +37,7 @@ module.exports.policies = {
 	*/
 
 	ProjectController: {
-		create: 'isAuthenticated',
+		create: ['isAuthenticated', 'hasGithubToken', 'ownsGithubRepo'],
 		list: 'isAuthenticated',
 		deploy: 'isAuthenticated',
 		destroy: 'isAuthenticated'

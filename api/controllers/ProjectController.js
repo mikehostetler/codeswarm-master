@@ -27,7 +27,6 @@ var repoRegexp = /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([
 
 module.exports = {
 
-
   /**
    * Action blueprints:
    *    `POST /projects`

@@ -90,8 +90,8 @@ define([
 
 			function requestGithubToken(cb) {
 				requests.get('/tokens/github').
-					done(function(_token) {
-						token = _token;
+					done(function(creds) {
+						token = creds.token;
 						cb();
 					}).
 					fail(error.xhrToCallback(cb));

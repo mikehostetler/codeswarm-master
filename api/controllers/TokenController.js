@@ -56,8 +56,9 @@ module.exports = {
       else {
         if (! req.user) res.send(404, 'User needs to be authenticated');
         else if (! req.session.token) res.send(500, 'User should have a token by now');
+        else if (! req.session.remoteUsername) res.send(500, 'User should have a remote username by now');
         else {
-          tokens.create(req.user, providerName, req.session.token, createdToken);
+          tokens.create(req.user, providerName, req.session.token, req.session.remoteUsername, createdToken);
         }
       }
     }
