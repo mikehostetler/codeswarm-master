@@ -15,6 +15,7 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
+var async    = require('async');
 var uuid     = require('../../lib/uuid');
 var extend   = require('util')._extend;
 var projects = require('../db/projects');
@@ -163,6 +164,45 @@ module.exports = {
     }
 
 
+  },
+
+  destroy: function destroy(req, res) {
+    var projectName = req.param('owner') + '/' + req.param('repo');
+
+    async.series([
+      getProject,
+      validateAuthorization,
+      deleteProject],
+      reply);
+
+    var project;
+
+    function getProject(cb) {
+      projects.get(projectName, gotProject);
+
+      function gotProject(err, _project) {
+        if (_project) project = _project;
+        cb(err);
+      }
+    }
+
+    function validateAuthorization(cb) {
+      if (! project.owners)
+        return res.forbidden('No project owners');
+      if (project.owners.indexOf(req.session.username()) < 0)
+        return res.forbidden('you are not an owner of ' + projectName);
+      cb();
+    }
+
+
+    function deleteProject(cb) {
+      projects.delete(project, cb);
+    }
+
+    function reply(err) {
+      if (err) return res.send(err.status_code || 500, err);
+      else return res.json({ok: true});
+    }
   },
 
 

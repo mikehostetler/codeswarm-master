@@ -154,6 +154,20 @@ function updateProject(id, attrs, cb) {
 }
 
 
+/// delete
+
+exports.delete = deleteProject;
+
+function deleteProject(project, cb) {
+  db.privileged('projects', function(err, projects) {
+    if (err) cb(err);
+    else projects.destroy(project._id, project._rev, cb);
+  });
+}
+
+
+/// Misc
+
 function prop(p) {
   return function(o) {
     return o[p];

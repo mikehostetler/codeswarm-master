@@ -18,7 +18,7 @@
 
 	<form id="project-config">
 
-    <input name="_id" type="hidden" value="{{_id}}">
+    <input name="id" type="hidden" value="{{_id}}">
 
 		<h4>Repository</h4>
 

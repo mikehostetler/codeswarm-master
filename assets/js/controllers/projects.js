@@ -163,12 +163,16 @@ define([
 			}
 
 			function showRepos(repos) {
-				dom.listGithubRepos(repos, selectedRepo);
+				dom.listGithubRepos(repos, addRepo, removeRepo);
 			}
 
-			function selectedRepo(repo) {
+			function addRepo(repo) {
 				dom.loadProject({
 					repo: repo.github.git_url }, self);
+			}
+
+			function removeRepo(repo) {
+				router.go('/' + repo);
 			}
 		},
 
@@ -205,27 +209,23 @@ define([
 			// Send to API
 			if (!data._id) {
 
-				req = requests.post("/projects", {
+				requests.post("/projects", {
 					repo: data.repo,
 					branch: data.branch || "master"
-				});
-
-				req.done(function () {
+				}).
+				done(function () {
 					dom.showSuccess("Project successfully created");
-					// Update ID field
-					dom.$main.find("input[name=\"_id\"]").val(data.name);
-				});
+					router.go('/projects');
+				}).
+				fail(error.handleXhrError);
 
-				req.fail(error.handleXhrError);
 			} else {
 				// Modify object
-				req = requests.post("/projects/" + data._id, data);
-
-				req.done(function () {
+				requests.post("/projects/" + data._id, data).
+				done(function () {
 					dom.showSuccess("Project successfully saved");
-				});
-
-				req.fail(error.handleXhrError);
+				}).
+				fail(error.handleXhrError);
 			}
 		},
 
@@ -237,9 +237,7 @@ define([
 				dom.showSuccess("Project successfully deleted");
 			});
 
-			req.fail(function () {
-				dom.showError("Could not delete project");
-			});
+			req.fail(error.handleXhrError);
 		}
 
 	};

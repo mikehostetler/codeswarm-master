@@ -324,12 +324,12 @@ define([
 			/**
 			 * List Github Repos
 			 */
-			listGithubRepos: function(repos, cb) {
+			listGithubRepos: function(repos, addCb, removeCb) {
 
-				var repoMap = {};
+				var repoMapByGitUrl = {};
 
 				repos.forEach(function(repo) {
-					repoMap[repo.github.git_url] = repo;
+					repoMapByGitUrl[repo.github.git_url] = repo;
 				});
 
 				var template = Handlebars.compile(github_repos),
@@ -340,9 +340,16 @@ define([
 
 				this.$main.find('.add-repo').click(function() {
 					var $this = $(this);
-					var repo = $this.attr('data-target');
-					if (repo) repo = repoMap[repo];
-					if (repo) cb(repo);
+					var gitUrl = $this.attr('data-target');
+					var repo;
+					if (gitUrl) repo = repoMapByGitUrl[gitUrl];
+					if (repo) addCb(repo);
+				});
+
+				this.$main.find('.remove-repo').click(function() {
+					var $this = $(this);
+					var id = $this.attr('data-target');
+					removeCb(id);
 				});
 			},
 

@@ -8,10 +8,6 @@
  *
  */
 module.exports = function(req, res, next) {
-
-  var username = req.session.username();
-  console.log('isAuthenticated?: %j', !! username);
-
-  if (username) next();
-  else res.forbidden('You are not permitted to perform this action.');
+  if (req.session.username()) next();
+  else res.send(401, new Error('You are not permitted to perform this action.'));
 };
