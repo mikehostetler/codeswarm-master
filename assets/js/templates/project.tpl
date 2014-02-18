@@ -18,7 +18,8 @@
 
 	<form id="project-config">
 
-    <input name="id" type="hidden" value="{{_id}}">
+    <input name="_id" type="hidden" value="{{_id}}">
+    <input name="_rev" type="hidden" value="{{_rev}}">
 
 		<h4>Repository</h4>
 
@@ -31,9 +32,17 @@
     <input id="project-branch" name="branch" type="text" title="Default branch" placeholder="master" value="master">
     {{/if}}
 
-    {{#unless _id}}
+    <label style="clear: both; display: inline">
+      <input type="checkbox" name="public" class="checkbox" {{#if public}}checked{{/if}}>
+      Public
+    </label>
+
+
+    {{#if _id}}
+      <button class="btn-left">Save</button>
+    {{else}}
     	<button class="btn-left">Create</button>
-    {{/unless}}
+    {{/if}}
 
 	</form>
 

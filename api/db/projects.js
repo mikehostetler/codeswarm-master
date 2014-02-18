@@ -10,7 +10,8 @@ function createProject(project, cb) {
     _id:    project._id,
     repo:   project.repo,
     branch: project.branch,
-    owners: project.owners
+    owners: project.owners,
+    public: project.public
   };
 
   (function _createProject() {
@@ -122,7 +123,6 @@ function getProject(id, cb) {
 exports.update = updateProject;
 
 function updateProject(id, attrs, cb) {
-  console.log('UPDATE PROJECT', arguments);
   db.privileged('projects', function(err, projects) {
     if (err) cb(err);
     else {

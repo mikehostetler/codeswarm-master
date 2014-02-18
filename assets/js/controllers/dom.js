@@ -276,19 +276,9 @@ define([
 					var name,
 						data = $(this).serializeObject();
 
-					if (data.hasOwnProperty("repo")) {
-						// Validate repo before creating
-						name = validateRepo(data.repo);
-						if (name) {
-							data.name = name;
-							controller.saveProject(data);
-						} else {
-							self.showError("Invalid project repository");
-						}
-					} else {
-						// This is a modification, repo already valid
+					if (validateRepo(data.repo))
 						controller.saveProject(data);
-					}
+
 				});
 
 				// Handle delete request

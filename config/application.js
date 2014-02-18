@@ -35,7 +35,7 @@ function session(req, res, next) {
   } else next();
 
   function replied(err, session) {
-    if (err) err.send(err.status_code || 500, err);
+    if (err) res.send(err.status_code || 500, err);
     else {
       if (! req.session) req.session = {};
       if (! session || ! session.userCtx || ! session.userCtx.name)
