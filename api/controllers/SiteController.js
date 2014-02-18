@@ -22,6 +22,12 @@ module.exports = {
 		res.view({
 				partials: {
 						'_header': '../partials/_header',
+						'_page-cap': '../partials/_page-cap',
+						'_search': '../partials/_search',
+						'_top-projects': '../partials/_top-projects',
+						'_info-grid': '../partials/_info-grid',
+						'_share-bar': '../partials/_share-bar',
+						'_footer-links': '../partials/_footer-links',
 						'_navigation': '../partials/_navigation',
 						'_mobile-navigation': '../partials/_mobile-navigation',
 						'_footer': '../partials/_footer'
