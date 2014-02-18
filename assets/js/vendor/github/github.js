@@ -93,9 +93,14 @@ define([
     // =======
 
     Github.User = function() {
-      this.repos = function(cb) {
+      this.repos = function(type, cb) {
+        if (typeof type == 'function') {
+          cb = type;
+          type = undefined;
+        }
+        if (! type) type = 'all';
         // Github does not always honor the 1000 limit so we want to iterate over the data set.
-        _requestAllPages("/user/repos?type=owner&per_page=1000&sort=updated", function(err, res) {
+        _requestAllPages("/user/repos?type=" + type + "&per_page=1000&sort=updated", function(err, res) {
           cb(err, res);
         });
       };

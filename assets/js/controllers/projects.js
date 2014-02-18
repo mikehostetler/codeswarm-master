@@ -109,7 +109,7 @@ define([
 						auth: 'oauth'
 					});
 					var user = github.getUser();
-					user.repos(cb);
+					user.repos('admin', cb);
 				}
 
 				function getUserRepos(cb) {
