@@ -39,6 +39,7 @@ module.exports.policies = {
 	ProjectController: {
 		create: ['isAuthenticated', 'hasGithubToken', 'ownsGithubRepo'],
 		list: 'isAuthenticated',
+		find: ['isAuthenticated', 'userOwnsProject'],
 		deploy: 'isAuthenticated',
 		destroy: 'isAuthenticated'
 	},
@@ -46,7 +47,13 @@ module.exports.policies = {
 	TokenController: {
 		create: 'isAuthenticated',
 		find: 'isAuthenticated'
+	},
+
+	BuildController: {
+		index: 'isAuthenticated',
+		find: ['isAuthenticated', 'userOwnsProject', 'buildBelongsToProject']
 	}
+
 };
 
 

@@ -165,6 +165,9 @@ module.exports = {
 
   },
 
+
+  // destroy
+
   destroy: function destroy(req, res) {
     var projectName = req.param('owner') + '/' + req.param('repo');
 
