@@ -65,7 +65,7 @@ define([
 				var template = Handlebars.compile(header),
 					html = template({
 						auth: auth
-					});
+					});	
 				this.$header.html(html);
 				// if (auth) {
 				// this.bindMenu();
@@ -74,33 +74,75 @@ define([
 				// }
 				// this.$shadowblock = this.$header.find("#shadow-block");
 
-				// Fire globalNav
+				// Fire globalNav & globalSearch
 				this.globalNav();
+				this.globalSearch();
 			},
 
 			/**
 			 * Show/hide global navigation
 			 */
 			globalNav: function () {
-				var self = this;
+				var self = this,
+					$navTrigger = $(".profile-nav--trigger"),
+					$nav = $(".profile-nav"),
+					navOpen = "profile-nav--open";
 
-				$(".nav-trigger").click(function (e) {
+				$navTrigger.click(function (e) {
 					e.stopPropagation();
 
-					if (!self.$body.hasClass("global-nav--open")) {
-						self.$body.addClass("global-nav--open");
+					if (!$nav.hasClass(navOpen)) {
+						$nav.addClass(navOpen);
 					} else {
-						self.$body.removeClass("global-nav--open");
+						$nav.removeClass(navOpen);
 					}
 				});
 
 				self.$document
 					.on("click", function () {
-						self.$body.removeClass("global-nav--open");
+						$nav.removeClass(navOpen);
 					})
-					.on("click", ".global-nav", function (e) {
+					.on("click", ".profile-nav--list", function (e) {
 						e.stopPropagation();
 					});
+
+				$(".global-search--trigger").on("click", function () {
+					$nav.removeClass(navOpen);
+				});
+			},
+
+			globalSearch: function () {
+				var self = this,
+					$searchTrigger = $(".global-search--trigger"),
+					$search = $(".global-search"),
+					searchOpen = "global-search--open",
+					searchTriggerOpen = "global-search--trigger--open";
+
+				$searchTrigger.click(function (e) {
+					e.stopPropagation();
+
+					if (!$search.hasClass(searchOpen)) {
+						$search.addClass(searchOpen);
+						$(this).addClass(searchTriggerOpen);
+					} else {
+						$search.removeClass(searchOpen);
+						$(this).removeClass(searchTriggerOpen);
+					}
+				});
+
+				self.$document
+					.on("click", function () {
+						$search.removeClass(searchOpen);
+						$searchTrigger.removeClass(searchTriggerOpen);
+					})
+					.on("click", ".global-search", function (e) {
+						e.stopPropagation();
+					});
+
+				$(".profile-nav--trigger").on("click", function () {
+					$search.removeClass(searchOpen);
+					$searchTrigger.removeClass(searchTriggerOpen);
+				});
 			},
 
 			/**
