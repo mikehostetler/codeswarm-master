@@ -324,12 +324,26 @@ define([
 			/**
 			 * List Github Repos
 			 */
-			listGithubRepos: function(repos) {
+			listGithubRepos: function(repos, cb) {
+
+				var repoMap = {};
+
+				repos.forEach(function(repo) {
+					repoMap[repo.github.git_url] = repo;
+				});
+
 				var template = Handlebars.compile(github_repos),
 					html = template({
 						repos: repos
 					});
 				this.$main.html(html);
+
+				this.$main.find('.add-repo').click(function() {
+					var $this = $(this);
+					var repo = $this.attr('data-target');
+					if (repo) repo = repoMap[repo];
+					if (repo) cb(repo);
+				});
 			},
 
 			/**

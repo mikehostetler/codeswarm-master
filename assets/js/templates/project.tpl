@@ -4,27 +4,25 @@
 
 <div class="content-wrap">
 
-	<label>Deploy Hook URL (POST)</label>
-	<pre id="project-hook">{{hook}}</pre>
+  {{#if hook}}
+  	<label>Deploy Hook URL (POST)</label>
+  	<pre id="project-hook">{{hook}}</pre>
+  {{/if}}
 
 	{{#if key}}
-	<label>Server Deploy Key</label>
-	<pre>{{key}}</pre>
+  	<label>Server Deploy Key</label>
+  	<pre>{{key}}</pre>
 	{{/if}}
 
 	<hr>
 
 	<form id="project-config">
 
+    <input name="_id" type="hidden" value="{{_id}}">
+
 		<h4>Repository</h4>
 
-		<input name="_id" type="hidden" value="{{_id}}">
-
-		{{#if repo}}
-		<p>{{repo}}</p>
-		{{else}}
-		<input id="project-repo" required="true" name="repo" type="text" title="Enter the clone URL" placeholder="git://github.com/username/project.git">
-		{{/if}}
+		<input id="project-repo" required="true" name="repo" type="text" title="Enter the clone URL" placeholder="git://github.com/username/project.git" value="{{repo}}">
 
     <h4>Branch</h4>
     {{#if branch}}

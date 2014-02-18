@@ -79,6 +79,8 @@ define([
 
 		newProject: function() {
 
+			var self = this;
+
 			async.series([
 				requestGithubToken,
 				getAvailableRepos
@@ -161,7 +163,12 @@ define([
 			}
 
 			function showRepos(repos) {
-				dom.listGithubRepos(repos);
+				dom.listGithubRepos(repos, selectedRepo);
+			}
+
+			function selectedRepo(repo) {
+				dom.loadProject({
+					repo: repo.github.git_url }, self);
 			}
 		},
 
