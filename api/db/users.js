@@ -8,18 +8,20 @@ exports.create = createUser;
 
 function createUser(user, cb) {
   if (! user) throw new Error('Need user');
-  if (! user.name) throw new Error('Need user.name');
+  if (! user.username) throw new Error('Need user.name');
   if (! user.password) throw new Error('Need user.password');
 
-  var id = userId(user.name);
+  var id = userId(user.username);
 
   user = {
-    _id: id,
-    name:     user.name,
+    _id:      id,
+    name:     user.username,
     type:     'user',
     roles:    [],
     password: user.password
   };
+
+  console.log('ABOUT TO INSERT USER %j', user);
 
   db.privileged('_users', function(err, db) {
     if (err) cb(err);
