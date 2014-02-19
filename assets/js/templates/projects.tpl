@@ -1,16 +1,16 @@
 <h1 class="page-title">
-    <i class="fa fa-folder"></i>
-    Projects
-    {{#unless restricted}}
-    <a href="#/project/new" class="btn right"><i class="fa fa-plus-circle"></i>New Project</a>
-    {{/unless}}
+  <i class="fa fa-folder"></i>
+  Projects
+  {{#unless restricted}}
+  <a href="#/project/new" class="btn right"><i class="fa fa-plus-circle"></i>New Project</a>
+  {{/unless}}
 </h1>
 
 <div class="content-wrap">
     <table class="datatable">
         <thead>
             <tr>
-                <th class="center" width="115">Status</th>
+                <th width="115">Status</th>
                 <th>Project</th>
                 <th width="175">Last Build</th>
             </tr>
@@ -74,35 +74,35 @@
     </table>
 
     <div class="sidebar">
-        <div class="sidebar-list-contain">
-            <h3 class="sidebar-list-title">Recent project builds</h3>
+      <div class="sidebar-list-contain">
+        <h3 class="sidebar-list-title">Recent project builds</h3>
 
-            <ul class="sidebar-list">
-                <li><a href="#">
-                    <strong>jQuery/jQuery</strong> - <time>Feb 11, 2014</time>
-                    <span>Commit d792e40 by rwaldron</span>
-                </a></li>
-                <li><a href="#">
-                    <strong>guardian/frontend</strong> - <time>Feb 10, 2014</time>
-                    <span>Commit d792e40 by trevanhetzel</span>
-                </a></li>
-                <li><a href="#">
-                    <strong>jQuery/jQuery</strong> - <time>Feb 11, 2014</time>
-                    <span>Commit d792e40 by rwaldron</span>
-                </a></li>
-                <li><a href="#">
-                    <strong>guardian/frontend</strong> - <time>Feb 10, 2014</time>
-                    <span>Commit d792e40 by trevanhetzel</span>
-                </a></li>
-                <li><a href="#">
-                    <strong>jQuery/jQuery</strong> - <time>Feb 11, 2014</time>
-                    <span>Commit d792e40 by rwaldron</span>
-                </a></li>
-            </ul>
+        <ul class="sidebar-list">
+          <li><a href="#">
+            <strong>jQuery/jQuery</strong> - <time>Feb 11, 2014</time>
+            <span>Commit d792e40 by rwaldron</span>
+          </a></li>
+          <li><a href="#">
+            <strong>guardian/frontend</strong> - <time>Feb 10, 2014</time>
+            <span>Commit d792e40 by trevanhetzel</span>
+          </a></li>
+          <li><a href="#">
+            <strong>jQuery/jQuery</strong> - <time>Feb 11, 2014</time>
+            <span>Commit d792e40 by rwaldron</span>
+          </a></li>
+          <li><a href="#">
+            <strong>guardian/frontend</strong> - <time>Feb 10, 2014</time>
+            <span>Commit d792e40 by trevanhetzel</span>
+          </a></li>
+          <li><a href="#">
+            <strong>jQuery/jQuery</strong> - <time>Feb 11, 2014</time>
+            <span>Commit d792e40 by rwaldron</span>
+          </a></li>
+        </ul>
 
-            <div class="sidebar-list-actions">
-                <a href="#" class="btn btn-sml">View all</a>
-            </div>
+        <div class="sidebar-list-actions">
+          <a href="#" class="btn btn-sml">View all</a>
         </div>
+      </div>
     </div>
 </div>
