@@ -32,9 +32,7 @@ module.exports.routes = {
   // located at `views/home/index.ejs`
   //
   // (This would also work if you had a file at: `/views/home.ejs`)
-  '/': {
-    view: 'home/index'
-  },
+  '/': 'SiteController',
 
   /*
   // But what if you want your home page to display
@@ -119,7 +117,10 @@ module.exports.routes = {
 
   'get /tokens/:provider': 'TokenController.find',
   'post /tokens/:provider': 'TokenController.create',
-  'get /tokens/:provider/callback': 'TokenController.callback'
+  'get /tokens/:provider/callback': 'TokenController.callback',
+
+	/// Catch All Route
+  'get /[^.?]+?': 'SiteController.redirect'
 };
 
 
