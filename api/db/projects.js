@@ -1,3 +1,5 @@
+var async   = require('async');
+var extend  = require('util')._extend;
 var db      = require('./');
 
 /// create
@@ -65,7 +67,7 @@ function projectListFor(username, cb) {
 
   function replied(err, reply) {
     if (err && err.status_code == 404 && err.reason == 'missing') {
-      createProjectsOwnedByView(function(err) {
+      createViews(function(err) {
         console.log(err);
         if (err) cb(err);
         else _projectListFor();
@@ -83,24 +85,55 @@ function projectListFor(username, cb) {
 }
 
 
-function createProjectsOwnedByView(cb) {
+/// Views
+
+var baseDDoc = {
+  'views': {
+
+    'owned_by': {
+      'map':
+        function(doc) {
+          if (doc.owners) {
+            doc.owners.forEach(function(owner) {
+              emit(owner, doc);
+            });
+          }
+        }
+    },
+
+    'owner_begins_with': {
+      'map':
+        function(doc) {
+          var project = doc._id;
+          var projectParts = project.split('/');
+          var repoOwner = projectParts[0];
+          var repoRepo = projectParts[1];
+          var owners = doc.owners || [];
+          if (doc.public) owners.unshift('public');
+
+          owners.forEach(function(owner) {
+            emit([owner, repoOwner], doc._id);
+            emit([owner, repoRepo], doc._id);
+            emit([owner, doc._id], doc._id);
+          });
+        }
+    }
+
+  }
+};
+
+function createViews(cb) {
   db.privileged('projects', function(err, db) {
     if (err) cb(err);
     else {
-      db.insert({
-        'views': {
-          'owned_by': {
-            'map':
-              function(doc) {
-                if (doc.owners) {
-                  doc.owners.forEach(function(owner) {
-                    emit(owner, doc);
-                  });
-                }
-              }
-          }
-        }
-      }, '_design/views', cb);
+      db.get('_design/views', got);
+    }
+
+    function got(err, ddoc) {
+
+      ddoc = extend(ddoc || {}, baseDDoc);
+
+      db.insert(ddoc, '_design/views', cb);
     }
   });
 }
@@ -162,6 +195,38 @@ function deleteProject(project, cb) {
   db.privileged('projects', function(err, projects) {
     if (err) cb(err);
     else projects.destroy(project._id, project._rev, cb);
+  });
+}
+
+
+/// search
+
+exports.search = searchProjects;
+
+function searchProjects(username, term, cb) {
+  db.privileged('projects', function(err, projects) {
+
+    var tasks = {
+      public: search('public')
+    };
+
+    if (username) tasks.private = search(username);
+
+    async.parallel(tasks, cb);
+
+    function search(username) {
+      return function _search(cb) {
+        var searchOptions = {
+          startkey: [username, term],
+          endkey: [username, term]
+        };
+        db.view('views', 'owner_begins_with', searchOptions, replied);
+
+        function replied(err, reply) {
+          console.log('search for %s replied %j', username, reply);
+        }
+      };
+    }
   });
 }
 

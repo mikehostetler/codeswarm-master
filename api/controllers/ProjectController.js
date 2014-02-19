@@ -81,11 +81,31 @@ module.exports = {
 
 
   /**
-   *    `GET /:owner/:repo`
+   *    `GET /projects/:owner/:repo`
    */
   find: function (req, res) {
 
     var id = req.param('owner') + '/' + req.param('repo');
+    var user = req.session.username();
+
+    projects.get(id, replied);
+
+    function replied(err, project) {
+      if (err) res.send(err.status_code || 500, err);
+      else if (! project) res.send(404, new Error('Not found'));
+      else {
+        if (project.public || user && project.owners.indexOf(user) >= 0)
+          res.send(project);
+        else res.send(404, new Error('Not Found'));
+      }
+    }
+  },
+
+  /**
+   *    `GET /projects/search`
+   */
+  search: function (req, res) {
+
     var user = req.session.username();
 
     projects.get(id, replied);
