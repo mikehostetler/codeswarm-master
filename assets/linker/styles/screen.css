@@ -327,15 +327,33 @@ code .annotation.fail {
 
 .datatable th,
 .datatable td {
-    padding: 12px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
+.datatable th {
+    padding: 12px;
+}
+
 .datatable td {
+    position: relative;
+    height: 60px;
     background: #fff;
     border: 1px solid #e2e2e2;
+}
+
+.datatable tr:hover td a {
+    background: #f8f8f8;
+}
+
+.datatable td a {
+    display: block;
+    position: absolute;
+    float: left;
+    width: 100%;
+    height: 100%;
+    padding: 12px;
 }
 
 .datatable th {
@@ -375,7 +393,18 @@ code .annotation.fail {
     .datatable td {
         position: relative;
         display: block;
+        height: auto;
         white-space: inherit;
+        border-bottom: 0;
+        border-top: 0;
+    }
+
+    .datatable td a {
+        position: static;
+    }
+
+    .datatable .last-build {
+        padding-top: 0;
     }
 
     .datatable thead tr {
@@ -413,6 +442,10 @@ code .annotation.fail {
     .datatable {
         float: left;
         width: 75%;
+    }
+
+    .last-build--title {
+        display: none;
     }
 
     .table-actions {
