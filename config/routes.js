@@ -104,6 +104,7 @@ module.exports.routes = {
   'post /projects': 'ProjectController.create',
   'post /:owner/:repo/deploy': 'ProjectController.deploy',
   'delete /projects/:owner/:repo': 'ProjectController.destroy',
+  'put /projects/:owner/:repo': 'ProjectController.update',
   'get /projects/:owner/:repo/builds': 'BuildController.index',
   'get /projects/:owner/:repo/builds/:build': 'BuildController.find',
 

@@ -79,6 +79,10 @@ define([
 
 		newProject: function() {
 
+			dom.loadProject({}, this);
+
+			return;
+
 			var self = this;
 
 			async.series([
@@ -202,16 +206,18 @@ define([
 		},
 
 		saveProject: function (data) {
-			var req;
+
 			// Set auth object
 			// Set blank branch to master
-			data.branch = (data.branch === "") ? "master" : data.branch;
+			if (!data.branch) data.branch = 'master';
+
 			// Send to API
 			if (!data._id) {
 
 				requests.post("/projects", {
 					repo: data.repo,
-					branch: data.branch || "master"
+					branch: data.branch || "master",
+					public: !! data.public
 				}).
 				done(function () {
 					dom.showSuccess("Project successfully created");
@@ -221,7 +227,7 @@ define([
 
 			} else {
 				// Modify object
-				requests.post("/projects/" + data._id, data).
+				requests.put("/projects/" + data._id, data).
 				done(function () {
 					dom.showSuccess("Project successfully saved");
 				}).

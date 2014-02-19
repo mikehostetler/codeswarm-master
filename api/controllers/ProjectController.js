@@ -33,6 +33,8 @@ module.exports = {
    */
    create: function (req, res) {
 
+    console.log('req body saving project:', req.body);
+
     var project = extend({}, req.body);
     var match = project.repo.match(repoRegexp);
     if (! match) return res.send(409, new Error('Invalid repo URL'));
@@ -40,11 +42,40 @@ module.exports = {
     var id = match[5];
     project._id = id;
     project.owners = [ req.session.username() ];
+    project.public = !! project.public;
+
     projects.create(project, replied);
 
     function replied(err, reply) {
       if (err) res.send(err.status_code || 500, err);
       else res.json(reply);
+    }
+  },
+
+  /**
+   * Action blueprints:
+   *    `PUT /projects/:owner/:repo`
+   */
+   update: function (req, res) {
+
+    var id = req.param('owner') + '/' + req.param('repo');
+    var project = extend({}, req.body);
+
+    var match = project.repo.match(repoRegexp);
+    if (! match) return res.send(409, new Error('Invalid repo URL'));
+
+    var newId = match[5];
+
+    if (newId != id) return res.send(409, new Error('Repo URL cannot change'));
+
+
+    project.public = !! project.public;
+
+    projects.update(id, project, replied);
+
+    function replied(err, reply) {
+      if (err) res.send(err.status_code || 500, err);
+      else res.json({ok: true});
     }
   },
 
