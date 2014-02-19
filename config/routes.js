@@ -110,7 +110,10 @@ module.exports.routes = {
 
   'get /tokens/:provider': 'TokenController.find',
   'post /tokens/:provider': 'TokenController.create',
-  'get /tokens/:provider/callback': 'TokenController.callback'
+  'get /tokens/:provider/callback': 'TokenController.callback',
+
+	/// Catch All Route
+  'get /[^.?]+?': 'SiteController.redirect'
 };
 
 

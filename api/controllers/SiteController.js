@@ -34,6 +34,11 @@ module.exports = {
 				},
 		});
 	},
+
+	// Redirect to the equivalent client-side route
+	redirect: function(req, res) {
+		res.redirect("/#"+req.originalUrl);
+	},
   
 
 
