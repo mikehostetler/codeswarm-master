@@ -65,13 +65,6 @@ define([
 				}
 			});
 
-			// Home
-			router.on("/users/new", function () {
-				dom.loadSignup();
-				dom.setBodyClass("signup");
-				users.getSignup();
-			});
-
 			// Projects list
 			router.on("/projects", function () {
 				authenticated(function () {
@@ -123,6 +116,13 @@ define([
 			router.on("/logout", function () {
 				session.unset();
 				router.go("/");
+			});
+
+			// Home
+			router.on("/users/new", function () {
+				dom.loadSignup();
+				dom.setBodyClass("signup");
+				users.getSignup();
 			});
 
 			router.beforeChange = function() {
