@@ -14,25 +14,39 @@
  *
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
+var partials = {
+		'_header': '../partials/_header',
+		'_page-cap': '../partials/_page-cap',
+		'_search': '../partials/_search',
+		'_top-projects': '../partials/_top-projects',
+		'_info-grid': '../partials/_info-grid',
+		'_share-bar': '../partials/_share-bar',
+		'_footer-links': '../partials/_footer-links',
+		'_navigation': '../partials/_navigation',
+		'_mobile-navigation': '../partials/_mobile-navigation',
+		'_footer': '../partials/_footer',
+		'_project-summary': '../partials/_project-summary',
+		'_latest-build': '../partials/_latest-build',
+		'_tabs-header': '../partials/_tabs-header',
+		'_table-listing-nav': '../partials/_table-listing-nav',
+		'_build-summary': '../partials/_build-summary',
+};
 
 module.exports = {
     
 	// Render Index View
 	index: function(req, res) {
-		res.view({
-				partials: {
-						'_header': '../partials/_header',
-						'_page-cap': '../partials/_page-cap',
-						'_search': '../partials/_search',
-						'_top-projects': '../partials/_top-projects',
-						'_info-grid': '../partials/_info-grid',
-						'_share-bar': '../partials/_share-bar',
-						'_footer-links': '../partials/_footer-links',
-						'_navigation': '../partials/_navigation',
-						'_mobile-navigation': '../partials/_mobile-navigation',
-						'_footer': '../partials/_footer'
-				},
-		});
+		res.view({ "partials": partials });
+	},
+
+	// TEMPORARY - Render Index View
+	twproject: function(req, res) {
+		res.view({ "partials": partials });
+	},
+
+	// TEMPORARY - Render Index View
+	twbuild: function(req, res) {
+		res.view({ "partials": partials });
 	},
 
 	// Redirect to the equivalent client-side route
