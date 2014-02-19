@@ -21,8 +21,6 @@ function createUser(user, cb) {
     password: user.password
   };
 
-  console.log('ABOUT TO INSERT USER %j', user);
-
   db.privileged('_users', function(err, db) {
     if (err) cb(err);
     else {

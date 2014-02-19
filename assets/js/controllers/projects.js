@@ -79,10 +79,6 @@ define([
 
 		newProject: function() {
 
-			dom.loadProject({}, this);
-
-			return;
-
 			var self = this;
 
 			async.series([

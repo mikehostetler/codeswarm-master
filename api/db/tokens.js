@@ -28,7 +28,7 @@ function getToken(user, provider, cb) {
 
 exports.create = createToken;
 
-function createToken(username, provider, token, username, cb) {
+function createToken(username, provider, token, remoteUsername, cb) {
   db.privileged('_users', function(err, _users) {
     if (err) cb(err);
     else {
@@ -41,7 +41,7 @@ function createToken(username, provider, token, username, cb) {
         if (! user.tokens) user.tokens = {};
         user.tokens[provider] = {
           token: token,
-          username: username
+          username: remoteUsername
         };
         _users.insert(user, cb);
       }
