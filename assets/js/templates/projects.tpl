@@ -1,6 +1,6 @@
 <h1 class="page-title">
     <i class="fa fa-folder"></i>
-    Project List
+    Projects
     {{#unless restricted}}
     <a href="#/project/new" class="btn right"><i class="fa fa-plus-circle"></i>New Project</a>
     {{/unless}}
@@ -116,9 +116,42 @@
         </tr>
         {{else}}
         <tr>
-        	<td class="center" colspan="5"><br><br><em>No projects currently exist. <a href="#/project/new">Create One &raquo;</a></em><br><br></td>
+        	<td class="center empty-projects" colspan="5"><em>No projects currently exist. <a href="#/project/new">Create One &raquo;</a></em></td>
         </tr>
         {{/each}}
         </tbody>
     </table>
+
+    <div class="sidebar">
+        <div class="sidebar-list-contain">
+            <h3 class="sidebar-list-title">Recent project builds</h3>
+
+            <ul class="sidebar-list">
+                <li><a href="#">
+                    <strong>jQuery/jQuery</strong> - <time>Feb 11, 2014</time>
+                    <span>Commit d792e40 by rwaldron</span>
+                </a></li>
+                <li><a href="#">
+                    <strong>guardian/frontend</strong> - <time>Feb 10, 2014</time>
+                    <span>Commit d792e40 by trevanhetzel</span>
+                </a></li>
+                <li><a href="#">
+                    <strong>jQuery/jQuery</strong> - <time>Feb 11, 2014</time>
+                    <span>Commit d792e40 by rwaldron</span>
+                </a></li>
+                <li><a href="#">
+                    <strong>guardian/frontend</strong> - <time>Feb 10, 2014</time>
+                    <span>Commit d792e40 by trevanhetzel</span>
+                </a></li>
+                <li><a href="#">
+                    <strong>jQuery/jQuery</strong> - <time>Feb 11, 2014</time>
+                    <span>Commit d792e40 by rwaldron</span>
+                </a></li>
+            </ul>
+
+            <div class="sidebar-list-actions">
+                <a href="#" class="btn btn-sml">View all</a>
+            </div>
+        </div>
+    </div>
 </div>

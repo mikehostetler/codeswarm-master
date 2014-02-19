@@ -189,7 +189,7 @@ button,
     cursor: pointer;
     outline: none;
     border: none;
-    color: #fff;
+    color: #fff !important;
     font-weight: normal;
     font-size: .875em;
     border-radius: 3px;
@@ -228,6 +228,10 @@ button .fa,
     .btn {
         padding: 8px 17px;
     }
+
+    .btn-sml {
+        padding: 7px 12px;
+    }
 }
 
 @media (min-width: 56.25em) {
@@ -235,6 +239,10 @@ button .fa,
     .btn {
         font-size: .875em;
         padding: 10px 25px;
+    }
+
+    .btn-sml {
+        padding: 7px 12px;
     }
 }
 
@@ -344,6 +352,11 @@ code .annotation.fail {
     text-align: center;
 }
 
+.empty-projects em {
+    display: block;
+    padding: 2em 0;
+}
+
 .datatable tr:first-child th:last-child {
     border-right: 0;
 }
@@ -352,7 +365,7 @@ code .annotation.fail {
     font-size: .75em;
 }
 
-@media (max-width: 56.25em) {
+@media (max-width: 63.74em) {
 
     .datatable td {
         position: relative;
@@ -391,7 +404,12 @@ code .annotation.fail {
     padding-top: .75em;
 }
 
-@media (min-width: 56.25em) {
+@media (min-width: 63.75em) {
+    .datatable {
+        float: left;
+        width: 75%;
+    }
+
     .table-actions {
         display: none;
     }
@@ -399,6 +417,87 @@ code .annotation.fail {
 
 .logs {
     font-size: .938em;
+}
+
+/* Sidebar
+==================================================================== */
+
+.sidebar {
+    float: right;
+    width: 100%;
+}
+
+.sidebar-list-contain {
+    float: left;
+    width: 100%;
+    margin: 1em 0 0;
+    background: white;
+    border-radius: 0 0 3px 3px;
+}
+
+.sidebar-list-title {
+    font-weight: 400;
+    background: #e2e2e2;
+    padding: .5em;
+    border-radius: 3px 3px 0 0;
+}
+
+.sidebar-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar-list li {
+    font-size: .938em;
+    line-height: 1.25em;
+    border-bottom: solid 1px #e2e2e2;
+}
+
+.sidebar-list time {
+    font-size: .875em;
+}
+
+.sidebar-list li span {
+    display: inline-block;
+    font-size: .875em;
+    line-height: 1em;
+}
+
+.sidebar-list a {
+    display: block;
+    padding: 1.25em .5em;
+}
+
+.sidebar-list a:hover {
+    color: #6d6d6d;
+}
+
+.sidebar-list-actions {
+    float: left;
+    width: 100%;
+    padding: 1.25em .5em;
+}
+
+@media (min-width: 63.75em) {
+    .sidebar {
+        width: 25%;
+        padding: 0 0 0 1.25em;
+    }
+
+    .sidebar-list-contain {
+        margin: 0;
+    }
+
+    .content-wrap .sidebar-list-title {
+        font-size: 1em;
+        margin: 0;
+        padding: 12px;
+    }
+
+    .sidebar-list a {
+        padding: 12px;
+    }
 }
 
 /* Header
