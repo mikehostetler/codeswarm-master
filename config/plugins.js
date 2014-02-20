@@ -1,1 +1,1 @@
-exports.modules = ['codeswarm-node'];
+exports.modules = ['codeswarm-node', 'codeswarm-plato'];
