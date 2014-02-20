@@ -8,7 +8,13 @@
 </h1>
 
 <div class="content-wrap">
-  <h1 class="project-title">{{_id}}</h1>
+  <h1 class="project-title">{{_id}} 
+    <span class="project-title--status">
+      <img src="../images/build-failing.png" alt="Build Failing">
+    </span>
+
+    <a href="#" class="btn btn-sec"><i class="fa fa-cog"></i>Settings</a>
+  </h1>
 
   <ul class="tabs-horiz">
     <li class="current-tab"><a href="#"><i class="fa fa-repeat"></i>Builds</a></li>
@@ -59,7 +65,7 @@
   <div class="sidebar">
     <section class="sidebar-glance-contain">
       <h3 class="sidebar-glance-title">At a Glance</h3>
-      <p>6 authors have pushed 66 commits to all branches, excluding merges. On master, 70 files have changed and there have been 50,134 additions and 729 deletions.</p>
+      <p class="sidebar-glance"><span><strong>6</strong> authors</span> have pushed <span><strong>66</strong> commits</span> to all branches, excluding merges. On master, <span><strong>70</strong> files</span> have changed and there have been <span><strong>50,134</strong> additions</span> and <span><strong>729</strong> deletions</span>.</p>
     </section>
 
     <section class="sidebar-list-contain">

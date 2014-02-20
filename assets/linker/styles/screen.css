@@ -212,19 +212,41 @@ button:hover,
     border: none !important;
     color: #fff !important;
     background: #ff6741; /* Old browsers */
-    background: -moz-linear-gradient(top,  #ff6741 0%, #ff6741 50%, #ff6741 50%, #ff6741 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff6741), color-stop(50%,#ff6741), color-stop(50%,#ff6741), color-stop(100%,#ff6741)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  #ff6741 0%,#ff6741 50%,#ff6741 50%,#ff6741 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  #ff6741 0%,#ff6741 50%,#ff6741 50%,#ff6741 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  #ff6741 0%,#ff6741 50%,#ff6741 50%,#ff6741 100%); /* IE10+ */
-    background: linear-gradient(to bottom,  #ff6741 0%,#ff6741 50%,#ff6741 50%,#ff6741 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff6741', endColorstr='#ff6741',GradientType=0 ); /* IE6-9 */
+    background: -moz-linear-gradient(top,  #ff6741 0%, #ff6741 50%, #f65a33 50%, #f65a33 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff6741), color-stop(50%,#ff6741), color-stop(50%,#f65a33), color-stop(100%,#f65a33)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #ff6741 0%,#ff6741 50%,#f65a33 50%,#f65a33 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #ff6741 0%,#ff6741 50%,#f65a33 50%,#f65a33 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #ff6741 0%,#ff6741 50%,#f65a33 50%,#f65a33 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #ff6741 0%,#ff6741 50%,#f65a33 50%,#f65a33 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff6741', endColorstr='#f65a33',GradientType=0 ); /* IE6-9 */
 }
 
 button .fa,
 .btn .fa {
     color: #fff;
     padding: 0 5px 0 0;
+}
+
+.btn-sec {
+    background: #747474; /* Old browsers */
+    background: -moz-linear-gradient(top,  #747474 0%, #747474 50%, #6d6d6d 50%, #6d6d6d 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#747474), color-stop(50%,#747474), color-stop(50%,#6d6d6d), color-stop(100%,#6d6d6d)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #747474 0%,#747474 50%,#6d6d6d 50%,#6d6d6d 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #747474 0%,#747474 50%,#6d6d6d 50%,#6d6d6d 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #747474 0%,#747474 50%,#6d6d6d 50%,#6d6d6d 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #747474 0%,#747474 50%,#6d6d6d 50%,#6d6d6d 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#747474', endColorstr='#6d6d6d',GradientType=0 ); /* IE6-9 */
+}
+
+.btn-sec:hover {
+    background: #6d6d6d; /* Old browsers */
+    background: -moz-linear-gradient(top,  #6d6d6d 0%, #6d6d6d 50%, #5c5c5c 50%, #5c5c5c 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#6d6d6d), color-stop(50%,#6d6d6d), color-stop(50%,#5c5c5c), color-stop(100%,#5c5c5c)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #6d6d6d 0%,#6d6d6d 50%,#5c5c5c 50%,#5c5c5c 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #6d6d6d 0%,#6d6d6d 50%,#5c5c5c 50%,#5c5c5c 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #6d6d6d 0%,#6d6d6d 50%,#5c5c5c 50%,#5c5c5c 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #6d6d6d 0%,#6d6d6d 50%,#5c5c5c 50%,#5c5c5c 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6d6d6d', endColorstr='#5c5c5c',GradientType=0 ); /* IE6-9 */
 }
 
 @media (min-width: 37.5em) {
@@ -1063,14 +1085,55 @@ button.remove-repo {
     color: black;
 }
 
+.project-title--status {
+    display: block;
+    margin-top: .25em;
+}
+
+.project-title .btn {
+    float: left;
+    margin: .5em 0 0;
+    width: 100%;
+    font-size: .65em;
+}
+
+@media (min-width: 28em) {
+    .project-title .btn {
+        width: auto;
+    }
+}
+
+@media (min-width: 37.5em) {
+    .project-title .btn {
+        float: right;
+        margin: 0;
+        font-size: .5em;
+    }
+}
+
 .sidebar-glance-contain {
     float: left;
     width: 100%;
-    margin: -6.5em 0 1.5em;
 }
 
 .sidebar-glance-title {
     font-weight: 400;
+    color: black;
+}
+
+.sidebar-glance {
+    font-size: .875em;
+    line-height: 1.375em;
+    padding: 1em 0 1.5em;
+    border-top: 2px solid #e2e2e2;
+    border-bottom: 2px solid #e2e2e2;
+}
+
+.sidebar-glance span {
+    font-size: 1.125em;
+}
+
+.sidebar-glance strong {
     color: black;
 }
 
@@ -1083,12 +1146,26 @@ button.remove-repo {
     .project-title {
         font-size: 1.75em;
     }
+
+    .project-title--status {
+        display: inline-block;
+        margin-top: 0;
+        vertical-align: middle;
+    }
 }
 
 @media (min-width: 63.75em) {
     .project-title {
         width: 75%;
         font-size: 2em;
+    }
+
+    .project-title--status {
+        height: 36px;
+    }
+
+    .sidebar-glance-contain {
+        margin: -7.25em 0 1.5em;
     }
 }
 
@@ -1103,28 +1180,27 @@ button.remove-repo {
     float: left;
     width: 100%;
     background: white;
-    text-align: center;
     border-radius: 3px;
     border: 1px solid #e2e2e2;
     border-top: 0;
 }
 
 .tabs-horiz li {
-    display: table-cell;
-    font-size: .938em;
-    border-top: 3px solid #e2e2e2;
+    display: block;
+    font-size: .875em;
+    border-left: 3px solid #e2e2e2;
 }
 
 .tabs-horiz .current-tab {
     font-weight: bold;
-    border-top: 3px solid #ff734b;
+    border-left: 3px solid #ff734b;
 }
 
 .tabs-horiz li a {
     display: block;
     width: 100%;
     height: 100%;
-    padding: 1em 0;
+    padding: .75em 0 .75em 1em;
 }
 
 .tabs-horiz li a:hover .fa,
@@ -1134,6 +1210,28 @@ button.remove-repo {
 
 .tabs-horiz li a:hover {
     background: #f8f8f8;
+}
+
+@media (min-width: 28em) {
+    .tabs-horiz {
+        text-align: center;
+    }
+
+    .tabs-horiz li {
+        display: table-cell;
+        font-size: .938em;
+        border-left: 0;
+        border-top: 3px solid #e2e2e2;
+    }
+
+    .tabs-horiz .current-tab {
+        border-left: 0;
+        border-top: 3px solid #ff734b;
+    }
+
+    .tabs-horiz li a {
+        padding: 1em 0;
+    }
 }
 
 @media (min-width: 63.75em) {

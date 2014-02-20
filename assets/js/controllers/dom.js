@@ -90,6 +90,7 @@ define([
 
 				$navTrigger.click(function (e) {
 					e.stopPropagation();
+					e.preventDefault();
 
 					if (!$nav.hasClass(navOpen)) {
 						$nav.addClass(navOpen);
