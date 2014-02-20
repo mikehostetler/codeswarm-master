@@ -18,7 +18,7 @@
         <tbody>
         {{#each projects}}
         <tr>
-            <td class="center status-col" data-status="{{_id}}">
+            <td data-status="{{_id}}">
                 {{#compare state "failed" operator="==="}}
                 <a href="#/{{_id}}/" title="Build Failing">
                     <img src="../images/build-failing.png" alt="Build Failing">

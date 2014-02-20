@@ -27,38 +27,31 @@
     <thead>
       <tr>
         <th width="115">Status</th>
-        <th>Message</th>
+        <th width="250">Message</th>
         <th>Commit</th>
         <th>Committer</th>
-        <th>Date</th>
+        <th width="175">Date</th>
       </tr>
     </thead>
     <tbody>
-    {{#each builds}}
       <tr data-build={{_id}}>
         <td>
-          {{#compare state "failed" operator="==="}}
-          <a href="#/{{project}}/builds/{{_id}}" title="Build Failed"><i class="fa fa-circle red"></i></a>
-          {{/compare}}
-
-          {{#compare state "passed" operator="==="}}
-          <a href="#/{{project}}/builds/{{_id}}" title="Build Passed"><i class="fa fa-circle green"></i></a>
-          {{/compare}}
-
-          {{#compare state "running" operator="==="}}
-          <a href="#/{{project}}/builds/{{_id}}" title="Running"><i class="fa fa-circle yellow"></i></a>
-          {{/compare}}
-
-          {{#compare state "pending" operator="==="}}
-          <a href="#/{{project}}/builds/{{_id}}" title="Pending"><i class="fa fa-circle yellow"></i></a>
-          {{/compare}}
+          <a href="/#/codeswarm/codeswarm/builds/f5hs7mhruuqnrf" title="Build Failing">
+              <img src="../images/build-failing.png" alt="Build Failing">
+          </a>
         </td>
-        <td></td>
-        <td></td>
-        <td>{{triggered_by}}</td>
-        <td></td>
+        <td><a href="/#/codeswarm/codeswarm/builds/f5hs7mhruuqnrf"><span class="project">fixed the underscore dep</span></a></td>
+        <td><a href="/#/codeswarm/codeswarm/builds/f5hs7mhruuqnrf"><span class="project">f5hs7mhruuqnrf</span></a></td>
+        <td><a href="/#/codeswarm/codeswarm/builds/f5hs7mhruuqnrf"><span class="project">pgte</span></a></td>
+        <td>
+          <a href="/#/codeswarm/codeswarm/builds/f5hs7mhruuqnrf">
+            <span class="last-build" data-timestamp="{{this._id}}">
+              <span class="last-build--title">Last build:</span>
+              2/20/2014 at 8:05am
+            </span>
+          </a>
+        </td>
       </tr>
-    {{/each}}
     </tbody>
   </table>
 

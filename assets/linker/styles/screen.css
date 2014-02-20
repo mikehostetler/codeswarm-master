@@ -375,7 +375,18 @@ code .annotation.fail {
     float: left;
     width: 100%;
     height: 100%;
+    padding: 6px 12px;
+}
+
+.datatable td:first-child a,
+.datatable td:last-child a {
     padding: 12px;
+}
+
+@media (min-width: 63.75em) {
+    .datatable td a {
+        padding: 12px;
+    }
 }
 
 .datatable th {
@@ -1035,6 +1046,19 @@ h4.project {
     color: #6d6d6d;
 }
 
+span.project {
+    font-size: .85em;
+    display: block;
+    color: #6d6d6d;
+}
+
+
+@media (min-width: 63.75em) {
+    span.project {
+        padding-top: .5em;
+    }
+}
+
 em.repo {
     display: inline-block;
     padding-bottom: 10px;
@@ -1114,6 +1138,7 @@ button.remove-repo {
 .sidebar-glance-contain {
     float: left;
     width: 100%;
+    margin: 1em 0 0;
 }
 
 .sidebar-glance-title {
