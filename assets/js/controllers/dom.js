@@ -48,7 +48,6 @@ define([
 				// Initialize methods
 				this.loadHeader();
 				this.floatHeader();
-
 			},
 
 			/**
@@ -112,6 +111,9 @@ define([
 				});
 			},
 
+			/**
+			 * Show/hide global search
+			 */
 			globalSearch: function () {
 				var self = this,
 					$searchTrigger = $(".global-search--trigger"),
