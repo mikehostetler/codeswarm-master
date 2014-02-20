@@ -2,6 +2,8 @@ var extend  = require('util')._extend;
 var cookie  = require('cookie');
 var db      = require('./');
 
+var forbiddenUserNames = ['public', 'root', 'admin'];
+
 /// create
 
 exports.create = createUser;
@@ -10,6 +12,9 @@ function createUser(user, cb) {
   if (! user) throw new Error('Need user');
   if (! user.username) throw new Error('Need user.name');
   if (! user.password) throw new Error('Need user.password');
+
+  if (forbiddenUserNames.indexOf(user.name) >= 0)
+    return cb(new Error('Invalid user name'));
 
   var id = userId(user.username);
 
