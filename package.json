@@ -20,8 +20,9 @@
     "ansi_up": "~1.0.0",
     "passport": "~0.2.0",
     "passport-github": "~0.1.5",
-    "remote-test": "git+ssh://git@github.com:BrowserSwarm/remote-test.git",
-    "github": "~0.1.14"
+    "github": "~0.1.14",
+    "grunt-contrib-sass": "~0.7.2",
+    "handlebars": "~2.0.0-alpha.1"
   },
   "scripts": {
     "start": "node app.js",
