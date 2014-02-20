@@ -1,19 +1,21 @@
 define([
 		"jquery",
 		"handlebars",
+		"underscore",
 		"controllers/timestamp",
 		"text!templates/header.tpl",
 		"text!templates/signup.tpl",
 		"text!templates/login.tpl",
 		"text!templates/menu.tpl",
 		"text!templates/projects.tpl",
+		"text!templates/projects_table.tpl",
 		"text!templates/project.tpl",
 		"text!templates/builds.tpl",
 		"text!templates/logview.tpl",
 		"text!templates/tokens.tpl",
 		"text!templates/github_repos.tpl"
 	],
-	function ($, Handlebars, timestamp, header, signup, login, menu, projects, project, builds, logview, tokens, github_repos) {
+	function ($, Handlebars, _, timestamp, header, signup, login, menu, projects, projects_table, project, builds, logview, tokens, github_repos) {
 		var dom;
 
 		dom = {
@@ -174,19 +176,49 @@ define([
 			 * Load projects
 			 */
 			loadProjects: function (data, controller, restricted) {
-				var template = Handlebars.compile(projects),
+				var self = this;
+				var search;
+
+				var template = Handlebars.compile(projects);
+				var projectsTableTemplate = Handlebars.compile(projects_table);
 					html = template({
-						projects: data,
+						projects: projectsTableTemplate({
+							projects: data,
+							restricted: restricted || false
+						}),
 						restricted: restricted || false
 					});
 				this.$main.html(html);
-				// Watch for build trigger
-				this.$main.find(".project-run-build").click(function () {
-					// Spin teh icon!
-					$(this).find("i").addClass("fa-spin");
-					var project = $(this).data("project");
-					controller.runBuild(project);
-				});
+
+				setupProjectList();
+
+				this.$main.find('#project-search').keyup(_.debounce(search, 250));
+
+				function search() {
+					var $this = $(this);
+					search = $this.val();
+					controller.search(search, searchResults);
+				}
+
+				function searchResults(projects) {
+					self.$main.find('#project-list').html(projectsTableTemplate({
+						projects: projects,
+						restricted: restricted,
+						search: !! search
+					}));
+					setupProjectList();
+				}
+
+				function setupProjectList() {
+					// Watch for build trigger
+					self.$main.find(".project-run-build").click(function () {
+						// Spin teh icon!
+						$(this).find("i").addClass("fa-spin");
+						var project = $(this).data("project");
+						controller.runBuild(project);
+					});
+				}
+
 			},
 
 			/**

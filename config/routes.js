@@ -100,7 +100,6 @@ module.exports.routes = {
   /// Projects
 
   'get /projects': 'ProjectController.list',
-  'get /projects/search': 'ProjectController.search',
   'get /projects/:owner/:repo': 'ProjectController.find',
   'post /projects': 'ProjectController.create',
   'post /:owner/:repo/deploy': 'ProjectController.deploy',

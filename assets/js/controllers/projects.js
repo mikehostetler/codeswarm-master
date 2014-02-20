@@ -20,23 +20,27 @@ define([
 
 			var self = this,
 				req = requests.get("/projects"),
-				acl_data = {},
-				base_href = location.protocol + "//" + location.hostname + (location.port ? ":" + location.port : "");
+				acl_data = {};
 
 			req.done(function (projects) {
 				var proj;
 				// Check for state and format timestamp
 
-				projects.forEach(function(project) {
-					project.view = base_href + "/#/" + project._id;
-					if (project.started_at) project.started_at = timestamp(project.started_at);
-					if (project.ended_at) project.ended_at = timestamp(project.ended_at);
-					socket.addProject(project);
-				});
+				projects.forEach(prepareProject);
 				dom.loadProjects(projects, self);
 			});
 
 			req.fail(error.handleXhrError);
+		},
+
+		search: function (terms, cb) {
+			requests.
+			  get('/projects?search=' + encodeURIComponent(terms)).
+			  done(function(projects) {
+			  	projects.forEach(prepareProject);
+			  	cb(projects);
+			  }).
+			  fail(error.handleXhrError);
 		},
 
 		runBuild: function (project) {
@@ -250,5 +254,13 @@ define([
 
 	function sortGithubRepos(a, b) {
 		return a.full_name < b.full_name ? -1 : 1;
+	}
+
+	function prepareProject(project) {
+		var base_href = location.protocol + "//" + location.hostname + (location.port ? ":" + location.port : "");
+		project.view = base_href + "/#/" + project._id;
+		if (project.started_at) project.started_at = timestamp(project.started_at);
+		if (project.ended_at) project.ended_at = timestamp(project.ended_at);
+		socket.addProject(project);
 	}
 });

@@ -108,13 +108,14 @@ var baseDDoc = {
           var projectParts = project.split('/');
           var repoOwner = projectParts[0];
           var repoRepo = projectParts[1];
-          var owners = doc.owners || [];
-          if (doc.public) owners.unshift('public');
+          var owners = [];
+          if (doc.public) owners.push('public');
+          if (doc.owners) owners = owners.concat(doc.owners);
 
           owners.forEach(function(owner) {
-            emit([owner, repoOwner], doc._id);
-            emit([owner, repoRepo], doc._id);
-            emit([owner, doc._id], doc._id);
+            emit([owner, repoOwner], doc);
+            emit([owner, repoRepo], doc);
+            emit([owner, project], doc);
           });
         }
     }
@@ -212,21 +213,49 @@ function searchProjects(username, term, cb) {
 
     if (username) tasks.private = search(username);
 
-    async.parallel(tasks, cb);
+    async.series(tasks, done);
 
     function search(username) {
       return function _search(cb) {
         var searchOptions = {
           startkey: [username, term],
-          endkey: [username, term]
+          endkey: [username, term + '\ufff0']
         };
-        db.view('views', 'owner_begins_with', searchOptions, replied);
+        projects.view('views', 'owner_begins_with', searchOptions, replied);
 
         function replied(err, reply) {
-          console.log('search for %s replied %j', username, reply);
+          if (err && err.status_code == 404) {
+            createViews(function(err) {
+              if (err) cb(err);
+              else searchProjects(username, term, cb);
+            });
+          } else if (err) cb(err)
+          else {
+            cb(null, reply.rows.map(prop('value')));
+          }
         }
       };
     }
+
+    function done(err, results) {
+      if (err) cb(err);
+      else {
+        var projects = [];
+        var scannedProjects = {};
+        Object.keys(results).forEach(function (type) {
+          /// dedupe
+          var _projects = results[type];
+          if (_projects) _projects.forEach(function(project) {
+            if (! scannedProjects[project._id]) {
+              scannedProjects[project._id] = true;
+              projects.push(project);
+            }
+          });
+        });
+        cb(null, projects);
+      }
+    }
+
   });
 }
 

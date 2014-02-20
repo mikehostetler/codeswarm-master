@@ -791,6 +791,11 @@ button.remove-repo {
     background: red;
 }
 
+.project-search {
+    width: 200px;
+    margin: -9px 0 -11px 1em;
+}
+
 /* Aside
 ==================================================================== */
 
