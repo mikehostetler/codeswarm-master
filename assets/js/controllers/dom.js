@@ -48,6 +48,7 @@ define([
 				// Initialize methods
 				this.loadHeader();
 				this.floatHeader();
+				this.accordion();
 			},
 
 			/**
@@ -146,6 +147,23 @@ define([
 				$(".profile-nav--trigger").on("click", function () {
 					$search.removeClass(searchOpen);
 					$searchTrigger.removeClass(searchTriggerOpen);
+				});
+			},
+
+			/**
+			 * Sidebar accordion module
+			 */
+			accordion: function () {
+				$(document).on("click", ".build-groups-contain .sidebar-list li .accordion--trigger", function (e) {
+					var $this = $(this);
+
+					e.preventDefault();
+
+					if (!$this.parent("li").hasClass("accordion--open")) {
+						$this.parent("li").addClass("accordion--open");
+					} else {
+						$this.parent("li").removeClass("accordion--open");
+					}
 				});
 			},
 

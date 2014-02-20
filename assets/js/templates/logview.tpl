@@ -30,10 +30,42 @@
       <h3 class="sidebar-list-title">Build groups</h3>
 
       <ul class="sidebar-list">
-        <li><a href="#"><strong>Chrome</strong></a></li>
-        <li><a href="#"><strong>Firefox</strong></a></li>
-        <li><a href="#"><strong>Safari</strong></a></li>
-        <li><a href="#"><strong>Internet Explorer</strong></a></li>
+        <li>
+          <a href="#" class="accordion--trigger"><strong>Chrome</strong></a>
+          <ul>
+            <li><a href="#">Chrome 32</a></a></li>
+            <li><a href="#">Chrome 31</a></li>
+            <li><a href="#">Chrome 30</a></li>
+            <li><a href="#">Chrome 29</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#" class="accordion--trigger"><strong>Firefox</strong></a>
+          <ul>
+            <li><a href="#">Firefox 27</a></li>
+            <li><a href="#">Firefox 26</a></li>
+            <li><a href="#">Firefox 25</a></li>
+            <li><a href="#">Firefox 24</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#" class="accordion--trigger"><strong>Safari</strong></a>
+          <ul>
+            <li><a href="#">Safari 7.02</a></li>
+            <li><a href="#">Safari 6.1</a></li>
+            <li><a href="#">Safari 5.2</a></li>
+            <li><a href="#">Safari 4.7</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#" class="accordion--trigger"><strong>Internet Explorer</strong></a>
+          <ul>
+            <li><a href="#">IE11</a></li>
+            <li><a href="#">IE10</a></li>
+            <li><a href="#">IE9</a></li>
+            <li><a href="#">IE8</a></li>
+          </ul>
+        </li>
       </ul>
     </section>
   </div>

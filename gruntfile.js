@@ -136,6 +136,7 @@ module.exports = function (grunt) {
   grunt.loadTasks(depsPath + '/grunt-contrib-cssmin/tasks');
   grunt.loadTasks(depsPath + '/grunt-contrib-less/tasks');
   grunt.loadTasks(depsPath + '/grunt-contrib-coffee/tasks');
+  grunt.loadNpmTasks('grunt-contrib-compass');
 
   // Project configuration.
   grunt.initConfig({
@@ -161,6 +162,17 @@ module.exports = function (grunt) {
           dest: 'www'
         }
         ]
+      }
+    },
+
+    compass: {
+      main: {
+        options: {
+          sassDir: './assets/sass',
+          cssDir: './assets/linker/styles',
+          outputStyle: 'compressed',
+          require: 'breakpoint'
+        }
       }
     },
 
@@ -411,6 +423,11 @@ module.exports = function (grunt) {
 
         // When assets are changed:
         tasks: ['compileAssets', 'linkAssets']
+      },
+      css: {
+        files: [ './assets/sass/*.scss' ],
+        tasks: [ 'compass:main' ],
+        options: { nospawn: true }
       }
     }
   });
@@ -447,6 +464,7 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'compileAssets',
     'linkAssets',
+    'compass',
     'clean:build',
     'copy:build'
   ]);
