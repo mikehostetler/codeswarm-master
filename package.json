@@ -22,7 +22,8 @@
     "passport-github": "~0.1.5",
     "github": "~0.1.14",
     "remote-test": "*",
-    "grunt-contrib-sass": "~0.7.2"
+    "grunt-contrib-sass": "~0.7.2",
+    "handlebars": "~2.0.0-alpha.1"
   },
   "scripts": {
     "start": "node app.js",
