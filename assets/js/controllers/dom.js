@@ -323,7 +323,7 @@ define([
 
 				// Confirm and process delete
 				this.$main.find("#project-confirm-delete").click(function () {
-					controller.deleteProject(self.$main.find("input[name=\"id\"]").val());
+					controller.deleteProject(self.$main.find("input[name=\"_id\"]").val());
 				});
 
 				// Cancel delete
