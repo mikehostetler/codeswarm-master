@@ -3,8 +3,8 @@ var Url = require('url');
 exports = module.exports = {
   "url": process.env.COUCHDB_URL || "http://localhost:5984",
   "admin": {
-      "username": process.env.COUCHDB_USERNAME || "mike",
-      "password": process.env.COUCHDB_PASSWORD || "mike"
+      "username": process.env.COUCHDB_USERNAME || "admin",
+      "password": process.env.COUCHDB_PASSWORD || "admin"
   }
 };
 
