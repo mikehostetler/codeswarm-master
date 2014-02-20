@@ -121,6 +121,7 @@ define([
 
 				$searchTrigger.click(function (e) {
 					e.stopPropagation();
+					e.preventDefault();
 
 					if (!$search.hasClass(searchOpen)) {
 						$search.addClass(searchOpen);

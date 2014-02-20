@@ -506,6 +506,10 @@ code .annotation.fail {
     border-radius: 0 0 3px 3px;
 }
 
+.build-groups-contain {
+    margin: 0 0 1em;
+}
+
 .sidebar-list-title {
     font-weight: 400;
     background: #e2e2e2;
@@ -558,6 +562,10 @@ code .annotation.fail {
 
     .sidebar-list-contain {
         margin: 0;
+    }
+
+    .build-groups-contain {
+        margin: -2.25em 0 0;
     }
 
     .content-wrap .sidebar-list-title {
@@ -876,16 +884,12 @@ a.global-search--trigger:hover {
     border-radius: 3px 3px 0 0;
 }
 
-.page-title .breadcrumb-active {
+.page-title .breadcrumb-hide {
     display: none;
 }
 
 .page-title a {
     color: #f2f2f2;
-}
-
-.page-title .fa {
-    display: inline;
 }
 
 .page-title .btn {
@@ -894,7 +898,8 @@ a.global-search--trigger:hover {
 }
 
 @media (min-width: 30em) {
-    .page-title .breadcrumb-active {
+    .page-title .breadcrumb-hide,
+    .page-title .fa {
         display: inline;
     }
 
@@ -925,6 +930,12 @@ a.global-search--trigger:hover {
         float: left;
         font-size: 1.25em;
         margin: -4px 6px -7px 0;
+    }
+
+    .page-title .fa-angle-right {
+        float: none;
+        margin: 0;
+        font-size: 1em;
     }
 
     .page-title .btn .fa {
@@ -1175,6 +1186,7 @@ button.remove-repo {
     .project-title--status {
         display: inline-block;
         margin-top: 0;
+        margin-left: .25em;
         vertical-align: middle;
     }
 }
@@ -1261,6 +1273,20 @@ button.remove-repo {
 
 @media (min-width: 63.75em) {
     .tabs-horiz {
+        width: 75%;
+    }
+}
+
+/* Code block
+==================================================================== */
+
+.code-output {
+    float: left;
+    width: 100%;
+}
+
+@media (min-width: 63.75em) {
+    .code-output {
         width: 75%;
     }
 }
