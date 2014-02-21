@@ -10,10 +10,15 @@
 @import "layout/sidebar";
 
 // modules
+@import "modules/at-a-glance";
 @import "modules/breadcrumbs";
 @import "modules/btn";
+@import "modules/build-info";
 @import "modules/datatable";
 @import "modules/form";
+@import "modules/global-nav";
+@import "modules/global-search";
 @import "modules/login";
 @import "modules/notifications";
+@import "modules/sidebar-list";
 @import "modules/tabs";

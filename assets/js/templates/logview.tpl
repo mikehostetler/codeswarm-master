@@ -1,10 +1,14 @@
 <h1 class="page-title">
   <i class="fa fa-folder"></i>
+
   <a href="/#/projects" class="breadcrumb-link">Projects</a>
   <i class="fa fa-angle-right breadcrumb-hide"></i>
+
   <a href="#!/{{build.project}}" class="breadcrumb-link breadcrumb-hide">{{project}}</a>
   <i class="fa fa-angle-right breadcrumb-hide"></i>
+
   <span class="breadcrumb-active breadcrumb-hide">{{_id}}</span>
+
   {{#unless restricted}}
   <a href="#/project/new" class="btn right"><i class="fa fa-plus-circle"></i>New Project</a>
   {{/unless}}
@@ -18,6 +22,34 @@
 
     <a href="#" class="btn btn-sec"><i class="fa fa-repeat"></i>Run</a>
   </h1>
+
+  <div class="build-info">
+    <div class="build-info-left">
+      <h4 class="build-info--title">Author</h4>
+
+      <div class="build-info--author">
+        <img src="http://www.gravatar.com/avatar/00000000000000000000000000000000">
+        <span>Trevan Hetzel</span>
+      </div>
+    </div>
+
+    <div class="build-info-mid">
+      <h4 class="build-info--title">Commit</h4>
+
+      <div class="build-info--commit">
+        <a href="#">04e550d (master)</a>
+        <span>Remove .DS_Store and add .gitignore</span>
+      </div>
+    </div>
+
+    <div class="build-info-right">
+      <h4 class="build-info--title">Date</h4>
+
+      <div class="build-info--date">
+        Jan. 25, 2014
+      </div>
+    </div>
+  </div>
 
   <ul class="tabs-horiz">
     <li class="current-tab"><a href="#"><i class="fa fa-repeat"></i>Build</a></li>

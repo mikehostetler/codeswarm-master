@@ -6,7 +6,7 @@
     float: left;
     width: 100%;
     background: white;
-    border-radius: 3px;
+    @include border-radius(3px);
     border: 1px solid #e2e2e2;
     border-top: 0;
 }
