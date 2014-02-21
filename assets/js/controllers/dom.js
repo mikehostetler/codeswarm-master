@@ -8,12 +8,17 @@ define([
 		"text!templates/menu.tpl",
 		"text!templates/projects.tpl",
 		"text!templates/project.tpl",
-		"text!templates/builds.tpl",
-		"text!templates/logview.tpl",
+		"text!templates/build.tpl",
 		"text!templates/tokens.tpl",
-		"text!templates/github_repos.tpl"
+		"text!templates/github_repos.tpl",
+		"text!templates/project/builds.tpl",
+		"text!templates/project/pull-requests.tpl",
+		"text!templates/project/branches.tpl",
+		"text!templates/build/build.tpl",
+		"text!templates/build/analysis.tpl",
+		"text!templates/build/source.tpl"
 	],
-	function ($, Handlebars, timestamp, header, signup, login, menu, projects, project, builds, logview, tokens, github_repos) {
+	function ($, Handlebars, timestamp, header, signup, login, menu, projects, project, logview, tokens, github_repos, project_builds, pull_requests, branches, build, analysis, source) {
 		var dom;
 
 		dom = {
@@ -28,6 +33,7 @@ define([
 			$menubutton: null,
 			$shadowblock: null,
 			$main: null,
+			$projectContain: null,
 			$notification: null,
 
 			// Named els
@@ -41,6 +47,7 @@ define([
 				this.$header = $("header");
 				this.$menu = $("aside");
 				this.$main = $("#main");
+				this.$projectContain = $("#project-contain");
 				this.$notification = $("#notification");
 				this.$body = $("body");
 				this.$document = $(document);
@@ -254,6 +261,60 @@ define([
 			},
 
 			/**
+			 * Load builds
+			 */
+			loadBuilds: function () {
+				var template = Handlebars.compile(project_builds),
+					html = template({});
+				this.$main.find("#project-contain").html(html);
+			},
+
+			/**
+			 * Load pull requests
+			 */
+			loadPullRequests: function () {
+				var template = Handlebars.compile(pull_requests),
+					html = template({});
+				this.$main.find("#project-contain").html(html);
+			},
+
+			/**
+			 * Load branches
+			 */
+			loadBranches: function () {
+				var template = Handlebars.compile(branches),
+					html = template({});
+				this.$main.find("#project-contain").html(html);
+			},
+
+			/**
+			 * Load build
+			 */
+			loadBuild: function () {
+				var template = Handlebars.compile(build),
+					html = template({});
+				this.$main.find("#build-contain").html(html);
+			},
+
+			/**
+			 * Load analysis
+			 */
+			loadAnalysis: function () {
+				var template = Handlebars.compile(analysis),
+					html = template({});
+				this.$main.find("#build-contain").html(html);
+			},
+
+			/**
+			 * Load source
+			 */
+			loadSource: function () {
+				var template = Handlebars.compile(source),
+					html = template({});
+				this.$main.find("#build-contain").html(html);
+			},
+
+			/**
 			 * Update project status
 			 */
 			updateProject: function (project) {
@@ -407,17 +468,17 @@ define([
 				});
 			},
 
-			/**
-			 * Load builds
-			 */
-			loadBuilds: function (project, data) {
-				var template = Handlebars.compile(builds),
-					html = template({
-						project: project,
-						builds: data
-					});
-				this.$main.html(html);
-			},
+			// /**
+			//  * Load builds
+			//  */
+			// loadBuilds: function (project, data) {
+			// 	var template = Handlebars.compile(builds),
+			// 		html = template({
+			// 			project: project,
+			// 			builds: data
+			// 		});
+			// 	this.$main.html(html);
+			// },
 
 			/**
 			 * Load log output
