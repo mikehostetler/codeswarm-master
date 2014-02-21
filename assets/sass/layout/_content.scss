@@ -1,0 +1,103 @@
+#main {
+    float: left;
+    width: 100%;
+    padding: .5em;
+
+    @include breakpoint(37.5em) {
+        padding: 1em;
+    }
+
+    @include breakpoint(56.25em) {
+        padding: 2.5em;
+    }
+}
+
+.page-title {
+    float: left;
+    width: 100%;
+    margin: 0;
+    padding: 14px 10px;
+    color: #f2f2f2;
+    font-size: .938em;
+    font-weight: 400;
+    background: #4a4f51;
+    @include border-radius(3px 3px 0 0);
+
+    .breadcrumb-hide {
+        display: none;
+    }
+
+    a {
+        color: #f2f2f2;
+    }
+
+    .btn {
+        margin: -7px 0 -8px;
+        color: white;
+    }
+
+    @include breakpoint(30em) {
+        .breadcrumb-hide,
+        .fa {
+            display: inline;
+        }
+
+        a.breadcrumb-link {
+            color: #999;
+            font-style: italic;
+
+            &:hover {
+                color: #bbb;
+            }
+        }
+    }
+
+    @include breakpoint(37.5em) {
+        padding: 15px 10px;
+        font-size: 1em;
+    }
+
+    @include breakpoint(56.25em) {
+        padding: 19px 10px;
+        font-size: 1.125em;
+
+        .fa {
+            float: left;
+            font-size: 1.25em;
+            margin: -4px 6px -7px 0;
+        }
+
+        .fa-angle-right {
+            float: none;
+            margin: 0;
+            font-size: 1em;
+        }
+
+        .btn {
+            margin: -9px 0 -11px;
+
+            .fa {
+                float: none;
+                font-size: 1em;
+                margin: 0;
+            }
+        }
+    }
+}
+
+.content-wrap {
+    float: left;
+    width: 100%;
+    background: #f2f2f2;
+    padding: 1.25em;
+    @include border-radius(0 0 3px 3px);
+
+    h3 {
+        font-size: .938em;
+        padding-bottom: .5em;
+
+        @include breakpoint(56.25em) {
+            font-size: 1.125em;
+        }
+    }
+}

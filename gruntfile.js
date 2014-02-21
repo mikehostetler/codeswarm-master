@@ -425,7 +425,7 @@ module.exports = function (grunt) {
         tasks: ['compileAssets', 'linkAssets']
       },
       css: {
-        files: [ './assets/sass/*.scss' ],
+        files: [ './assets/sass/*.scss', './assets/sass/*/*.scss' ],
         tasks: [ 'compass:main' ],
         options: { nospawn: true }
       }

@@ -25,6 +25,12 @@
     <li><a href="#/branches"><i class="fa fa-code"></i>Source</a></li>
   </ul>
 
+  <ul class="breadcrumbs-secondary">
+    <li><a href="#">Build</a></li>
+    <li><a href="#">Internet Explorer</a></li>
+    <li>IE9</li>
+  </ul>
+
   <div class="sidebar">
     <section class="sidebar-list-contain build-groups-contain">
       <h3 class="sidebar-list-title">Build groups</h3>

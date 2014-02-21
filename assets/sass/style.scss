@@ -3,15 +3,17 @@
 @import "reset";
 @import "base";
 
-//modules
-@import "header";
-@import "btn";
-@import "content";
-@import "datatable";
-@import "form";
-@import "header";
-@import "project";
-@import "sidebar";
-@import "tabs";
-@import "login";
-@import "notifications";
+// layout
+@import "layout/content";
+@import "layout/header";
+@import "layout/project";
+@import "layout/sidebar";
+
+// modules
+@import "modules/breadcrumbs";
+@import "modules/btn";
+@import "modules/datatable";
+@import "modules/form";
+@import "modules/login";
+@import "modules/notifications";
+@import "modules/tabs";
