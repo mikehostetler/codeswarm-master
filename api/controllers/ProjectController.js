@@ -142,8 +142,10 @@ module.exports = {
       var build = {
         _id: id,
         project: project._id,
+        previous_build: project.last_build,
+        previous_successful_build: project.last_successful_build,
         created_at: time,
-        triggered_by: req.session.username(),
+        triggered_by: req.session && req.session.username(),
         repo: project.repo,
         dir: id
       };
