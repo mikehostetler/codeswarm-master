@@ -1,0 +1,67 @@
+.tabs-horiz {
+    display: table;
+    list-style: none;
+    margin: 1em 0;
+    padding: 0;
+    float: left;
+    width: 100%;
+    background: white;
+    border-radius: 3px;
+    border: 1px solid #e2e2e2;
+    border-top: 0;
+}
+
+.tabs-horiz li {
+    display: block;
+    font-size: .875em;
+    border-left: 3px solid #e2e2e2;
+}
+
+.tabs-horiz .current-tab {
+    font-weight: bold;
+    border-left: 3px solid #ff734b;
+}
+
+.tabs-horiz li a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: .75em 0 .75em 1em;
+}
+
+.tabs-horiz li a:hover .fa,
+.tabs-horiz .current-tab .fa {
+    color: black;
+}
+
+.tabs-horiz li a:hover {
+    background: #f8f8f8;
+}
+
+@media (min-width: 28em) {
+    .tabs-horiz {
+        text-align: center;
+    }
+
+    .tabs-horiz li {
+        display: table-cell;
+        font-size: .938em;
+        border-left: 0;
+        border-top: 3px solid #e2e2e2;
+    }
+
+    .tabs-horiz .current-tab {
+        border-left: 0;
+        border-top: 3px solid #ff734b;
+    }
+
+    .tabs-horiz li a {
+        padding: 1em 0;
+    }
+}
+
+@media (min-width: 63.75em) {
+    .tabs-horiz {
+        width: 75%;
+    }
+}
