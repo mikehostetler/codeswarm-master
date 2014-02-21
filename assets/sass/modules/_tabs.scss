@@ -9,59 +9,65 @@
     @include border-radius(3px);
     border: 1px solid #e2e2e2;
     border-top: 0;
-}
 
-.tabs-horiz li {
-    display: block;
-    font-size: .875em;
-    border-left: 3px solid #e2e2e2;
-}
+    li {
+        display: block;
+        font-size: .875em;
+        border-left: 3px solid #e2e2e2;
 
-.tabs-horiz .current-tab {
-    font-weight: bold;
-    border-left: 3px solid #ff734b;
-}
+        a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            padding: .75em 0 .75em 1em;
 
-.tabs-horiz li a {
-    display: block;
-    width: 100%;
-    height: 100%;
-    padding: .75em 0 .75em 1em;
-}
+            &:hover {
+                background: #f8f8f8;
 
-.tabs-horiz li a:hover .fa,
-.tabs-horiz .current-tab .fa {
-    color: black;
-}
+                .fa {
+                    color: black;
+                }
+            }
+        }
 
-.tabs-horiz li a:hover {
-    background: #f8f8f8;
-}
+        @include breakpoint(28em) {
+            display: table-cell;
+            font-size: .938em;
+            border-left: 0;
+            border-top: 3px solid #e2e2e2;
 
-@media (min-width: 28em) {
-    .tabs-horiz {
+            a {
+                padding: 1em 0;
+            }
+        }
+    }
+
+    @include breakpoint(28em) {
         text-align: center;
     }
 
-    .tabs-horiz li {
-        display: table-cell;
-        font-size: .938em;
-        border-left: 0;
-        border-top: 3px solid #e2e2e2;
-    }
-
-    .tabs-horiz .current-tab {
-        border-left: 0;
-        border-top: 3px solid #ff734b;
-    }
-
-    .tabs-horiz li a {
-        padding: 1em 0;
+    @include breakpoint(63.75em) {
+        width: 75%;
     }
 }
 
-@media (min-width: 63.75em) {
-    .tabs-horiz {
-        width: 75%;
+// Active classes
+
+.builds--builds .builds-tab,
+.builds--pull-requests .pull-requests-tab,
+.builds--branches .branches-tab,
+.build--build .build-tab,
+.build--analysis .analysis-tab,
+.build--source .source-tab {
+    font-weight: bold;
+    border-left: 3px solid #ff734b;
+
+    .fa {
+        color: black;
+    }
+
+    @include breakpoint(28em) {
+        border-left: 0;
+        border-top: 3px solid #ff734b;
     }
 }

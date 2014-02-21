@@ -73,11 +73,41 @@ define([
 				});
 			});
 
-			router.on("/:owner/:repo", function(owner, repo) {
-				console.log('REPO', arguments);
+			// Project default (builds list)
+			router.on("/:owner/:repo", function (owner, repo) {
 				var project = owner + '/' + repo;
 				authenticated(function () {
+					builds.list(project);
 					projects.viewProject(project);
+					dom.loadBuilds();
+					dom.setBodyClass("builds--builds");
+				});
+			});
+
+			// Builds
+			router.on("/:owner/:repo/builds", function (owner, repo) {
+				var project = owner + '/' + repo;
+				authenticated(function () {
+					dom.loadBuilds();
+					dom.setBodyClass("builds--builds");
+				});
+			});
+
+			// Pull Requests
+			router.on("/:owner/:repo/pull-requests", function (owner, repo) {
+				var project = owner + '/' + repo;
+				authenticated(function () {
+					dom.loadPullRequests();
+					dom.setBodyClass("builds--pull-requests");
+				});
+			});
+
+			// Branches
+			router.on("/:owner/:repo/branches", function (owner, repo) {
+				var project = owner + '/' + repo;
+				authenticated(function () {
+					dom.loadBranches();
+					dom.setBodyClass("builds--branches");
 				});
 			});
 
@@ -88,21 +118,39 @@ define([
 				});
 			});
 
-			// Build list
-			router.on("/:owner/:repo/builds", function (owner, repo) {
-				var project = owner + '/' + repo;
-				authenticated(function () {
-					builds.list(project);
-					dom.setBodyClass("project-logs");
-				});
-			});
-
-			// Log output
+			// Build output (default build logs)
 			router.on("/:owner/:repo/builds/:log", function (owner, repo, log) {
 				var project = owner + '/' + repo;
 				authenticated(function () {
 					builds.show(project, log);
-					dom.setBodyClass("view-log");
+					dom.setBodyClass("build--build");
+				});
+			});
+
+			// Build
+			router.on("/:owner/:repo/build/:log", function (owner, repo, log) {
+				var project = owner + '/' + repo;
+				authenticated(function () {
+					dom.loadBuild();
+					dom.setBodyClass("build--build");
+				});
+			});
+
+			// Analysis
+			router.on("/:owner/:repo/analysis/:log", function (owner, repo, log) {
+				var project = owner + '/' + repo;
+				authenticated(function () {
+					dom.loadAnalysis();
+					dom.setBodyClass("build--analysis");
+				});
+			});
+
+			// Source
+			router.on("/:owner/:repo/source/:log", function (owner, repo, log) {
+				var project = owner + '/' + repo;
+				authenticated(function () {
+					dom.loadSource();
+					dom.setBodyClass("build--source");
 				});
 			});
 
