@@ -108,6 +108,8 @@
     </section>
   </div>
 
+  <h2 class="section-title">Build Output</h2>
+
   {{#each stages}}
     {{#each commands}}
       <code class="code-output">
