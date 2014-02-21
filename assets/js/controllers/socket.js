@@ -15,6 +15,10 @@ define([
   var projects = {};
   var project, builds, watchingBuild;
 
+  var joinEvents = [];
+
+  socket.on('connect', onSocketConnect);
+
   return {
     addProject: addProject,
     addBuilds: addBuilds,
@@ -22,26 +26,35 @@ define([
     reset: reset
   };
 
+  function onSocketConnect() {
+    joinEvents.forEach(function(joinEvent) {
+      socket.emit.apply(socket, joinEvent);
+    });
+  }
+
   function addProject(project) {
     projects[project._id] = project;
+    joinEvents.push(['join project', project._id]);
     socket.emit('join project', project._id);
   }
 
   function addBuilds(_project, _builds) {
     builds = _builds;
     project = _project;
+    joinEvents.push(['join builds', project]);
     socket.emit('join builds', project);
   }
 
   function watchBuild(build) {
     watchingBuild = build;
+    joinEvents.push(['watch build', build]);
     socket.emit('watch build', build);
   }
 
   function reset() {
-    console.log('reset');
     socket.emit('reset');
 
+    joinEvents = [];
     projects = {};
     builds = [];
     project = undefined;
