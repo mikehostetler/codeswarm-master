@@ -64,10 +64,10 @@ define([
 
 				req = requests.get("/projects/" + project);
 
-				req.done(function (data) {
-					data.hook = hook + "/deploy/" + data.dir;
+				req.done(function (project) {
+					project.hook = hook + '/' + project._id + '/webhook?secret=' + project.secret;
 					// Load project
-					dom.loadProject(data, self);
+					dom.loadProject(project, self);
 				});
 
 				req.fail(error.handleXhrError);

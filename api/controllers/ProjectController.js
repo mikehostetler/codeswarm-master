@@ -148,37 +148,12 @@ module.exports = {
         dir: id
       };
 
-      var post = req.body;
-      var run = false;
-      var payload, ref, branch;
+      build.branch = project.branch;
 
-      // Check trigger condition and branch match
-      if (!post.hasOwnProperty("payload")) {
-        // Manual trigger
-        run = true;
-      } else {
-        payload = JSON.parse(post.payload);
-        // Check to ensure branch match
-        if (payload.hasOwnProperty("ref")) {
-          //console.log(post);
-          ref = payload.ref.split("/");
-          branch = ref[ref.length - 1];
-          run = branch === project.branch;
-        }
-      }
+      // Set state object
+      build.state = 'pending';
 
-      if (run) {
-
-        build.branch = project.branch;
-
-        // Set state object
-        build.state = 'pending';
-
-        builds.create(build, createdBuild);
-
-      } else {
-        res.json({});
-      }
+      builds.create(build, createdBuild);
     }
 
     function createdBuild(err, build) {
@@ -236,6 +211,54 @@ module.exports = {
       if (err) return res.send(err.status_code || 500, err);
       else return res.json({ok: true});
     }
+  },
+
+
+  webhook: function webhook(req, res) {
+    if (! req.project) return res.send(404, new Error('No project found'));
+
+    var project = req.project;
+    var run = false;
+    var payload, ref, branch;
+
+    payload = req.body;
+    // Check to ensure branch match
+    if (payload.hasOwnProperty("ref")) {
+      ref = payload.ref.split("/");
+      branch = ref[ref.length - 1];
+      run = branch === project.branch;
+    }
+
+    if (run) {
+      var id = uuid();
+
+      var build = {
+        _id: id,
+        project: project._id,
+        created_at: Date.now(),
+        triggered_by: 'Github webhook',
+        repo: project.repo,
+        dir: id,
+        branch: project.branch,
+        state: 'pending',
+        commit: payload.after
+      };
+
+      builds.create(build, createdBuild);
+    }
+
+    function createdBuild(err, build) {
+      if (err) {
+        res.send(err.status_code || 500, err);
+      } else {
+        // Run build
+        Build(build, function(err) {
+          if (err) res.send(err.status_code || 500, err);
+          else res.json(build);
+        });
+      }
+    }
+
   },
 
 

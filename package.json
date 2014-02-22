@@ -35,6 +35,7 @@
   "author": "",
   "license": "",
   "devDependencies": {
-    "nodemon": "~1.0.14"
+    "nodemon": "~1.0.14",
+    "request": "~2.34.0"
   }
 }
