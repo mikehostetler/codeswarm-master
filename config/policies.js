@@ -41,6 +41,7 @@ module.exports.policies = {
 		list: 'isAuthenticated',
 		find: ['isAuthenticated', 'userOwnsProjectOrPublic'],
 		deploy: ['isAuthenticated', 'userOwnsProject'],
+		webhook: ['hasValidProjectSecret'],
 		destroy: ['isAuthenticated', 'userOwnsProject'],
 		update: ['isAuthenticated', 'userOwnsProject'],
 	},
