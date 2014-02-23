@@ -42,3 +42,14 @@ Using a different user on the fronted than the admin user and also the persisten
 To define / redefine the session timeout you need to specify the `timeout` parameter of the `couch_httpd_auth` section of the configuration, in seconds:
 
 ![session timeout](docs/images/session_timeout.png)
+
+### ENV Variables
+
+* COUCHDB_URL - couchdb url, defaults to "http://localhost:5984".
+* COUCHDB_USERNAME - couchdb username, defaults to "admin".
+* COUCHDB_PASSWORD - couchdb password, defaults to "admin".
+* PORT - http listening port, defaults to 1337.
+* GITHUB_CLIENT_ID
+* GITHUB_CLIENT_SECRET
+* GITHUB_CALLBACK_URL - github callback, default to "http://localhost:1337/tokens/github/callback"
+* VOUCH_REMOTE or CODESWARM_REMOTE - remotified, defaults to "false".
