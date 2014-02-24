@@ -9,7 +9,28 @@
 </h1>
 
 <div class="content-wrap">
-  <form class="global-form" id="project-config">
+  <div class="sidebar">
+    <section class="sidebar-list-contain">
+      <h3 class="sidebar-list-title">Config options</h3>
+
+      <ul class="sidebar-list">
+        <li class="sidebar-list--active">
+          <a href="#"><strong>Repository</strong></a>
+        </li>
+        <li>
+          <a href="#"><strong>GitHub</strong></a>
+        </li>
+        <li>
+          <a href="#"><strong>Pivotal Tracker</strong></a>
+        </li>
+        <li>
+          <a href="#"><strong>Google Apps</strong></a>
+        </li>
+      </ul>
+    </section>
+  </div>
+
+  <form class="global-form project-config-form" id="project-config">
     <div class="gf-col">
       <label>Repository</label>
       <input id="project-repo" required="true" name="repo" type="text" title="Enter the clone URL" placeholder="git://github.com/username/project.git" value="{{repo}}">
@@ -37,7 +58,14 @@
       <label>Label</label>
       <input type="text" placeholder="Text input">
     </div>
+
+    <div class="gf-actions">
+      <button type="submit" class="btn">Save</button>
+      <button class="btn btn-sec">Cancel</button>
+    </div>
   </form>
+
+
 </div>
 
 <!-- <div class="content-wrap">

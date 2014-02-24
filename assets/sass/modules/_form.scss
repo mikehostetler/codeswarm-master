@@ -17,6 +17,13 @@
     }
 }
 
+.gf-actions {
+    float: left;
+    width: 100%;
+    border-top: 1px solid #bdc3c7;
+    padding-top: .75em;
+}
+
 .global-form {
     label {
         display: block;
@@ -25,7 +32,7 @@
         font-size: .938em;
 
         @include breakpoint(50em) {
-            font-size: 1.25em;
+            font-size: 1.125em;
             margin: .75em 0 .75em;
         }
     }
@@ -64,5 +71,15 @@
     textarea { 
         font-family: "Roboto", Arial, Helvetica, sans-serif; 
         min-height: 150px;
+    }
+}
+
+// Project config form
+.project-config-form {
+    margin-top: 1.5em;
+
+    @include breakpoint(63.75em) {
+        margin-top: 0;
+        width: 75%;
     }
 }
