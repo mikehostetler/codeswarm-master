@@ -19,9 +19,9 @@ define([
 		"text!templates/build/source.tpl",
 		"text!templates/user_profile.tpl",
 		"text!templates/user_settings.tpl",
-		"text!templates/project_settings.tpl"
+		"text!templates/project_config.tpl"
 	],
-	function ($, Handlebars, timestamp, header, signup, login, menu, projects, project, logview, tokens, github_repos, project_builds, pull_requests, branches, build, analysis, source, user_profile, user_settings, project_settings) {
+	function ($, Handlebars, timestamp, header, signup, login, menu, projects, project, logview, tokens, github_repos, project_builds, pull_requests, branches, build, analysis, source, user_profile, user_settings, project_config) {
 		var dom;
 
 		dom = {
@@ -300,7 +300,7 @@ define([
 			},
 
 			loadProjectConfig: function () {
-				var template = Handlebars.compile(project_settings),
+				var template = Handlebars.compile(project_config),
 					html = template({});
 				this.$main.html(html);
 			},

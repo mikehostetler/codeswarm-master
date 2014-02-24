@@ -47,7 +47,7 @@
             	{{#if this.view}}
                 <h4 class="project">{{this._id}}</h4>
                 {{/if}}
-                <br /><em class="repo">{{this.repo}}</em>
+                <em class="repo">{{this.repo}}</em>
                 </a>
             </td>
 

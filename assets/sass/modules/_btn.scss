@@ -10,11 +10,19 @@ button,
     color: #fff !important;
     font-weight: normal;
     font-size: .875em;
-    @include border-radius(3px);
-    @include background-image(linear-gradient(#ff734b 0%, #ff734b 50%, #ff6741 50%, #ff6741 100%));
+    @include border-radius(4px);
+    background: #b1d928;
+    border-bottom: 2px solid #8eb122;
+    @include box-shadow(inset 0 -2px #8eb122);
+    @include text-shadow(0 1px 2px rgba(0, 0, 0, 0.25));
+    @include transition(background .2s ease);
+    //@include background-image(linear-gradient(#ff734b 0%, #ff734b 50%, #ff6741 50%, #ff6741 100%));
 
     &:hover {
-        @include background-image(linear-gradient(#ff6741 0%, #ff6741 50%, #f65a33 50%, #f65a33 100%));
+        background: #a5cd1e;
+        border-bottom: 2px solid #7fa116;
+        @include box-shadow(inset 0 -2px #7fa116);
+        //@include background-image(linear-gradient(#ff6741 0%, #ff6741 50%, #f65a33 50%, #f65a33 100%));
     }
 
     .fa {
@@ -33,10 +41,16 @@ button,
 }
 
 .btn-sec {
-    @include background-image(linear-gradient(#747474 0%, #747474 50%, #6d6d6d 50%, #6d6d6d 100%));
+    background: #b5b8b5;
+    border-bottom: 2px solid #9e9f9e;
+    @include box-shadow(inset 0 -2px #9e9f9e);
+    //@include background-image(linear-gradient(#747474 0%, #747474 50%, #6d6d6d 50%, #6d6d6d 100%));
 
     &:hover {
-        @include background-image(linear-gradient(#6d6d6d 0%, #6d6d6d 50%, #5c5c5c 50%, #5c5c5c 100%));
+        background: #a4a6a4;
+        border-bottom: 2px solid #929492;
+        @include box-shadow(inset 0 -2px #929492);
+        //@include background-image(linear-gradient(#6d6d6d 0%, #6d6d6d 50%, #5c5c5c 50%, #5c5c5c 100%));
     }
 }
 
