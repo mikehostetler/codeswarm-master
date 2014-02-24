@@ -14,6 +14,7 @@
     "cqs": "~0.8.1",
     "async": "~0.2.10",
     "codeswarm-node": "git+ssh://git@github.com:codeswarm/codeswarm-node.git",
+    "codeswarm-plato": "git+ssh://git@github.com:codeswarm/codeswarm-plato.git",
     "remote-test": "git+ssh://git@github.com:codeswarm/remote-test.git",
     "colors": "~0.6.2",
     "eventemitter2": "~0.4.13",
