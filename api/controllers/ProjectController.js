@@ -150,7 +150,8 @@ module.exports = {
         dir: id,
         branch: project.branch,
         commit: 'HEAD',
-        type: project.type
+        type: project.type,
+        plugins: project.plugins
       };
 
       build.branch = project.branch;
@@ -249,7 +250,8 @@ module.exports = {
         branch: project.branch,
         state: 'pending',
         commit: payload.after,
-        type: project.type
+        type: project.type,
+        plugins: project.plugins
       };
 
       builds.create(build, createdBuild);
