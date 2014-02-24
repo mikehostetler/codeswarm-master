@@ -187,6 +187,10 @@ define([
 
 			 			$("body").addClass("modal--open"); // Add class to body for background overlay
 			 			$destModal.addClass("modal--active"); // Add active class to modal
+			 		})
+			 		.on("click", ".modal-contain", function (e) {
+			 			// Prevent modal from closing when clicking inside one
+			 			e.stopPropagation();
 			 		});
 			 },
 

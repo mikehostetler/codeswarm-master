@@ -43,7 +43,13 @@
     </div>
 
     <div class="modal" id="modal-image-upload">
-    	test
+    	<div class="modal-contain">
+    		<div class="modal-title">Upload new image</div>
+
+    		<div class="modal-body">
+    			<input type="file">
+    		</div>
+    	</div>
     </div>
   </form>
 </div>
