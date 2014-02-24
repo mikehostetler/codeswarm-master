@@ -13,7 +13,7 @@
       <img src="../images/build-failing.png" alt="Build Failing">
     </span>
 
-    <a href="#" class="btn btn-sec"><i class="fa fa-cog"></i>Settings</a>
+    <a href="#/{{_id}}/config" class="btn btn-sec"><i class="fa fa-cog"></i>Config</a>
   </h1>
 
   <ul class="tabs-horiz">

@@ -16,9 +16,12 @@ define([
 		"text!templates/project/branches.tpl",
 		"text!templates/build/build.tpl",
 		"text!templates/build/analysis.tpl",
-		"text!templates/build/source.tpl"
+		"text!templates/build/source.tpl",
+		"text!templates/user_profile.tpl",
+		"text!templates/user_settings.tpl",
+		"text!templates/project_config.tpl"
 	],
-	function ($, Handlebars, timestamp, header, signup, login, menu, projects, project, logview, tokens, github_repos, project_builds, pull_requests, branches, build, analysis, source) {
+	function ($, Handlebars, timestamp, header, signup, login, menu, projects, project, logview, tokens, github_repos, project_builds, pull_requests, branches, build, analysis, source, user_profile, user_settings, project_config) {
 		var dom;
 
 		dom = {
@@ -296,6 +299,12 @@ define([
 				this.$main.find("#build-contain").html(html);
 			},
 
+			loadProjectConfig: function () {
+				var template = Handlebars.compile(project_config),
+					html = template({});
+				this.$main.html(html);
+			},
+
 			/**
 			 * Load analysis
 			 */
@@ -312,6 +321,24 @@ define([
 				var template = Handlebars.compile(source),
 					html = template({});
 				this.$main.find("#build-contain").html(html);
+			},
+
+			/**
+			 * Load user profile
+			 */
+			loadUserProfile: function () {
+				var template = Handlebars.compile(user_profile),
+					html = template({});
+				this.$main.html(html);
+			},
+
+			/**
+			 * Load user settings
+			 */
+			loadUserSettings: function () {
+				var template = Handlebars.compile(user_settings),
+					html = template({});
+				this.$main.html(html);
 			},
 
 			/**

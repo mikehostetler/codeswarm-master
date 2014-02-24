@@ -14,9 +14,12 @@
     background: #30373a;
     border: solid 1px #30373a;
     color: white;
+    font-size: .938em;
+    padding: 8px 12px;
 
     @include breakpoint(42em) {
         margin: .875em 0 0 2em;
+        @include border-radius(3px);
     }
 
     @include breakpoint(max-width 42em) {

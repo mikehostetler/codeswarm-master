@@ -114,7 +114,9 @@ define([
 			router.on("/:owner/:repo/config", function(owner, repo) {
 				console.log('CONFIG', arguments);
 				authenticated(function () {
-					projects.configProject(owner + '/' + repo);
+					dom.loadProjectConfig();
+					dom.setBodyClass("project--config");
+					//projects.configProject(owner + '/' + repo);
 				});
 			});
 
@@ -171,6 +173,18 @@ define([
 				dom.loadSignup();
 				dom.setBodyClass("signup");
 				users.getSignup();
+			});
+
+			// User profile
+			router.on("/mike", function () {
+				dom.loadUserProfile();
+				dom.setBodyClass("user");
+			});
+
+			// User settings
+			router.on("/mike/settings", function () {
+				dom.loadUserSettings();
+				dom.setBodyClass("user--setings");
 			});
 
 			router.beforeChange = function() {
