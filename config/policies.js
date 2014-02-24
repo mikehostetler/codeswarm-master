@@ -44,6 +44,7 @@ module.exports.policies = {
 		webhook: ['hasValidProjectSecret'],
 		destroy: ['isAuthenticated', 'userOwnsProject'],
 		update: ['isAuthenticated', 'userOwnsProject'],
+		updatePlugins: ['isAuthenticated', 'userOwnsProject']
 	},
 
 	TokenController: {
@@ -54,6 +55,10 @@ module.exports.policies = {
 	BuildController: {
 		index: 'isAuthenticated',
 		find: ['isAuthenticated', 'userOwnsProjectOrPublic', 'buildBelongsToProject']
+	},
+
+	PluginController: {
+		list: 'isAuthenticated'
 	}
 
 };

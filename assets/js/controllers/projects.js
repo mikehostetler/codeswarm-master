@@ -241,6 +241,46 @@ define([
 			});
 
 			req.fail(error.handleXhrError);
+		},
+
+		configPlugins: function (name) {
+			var project, pluginsConfig;
+			async.series([
+				loadProject,
+				loadPlugins
+			], done);
+
+			function loadProject(cb) {
+				requests.get("/projects/" + name).
+				done(function(_project) {
+					project = _project;
+					if (! project.type) dom.showError('Project has no defined type');
+					else cb();
+				}).
+				fail(error.handleXhrError);
+			}
+
+			function loadPlugins(cb) {
+				requests.get('/plugins/config/' + project.type).
+				done(function(_pluginsConfig) {
+					pluginsConfig = _pluginsConfig;
+					cb();
+				}).
+				fail(error.handleXhrError);
+			}
+
+			function done() {
+				dom.loadPluginConfig(project, pluginsConfig, save);
+			}
+
+			function save(config) {
+				requests.put('/projects/' + project._id + '/plugins', config).
+				done(function() {
+					dom.showSuccess('Plugin settings saved');
+				}).
+				fail(error.handleXhrError);
+			}
+
 		}
 
 	};

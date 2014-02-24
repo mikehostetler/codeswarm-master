@@ -33,11 +33,11 @@ module.exports = {
    */
    create: function (req, res) {
 
-    console.log('req body saving project:', req.body);
-
     var project = extend({}, req.body);
     var match = project.repo.match(repoRegexp);
     if (! match) return res.send(409, new Error('Invalid repo URL'));
+
+    if (! project.type) res.send(409, new Error('Please define a project type'));
 
     var id = match[5];
     project._id = id;
@@ -265,6 +265,22 @@ module.exports = {
           else res.json(build);
         });
       }
+    }
+
+  },
+
+
+
+  /// Update Plugins
+
+  updatePlugins: function updatePlugins(req, res) {
+    var projectName = req.param('owner') + '/' + req.param('repo');
+
+    projects.update(projectName, { plugins: req.body}, updated);
+
+    function updated(err) {
+      if (err) res.send(err.status_code || 500, err);
+      else res.json({ok: true});
     }
 
   },
