@@ -18,5 +18,6 @@
 	</form>
 
   <p style="clear:both"><a href="#/users/new">Create new account</a>
+  <p style="clear:both"><a href="#/forgot-password">Forgot Password?</a>
 
 </div>

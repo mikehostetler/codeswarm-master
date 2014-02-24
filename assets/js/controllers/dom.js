@@ -5,6 +5,7 @@ define([
 		"text!templates/header.tpl",
 		"text!templates/signup.tpl",
 		"text!templates/login.tpl",
+		"text!templates/forgot-password.tpl",
 		"text!templates/menu.tpl",
 		"text!templates/projects.tpl",
 		"text!templates/project.tpl",
@@ -19,9 +20,12 @@ define([
 		"text!templates/build/source.tpl",
 		"text!templates/user_profile.tpl",
 		"text!templates/user_settings.tpl",
-		"text!templates/project_config.tpl"
+		"text!templates/project_config.tpl",
+		"text!templates/about.tpl",
+		"text!templates/support.tpl",
+		"text!templates/contribute.tpl"
 	],
-	function ($, Handlebars, timestamp, header, signup, login, menu, projects, project, logview, tokens, github_repos, project_builds, pull_requests, branches, build, analysis, source, user_profile, user_settings, project_config) {
+	function ($, Handlebars, timestamp, header, signup, login, forgotpass, menu, projects, project, logview, tokens, github_repos, project_builds, pull_requests, branches, build, analysis, source, user_profile, user_settings, project_config, about, support, contribute) {
 		var dom;
 
 		dom = {
@@ -56,7 +60,7 @@ define([
 				this.$document = $(document);
 
 				// Initialize methods
-				this.loadHeader();
+				this.loadHeader(true);
 				this.floatHeader();
 				this.accordion();
 			},
@@ -227,6 +231,19 @@ define([
 			},
 
 			/**
+			 * Load the Forgot Password form
+			 */
+			loadForgotPassword: function () {
+				this.loaded = false;
+				this.$main
+					.html(forgotpass)
+					.find("input:first-of-type")
+					.focus();
+				this.loadHeader(false);
+			},
+
+
+			/**
 			 * Get input from form element by name
 			 */
 			getValue: function (form, name) {
@@ -338,6 +355,34 @@ define([
 			loadUserSettings: function () {
 				var template = Handlebars.compile(user_settings),
 					html = template({});
+				this.$main.html(html);
+			},
+												
+			/**
+			 * Load About Page
+			 */
+			loadPage: function (page) {
+				var tmpl;
+				switch (page) {
+					case "about": tmpl = about;
+						break;
+					case "support": tmpl = support;
+						break;
+					case "contribute": tmpl = contribute;
+						break;
+				}
+				
+				var template = Handlebars.compile(tmpl),
+						html = template({});
+				this.$main.html(html);
+			},
+
+			/**
+			 * Load Home Page
+			 */
+			loadHome: function () {
+				var template = Handlebars.compile(about),
+						html = template({});
 				this.$main.html(html);
 			},
 

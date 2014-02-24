@@ -56,16 +56,57 @@ define([
 
 			// Home
 			router.on("/", function () {
+				projects.showList();
+				dom.setBodyClass("home-page");
+			});
+
+			// About - Static HTML page
+			router.on("/about", function () {
+				dom.loadPage('about');
+				dom.setBodyClass("about-page");
+			});
+
+			// Support - Static HTML page
+			router.on("/support", function () {
+				dom.loadPage('support');
+				dom.setBodyClass("support-page");
+			});
+
+			// Contribute - Static HTML page
+			router.on("/contribute", function () {
+				dom.loadPage('contribute');
+				dom.setBodyClass("contribute-page");
+			});
+
+			// Login page
+			router.on("/login", function () {
 				if (!session.get()) {
 					dom.loadLogin();
 					dom.setBodyClass("login");
 					session.getLogin();
 				} else {
-					router.go("/projects");
+					router.go("/");
 				}
 			});
 
-			// Projects list
+			// Forgot Password
+			router.on("/forgot-password", function () {
+				if (!session.get()) {
+					dom.loadForgotPassword();
+					dom.setBodyClass("forgot-password");
+				} else {
+					router.go("/");
+				}
+			});
+
+			// Logout
+			router.on("/logout", function () {
+				session.unset();
+				router.go("/");
+			});
+
+
+			// Projects list - TODO change this
 			router.on("/projects", function () {
 				authenticated(function () {
 					projects.showList();
@@ -160,12 +201,6 @@ define([
 				authenticated(function () {
 					projects.newProject();
 				});
-			});
-
-			// Logout
-			router.on("/logout", function () {
-				session.unset();
-				router.go("/");
 			});
 
 			// Home
