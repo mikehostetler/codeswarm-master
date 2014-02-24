@@ -83,3 +83,74 @@
         width: 75%;
     }
 }
+
+// User config form
+.user-config-form {
+    margin-top: 1.5em;
+
+    @include breakpoint(63.75em) {
+        margin-top: 0;
+        width: 75%;
+    }
+}
+
+.user-config-image {
+    float: left;
+    width: 100%;
+    margin: 0 0 1.5em;
+
+    label {
+        display: block;
+        width: 100%;
+        margin: 0 0 .5em;
+        font-size: .938em;
+
+        @include breakpoint(50em) {
+            font-size: 1.125em;
+            margin: .75em 0 .75em;
+        }
+    }
+
+    .image-contain {
+        position: relative;
+        float: left;
+
+        .image-edit-trigger {
+            display: none;
+            position: absolute;
+            z-index: 1;
+            top: 50px;
+            right: 0;
+            left: 0;
+            margin: 0 auto;
+            width: 50%;
+            text-align: center;
+            cursor: pointer;
+            @include border-radius(3px);
+        }
+
+        img {
+            float: left;
+            height: 120px;
+            max-width: 100%;
+            @include transition(opacity .2s ease);
+        }
+
+        &:hover {
+            background: black;
+
+            img {
+                opacity: .75;
+            }
+
+            .image-edit-trigger {
+                display: block;
+            }
+        }
+    }
+
+    @include breakpoint(63.75em) {
+        width: 25%;
+        padding: 0 0 0 2.5em;
+    }
+}
