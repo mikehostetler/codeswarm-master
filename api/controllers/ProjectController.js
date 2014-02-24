@@ -136,6 +136,8 @@ module.exports = {
 
       if (err) return res.send(err.status_code || 500, err);
 
+      if (! project.type) return res.send(500, new Error('no project type defined'));
+
       var id = uuid();
       var time = Date.now();
 
@@ -145,7 +147,10 @@ module.exports = {
         created_at: time,
         triggered_by: req.session.username(),
         repo: project.repo,
-        dir: id
+        dir: id,
+        branch: project.branch,
+        commit: 'HEAD',
+        type: project.type
       };
 
       build.branch = project.branch;
@@ -221,6 +226,8 @@ module.exports = {
     var run = false;
     var payload, ref, branch;
 
+    if (! project.type) return res.send(500, new Error('no project type defined'));
+
     payload = req.body;
     // Check to ensure branch match
     if (payload.hasOwnProperty("ref")) {
@@ -241,7 +248,8 @@ module.exports = {
         dir: id,
         branch: project.branch,
         state: 'pending',
-        commit: payload.after
+        commit: payload.after,
+        type: project.type
       };
 
       builds.create(build, createdBuild);

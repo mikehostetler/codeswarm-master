@@ -213,7 +213,8 @@ define([
 				requests.post("/projects", {
 					repo: data.repo,
 					branch: data.branch || "master",
-					public: !! data.public
+					public: !! data.public,
+					type: data.type
 				}).
 				done(function () {
 					dom.showSuccess("Project successfully created");
