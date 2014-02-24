@@ -65,6 +65,14 @@
 	}
 }
 
+.sidebar-list--active {
+    border-left: 3px solid #ff734b;
+
+    a {
+        color: #6d6d6d;
+    }
+}
+
 .build-groups-contain {
     margin: 0 0 1em;
 
