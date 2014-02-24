@@ -13,11 +13,29 @@
     <div class="gf-col">
       <label>Repository</label>
       <input id="project-repo" required="true" name="repo" type="text" title="Enter the clone URL" placeholder="git://github.com/username/project.git" value="{{repo}}">
+
+      <label>Label</label>
+      <input type="text" placeholder="Text input">
+
+      <label>Label</label>
+      <input type="text" placeholder="Text input">
+
+      <label>Label</label>
+      <input type="text" placeholder="Text input">
     </div>
 
     <div class="gf-col">
       <label>Branch</label>
       <input id="project-branch" required="true" name="branch" type="text" title="Enter the default branch" value="{{branch}}">
+
+      <label>Label</label>
+      <input type="text" placeholder="Text input">
+
+      <label>Label</label>
+      <input type="text" placeholder="Text input">
+
+      <label>Label</label>
+      <input type="text" placeholder="Text input">
     </div>
   </form>
 </div>
