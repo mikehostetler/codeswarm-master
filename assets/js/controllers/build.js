@@ -1,6 +1,7 @@
 define([
+  'ansi_up',
   'controllers/timestamp'],
-  function (timestamp) {
+  function (ansi_up, timestamp) {
 
   var build = {
     forShow: function(build) {
@@ -14,7 +15,7 @@ define([
             command.out = command.out.
               split('\n').
               map(ansi_up.ansi_to_html).
-              map(decorateLine).
+              //map(decorateLine).
               join('');
 
              command.finished_at = timestamp(command.finished_at);
