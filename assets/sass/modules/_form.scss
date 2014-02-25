@@ -17,6 +17,17 @@
     }
 }
 
+.gf-centered {
+    float: left;
+    width: 100%;
+    text-align: center;
+    padding-top: 1em;
+
+    p {
+        margin-bottom: 1em;
+    }
+}
+
 .gf-actions {
     float: left;
     width: 100%;
