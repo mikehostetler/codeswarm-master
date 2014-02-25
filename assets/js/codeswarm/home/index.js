@@ -1,21 +1,26 @@
-define(['plugins/router'], function (router) {
-    return {
-        router: router,
-        activate: function () {
-            return router.map([
-                { route: ['', 'home'],                  moduleId: 'home/index',            title: 'Home',       nav: 1 }
-								/*
-                { route: 'view-composition',            moduleId: 'viewComposition/index',  title: 'View Composition',  nav: true },
-                { route: 'modal',                       moduleId: 'modal/index',            title: 'Modal Dialogs',     nav: 3 },
-                { route: 'event-aggregator',            moduleId: 'eventAggregator/index',  title: 'Events',            nav: 2 },
-                { route: 'widgets',                     moduleId: 'widgets/index',          title: 'Widgets',           nav: true },
-                { route: 'master-detail',               moduleId: 'masterDetail/index',     title: 'Master Detail',     nav: true },
-                { route: 'knockout-samples*details',    moduleId: 'ko/index',               title: 'Knockout Samples',  nav: true, hash: '#knockout-samples' }
-								*/
-            ]).buildNavigationModel()
-              .mapUnknownRoutes('home/index', 'not-found')
-              .activate();
-        }
+﻿define(function() {
+    var ctor = function () {
+        this.displayName = 'Welcome to the Durandal Starter Kit!';
+        this.description = 'Durandal is a cross-device, cross-platform client framework written in JavaScript and designed to make Single Page Applications (SPAs) easy to create and maintain.';
+        this.features = [
+            'Clean MV* Architecture',
+            'JS & HTML Modularity',
+            'Simple App Lifecycle',
+            'Eventing, Modals, Message Boxes, etc.',
+            'Navigation & Screen State Management',
+            'Consistent Async Programming w/ Promises',
+            'App Bundling and Optimization',
+            'Use any Backend Technology',
+            'Built on top of jQuery, Knockout & RequireJS',
+            'Integrates with other libraries such as SammyJS & Bootstrap',
+            'Make jQuery & Bootstrap widgets templatable and bindable (or build your own widgets).'
+        ];
     };
-});
 
+    //Note: This module exports a function. That means that you, the developer, can create multiple instances.
+    //This pattern is also recognized by Durandal so that it can create instances on demand.
+    //If you wish to create a singleton, you should export an object instead of a function.
+    //See the "flickr" module for an example of object export.
+
+    return ctor;
+});

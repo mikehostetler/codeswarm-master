@@ -1,20 +1,35 @@
-﻿define(['plugins/router'], function (router) {
+﻿define(['plugins/router', 'durandal/app'], function (router, app) {
     return {
         router: router,
+        search: function() {
+            //It's really easy to show a message box.
+            //You can add custom options too. Also, it returns a promise for the user's response.
+            app.showMessage('Search not yet implemented...');
+        },
         activate: function () {
-            return router.map([
-                { route: ['', 'home'],                  moduleId: 'home/index',            title: 'Home',       nav: 1 }
-								/*
-                { route: 'view-composition',            moduleId: 'viewComposition/index',  title: 'View Composition',  nav: true },
-                { route: 'modal',                       moduleId: 'modal/index',            title: 'Modal Dialogs',     nav: 3 },
-                { route: 'event-aggregator',            moduleId: 'eventAggregator/index',  title: 'Events',            nav: 2 },
-                { route: 'widgets',                     moduleId: 'widgets/index',          title: 'Widgets',           nav: true },
-                { route: 'master-detail',               moduleId: 'masterDetail/index',     title: 'Master Detail',     nav: true },
-                { route: 'knockout-samples*details',    moduleId: 'ko/index',               title: 'Knockout Samples',  nav: true, hash: '#knockout-samples' }
-								*/
-            ]).buildNavigationModel()
-              .mapUnknownRoutes('hello/index', 'not-found')
-              .activate();
+            router.map([
+								// Static Routes
+                { route: '',								moduleId: 'codeswarm/home/index',					title: 'Welcome',						nav: true },
+                { route: 'about',						moduleId: 'codeswarm/home/about',					title: 'About CodeSwarm',		nav: true },
+                { route: 'support',					moduleId: 'codeswarm/home/support',				title: 'Getting Support',		nav: true },
+                { route: 'contribute',			moduleId: 'codeswarm/home/contribute',		title: 'Contribute',				nav: true },
+
+								// Search
+                { route: 'search/*term',		moduleId: 'codeswarm/home/search',				title: 'Search',						nav: true },
+
+								// Orgs - Implements a Child Router
+                { route: ':org',						moduleId: 'codeswarm/org/index',					nav: true },
+
+								// User Management
+                { route: 'login',						moduleId: 'codeswarm/user/login',					title: 'Login',							nav: true },
+                { route: 'logout',					moduleId: 'codeswarm/user/logout',				title: 'Logout',						nav: true },
+                { route: 'forgot-password',	moduleId: 'codeswarm/user/forgot-password',														nav: true },
+                { route: ':user',						moduleId: 'codeswarm/user/index',					title: 'User Profile',			nav: true },
+                { route: ':user/settings',	moduleId: 'codeswarm/user/settings',			title: 'User Settings',			nav: true }
+
+            ]).buildNavigationModel();
+            
+            return router.activate();
         }
     };
 });
