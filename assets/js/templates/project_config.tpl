@@ -4,7 +4,7 @@
   <a href="/#/projects/{{_id}}" class="breadcrumb-link breadcrumb-hide">codeswarm/codeswarm</a>
   <span class="breadcrumb-active breadcrumb-hide">Config</span>
   {{#unless restricted}}
-  <a href="#/project/new" class="btn right"><i class="fa fa-plus-circle"></i>New Project</a>
+  <a href="#/add-your-project" class="btn right"><i class="fa fa-plus-circle"></i>New Project</a>
   {{/unless}}
 </h1>
 

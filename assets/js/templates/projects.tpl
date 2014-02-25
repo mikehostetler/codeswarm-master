@@ -2,7 +2,7 @@
   <i class="fa fa-folder"></i>
   Projects
   {{#unless restricted}}
-  <a href="#/project/new" class="btn right"><i class="fa fa-plus-circle"></i>New Project</a>
+  <a href="#/add-your-project" class="btn right"><i class="fa fa-plus-circle"></i>New Project</a>
   {{/unless}}
 </h1>
 
