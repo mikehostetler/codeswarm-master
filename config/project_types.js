@@ -1,2 +1,2 @@
-exports.node = ['codeswarm-node'];
-exports.browser = ['codeswarm-browser'];
+exports.node = ['codeswarm-node', 'codeswarm-plato'];
+exports.browser = ['codeswarm-browser', 'codeswarm-plato'];

@@ -1,1 +1,5 @@
-exports.modules = ['codeswarm-node', 'codeswarm-browser'];
+exports.modules = [
+  'codeswarm-node',
+  'codeswarm-browser',
+  'codeswarm-plato'
+];

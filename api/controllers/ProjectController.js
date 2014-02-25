@@ -81,7 +81,7 @@ module.exports = {
 
 
   /**
-   *    `GET /:owner/:repo`
+   *    `GET /projects/:owner/:repo`
    */
   find: function (req, res) {
 
@@ -107,15 +107,19 @@ module.exports = {
    */
   list: function (req, res) {
     var user = req.session.username();
-    if (user) {
+    var search = req.param('search');
+
+    if (! user) {
+      res.send(403, new Error('You need to be logged in for now'));
+    } else if (! search) {
       projects.listFor(user, replied);
     } else {
-      res.send(403, new Error('You need to be logged in for now'));
+      projects.search(user, search, replied);
     }
 
     function replied(err, projects) {
       if (err) res.send(err.status_code || 500, err);
-      else res.send(projects);
+      else res.json(projects);
     }
   },
 
@@ -144,8 +148,10 @@ module.exports = {
       var build = {
         _id: id,
         project: project._id,
+        previous_build: project.last_build,
+        previous_successful_build: project.last_successful_build,
         created_at: time,
-        triggered_by: req.session.username(),
+        triggered_by: req.session && req.session.username(),
         repo: project.repo,
         dir: id,
         branch: project.branch,
@@ -243,6 +249,8 @@ module.exports = {
       var build = {
         _id: id,
         project: project._id,
+        previous_build: project.last_build,
+        previous_successful_build: project.last_successful_build,
         created_at: Date.now(),
         triggered_by: 'Github webhook',
         repo: project.repo,
