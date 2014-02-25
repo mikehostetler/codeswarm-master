@@ -1,3 +1,6 @@
 ﻿define(function() {
-    return {};
+    var ctor = function () {
+        this.displayName = 'Login';
+    };
+    return ctor;
 });

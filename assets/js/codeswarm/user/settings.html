@@ -1,7 +1,55 @@
-﻿<h1 class="page-title" data-bind="html:displayName"> </h1>
+<h1 class="page-title">
+  <i class="fa fa-user"></i>
+  <span data-bind="html:displayName"></span>
+</h1>
 
 <div class="content-wrap">
-	Bacon ipsum dolor sit amet ham pastrami bacon shoulder ball tip beef andouille prosciutto kevin sirloin pork loin. Spare ribs pancetta prosciutto ball tip ham hock pig fatback jowl doner salami venison boudin kielbasa pastrami. Pork chop chicken ham biltong doner boudin swine andouille pork belly kevin ham hock. Beef cow tenderloin sirloin. Shank doner salami ball tip rump capicola meatball ribeye andouille jowl turducken beef bresaola pork chop boudin. Ball tip porchetta kevin, t-bone leberkas sausage turkey corned beef. Pork loin ham ground round kevin shoulder pancetta ball tip venison.
+	<form id="user-config">
+		<div class="global-form user-config-form">
+	    <div class="gf-col">
+	      <label>First Name</label>
+	      <input type="text" placeholder="John">
 
-	Bacon ham landjaeger, salami venison biltong fatback andouille tongue tenderloin beef ribs flank ground round bresaola doner. Jerky tongue jowl sausage beef strip steak leberkas ham hock pig salami. Fatback cow t-bone, pastrami salami venison turkey beef meatball pork strip steak tri-tip ground round ball tip. T-bone beef ribs pork loin ground round pancetta salami boudin meatloaf frankfurter flank biltong drumstick kevin ham. Shankle sirloin sausage prosciutto chicken doner. Beef ribs flank t-bone ground round swine doner pork chop, kielbasa jowl.
+	      <label>Last Name</label>
+	      <input type="text" placeholder="Doe">
+
+	      <label>Email</label>
+	      <input type="text" placeholder="your@email.com">
+
+	      <label>Username</label>
+	      <input type="text" placeholder="johndoe">
+	    </div>
+
+	    <div class="gf-col">
+	      <label>Password</label>
+	      <input name="branch" type="password" placeholder="Password">
+
+	      <label>Confirm Password</label>
+	      <input type="password" placeholder="Confirm password">
+	    </div>
+	  </div>
+
+	  <div class="user-config-image">
+			<label>Profile image</label>
+			<div class="image-contain">
+				<a href="#" class="image-edit-trigger btn btn-sml modal-trigger" id="modal-image-upload--trigger">Edit</a>
+				<img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?s=120">
+			</div>
+		</div>
+
+		<div class="gf-actions">
+      <button type="submit" class="btn">Save</button>
+      <button class="btn btn-sec">Cancel</button>
+    </div>
+
+    <div class="modal" id="modal-image-upload">
+    	<div class="modal-contain">
+    		<div class="modal-title">Upload new image</div>
+
+    		<div class="modal-body">
+    			<input type="file">
+    		</div>
+    	</div>
+    </div>
+  </form>
 </div>

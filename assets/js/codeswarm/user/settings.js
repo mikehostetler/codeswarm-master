@@ -1,6 +1,6 @@
 ﻿define(function() {
     var ctor = function () {
-        this.displayName = 'About CodeSwarm';
+        this.displayName = 'Settings';
     };
 
     //Note: This module exports a function. That means that you, the developer, can create multiple instances.
