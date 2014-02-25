@@ -14,6 +14,20 @@
         <input type="text" name="{{../../name}}/{{name}}" value="{{value}}" {{#if required}}required{{/if}}>
       {{/compare}}
 
+      {{#compare type "text" operator="==="}}
+        <textarea name="{{../../name}}/{{name}}" {{#if required}}required{{/if}}>{{value}}</textarea>
+      {{/compare}}
+
+      {{#compare type "selectOne" operator="==="}}
+        <div>
+          <select name="{{../../name}}/{{name}}" {{#if required}}required{{/if}}>
+            {{#each from}}
+              <option value="{{value}}" {{#if selected}}selected{{/if}}>{{value}}</option>
+            {{/each}}
+          </select>
+        </div>
+      {{/compare}}
+
       {{#compare type "selectMultiple" operator="==="}}
         <ul>
         {{#each from}}

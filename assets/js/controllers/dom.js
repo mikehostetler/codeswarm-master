@@ -342,7 +342,14 @@ define([
 								return {
 									value: possibleValue,
 									selected: attribute.value.indexOf(possibleValue) >= 0
-								}
+								};
+							});
+						} else if (attribute.type == 'selectOne') {
+							attribute.from = attribute.from.map(function(possibleValue) {
+								return {
+									value: possibleValue,
+									selected: attribute.value == possibleValue
+								};
 							});
 						}
 					});
