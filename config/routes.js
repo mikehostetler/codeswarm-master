@@ -114,6 +114,7 @@ module.exports.routes = {
   'post /:owner/:repo/webhook': 'ProjectController.webhook',
   'delete /projects/:owner/:repo': 'ProjectController.destroy',
   'put /projects/:owner/:repo': 'ProjectController.update',
+  'put /projects/:owner/:repo/plugins': 'ProjectController.updatePlugins',
   'get /projects/:owner/:repo/builds': 'BuildController.index',
   'get /projects/:owner/:repo/builds/:build': 'BuildController.find',
 
@@ -122,6 +123,10 @@ module.exports.routes = {
   'get /tokens/:provider': 'TokenController.find',
   'post /tokens/:provider': 'TokenController.create',
   'get /tokens/:provider/callback': 'TokenController.callback',
+
+  /// Plugin Config
+
+  'get /plugins/config/:type': 'PluginController.list',
 
 	/// Catch All Route
   'get /[^.?]+?': 'SiteController.redirect'

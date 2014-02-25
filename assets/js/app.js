@@ -88,6 +88,12 @@ define([
 				});
 			});
 
+			router.on("/:owner/:repo/plugins", function(owner, repo) {
+				authenticated(function () {
+					projects.configPlugins(owner + '/' + repo);
+				});
+			});
+
 			// Build list
 			router.on("/:owner/:repo/builds", function (owner, repo) {
 				var project = owner + '/' + repo;

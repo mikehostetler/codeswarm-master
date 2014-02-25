@@ -42,6 +42,7 @@
     </select>
 
 
+
     <label style="clear: both; display: inline">
       <input type="checkbox" name="public" class="checkbox" {{#if public}}checked{{/if}}>
       Public
@@ -56,6 +57,10 @@
     {{/if}}
 
 	</form>
+
+  {{#if _id}}
+    <p><button><a href="#/{{_id}}/plugins">Configure plugins</a></button></p>
+  {{/if}}
 
 	<hr>
 

@@ -13,9 +13,10 @@ define([
 		"text!templates/builds.tpl",
 		"text!templates/logview.tpl",
 		"text!templates/tokens.tpl",
-		"text!templates/github_repos.tpl"
+		"text!templates/github_repos.tpl",
+		"text!templates/plugins.tpl"
 	],
-	function ($, Handlebars, _, timestamp, header, signup, login, menu, projects, projects_table, project, builds, logview, tokens, github_repos) {
+	function ($, Handlebars, _, timestamp, header, signup, login, menu, projects, projects_table, project, builds, logview, tokens, github_repos, plugins) {
 		var dom;
 
 		dom = {
@@ -318,6 +319,52 @@ define([
 					self.$main.find("#project-delete").show();
 					// Hide confirm/cancel
 					self.$main.find("#project-confirm-delete, #project-cancel-delete").hide();
+				});
+			},
+
+			/**
+			 * Project Plugin Config
+			 */
+			loadPluginConfig: function(project, pluginSchema, save) {
+				var self = this;
+				var template = Handlebars.compile(plugins);
+
+				var projectPluginsConfig = project.plugins || {};
+
+				var _plugins = Object.keys(pluginSchema).map(function(plugin) {
+					var projectPluginConfig = projectPluginsConfig[plugin] || {};
+					var attributes = pluginSchema[plugin];
+
+					attributes.forEach(function(attribute) {
+						attribute.value = projectPluginConfig[attribute.name];
+					});
+
+					return {
+						name: plugin,
+						attributes: attributes
+					};
+				});
+
+				var html = template({
+						project: project,
+						plugins: _plugins
+					});
+				this.$main.html(html);
+
+				this.$main.find('form').submit(function(e) {
+					e.preventDefault();
+					var form = $(this).serializeObject();
+					var config = {};
+					for(var key in form) {
+						var split = key.split('/');
+						var plugin = split[0];
+						var name = split[1];
+						var value = form[key];
+						if (! config[plugin]) config[plugin] = {};
+						config[plugin][name] = value;
+					}
+
+					save(config);
 				});
 			},
 
