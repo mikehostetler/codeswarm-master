@@ -1,7 +1,7 @@
 define([
   'ansi_up',
   'controllers/timestamp'],
-  function (ansi_up, timestamp) {
+function (ansi_up, timestamp) {
 
   var build = {
     forShow: function(build) {
