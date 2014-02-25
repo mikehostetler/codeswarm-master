@@ -1,21 +1,31 @@
-#login {
-	label,
-	input,
-	button {
-		float: left;
-	}
-	
-	label {
-    	width: 100%;
-    }
+.login {
+	header {
+		.menu-button {
+			display: block;
+			width: 120px;
+			float: none;
+			margin: .938em auto 0;
+			text-align: center;
+		}
 
-    input {
-	    max-width: 300px;
+		@include breakpoint(37.5em) {
+			.menu-button {
+				width: 150px;
+				margin: 1.125em auto 0;
+			}
+		}
 	}
 
-	button {
-	    @include breakpoint(37.5em) {
-	    	margin: 0 0 0 1em;
-	    }
+	.page-title,
+	.content-wrap {
+		max-width: 400px;
+		margin: 0 auto;
+		float: none;
+		overflow: hidden;
+	}
+
+	.gf-col {
+		width: 100%;
+		padding: 0;
 	}
 }
