@@ -5,13 +5,13 @@
 
 <div class="content-wrap">
 	<ul class="tabs-horiz add-project-steps">
-    <li class="add-project-step1 completed-step">
+    <li class="add-project-step1 current-step">
     	<span class="tab-cont">
     		<i class="project-step-icon">1</i>
     		<span>Log in to GitHub</span>
     	</span>
     </li>
-    <li class="add-project-step2 current-step">
+    <li class="add-project-step2">
     	<span class="tab-cont">
     		<i class="project-step-icon">2</i>
     		<span>Choose your Project</span>
@@ -24,6 +24,70 @@
     	</span>
     </li>
   </ul>
+
+  <form method="post" action="/tokens/github" class="global-form">
+  	<div class="gf-centered">
+  		<p>You need to be logged in to GitHub in order to add a project.</p>
+      <button class="btn">Log in to GitHub</button>
+    </div>
+  </form>
+
+  <!-- <table class="datatable datatable-wide">
+    <tbody>
+    	<tr>
+    		<td>
+    			<a href="#"><h4 class="project">codeswarm/codeswarm</h4></a>
+    		</td>
+    	</tr>
+    	<tr>
+    		<td>
+    			<a href="#"><h4 class="project">codeswarm/codeswarm</h4></a>
+    		</td>
+    	</tr>
+    	<tr>
+    		<td>
+    			<a href="#"><h4 class="project">codeswarm/codeswarm</h4></a>
+    		</td>
+    	</tr>
+    	<tr>
+    		<td>
+    			<a href="#"><h4 class="project">codeswarm/codeswarm</h4></a>
+    		</td>
+    	</tr>
+    	<tr>
+    		<td>
+    			<a href="#"><h4 class="project">codeswarm/codeswarm</h4></a>
+    		</td>
+    	</tr>
+    	<tr>
+    		<td>
+    			<a href="#"><h4 class="project">codeswarm/codeswarm</h4></a>
+    		</td>
+    	</tr>
+    </tbody>
+  </table> -->
+
+  <!-- <form class="global-form">
+  	<div class="gf-col">
+  		<label>Label</label>
+  		<input type="text" placeholder="Text input">
+
+  		<label>Label</label>
+  		<input type="text" placeholder="Text input">
+  	</div>
+
+  	<div class="gf-col">
+  		<label>Label</label>
+  		<input type="text" placeholder="Text input">
+
+  		<label>Label</label>
+  		<input type="text" placeholder="Text input">
+  	</div>
+
+  	<div class="gf-actions">
+  		<button type="submit" class="btn">Submit</button>
+  	</div>
+  </form> -->
 </div>
 
 <!-- <h1 class="page-title">

@@ -128,6 +128,33 @@
     }
 }
 
+.datatable-wide {
+    td {
+        height: 50px;
+
+        &:first-child a ,
+        &:last-child a {
+            padding: 16px 12px 12px;
+        }
+    }
+
+    tr:nth-child(even) {
+        a {
+            background: #f8f8f8;
+        }
+
+        @include breakpoint(63.75em) {
+            a {
+                background: #fefefe;
+            }
+        }
+    }
+
+    @include breakpoint(63.75em) {
+        width: 100%;
+    }
+}
+
 .logs {
     font-size: .938em;
 }
