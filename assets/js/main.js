@@ -8,7 +8,7 @@ require.config({
 		"github": "vendor/github/github",
 		"base64": "vendor/base64/base64",
 		"async": "vendor/async/async",
-		"underscore": "vendor/underscore/underscore",
+		"underscore": "vendor/underscore/underscore-min",
 		"app": "app"
 	},
 	shim: {

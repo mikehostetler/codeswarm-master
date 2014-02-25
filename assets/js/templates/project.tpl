@@ -32,10 +32,21 @@
     <input id="project-branch" name="branch" type="text" title="Default branch" placeholder="master" value="master">
     {{/if}}
 
+    <h4>Type</h4>
+    <select name="type">
+      {{#select type}}
+        <option value="">Select one</option>
+        <option value="node">Node.js</option>
+        <option value="browser">Browser</option>
+      {{/select}}
+    </select>
+
+
     <label style="clear: both; display: inline">
       <input type="checkbox" name="public" class="checkbox" {{#if public}}checked{{/if}}>
       Public
     </label>
+
 
 
     {{#if _id}}

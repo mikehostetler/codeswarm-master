@@ -111,6 +111,7 @@ module.exports.routes = {
   'get /projects/:owner/:repo': 'ProjectController.find',
   'post /projects': 'ProjectController.create',
   'post /:owner/:repo/deploy': 'ProjectController.deploy',
+  'post /:owner/:repo/webhook': 'ProjectController.webhook',
   'delete /projects/:owner/:repo': 'ProjectController.destroy',
   'put /projects/:owner/:repo': 'ProjectController.update',
   'get /projects/:owner/:repo/builds': 'BuildController.index',

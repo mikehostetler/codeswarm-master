@@ -1,5 +1,6 @@
 var async   = require('async');
 var extend  = require('util')._extend;
+var uuid    = require('../../lib/uuid');
 var db      = require('./');
 
 /// create
@@ -13,7 +14,8 @@ function createProject(project, cb) {
     repo:   project.repo,
     branch: project.branch,
     owners: project.owners,
-    public: project.public
+    public: project.public,
+    secret: uuid()
   };
 
   (function _createProject() {

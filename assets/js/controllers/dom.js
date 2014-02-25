@@ -288,20 +288,6 @@ define([
 					return false;
 				};
 
-				// On repo change, modify hook and dir/name
-				this.$main.find("#project-repo").off().on("input", function () {
-					var val = $(this).val(),
-						deployUrl = location.protocol + "//" + location.hostname + (location.port ? ":" + location.port : ""),
-						id = self.$main.find("#project-id"),
-						hook = self.$main.find("#project-hook"),
-						name = validateRepo(val);
-
-					if (name) {
-						id.text(name);
-						hook.text(deployUrl + "/deploy/" + name);
-					}
-				});
-
 				// Handle form submission
 				$("#project-config").submit(function (e) {
 					e.preventDefault();
@@ -523,6 +509,12 @@ define([
 
 			return buffer;
 		});
+
+		Handlebars.registerHelper('select', function( value, options ){
+      var $el = $('<select />').html( options.fn(this) );
+      $el.find('[value=' + value + ']').attr({'selected':'selected'});
+      return $el.html();
+    });
 
 		$.fn.serializeObject = function () {
 			"use strict";
