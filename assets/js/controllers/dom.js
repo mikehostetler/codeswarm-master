@@ -63,6 +63,7 @@ define([
 				this.loadHeader(true);
 				this.floatHeader();
 				this.accordion();
+				this.modal();
 			},
 
 			/**
@@ -163,6 +164,39 @@ define([
 					$searchTrigger.removeClass(searchTriggerOpen);
 				});
 			},
+
+			/**
+			 * Modals
+			 */
+			 modal: function () {
+			 	$(document)
+			 		// Remove active class when clicking anywhere on document
+			 		.on("click", function () {
+			 			$("body").removeClass("modal--open");
+			 			$(".modal").removeClass("modal--active");
+			 		})
+			 		.on("click", ".modal-trigger", function (e) {
+			 			e.preventDefault();
+			 			
+			 			// Override if clicking on a .modal-trigger			 			
+			 			e.stopPropagation();
+
+			 			var $this = $(this),
+			 				triggerId = $this.attr("id").split("--");
+
+			 			triggerId.pop();
+
+			 			var triggerDest = triggerId.join(), // Save the id minus --trigger
+			 				$destModal = $("#" + triggerDest); // This id should now be same as modal id
+
+			 			$("body").addClass("modal--open"); // Add class to body for background overlay
+			 			$destModal.addClass("modal--active"); // Add active class to modal
+			 		})
+			 		.on("click", ".modal-contain", function (e) {
+			 			// Prevent modal from closing when clicking inside one
+			 			e.stopPropagation();
+			 		});
+			 },
 
 			/**
 			 * Sidebar accordion module

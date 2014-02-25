@@ -197,7 +197,7 @@ define([
 				});
 			});
 
-			router.on("/project/new", function() {
+			router.on("/add-your-project", function() {
 				authenticated(function () {
 					projects.newProject();
 				});

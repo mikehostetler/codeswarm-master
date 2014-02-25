@@ -17,7 +17,6 @@
 	</a>
 
 	<ul class="profile-nav--list">
-		<li><a href="/#/mike"><i class="fa fa-user"></i>Your Profile</a></li>
 		<li><a href="#/mike/settings"><i class="fa fa-cog"></i>Account Settings</a></li>
 		<li><a href="#/logout"><i class="fa fa-power-off"></i>Log Out</a></li>
 	</ul>

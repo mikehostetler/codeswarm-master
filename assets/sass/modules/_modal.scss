@@ -1,0 +1,52 @@
+.modal--open {
+	&::after {
+		position: absolute;
+		content: "";
+		top: 0;
+		z-index: 99;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0, 0, 0, .5);
+	}
+}
+
+.modal {
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	padding: 1em;
+	z-index: 100;
+
+	&.modal--active {
+		display: block;
+	}
+}
+
+.modal-contain {
+	position: relative;
+	max-width: 35em;
+	margin: 14em auto 0;
+	@include translateY(-50%);
+	@include border-radius(3px);
+	overflow: hidden;
+}
+
+.modal-title {
+	float: left;
+	width: 100%;
+	padding: 1em;
+	background: #b1d928;
+	color: white;
+	@include text-shadow(0 1px 2px rgba(0, 0, 0, 0.25));
+}
+
+.modal-body {
+	float: left;
+	width: 100%;
+	padding: 1em;
+	background: white;
+}
