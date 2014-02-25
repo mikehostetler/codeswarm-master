@@ -24,10 +24,11 @@
                 { route: ':org/:repo/config',	moduleId: 'codeswarm/org/config',				nav: true },
 
 								// User Management
-                { route: 'login',						moduleId: 'codeswarm/user/login',					title: 'Login',							nav: true },
-                { route: 'logout',					moduleId: 'codeswarm/user/logout',				title: 'Logout',						nav: true },
-                { route: 'forgot-password',	moduleId: 'codeswarm/user/forgot-password',														nav: true },
-                { route: ':user',						moduleId: 'codeswarm/user/index',					title: 'User Profile',			nav: true },
+                { route: 'user/login',			moduleId: 'codeswarm/user/login',					title: 'Login',							nav: true },
+                { route: 'user/logout',			moduleId: 'codeswarm/user/logout',				title: 'Logout',						nav: true },
+                { route: 'user/forgot-password',	moduleId: 'codeswarm/user/forgot-password',											nav: true },
+                { route: 'user/signup',			moduleId: 'codeswarm/user/signup',				title: 'Signup',						nav: true },
+                { route: ['user',':user'],	moduleId: 'codeswarm/user/index',					title: 'User Profile',			nav: true },
                 { route: ':user/settings',	moduleId: 'codeswarm/user/settings',			title: 'User Settings',			nav: true }
 
             ]).buildNavigationModel();
