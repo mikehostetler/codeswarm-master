@@ -42,9 +42,12 @@
         border-right: solid 1px #ccc;
     }
 
-    td {
+    .anchor-wrap {
         position: relative;
         height: 60px;
+    }
+
+    td {
         background: white;
         border: 1px solid #e2e2e2;
 
@@ -67,7 +70,6 @@
         }
 
         @include breakpoint(max-width 63.74em) {
-            position: relative;
             display: block;
             height: auto;
             white-space: inherit;
