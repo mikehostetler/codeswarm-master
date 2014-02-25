@@ -7,10 +7,10 @@
 	<form id="login" class="global-form" data-bind="submit: tryLogin">
 		<div class="gf-col">
 			<label>User name</label>
-			<input type="text" placeholder="User name" name="username">
+			<input type="text" placeholder="User name" name="username" data-bind="value: username">
 
 			<label>Password</label>
-			<input type="password" placeholder="Password" name="password">
+			<input type="password" placeholder="Password" name="password" data-bind="value: password">
 		</div>
 
 		<div class="gf-actions">
