@@ -337,6 +337,14 @@ define([
 
 					attributes.forEach(function(attribute) {
 						attribute.value = projectPluginConfig[attribute.name];
+						if (attribute.type == 'selectMultiple') {
+							attribute.from = attribute.from.map(function(possibleValue) {
+								return {
+									value: possibleValue,
+									selected: attribute.value.indexOf(possibleValue) >= 0
+								}
+							});
+						}
 					});
 
 					return {
