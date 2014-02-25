@@ -8,21 +8,14 @@
 				'ansi_up': 'vendor/ansi_up/ansi_up',
 				'github': 'vendor/github/github',
 				'underscore': 'vendor/underscore/underscore-min',
-				'session':	'controllers/session',
-				'users':		'controllers/users',
-				'projects':	'controllers/projects',
-				'builds':	'controllers/builds',
-				'socket':	'controllers/socket',
     }
 });
 
-define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'socket'],  function (system, app, viewLocator,socket) {
+define(['durandal/system', 'durandal/app', 'durandal/viewLocator' ],  function (system, app, viewLocator) {
 
     //>>excludeStart("build", true);
     system.debug(true);
     //>>excludeEnd("build");
-
-		socket.reset();
 
     app.title = 'Welcome to CodeSwarm!';
 

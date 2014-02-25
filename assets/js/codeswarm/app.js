@@ -17,8 +17,11 @@
 								// Search
                 { route: 'search/*term',		moduleId: 'codeswarm/home/search',				title: 'Search',						nav: true },
 
-								// Orgs - Implements a Child Router
+								// Orgs
                 { route: ':org',						moduleId: 'codeswarm/org/index',					nav: true },
+                { route: ':org/:repo',			moduleId: 'codeswarm/org/project',				nav: true },
+                { route: ':org/:repo/:build',	moduleId: 'codeswarm/org/build',				nav: true },
+                { route: ':org/:repo/config',	moduleId: 'codeswarm/org/config',				nav: true },
 
 								// User Management
                 { route: 'login',						moduleId: 'codeswarm/user/login',					title: 'Login',							nav: true },
