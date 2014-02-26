@@ -1,4 +1,4 @@
-﻿define(['plugins/router', 'durandal/app'], function (router, app) {
+define(['plugins/router', 'durandal/app', 'dom'], function (router, app, dom) {
     return {
         router: router,
         search: function() {
@@ -36,6 +36,9 @@
             ]).buildNavigationModel();
 
             return router.activate();
+        },
+        compositionComplete: function () {
+          dom.activate();
         }
     };
 });
