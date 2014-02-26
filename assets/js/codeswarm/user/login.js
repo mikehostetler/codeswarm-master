@@ -17,13 +17,7 @@ function(ko, request) {
         // Define request object
         loginRequest: {
           url: '/api/session',
-          type: 'POST',
-          done: function (data) {
-            console.log(data);
-          },
-          fail: function (err) {
-            console.log(err);
-          }
+          type: 'POST'
         },
 
         // Login handler method
@@ -34,7 +28,13 @@ function(ko, request) {
             'password': this.password()
           };
           // Processes request obj
-          request(this.loginRequest, payload);
+          var req = request(this.loginRequest, payload);
+          req.done(function (data) {
+            console.log(data);
+          });
+          req.fail(function () {
+            console.log('FAIL');
+          });
         }
 
     };
