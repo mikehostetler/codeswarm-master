@@ -1,9 +1,10 @@
 define([
   'knockout',
-  'jquery'
+  'request'
 ],
 
-function(ko, $) {
+function(ko, request) {
+
     var ctor = {
 
         // Set displayName
@@ -13,33 +14,26 @@ function(ko, $) {
         username: ko.observable(),
         password: ko.observable(),
 
+        // Request object
+        request: {
+          url: '/api/session',
+          type: 'POST',
+          done: function (data) {
+            console.log(data);
+          },
+          fail: function (err) {
+            console.log(err);
+          }
+        },
+
         // Login handler method
         tryLogin: function () {
-          this.request(this.username(), this.password());
-        },
-
-        // Make login request
-        loginReq: function (username, password) {
-          $.ajax({
-            url: '/session',
-            type: 'POST',
-            data: {
-              'username': username,
-              'password': password
-            },
-            success: this.loginReqPass,
-            failure: this.loginReqFail
-          });
-        },
-
-        // Request successful
-        loginReqPass: function (data) {
-          console.log(data);
-        },
-
-        // Request failure
-        loginReqFail: function (err) {
-          console.log(err);
+          var payload = {
+            'username': this.username(),
+            'password': this.password()
+          };
+          // Processes request obj
+          request(this.request, payload);
         }
 
     };

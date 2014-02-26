@@ -7,7 +7,8 @@
         'jquery': 'vendor/jquery/jquery',
 				'ansi_up': 'vendor/ansi_up/ansi_up',
 				'github': 'vendor/github/github',
-				'underscore': 'vendor/underscore/underscore-min'
+				'underscore': 'vendor/underscore/underscore-min',
+				'request': 'utils/request'
     }
 });
 
