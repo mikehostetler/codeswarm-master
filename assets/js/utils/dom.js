@@ -113,15 +113,15 @@ define([
 
     // Handle accordions
     accordion: function () {
-      $(document).on("click", ".build-groups-contain .sidebar-list li .accordion--trigger", function (e) {
+      $(document).on('click', '.build-groups-contain .sidebar-list li .accordion--trigger', function (e) {
         var $this = $(this);
 
         e.preventDefault();
 
-        if (!$this.parent("li").hasClass("accordion--open")) {
-          $this.parent("li").addClass("accordion--open");
+        if (!$this.parent('li').hasClass('accordion--open')) {
+          $this.parent('li').addClass('accordion--open');
         } else {
-          $this.parent("li").removeClass("accordion--open");
+          $this.parent('li').removeClass('accordion--open');
         }
       });
     }
