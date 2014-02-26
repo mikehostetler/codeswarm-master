@@ -4,28 +4,28 @@
 </h1>
 
 <div class="content-wrap">
-	<form id="user-config">
+	<form id="user-config" data-bind="submit: trySaveSettings">
 		<div class="global-form user-config-form">
 	    <div class="gf-col">
 	      <label>First Name</label>
-	      <input type="text" placeholder="John">
+	      <input type="text" placeholder="John" data-bind="value: fname">
 
 	      <label>Last Name</label>
-	      <input type="text" placeholder="Doe">
+	      <input type="text" placeholder="Doe" data-bind="value: lname">
 
 	      <label>Email</label>
-	      <input type="text" placeholder="your@email.com">
+	      <input type="text" placeholder="your@email.com" data-bind="value: email">
 
 	      <label>Username</label>
-	      <input type="text" placeholder="johndoe">
+	      <input type="text" placeholder="johndoe" data-bind="value: username">
 	    </div>
 
 	    <div class="gf-col">
 	      <label>Password</label>
-	      <input name="branch" type="password" placeholder="Password">
+	      <input name="branch" type="password" placeholder="Password" data-bind="value: password">
 
 	      <label>Confirm Password</label>
-	      <input type="password" placeholder="Confirm password">
+	      <input type="password" placeholder="Confirm password" data-bind="value: confirm_password">
 	    </div>
 	  </div>
 
