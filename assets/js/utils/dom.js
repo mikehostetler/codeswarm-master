@@ -56,6 +56,42 @@ define([
       $('.global-search--trigger').on('click', function () {
         $nav.removeClass(navOpen);
       });
+    },
+
+    // Hanlde global search
+    globalSearch: function () {
+      var self = this,
+        $searchTrigger = $(".global-search--trigger"),
+        $search = $(".global-search"),
+        searchOpen = "global-search--open",
+        searchTriggerOpen = "global-search--trigger--open";
+
+      $searchTrigger.click(function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+
+        if (!$search.hasClass(searchOpen)) {
+          $search.addClass(searchOpen);
+          $(this).addClass(searchTriggerOpen);
+        } else {
+          $search.removeClass(searchOpen);
+          $(this).removeClass(searchTriggerOpen);
+        }
+      });
+
+      self.$document
+      .on("click", function () {
+        $search.removeClass(searchOpen);
+        $searchTrigger.removeClass(searchTriggerOpen);
+      })
+      .on("click", ".global-search", function (e) {
+        e.stopPropagation();
+      });
+
+      $(".profile-nav--trigger").on("click", function () {
+        $search.removeClass(searchOpen);
+        $searchTrigger.removeClass(searchTriggerOpen);
+      });
     }
 
   };
