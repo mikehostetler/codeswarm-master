@@ -16,13 +16,7 @@ function(ko, request) {
         // Define request object
         resetPasswordRequest: {
           url: '/api/session',
-          type: 'POST',
-          done: function (data) {
-            console.log(data);
-          },
-          fail: function (err) {
-            console.log(err);
-          }
+          type: 'POST'
         },
 
         // Reset password handler method
@@ -32,7 +26,13 @@ function(ko, request) {
               'username': this.username()
             };
             // Processes request obj
-            request(this.resetPasswordRequest, payload);
+            var req = request(this.resetPasswordRequest, payload);
+            req.done(function () {
+              console.log('DATA!');
+            });
+            req.fail(function () {
+              console.log('FAIL');
+            });
         }
 
     };
