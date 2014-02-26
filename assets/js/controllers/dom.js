@@ -19,9 +19,10 @@ define([
 		"text!templates/build/source.tpl",
 		"text!templates/user_profile.tpl",
 		"text!templates/user_settings.tpl",
-		"text!templates/project_config.tpl"
+		"text!templates/project_config.tpl",
+		"text!templates/search_results.tpl"
 	],
-	function ($, Handlebars, timestamp, header, signup, login, menu, projects, project, logview, tokens, github_repos, project_builds, pull_requests, branches, build, analysis, source, user_profile, user_settings, project_config) {
+	function ($, Handlebars, timestamp, header, signup, login, menu, projects, project, logview, tokens, github_repos, project_builds, pull_requests, branches, build, analysis, source, user_profile, user_settings, project_config, search_results) {
 		var dom;
 
 		dom = {
@@ -371,6 +372,15 @@ define([
 			 */
 			loadUserSettings: function () {
 				var template = Handlebars.compile(user_settings),
+					html = template({});
+				this.$main.html(html);
+			},
+
+			/**
+			 * Load search results
+			 */
+			loadSearchResults: function () {
+				var template = Handlebars.compile(search_results),
 					html = template({});
 				this.$main.html(html);
 			},

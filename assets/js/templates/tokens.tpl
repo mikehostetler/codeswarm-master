@@ -36,32 +36,44 @@
     <tbody>
     	<tr>
     		<td>
-    			<a href="#"><h4 class="project">codeswarm/codeswarm</h4></a>
+          <div class="anchor-wrap">
+    			 <a href="#"><h4 class="project">codeswarm/codeswarm</h4></a>
+          </div>
     		</td>
     	</tr>
     	<tr>
     		<td>
-    			<a href="#"><h4 class="project">codeswarm/codeswarm</h4></a>
+          <div class="anchor-wrap">
+    			 <a href="#"><h4 class="project">codeswarm/codeswarm</h4></a>
+          </div>
     		</td>
     	</tr>
     	<tr>
     		<td>
-    			<a href="#"><h4 class="project">codeswarm/codeswarm</h4></a>
+          <div class="anchor-wrap">
+    			 <a href="#"><h4 class="project">codeswarm/codeswarm</h4></a>
+          </div>
     		</td>
     	</tr>
     	<tr>
     		<td>
-    			<a href="#"><h4 class="project">codeswarm/codeswarm</h4></a>
+          <div class="anchor-wrap">
+    			 <a href="#"><h4 class="project">codeswarm/codeswarm</h4></a>
+          </div>
     		</td>
     	</tr>
     	<tr>
     		<td>
-    			<a href="#"><h4 class="project">codeswarm/codeswarm</h4></a>
+          <div class="anchor-wrap">
+    			 <a href="#"><h4 class="project">codeswarm/codeswarm</h4></a>
+          </div>
     		</td>
     	</tr>
     	<tr>
     		<td>
-    			<a href="#"><h4 class="project">codeswarm/codeswarm</h4></a>
+          <div class="anchor-wrap">
+    			 <a href="#"><h4 class="project">codeswarm/codeswarm</h4></a>
+          </div>
     		</td>
     	</tr>
     </tbody>
