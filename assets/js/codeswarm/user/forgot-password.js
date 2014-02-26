@@ -1,12 +1,40 @@
-﻿define(function() {
-    var ctor = function () {
-        this.displayName = 'Forgot Password';
+define([
+  'knockout',
+  'request'
+],
+
+function(ko, request) {
+
+    var ctor = {
+
+        // Set displayName
+        displayName: 'Forgot Password',
+
+        // Setup model
+        username: ko.observable(),
+
+        // Define request object
+        resetPasswordRequest: {
+          url: '/api/session',
+          type: 'POST',
+          done: function (data) {
+            console.log(data);
+          },
+          fail: function (err) {
+            console.log(err);
+          }
+        },
+
+        // Reset password handler method
+        tryResetPassword: function () {
+            // Define request payload
+            var payload = {
+              'username': this.username()
+            };
+            // Processes request obj
+            request(this.resetPasswordRequest, payload);
+        }
+
     };
-
-    //Note: This module exports a function. That means that you, the developer, can create multiple instances.
-    //This pattern is also recognized by Durandal so that it can create instances on demand.
-    //If you wish to create a singleton, you should export an object instead of a function.
-    //See the "flickr" module for an example of object export.
-
     return ctor;
 });

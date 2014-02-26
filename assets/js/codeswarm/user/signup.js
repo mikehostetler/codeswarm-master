@@ -27,7 +27,7 @@ function(ko, request) {
           }
         },
 
-        // Login handler method
+        // Signup handler method
         trySignup: function () {
           // Check password confirm
           if (this.password() === this.confirm_password()) {
