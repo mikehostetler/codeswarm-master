@@ -15,6 +15,7 @@ define([
       this.globalNav();
       this.globalSearch();
       this.floatHeader();
+      this.accordion();
     },
 
     // Show notification modal
@@ -107,6 +108,21 @@ define([
       $('.profile-nav--trigger').on('click', function () {
         $search.removeClass(searchOpen);
         $searchTrigger.removeClass(searchTriggerOpen);
+      });
+    },
+
+    // Handle accordions
+    accordion: function () {
+      $(document).on("click", ".build-groups-contain .sidebar-list li .accordion--trigger", function (e) {
+        var $this = $(this);
+
+        e.preventDefault();
+
+        if (!$this.parent("li").hasClass("accordion--open")) {
+          $this.parent("li").addClass("accordion--open");
+        } else {
+          $this.parent("li").removeClass("accordion--open");
+        }
       });
     }
 
