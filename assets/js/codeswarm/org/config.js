@@ -1,12 +1,48 @@
-﻿define(function() {
-    var ctor = function () {
-        this.displayName = 'About CodeSwarm';
+define([
+  'knockout',
+  'request'
+], function(ko, request) {
+
+    var ctor = {
+
+        // Set displayName
+        displayName: 'About CodeSwarm',
+
+        // Initialization
+        activator: function (context) {
+
+        },
+
+        // Define model
+        SOMEPROPERTY: ko.observable(),
+
+        // Define request
+        someReq: {
+          url: '/ENDPOINT',
+          type: 'GET'
+        },
+
+        trySomeReq: function () {
+          // Set payload
+          var payload = {
+
+          };
+          // Make Request
+          var req = request(this.someReq, payload);
+
+          // On success
+          req.done(function (data) {
+
+          });
+
+          // On failure
+          req.fail(function (err) {
+
+          });
+        }
+
     };
 
-    //Note: This module exports a function. That means that you, the developer, can create multiple instances.
-    //This pattern is also recognized by Durandal so that it can create instances on demand.
-    //If you wish to create a singleton, you should export an object instead of a function.
-    //See the "flickr" module for an example of object export.
 
     return ctor;
 });
