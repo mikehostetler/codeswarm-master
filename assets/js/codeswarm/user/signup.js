@@ -18,13 +18,7 @@ function(ko, request) {
         // Define request object
         signupRequest: {
           url: '/api/session',
-          type: 'POST',
-          done: function (data) {
-            console.log(data);
-          },
-          fail: function (err) {
-            console.log(err);
-          }
+          type: 'POST'
         },
 
         // Signup handler method
@@ -37,7 +31,13 @@ function(ko, request) {
               'password': this.password()
             };
             // Processes request obj
-            request(this.signupRequest, payload);
+            var req = request(this.signupRequest, payload);
+            req.done(function () {
+              console.log('GOT DATA');
+            });
+            req.fail(function () {
+              console.log('FAIL');
+            });
           } else {
             alert("Your passwords do not match!");
           }
