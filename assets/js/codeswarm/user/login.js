@@ -14,8 +14,8 @@ function(ko, request) {
         username: ko.observable(),
         password: ko.observable(),
 
-        // Request object
-        request: {
+        // Define request object
+        loginRequest: {
           url: '/api/session',
           type: 'POST',
           done: function (data) {
@@ -28,12 +28,13 @@ function(ko, request) {
 
         // Login handler method
         tryLogin: function () {
+          // Define request payload
           var payload = {
             'username': this.username(),
             'password': this.password()
           };
           // Processes request obj
-          request(this.request, payload);
+          request(this.loginRequest, payload);
         }
 
     };
