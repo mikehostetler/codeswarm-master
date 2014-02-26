@@ -1,4 +1,4 @@
-﻿requirejs.config({
+requirejs.config({
     paths: {
         'text': 'vendor/requirejs-text/text',
         'durandal':'vendor/durandal',
@@ -8,7 +8,8 @@
 				'ansi_up': 'vendor/ansi_up/ansi_up',
 				'github': 'vendor/github/github',
 				'underscore': 'vendor/underscore/underscore-min',
-				'request': 'utils/request'
+				'request': 'utils/request',
+				'dom': 'utils/dom'
     }
 });
 

@@ -1,9 +1,10 @@
 define([
   'knockout',
-  'request'
+  'request',
+  'dom'
 ],
 
-function(ko, request) {
+function(ko, request, dom) {
 
     var ctor = {
 
@@ -39,7 +40,7 @@ function(ko, request) {
               console.log('FAIL');
             });
           } else {
-            alert("Your passwords do not match!");
+            dom.showNotification('error', 'Your passwords do not match');
           }
         }
 

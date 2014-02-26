@@ -4,21 +4,21 @@ define([
 
   var dom = {
 
-    // Cache elements
-    $notification: $('#notification'),
+    // Set elements
+    notification: '#notification',
 
     // Show notification modal
     // type = error, success
     showNotification: function (type, message) {
-      var self = this;
-      self.$notification.addClass(type).children("div").html(message);
+      var notification = $(this.notification);
+      notification.addClass(type).children("div").html(message);
       // Auto-close after timeout
       var closer = setTimeout(function () {
-        self.$notification.removeClass(type);
+        notification.removeClass(type);
       }, 3000);
       // Bind close button
-      self.$notification.find("a").click(function () {
-        self.$notification.removeClass(type);
+      notification.find("a").click(function () {
+        notification.removeClass(type);
         window.clearTimeout(closer);
       });
     }
