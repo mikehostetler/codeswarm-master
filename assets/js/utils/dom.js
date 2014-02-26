@@ -6,11 +6,15 @@ define([
 
     activate: function () {
       // Cache elements
-      this.$notification = $('#notification');
+      this.$window = $(window);
       this.$document = $(document);
+      this.$header = $('header');
+      this.$notification = $('#notification');
 
       // Start core dom handlers
       this.globalNav();
+      this.globalSearch();
+      this.floatHeader();
     },
 
     // Show notification modal
@@ -58,13 +62,25 @@ define([
       });
     },
 
+    // Initializes floating header
+    floatHeader: function () {
+      var self = this;
+      self.$window.scroll(function () {
+        if ($(this).scrollTop() > 0) {
+          self.$header.addClass('floating');
+        } else {
+          self.$header.removeClass('floating');
+        }
+      });
+    },
+
     // Hanlde global search
     globalSearch: function () {
       var self = this,
-        $searchTrigger = $(".global-search--trigger"),
-        $search = $(".global-search"),
-        searchOpen = "global-search--open",
-        searchTriggerOpen = "global-search--trigger--open";
+        $searchTrigger = $('.global-search--trigger'),
+        $search = $('.global-search'),
+        searchOpen = 'global-search--open',
+        searchTriggerOpen = 'global-search--trigger--open';
 
       $searchTrigger.click(function (e) {
         e.stopPropagation();
@@ -80,15 +96,15 @@ define([
       });
 
       self.$document
-      .on("click", function () {
+      .on('click', function () {
         $search.removeClass(searchOpen);
         $searchTrigger.removeClass(searchTriggerOpen);
       })
-      .on("click", ".global-search", function (e) {
+      .on('click', '.global-search', function (e) {
         e.stopPropagation();
       });
 
-      $(".profile-nav--trigger").on("click", function () {
+      $('.profile-nav--trigger').on('click', function () {
         $search.removeClass(searchOpen);
         $searchTrigger.removeClass(searchTriggerOpen);
       });
