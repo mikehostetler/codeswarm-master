@@ -31,9 +31,15 @@ function(ko, request) {
 
         // Request info to populate model
         getSettings: function (user) {
+          var self = this;
           var req = request(this.getSettingsRequest, { 'user': user });
           req.done(function (data) {
-            console.log(data);
+            console.log('WE GOT THE DATA!');
+            // Set the models...
+            self.fname('DATAS');
+          });
+          req.fail(function() {
+            console.log('WE NO HAVE THE DATAS!');
           });
         },
 

@@ -8,13 +8,7 @@ define(['jquery'], function ($) {
     return $.ajax({
       url: req.url,
       type: req.type,
-      data: payload || {},
-      success: function () {
-        return this;
-      },
-      error: function () {
-        return this;
-      }
+      data: payload || {}
     });
   };
 
