@@ -11,9 +11,9 @@ button,
     font-weight: normal;
     font-size: .875em;
     @include border-radius(4px);
-    background: #b1d928;
-    border-bottom: 2px solid #8eb122;
-    @include box-shadow(inset 0 -2px #8eb122);
+    background: #f28b20;
+    border-bottom: 2px solid #da7207;
+    @include box-shadow(inset 0 -2px #da7207);
     @include text-shadow(0 1px 2px rgba(0, 0, 0, 0.25));
     @include transition(background .2s ease);
     //@include background-image(linear-gradient(#ff734b 0%, #ff734b 50%, #ff6741 50%, #ff6741 100%));

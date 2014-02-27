@@ -20,7 +20,7 @@
     color: #f2f2f2;
     font-size: .938em;
     font-weight: 400;
-    background: #4a4f51;
+    background: #5c6771;
     @include border-radius(3px 3px 0 0);
 
     .breadcrumb-hide {
@@ -88,7 +88,7 @@
 .content-wrap {
     float: left;
     width: 100%;
-    background: #f2f2f2;
+    background: #fff;
     padding: 1.25em;
     @include border-radius(0 0 3px 3px);
 
