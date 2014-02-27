@@ -16,7 +16,7 @@ function createUser(user, cb) {
   if (forbiddenUserNames.indexOf(user.email) >= 0)
     return cb(new Error('Invalid user email'));
 
-  var id = userId(user.username);
+  var id = userId(user.email);
 
   user = {
     _id:      id,
