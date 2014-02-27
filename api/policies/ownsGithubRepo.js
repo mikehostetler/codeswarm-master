@@ -5,6 +5,9 @@ var repoRegexp = /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([
 module.exports = ownsGithubRepo;
 
 function ownsGithubRepo(req, res, next) {
+
+  if (req.session.hasRole('admin')) return next();
+
   var repo = req.body && req.body.repo;
   if (! repo) return next();
 
@@ -15,7 +18,6 @@ function ownsGithubRepo(req, res, next) {
   var repoParts = repo.split('/');
 
   var github = new Github({ version: '3.0.0' });
-  console.log('using token', req.session.github.creds.token);
   github.authenticate({
     type: 'oauth',
     token: req.session.github.creds.token

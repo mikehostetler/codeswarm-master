@@ -36,13 +36,20 @@ module.exports = {
 
     users.authenticate(req.param('username'), req.param('password'), replied);
 
-    function replied(err, sessionId) {
+    function replied(err, sessionId, username, roles) {
       if (err) res.send(err.status_code || 500, err);
       else if (! sessionId) res.send(500, new Error('No session id generated'));
       else {
         var cookie = Cookie.serialize('sid', sessionId, cookieOptions);
         res.setHeader('Set-Cookie', cookie);
-        res.json({ session: sessionId });
+        if (sessionId) {
+          var user = {
+            name: username,
+            roles: roles,
+            isAdmin: roles.indexOf('admin') >= 0
+          };
+        }
+        res.json({ session: sessionId, user: user });
       }
     }
   },

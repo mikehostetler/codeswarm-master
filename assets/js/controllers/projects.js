@@ -6,9 +6,10 @@ define([
 	"controllers/timestamp",
 	"controllers/error",
 	"controllers/socket",
+	"controllers/users",
 	"github",
 	"async"
-], function (dom, requests, session, Router, timestamp, error, socket, Github, async) {
+], function (dom, requests, session, Router, timestamp, error, socket, users, Github, async) {
 	var router,
 		projects;
 
@@ -164,12 +165,12 @@ define([
 				} else if (! repos) {
 					dom.showError('Could not retrieve repos');
 				} else {
-					showRepos(repos);
+					showRepos(repos, users.getCurrent());
 				}
 			}
 
-			function showRepos(repos) {
-				dom.listGithubRepos(repos, addRepo, removeRepo);
+			function showRepos(repos, user) {
+				dom.listGithubRepos(repos, user, addRepo, removeRepo, directAdd);
 			}
 
 			function addRepo(repo) {
@@ -179,6 +180,10 @@ define([
 
 			function removeRepo(repo) {
 				router.go('/' + repo);
+			}
+
+			function directAdd() {
+				dom.loadProject({ isOwner: true }, self);
 			}
 		},
 

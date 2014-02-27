@@ -42,3 +42,13 @@ Using a different user on the fronted than the admin user and also the persisten
 To define / redefine the session timeout you need to specify the `timeout` parameter of the `couch_httpd_auth` section of the configuration, in seconds:
 
 ![session timeout](docs/images/session_timeout.png)
+
+
+## Admin rights
+
+In order to add foreign projects (projects you are not a github admin of), you need to bead admin rights.
+
+To give a user admin rights go to the `_users` database in CouchDB and edit the relevant user.
+Edit the `roles` attribute and add an `admin` value to it. Save the user document.
+
+The user must logout and login in order to get the privileges.

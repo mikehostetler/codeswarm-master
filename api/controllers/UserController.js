@@ -25,7 +25,6 @@ module.exports = {
    *    `POST /users`
    */
   create: function (req, res) {
-    console.log('CREATE USER %j', req.body);
     users.create(req.body, replied);
 
     function replied(err) {

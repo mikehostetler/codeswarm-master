@@ -4,6 +4,8 @@
 
 <div class="content-wrap">
 
+  {{#if user.isAdmin}}<button class="direct-add">I want to setup a repo that is not mine</button>{{/if}}
+
   <ul class="repos">
     {{#each repos}}
       <li class="remote-repo">

@@ -394,7 +394,7 @@ define([
 			/**
 			 * List Github Repos
 			 */
-			listGithubRepos: function(repos, addCb, removeCb) {
+			listGithubRepos: function(repos, user, addCb, removeCb, directAdd) {
 
 				var repoMapByGitUrl = {};
 
@@ -404,7 +404,8 @@ define([
 
 				var template = Handlebars.compile(github_repos),
 					html = template({
-						repos: repos
+						repos: repos,
+						user: user
 					});
 				this.$main.html(html);
 
@@ -421,6 +422,12 @@ define([
 					var id = $this.attr('data-target');
 					removeCb(id);
 				});
+
+				if (user.isAdmin) {
+					this.$main.find('.direct-add').click(function() {
+						directAdd();
+					});
+				}
 			},
 
 			/**

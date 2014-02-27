@@ -49,12 +49,13 @@ function authenticate(username, password, callback) {
   db.public.auth(username, password, replied);
 
   function replied(err, body, headers) {
+    console.log('AUTHENTICATE REPLY:', body);
     if (err) callback(err);
     else {
       var sessionId;
       var header = headers['set-cookie'][0];
       if (header) sessionId = cookie.parse(header).AuthSession;
-      callback(null, sessionId, username);
+      callback(null, sessionId, username, body.roles);
     }
   }
 }
