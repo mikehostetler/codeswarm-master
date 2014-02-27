@@ -4,7 +4,7 @@ define([
   'session',
   'dom',
 	'durandal/system',
-	'durandal/router'
+	'plugins/router'
 ],
 
 function(ko, request, session, dom, system, router) {
