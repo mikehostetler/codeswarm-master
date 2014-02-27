@@ -26,6 +26,12 @@ function(ko, request, dom) {
 
         // Signup handler method
         trySignup: function () {
+          // Ensure all fields (sans email; tested later) contain values
+          if (this.fname() === undefined || this.lname() === undefined || this.password() === undefined) {
+            dom.showNotification('error', 'Please fill out all fields');
+            return;
+          }
+
           // Test email
           if (!/\S+@\S+\.\S+/.test(this.email())) {
             dom.showNotification('error', 'Invalid email address');
@@ -35,12 +41,6 @@ function(ko, request, dom) {
           // Check password confirm
           if (this.password() !== this.confirm_password()) {
             dom.showNotification('error', 'Your passwords do not match');
-            return;
-          }
-
-          // Ensure all (untested) fields contain values
-          if (this.fname()==='' || this.lname()==='' || this.password()==='') {
-            dom.showNotification('error', 'Please fill out all fields');
             return;
           }
 
