@@ -23,9 +23,10 @@ define([
 		"text!templates/project_config.tpl",
 		"text!templates/about.tpl",
 		"text!templates/support.tpl",
-		"text!templates/contribute.tpl"
+		"text!templates/contribute.tpl",
+		"text!templates/search_results.tpl"
 	],
-	function ($, Handlebars, timestamp, header, signup, login, forgotpass, menu, projects, project, logview, tokens, github_repos, project_builds, pull_requests, branches, build, analysis, source, user_profile, user_settings, project_config, about, support, contribute) {
+	function ($, Handlebars, timestamp, header, signup, login, forgotpass, menu, projects, project, logview, tokens, github_repos, project_builds, pull_requests, branches, build, analysis, source, user_profile, user_settings, project_config, about, support, contribute, search_results) {
 		var dom;
 
 		dom = {
@@ -417,6 +418,15 @@ define([
 			loadHome: function () {
 				var template = Handlebars.compile(about),
 						html = template({});
+				this.$main.html(html);
+			},
+
+			/**
+			 * Load search results
+			 */
+			loadSearchResults: function () {
+				var template = Handlebars.compile(search_results),
+					html = template({});
 				this.$main.html(html);
 			},
 

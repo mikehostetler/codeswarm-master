@@ -19,6 +19,7 @@
         {{#each projects}}
         <tr>
             <td data-status="{{_id}}">
+              <div class="anchor-wrap">
                 {{#compare state "failed" operator="==="}}
                 <a href="#/{{_id}}/" title="Build Failing">
                     <img src="../images/build-failing.png" alt="Build Failing">
@@ -40,18 +41,22 @@
                 {{#compare state undefined operator="==="}}
                 <a title="No Builds"><i class="fa fa-circle"></i></a>
                 {{/compare}}
+              </div>
             </td>
 
             <td>
+              <div class="anchor-wrap">
                 <a href="{{this.view}}">
             	{{#if this.view}}
                 <h4 class="project">{{this._id}}</h4>
                 {{/if}}
                 <em class="repo">{{this.repo}}</em>
                 </a>
+              </div>
             </td>
 
             <td>
+              <div class="anchor-wrap">
                 <a href="{{this.view}}">
                     <span class="last-build" data-timestamp="{{this._id}}">
                         <span class="last-build--title">Last build:</span>
@@ -62,6 +67,7 @@
                         {{/if}}
                     </span>
                 </a>
+              </div>
             </td>
         </tr>
 

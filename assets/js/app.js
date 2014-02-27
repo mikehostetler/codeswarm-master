@@ -222,6 +222,12 @@ define([
 				dom.setBodyClass("user--setings");
 			});
 
+			// Search
+			router.on("/search", function () {
+				dom.loadSearchResults();
+				dom.setBodyClass("search");
+			});
+
 			router.beforeChange = function() {
 				socket.reset();
 			};
