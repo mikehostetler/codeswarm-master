@@ -9,7 +9,8 @@ requirejs.config({
 				'github': 'vendor/github/github',
 				'underscore': 'vendor/underscore/underscore-min',
 				'request': 'utils/request',
-				'dom': 'utils/dom'
+				'dom': 'utils/dom',
+				'session': 'utils/session'
     }
 });
 
