@@ -42,7 +42,7 @@ function session(req, res, next) {
         session = null;
       req.session.couchdb = session;
       req.session.username = getUsername;
-      console.log('COUCHDB USER:', req.session.username());
+      req.session.hasRole = hasRole;
       next();
     }
   }
@@ -50,4 +50,12 @@ function session(req, res, next) {
 
 function getUsername() {
   return this.couchdb && this.couchdb.userCtx && this.couchdb.userCtx.name;
+}
+
+function hasRole(role) {
+  var has = false;
+  var roles = this.couchdb && this.couchdb.userCtx && this.couchdb.userCtx.roles;
+  if (roles) has = roles.indexOf(role) >= 0;
+
+  return has;
 }

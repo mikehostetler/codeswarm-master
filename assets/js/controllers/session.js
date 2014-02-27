@@ -1,8 +1,10 @@
 define([
 	"controllers/dom",
 	"controllers/requests",
-	"controllers/router"
-], function (dom, requests, Router, error) {
+	"controllers/router",
+	"controllers/error",
+	"controllers/users"
+], function (dom, requests, Router, error, users) {
 	var session;
 
 	session = {
@@ -19,6 +21,7 @@ define([
 
 		unset: function () {
 			localStorage.removeItem("session");
+			users.clearCurrent();
 		},
 
 		check: function(cb) {
@@ -51,6 +54,7 @@ define([
 
 				req.done(function (response) {
 					self.set(response.session);
+					users.setCurrent(response.user);
 					if (localStorage.getItem("route")) {
 						// User has saved route, pass them there
 						router.go(localStorage.getItem("route"));
