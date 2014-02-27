@@ -1,4 +1,6 @@
-define(function () {
+define([
+  'plugins/router'
+], function (router) {
 
   // Client side maintenance of user session information
   var session = {
@@ -6,8 +8,9 @@ define(function () {
     start: function (data) {
       // Set localStorage JSON
       localStorage.setItem('session', JSON.stringify(data));
+
       // Send to home
-      location.href = '/';
+			router.navigate('');	
     },
 
     data: function () {
@@ -18,8 +21,9 @@ define(function () {
     end: function () {
       // Clear localStorage
       localStorage.removeItem('session');
+
       // Return to login screen
-      location.href = '/user/login';
+			router.navigate('user/login');	
     }
 
   };
