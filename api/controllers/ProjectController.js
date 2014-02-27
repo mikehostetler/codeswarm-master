@@ -95,7 +95,7 @@ module.exports = {
       else if (! project) res.send(404, new Error('Not found'));
       else {
         if (project.public || user && project.owners.indexOf(user) >= 0)
-          res.send(project);
+          res.send(filterProjectForUser(project, user));
         else res.send(404, new Error('Not Found'));
       }
     }
@@ -119,7 +119,11 @@ module.exports = {
 
     function replied(err, projects) {
       if (err) res.send(err.status_code || 500, err);
-      else res.json(projects);
+      else res.json(projects.map(filterProject));
+    }
+
+    function filterProject(project) {
+      return filterProjectForUser(project, user);
     }
   },
 
@@ -304,3 +308,15 @@ module.exports = {
 
 
 };
+
+
+/// Misc
+
+function filterProjectForUser(project, user) {
+  project.isOwner = (user && project.owners && project.owners.indexOf(user) >= 0);
+
+  if (! project.isOwner)
+    delete project.secret;
+
+  return project;
+}

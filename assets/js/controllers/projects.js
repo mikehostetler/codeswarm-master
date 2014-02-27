@@ -69,7 +69,9 @@ define([
 				req = requests.get("/projects/" + project);
 
 				req.done(function (project) {
-					project.hook = hook + '/' + project._id + '/webhook?secret=' + project.secret;
+					if (project.secret)
+					  project.hook = hook + '/' + project._id + '/webhook?secret=' + project.secret;
+
 					// Load project
 					dom.loadProject(project, self);
 				});
