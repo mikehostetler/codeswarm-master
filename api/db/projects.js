@@ -15,7 +15,8 @@ function createProject(project, cb) {
     branch: project.branch,
     owners: project.owners,
     public: project.public,
-    secret: uuid()
+    type:   project.type,
+    secret: uuid(),
   };
 
   (function _createProject() {
