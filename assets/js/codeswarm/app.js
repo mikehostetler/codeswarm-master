@@ -1,5 +1,7 @@
 define(['plugins/router', 'durandal/app', 'dom'], function (router, app, dom) {
     return {
+				gravatarUrl: 'http://www.gravatar.com/avatar/00000000000000000000000000000000',
+				fullName: 'Mike Hostetler',
         router: router,
         search: function() {
             //It's really easy to show a message box.
