@@ -16,9 +16,15 @@
 			</form>
 
 			<div class="profile-nav">
+				<a href="/#/user/signup" class="profile-nav--item">
+					Create <i class="fa fa-plus"></i>
+				</a>
+				<a href="/#/user/login" class="profile-nav--item">
+					Login <i class="fa fa-arrow-right"></i>
+				</a>
 				<a href="#" class="profile-nav--trigger">
 					<img data-bind="attr: { src: gravatarUrl }" src="http://www.gravatar.com/avatar/00000000000000000000000000000000" class="profile-nav--thumb">
-					<span data-bind="text: fullName"></span>
+					<span data-bind="text: fullName">Welcome!</span>
 					<i class="fa fa-caret-down"></i>
 				</a>
 
@@ -31,7 +37,7 @@
 		</header>
 
 		<div id="main">
-			<div class="container-fluid page-host" data-bind="router: { cacheViews:true }"></div>
+			<div class="container-fluid page-host" data-bind="router: { cacheViews: false}"></div>
 
 			<footer>
 				Awesome Footer

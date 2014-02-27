@@ -66,6 +66,17 @@ header .fa-check-circle:hover {
     float: right;
 }
 
+a.profile-nav--item {
+		float: left;
+    display: block;
+    padding: .3em .5em;
+    height: 2.75em;
+    color: #fff;
+    line-height: 3em;
+    border-left: solid 1px #262d31;
+    border-right: solid 1px #262d31;
+}
+
 a.profile-nav--trigger {
     position: absolute;
     right: 0;
@@ -82,7 +93,7 @@ a.profile-nav--trigger span {
     display: none;
 }
 
-.profile-nav--trigger:hover {
+.profile-nav--item:hover, .profile-nav--trigger:hover {
     background: #30373a;
 }
 
