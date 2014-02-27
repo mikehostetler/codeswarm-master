@@ -337,6 +337,21 @@ define([
 
 					attributes.forEach(function(attribute) {
 						attribute.value = projectPluginConfig[attribute.name];
+						if (attribute.type == 'selectMultiple') {
+							attribute.from = attribute.from.map(function(possibleValue) {
+								return {
+									value: possibleValue,
+									selected: attribute.value && attribute.value.indexOf(possibleValue) >= 0
+								};
+							});
+						} else if (attribute.type == 'selectOne') {
+							attribute.from = attribute.from.map(function(possibleValue) {
+								return {
+									value: possibleValue,
+									selected: attribute.value == possibleValue
+								};
+							});
+						}
 					});
 
 					return {
