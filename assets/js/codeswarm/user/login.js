@@ -2,10 +2,16 @@ define([
   'knockout',
   'request',
   'session',
-  'dom'
+  'dom',
+	'durandal/system',
+	'durandal/router'
 ],
 
-function(ko, request, session, dom) {
+function(ko, request, session, dom, system, router) {
+
+		if(session.isLoggedIn()) {
+			router.navigate('user');
+		}
 
     var ctor = {
 
