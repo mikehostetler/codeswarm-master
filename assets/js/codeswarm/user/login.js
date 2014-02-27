@@ -1,9 +1,11 @@
 define([
   'knockout',
-  'request'
+  'request',
+  'session',
+  'dom'
 ],
 
-function(ko, request) {
+function(ko, request, session, dom) {
 
     var ctor = {
 
@@ -16,7 +18,7 @@ function(ko, request) {
 
         // Define request object
         loginRequest: {
-          url: '/api/session',
+          url: '/sessions',
           type: 'POST'
         },
 
@@ -30,10 +32,10 @@ function(ko, request) {
           // Processes request obj
           var req = request(this.loginRequest, payload);
           req.done(function (data) {
-            console.log(data);
+            session.start(data);
           });
-          req.fail(function () {
-            console.log('FAIL');
+          req.fail(function (err) {
+            dom.showNotification('error', JSON.parse(err.responseText).message);
           });
         }
 
