@@ -18,7 +18,7 @@ function(ko, request, dom) {
 
         // Define request object
         signupRequest: {
-          url: '/api/session',
+          url: '/users',
           type: 'POST'
         },
 
@@ -34,10 +34,10 @@ function(ko, request, dom) {
             // Processes request obj
             var req = request(this.signupRequest, payload);
             req.done(function () {
-              console.log('GOT DATA');
+              location.href = '/';
             });
-            req.fail(function () {
-              console.log('FAIL');
+            req.fail(function (err) {
+              dom.showNotification('error', JSON.parse(err.responseText).message);
             });
           } else {
             dom.showNotification('error', 'Your passwords do not match');
