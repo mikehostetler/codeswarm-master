@@ -83,6 +83,7 @@ module.exports = {
 				'_tabs-header': '../partials/_tabs-header',
 				'_table-listing-nav': '../partials/_table-listing-nav',
 				'_build-summary': '../partials/_build-summary',
+				'_listing-page-nav': '../partials/_listing-page-nav',
 			}
 		});
 	},
