@@ -3,28 +3,49 @@
 
     <head>
         <title>CodeSwarm Continuous Integration &amp; Deployment</title>
+        
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <meta name="format-detection" content="telephone=no"/>
         <meta name="viewport" content="width=device-width, user-scalable=no">
+        
+        <link rel="apple-touch-startup-image" href="/images/ios-startup-image-landscape.png" media="(orientation:landscape)" />
+        <link rel="apple-touch-startup-image" href="/images/ios-startup-image-portrait.png" media="(orientation:portrait)" />
+        <link rel="apple-touch-icon" href="/images/icon.png"/>
+
+        <link rel="shortcut icon" href="/linker/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/linker/favicon.ico" type="image/x-icon">
+
         <!--STYLES-->
         <link rel="stylesheet" href="/linker/styles/font-awesome.css">
         <link rel="stylesheet" href="/linker/styles/fonts.css">
         <link rel="stylesheet" href="/linker/styles/style.css">
+        <link rel="stylesheet" href="/linker/styles/durandal.css" />
+        <link rel="stylesheet" href="/linker/styles/ie10mobile.css">
         <!--STYLES END-->
-        <link rel="shortcut icon" href="/linker/favicon.ico" type="image/x-icon">
-        <link rel="icon" href="/linker/favicon.ico" type="image/x-icon">
+
+        <script type="text/javascript">
+            if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
+                var msViewportStyle = document.createElement("style");
+                var mq = "@@-ms-viewport{width:auto!important}";
+                msViewportStyle.appendChild(document.createTextNode(mq));
+                document.getElementsByTagName("head")[0].appendChild(msViewportStyle);
+            }
+        </script>
     </head>
 
     <body>
 
-        <div id="notification">
-            <a><i class="fa fa-times"></i></a>
-            <div></div>
+        <div id="applicationHost">
+            <div class="splash">
+              <div class="message">
+                  CodeSwarm!
+              </div>
+              <i class="icon-spinner icon-2x icon-spin active"></i>
+          </div>
         </div>
-
-        <aside></aside>
-
-        <header></header>
-
-        <div id="main"></div>
 
 
         <!--SCRIPTS-->
@@ -33,7 +54,5 @@
         <!--SCRIPTS END-->
 
         <script src="/js/vendor/requirejs/require.js" data-main="/js/main.js"></script>
-
     </body>
-
 </html>

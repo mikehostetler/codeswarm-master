@@ -1,3 +1,6 @@
+var async   = require('async');
+var extend  = require('util')._extend;
+var uuid    = require('../../lib/uuid');
 var db      = require('./');
 
 /// create
@@ -11,7 +14,9 @@ function createProject(project, cb) {
     repo:   project.repo,
     branch: project.branch,
     owners: project.owners,
-    public: project.public
+    public: project.public,
+    type:   project.type,
+    secret: uuid(),
   };
 
   (function _createProject() {
@@ -65,7 +70,7 @@ function projectListFor(username, cb) {
 
   function replied(err, reply) {
     if (err && err.status_code == 404 && err.reason == 'missing') {
-      createProjectsOwnedByView(function(err) {
+      createViews(function(err) {
         console.log(err);
         if (err) cb(err);
         else _projectListFor();
@@ -83,24 +88,56 @@ function projectListFor(username, cb) {
 }
 
 
-function createProjectsOwnedByView(cb) {
+/// Views
+
+var baseDDoc = {
+  'views': {
+
+    'owned_by': {
+      'map':
+        function(doc) {
+          if (doc.owners) {
+            doc.owners.forEach(function(owner) {
+              emit(owner, doc);
+            });
+          }
+        }
+    },
+
+    'owner_begins_with': {
+      'map':
+        function(doc) {
+          var project = doc._id;
+          var projectParts = project.split('/');
+          var repoOwner = projectParts[0];
+          var repoRepo = projectParts[1];
+          var owners = [];
+          if (doc.public) owners.push('public');
+          if (doc.owners) owners = owners.concat(doc.owners);
+
+          owners.forEach(function(owner) {
+            emit([owner, repoOwner], doc);
+            emit([owner, repoRepo], doc);
+            emit([owner, project], doc);
+          });
+        }
+    }
+
+  }
+};
+
+function createViews(cb) {
   db.privileged('projects', function(err, db) {
     if (err) cb(err);
     else {
-      db.insert({
-        'views': {
-          'owned_by': {
-            'map':
-              function(doc) {
-                if (doc.owners) {
-                  doc.owners.forEach(function(owner) {
-                    emit(owner, doc);
-                  });
-                }
-              }
-          }
-        }
-      }, '_design/views', cb);
+      db.get('_design/views', got);
+    }
+
+    function got(err, ddoc) {
+
+      ddoc = extend(ddoc || {}, baseDDoc);
+
+      db.insert(ddoc, '_design/views', cb);
     }
   });
 }
@@ -162,6 +199,66 @@ function deleteProject(project, cb) {
   db.privileged('projects', function(err, projects) {
     if (err) cb(err);
     else projects.destroy(project._id, project._rev, cb);
+  });
+}
+
+
+/// search
+
+exports.search = searchProjects;
+
+function searchProjects(username, term, cb) {
+  db.privileged('projects', function(err, projects) {
+
+    var tasks = {
+      public: search('public')
+    };
+
+    if (username) tasks.private = search(username);
+
+    async.series(tasks, done);
+
+    function search(username) {
+      return function _search(cb) {
+        var searchOptions = {
+          startkey: [username, term],
+          endkey: [username, term + '\ufff0']
+        };
+        projects.view('views', 'owner_begins_with', searchOptions, replied);
+
+        function replied(err, reply) {
+          if (err && err.status_code == 404) {
+            createViews(function(err) {
+              if (err) cb(err);
+              else searchProjects(username, term, cb);
+            });
+          } else if (err) cb(err)
+          else {
+            cb(null, reply.rows.map(prop('value')));
+          }
+        }
+      };
+    }
+
+    function done(err, results) {
+      if (err) cb(err);
+      else {
+        var projects = [];
+        var scannedProjects = {};
+        Object.keys(results).forEach(function (type) {
+          /// dedupe
+          var _projects = results[type];
+          if (_projects) _projects.forEach(function(project) {
+            if (! scannedProjects[project._id]) {
+              scannedProjects[project._id] = true;
+              projects.push(project);
+            }
+          });
+        });
+        cb(null, projects);
+      }
+    }
+
   });
 }
 

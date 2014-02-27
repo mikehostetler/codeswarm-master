@@ -6,9 +6,10 @@ define([
 	"controllers/timestamp",
 	"controllers/error",
 	"controllers/socket",
+	"controllers/users",
 	"github",
 	"async"
-], function (dom, requests, session, Router, timestamp, error, socket, Github, async) {
+], function (dom, requests, session, Router, timestamp, error, socket, users, Github, async) {
 	var router,
 		projects;
 
@@ -20,23 +21,27 @@ define([
 
 			var self = this,
 				req = requests.get("/projects"),
-				acl_data = {},
-				base_href = location.protocol + "//" + location.hostname + (location.port ? ":" + location.port : "");
+				acl_data = {};
 
 			req.done(function (projects) {
 				var proj;
 				// Check for state and format timestamp
 
-				projects.forEach(function(project) {
-					project.view = base_href + "/#/" + project._id;
-					if (project.started_at) project.started_at = timestamp(project.started_at);
-					if (project.ended_at) project.ended_at = timestamp(project.ended_at);
-					socket.addProject(project);
-				});
+				projects.forEach(prepareProject);
 				dom.loadProjects(projects, self);
 			});
 
 			req.fail(error.handleXhrError);
+		},
+
+		search: function (terms, cb) {
+			requests.
+			  get('/projects?search=' + encodeURIComponent(terms)).
+			  done(function(projects) {
+			  	projects.forEach(prepareProject);
+			  	cb(projects);
+			  }).
+			  fail(error.handleXhrError);
 		},
 
 		runBuild: function (project) {
@@ -64,10 +69,12 @@ define([
 
 				req = requests.get("/projects/" + project);
 
-				req.done(function (data) {
-					data.hook = hook + "/deploy/" + data.dir;
+				req.done(function (project) {
+					if (project.secret)
+					  project.hook = hook + '/' + project._id + '/webhook?secret=' + project.secret;
+
 					// Load project
-					dom.loadProject(data, self);
+					dom.loadProject(project, self);
 				});
 
 				req.fail(error.handleXhrError);
@@ -158,12 +165,12 @@ define([
 				} else if (! repos) {
 					dom.showError('Could not retrieve repos');
 				} else {
-					showRepos(repos);
+					showRepos(repos, users.getCurrent());
 				}
 			}
 
-			function showRepos(repos) {
-				dom.listGithubRepos(repos, addRepo, removeRepo);
+			function showRepos(repos, user) {
+				dom.listGithubRepos(repos, user, addRepo, removeRepo, directAdd);
 			}
 
 			function addRepo(repo) {
@@ -173,6 +180,10 @@ define([
 
 			function removeRepo(repo) {
 				router.go('/' + repo);
+			}
+
+			function directAdd() {
+				dom.loadProject({ isOwner: true }, self);
 			}
 		},
 
@@ -213,7 +224,8 @@ define([
 				requests.post("/projects", {
 					repo: data.repo,
 					branch: data.branch || "master",
-					public: !! data.public
+					public: !! data.public,
+					type: data.type
 				}).
 				done(function () {
 					dom.showSuccess("Project successfully created");
@@ -240,6 +252,46 @@ define([
 			});
 
 			req.fail(error.handleXhrError);
+		},
+
+		configPlugins: function (name) {
+			var project, pluginsConfig;
+			async.series([
+				loadProject,
+				loadPlugins
+			], done);
+
+			function loadProject(cb) {
+				requests.get("/projects/" + name).
+				done(function(_project) {
+					project = _project;
+					if (! project.type) dom.showError('Project has no defined type');
+					else cb();
+				}).
+				fail(error.handleXhrError);
+			}
+
+			function loadPlugins(cb) {
+				requests.get('/plugins/config/' + project.type).
+				done(function(_pluginsConfig) {
+					pluginsConfig = _pluginsConfig;
+					cb();
+				}).
+				fail(error.handleXhrError);
+			}
+
+			function done() {
+				dom.loadPluginConfig(project, pluginsConfig, save);
+			}
+
+			function save(config) {
+				requests.put('/projects/' + project._id + '/plugins', config).
+				done(function() {
+					dom.showSuccess('Plugin settings saved');
+				}).
+				fail(error.handleXhrError);
+			}
+
 		}
 
 	};
@@ -250,5 +302,13 @@ define([
 
 	function sortGithubRepos(a, b) {
 		return a.full_name < b.full_name ? -1 : 1;
+	}
+
+	function prepareProject(project) {
+		var base_href = location.protocol + "//" + location.hostname + (location.port ? ":" + location.port : "");
+		project.view = base_href + "/#/" + project._id;
+		if (project.started_at) project.started_at = timestamp(project.started_at);
+		if (project.ended_at) project.ended_at = timestamp(project.ended_at);
+		socket.addProject(project);
 	}
 });

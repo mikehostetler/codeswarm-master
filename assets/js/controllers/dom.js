@@ -1,6 +1,7 @@
 define([
 		"jquery",
 		"handlebars",
+		"underscore",
 		"controllers/timestamp",
 		"text!templates/header.tpl",
 		"text!templates/signup.tpl",
@@ -8,6 +9,7 @@ define([
 		"text!templates/forgot-password.tpl",
 		"text!templates/menu.tpl",
 		"text!templates/projects.tpl",
+		"text!templates/projects_table.tpl",
 		"text!templates/project.tpl",
 		"text!templates/build.tpl",
 		"text!templates/tokens.tpl",
@@ -24,9 +26,10 @@ define([
 		"text!templates/about.tpl",
 		"text!templates/support.tpl",
 		"text!templates/contribute.tpl",
-		"text!templates/search_results.tpl"
+		"text!templates/search_results.tpl",
+		"text!templates/plugins.tpl"
 	],
-	function ($, Handlebars, timestamp, header, signup, login, forgotpass, menu, projects, project, logview, tokens, github_repos, project_builds, pull_requests, branches, build, analysis, source, user_profile, user_settings, project_config, about, support, contribute, search_results) {
+	function ($, Handlebars, timestamp, header, signup, login, forgotpass, menu, projects, project, logview, tokens, github_repos, project_builds, pull_requests, branches, build, analysis, source, user_profile, user_settings, project_config, about, support, contribute, search_results, plugins) {
 		var dom;
 
 		dom = {
@@ -300,19 +303,49 @@ define([
 			 * Load projects
 			 */
 			loadProjects: function (data, controller, restricted) {
-				var template = Handlebars.compile(projects),
+				var self = this;
+				var search;
+
+				var template = Handlebars.compile(projects);
+				var projectsTableTemplate = Handlebars.compile(projects_table);
 					html = template({
-						projects: data,
+						projects: projectsTableTemplate({
+							projects: data,
+							restricted: restricted || false
+						}),
 						restricted: restricted || false
 					});
 				this.$main.html(html);
-				// Watch for build trigger
-				this.$main.find(".project-run-build").click(function () {
-					// Spin teh icon!
-					$(this).find("i").addClass("fa-spin");
-					var project = $(this).data("project");
-					controller.runBuild(project);
-				});
+
+				setupProjectList();
+
+				this.$main.find('#project-search').keyup(_.debounce(search, 250));
+
+				function search() {
+					var $this = $(this);
+					search = $this.val();
+					controller.search(search, searchResults);
+				}
+
+				function searchResults(projects) {
+					self.$main.find('#project-list').html(projectsTableTemplate({
+						projects: projects,
+						restricted: restricted,
+						search: !! search
+					}));
+					setupProjectList();
+				}
+
+				function setupProjectList() {
+					// Watch for build trigger
+					self.$main.find(".project-run-build").click(function () {
+						// Spin teh icon!
+						$(this).find("i").addClass("fa-spin");
+						var project = $(this).data("project");
+						controller.runBuild(project);
+					});
+				}
+
 			},
 
 			/**
@@ -497,20 +530,6 @@ define([
 					return false;
 				};
 
-				// On repo change, modify hook and dir/name
-				this.$main.find("#project-repo").off().on("input", function () {
-					var val = $(this).val(),
-						deployUrl = location.protocol + "//" + location.hostname + (location.port ? ":" + location.port : ""),
-						id = self.$main.find("#project-id"),
-						hook = self.$main.find("#project-hook"),
-						name = validateRepo(val);
-
-					if (name) {
-						id.text(name);
-						hook.text(deployUrl + "/deploy/" + name);
-					}
-				});
-
 				// Handle form submission
 				$("#project-config").submit(function (e) {
 					e.preventDefault();
@@ -545,6 +564,67 @@ define([
 			},
 
 			/**
+			 * Project Plugin Config
+			 */
+			loadPluginConfig: function(project, pluginSchema, save) {
+				var self = this;
+				var template = Handlebars.compile(plugins);
+
+				var projectPluginsConfig = project.plugins || {};
+
+				var _plugins = Object.keys(pluginSchema).map(function(plugin) {
+					var projectPluginConfig = projectPluginsConfig[plugin] || {};
+					var attributes = pluginSchema[plugin];
+
+					attributes.forEach(function(attribute) {
+						attribute.value = projectPluginConfig[attribute.name];
+						if (attribute.type == 'selectMultiple') {
+							attribute.from = attribute.from.map(function(possibleValue) {
+								return {
+									value: possibleValue,
+									selected: attribute.value && attribute.value.indexOf(possibleValue) >= 0
+								};
+							});
+						} else if (attribute.type == 'selectOne') {
+							attribute.from = attribute.from.map(function(possibleValue) {
+								return {
+									value: possibleValue,
+									selected: attribute.value == possibleValue
+								};
+							});
+						}
+					});
+
+					return {
+						name: plugin,
+						attributes: attributes
+					};
+				});
+
+				var html = template({
+						project: project,
+						plugins: _plugins
+					});
+				this.$main.html(html);
+
+				this.$main.find('form').submit(function(e) {
+					e.preventDefault();
+					var form = $(this).serializeObject();
+					var config = {};
+					for(var key in form) {
+						var split = key.split('/');
+						var plugin = split[0];
+						var name = split[1];
+						var value = form[key];
+						if (! config[plugin]) config[plugin] = {};
+						config[plugin][name] = value;
+					}
+
+					save(config);
+				});
+			},
+
+			/**
 			 * Request Github Token
 			 */
 			requestGithubToken: function() {
@@ -555,7 +635,7 @@ define([
 			/**
 			 * List Github Repos
 			 */
-			listGithubRepos: function(repos, addCb, removeCb) {
+			listGithubRepos: function(repos, user, addCb, removeCb, directAdd) {
 
 				var repoMapByGitUrl = {};
 
@@ -565,7 +645,8 @@ define([
 
 				var template = Handlebars.compile(github_repos),
 					html = template({
-						repos: repos
+						repos: repos,
+						user: user
 					});
 				this.$main.html(html);
 
@@ -582,6 +663,12 @@ define([
 					var id = $this.attr('data-target');
 					removeCb(id);
 				});
+
+				if (user.isAdmin) {
+					this.$main.find('.direct-add').click(function() {
+						directAdd();
+					});
+				}
 			},
 
 			// /**
@@ -732,6 +819,12 @@ define([
 
 			return buffer;
 		});
+
+		Handlebars.registerHelper('select', function( value, options ){
+      var $el = $('<select />').html( options.fn(this) );
+      $el.find('[value=' + value + ']').attr({'selected':'selected'});
+      return $el.html();
+    });
 
 		$.fn.serializeObject = function () {
 			"use strict";

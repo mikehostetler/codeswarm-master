@@ -29,7 +29,22 @@ define([
 
         req.fail(dom.showXhrError);
       });
+    },
+
+    setCurrent: function(user) {
+      localStorage.setItem('user', JSON.stringify(user));
+    },
+
+    clearCurrent: function() {
+      localStorage.removeItem('user');
+    },
+
+    getCurrent: function() {
+      var user = localStorage.getItem('user');
+      if (user) user = JSON.parse(user);
+      return user;
     }
+
   };
 
   return users;

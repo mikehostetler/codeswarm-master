@@ -14,7 +14,6 @@ define([
 			var req = requests.get("/projects/" + project + '/builds');
 
 			req.done(function (builds) {
-				var output = [];
 
 				builds.sort(sortByDesc('created_at'));
 
@@ -34,7 +33,6 @@ define([
 		},
 
 		show: function (project, build) {
-			var self = this;
 			var req = requests.get("/projects/" + project + "/builds/" + build);
 
 			socket.watchBuild(build);

@@ -53,3 +53,12 @@ To define / redefine the session timeout you need to specify the `timeout` param
 * GITHUB_CLIENT_SECRET
 * GITHUB_CALLBACK_URL - github callback, default to "http://localhost:1337/tokens/github/callback"
 * VOUCH_REMOTE or CODESWARM_REMOTE - remotified, defaults to "false".
+
+## Admin rights
+
+In order to add foreign projects (projects you are not a github admin of), you need to bead admin rights.
+
+To give a user admin rights go to the `_users` database in CouchDB and edit the relevant user.
+Edit the `roles` attribute and add an `admin` value to it. Save the user document.
+
+The user must logout and login in order to get the privileges.

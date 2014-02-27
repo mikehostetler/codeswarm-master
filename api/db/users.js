@@ -2,6 +2,8 @@ var extend  = require('util')._extend;
 var cookie  = require('cookie');
 var db      = require('./');
 
+var forbiddenUserNames = ['public', 'root', 'admin'];
+
 /// create
 
 exports.create = createUser;
@@ -10,6 +12,9 @@ function createUser(user, cb) {
   if (! user) throw new Error('Need user');
   if (! user.username) throw new Error('Need user.name');
   if (! user.password) throw new Error('Need user.password');
+
+  if (forbiddenUserNames.indexOf(user.name) >= 0)
+    return cb(new Error('Invalid user name'));
 
   var id = userId(user.username);
 
@@ -44,12 +49,13 @@ function authenticate(username, password, callback) {
   db.public.auth(username, password, replied);
 
   function replied(err, body, headers) {
+    console.log('AUTHENTICATE REPLY:', body);
     if (err) callback(err);
     else {
       var sessionId;
       var header = headers['set-cookie'][0];
       if (header) sessionId = cookie.parse(header).AuthSession;
-      callback(null, sessionId, username);
+      callback(null, sessionId, username, body.roles);
     }
   }
 }

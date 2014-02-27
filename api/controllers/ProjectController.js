@@ -33,11 +33,11 @@ module.exports = {
    */
    create: function (req, res) {
 
-    console.log('req body saving project:', req.body);
-
     var project = extend({}, req.body);
     var match = project.repo.match(repoRegexp);
     if (! match) return res.send(409, new Error('Invalid repo URL'));
+
+    if (! project.type) res.send(409, new Error('Please define a project type'));
 
     var id = match[5];
     project._id = id;
@@ -81,7 +81,7 @@ module.exports = {
 
 
   /**
-   *    `GET /:owner/:repo`
+   *    `GET /projects/:owner/:repo`
    */
   find: function (req, res) {
 
@@ -95,7 +95,7 @@ module.exports = {
       else if (! project) res.send(404, new Error('Not found'));
       else {
         if (project.public || user && project.owners.indexOf(user) >= 0)
-          res.send(project);
+          res.send(filterProjectForUser(project, user));
         else res.send(404, new Error('Not Found'));
       }
     }
@@ -107,15 +107,23 @@ module.exports = {
    */
   list: function (req, res) {
     var user = req.session.username();
-    if (user) {
+    var search = req.param('search');
+
+    if (! user) {
+      res.send(403, new Error('You need to be logged in for now'));
+    } else if (! search) {
       projects.listFor(user, replied);
     } else {
-      res.send(403, new Error('You need to be logged in for now'));
+      projects.search(user, search, replied);
     }
 
     function replied(err, projects) {
       if (err) res.send(err.status_code || 500, err);
-      else res.send(projects);
+      else res.json(projects.map(filterProject));
+    }
+
+    function filterProject(project) {
+      return filterProjectForUser(project, user);
     }
   },
 
@@ -136,6 +144,8 @@ module.exports = {
 
       if (err) return res.send(err.status_code || 500, err);
 
+      if (! project.type) return res.send(500, new Error('no project type defined'));
+
       var id = uuid();
       var time = Date.now();
 
@@ -147,40 +157,19 @@ module.exports = {
         created_at: time,
         triggered_by: req.session && req.session.username(),
         repo: project.repo,
-        dir: id
+        dir: id,
+        branch: project.branch,
+        commit: 'HEAD',
+        type: project.type,
+        plugins: project.plugins
       };
 
-      var post = req.body;
-      var run = false;
-      var payload, ref, branch;
+      build.branch = project.branch;
 
-      // Check trigger condition and branch match
-      if (!post.hasOwnProperty("payload")) {
-        // Manual trigger
-        run = true;
-      } else {
-        payload = JSON.parse(post.payload);
-        // Check to ensure branch match
-        if (payload.hasOwnProperty("ref")) {
-          //console.log(post);
-          ref = payload.ref.split("/");
-          branch = ref[ref.length - 1];
-          run = branch === project.branch;
-        }
-      }
+      // Set state object
+      build.state = 'pending';
 
-      if (run) {
-
-        build.branch = project.branch;
-
-        // Set state object
-        build.state = 'pending';
-
-        builds.create(build, createdBuild);
-
-      } else {
-        res.json({});
-      }
+      builds.create(build, createdBuild);
     }
 
     function createdBuild(err, build) {
@@ -241,6 +230,76 @@ module.exports = {
   },
 
 
+  webhook: function webhook(req, res) {
+    if (! req.project) return res.send(404, new Error('No project found'));
+
+    var project = req.project;
+    var run = false;
+    var payload, ref, branch;
+
+    if (! project.type) return res.send(500, new Error('no project type defined'));
+
+    payload = req.body;
+    // Check to ensure branch match
+    if (payload.hasOwnProperty("ref")) {
+      ref = payload.ref.split("/");
+      branch = ref[ref.length - 1];
+      run = branch === project.branch;
+    }
+
+    if (run) {
+      var id = uuid();
+
+      var build = {
+        _id: id,
+        project: project._id,
+        previous_build: project.last_build,
+        previous_successful_build: project.last_successful_build,
+        created_at: Date.now(),
+        triggered_by: 'Github webhook',
+        repo: project.repo,
+        dir: id,
+        branch: project.branch,
+        state: 'pending',
+        commit: payload.after,
+        type: project.type,
+        plugins: project.plugins
+      };
+
+      builds.create(build, createdBuild);
+    }
+
+    function createdBuild(err, build) {
+      if (err) {
+        res.send(err.status_code || 500, err);
+      } else {
+        // Run build
+        Build(build, function(err) {
+          if (err) res.send(err.status_code || 500, err);
+          else res.json(build);
+        });
+      }
+    }
+
+  },
+
+
+
+  /// Update Plugins
+
+  updatePlugins: function updatePlugins(req, res) {
+    var projectName = req.param('owner') + '/' + req.param('repo');
+
+    projects.update(projectName, { plugins: req.body}, updated);
+
+    function updated(err) {
+      if (err) res.send(err.status_code || 500, err);
+      else res.json({ok: true});
+    }
+
+  },
+
+
 
 
   /**
@@ -251,3 +310,15 @@ module.exports = {
 
 
 };
+
+
+/// Misc
+
+function filterProjectForUser(project, user) {
+  project.isOwner = (user && project.owners && project.owners.indexOf(user) >= 0);
+
+  if (! project.isOwner)
+    delete project.secret;
+
+  return project;
+}
