@@ -19,7 +19,7 @@ function(ko, request, session, dom, system, router) {
         displayName: 'Login',
 
         // Setup model
-        username: ko.observable(),
+        email: ko.observable(),
         password: ko.observable(),
 
         // Define request object
@@ -32,7 +32,7 @@ function(ko, request, session, dom, system, router) {
         tryLogin: function () {
           // Define request payload
           var payload = {
-            'username': this.username(),
+            'email': this.email(),
             'password': this.password()
           };
           // Processes request obj

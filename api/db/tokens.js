@@ -9,8 +9,8 @@ function getToken(user, provider, cb) {
   db.privileged('_users', function(err, _users) {
     if (err) cb(err);
     else {
-      var username = users.userId(user); // internal couchdb username
-      _users.get(username, replied);
+      var email = users.userId(user); // internal couchdb username
+      _users.get(email, replied);
     }
   });
 
@@ -28,11 +28,11 @@ function getToken(user, provider, cb) {
 
 exports.create = createToken;
 
-function createToken(username, provider, token, remoteUsername, cb) {
+function createToken(email, provider, token, remoteUsername, cb) {
   db.privileged('_users', function(err, _users) {
     if (err) cb(err);
     else {
-      _users.get(users.userId(username), gotUser);
+      _users.get(users.userId(email), gotUser);
     }
 
     function gotUser(err, user) {
@@ -41,7 +41,7 @@ function createToken(username, provider, token, remoteUsername, cb) {
         if (! user.tokens) user.tokens = {};
         user.tokens[provider] = {
           token: token,
-          username: remoteUsername
+          email: remoteUsername
         };
         _users.insert(user, cb);
       }
