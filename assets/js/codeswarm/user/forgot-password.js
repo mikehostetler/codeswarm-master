@@ -11,7 +11,7 @@ function(ko, request) {
         displayName: 'Forgot Password',
 
         // Setup model
-        username: ko.observable(),
+        email: ko.observable(),
 
         // Define request object
         resetPasswordRequest: {
@@ -23,7 +23,7 @@ function(ko, request) {
         tryResetPassword: function () {
             // Define request payload
             var payload = {
-              'username': this.username()
+              'email': this.email()
             };
             // Processes request obj
             var req = request(this.resetPasswordRequest, payload);
