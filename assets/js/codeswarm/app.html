@@ -15,13 +15,15 @@
 				<input type="text" name="Search" placeholder="Search..." class="search-input">
 			</form>
 
-			<div class="profile-nav">
+			<div class="profile-nav" data-bind="ifnot: loggedIn">
 				<a href="/#/user/signup" class="profile-nav--item">
 					Create <i class="fa fa-plus"></i>
 				</a>
 				<a href="/#/user/login" class="profile-nav--item">
 					Login <i class="fa fa-arrow-right"></i>
 				</a>
+			</div>
+			<div class="profile-nav" data-bind="if: loggedIn">
 				<a href="#" class="profile-nav--trigger">
 					<img data-bind="attr: { src: gravatarUrl }" src="http://www.gravatar.com/avatar/00000000000000000000000000000000" class="profile-nav--thumb">
 					<span data-bind="text: fullName">Welcome!</span>

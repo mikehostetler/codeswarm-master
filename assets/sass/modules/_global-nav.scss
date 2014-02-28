@@ -7,7 +7,7 @@
     }
 }
 
-a.profile-nav--trigger {
+a.profile-nav--trigger, a.profile-nav--item {
     position: absolute;
     right: 0;
     display: block;
@@ -44,6 +44,11 @@ a.profile-nav--trigger {
             display: inline;
         }
     }
+}
+a.profile-nav--item {
+    position: relative;
+		float: left;
+    padding-left: .65em;
 }
 
 .profile-nav--thumb {

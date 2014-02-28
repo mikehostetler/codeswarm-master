@@ -1,7 +1,8 @@
-define(['plugins/router', 'durandal/app', 'dom'], function (router, app, dom) {
+define(['plugins/router', 'durandal/app', 'dom', 'session', 'knockout'], function (router, app, dom, session, ko) {
     return {
 				gravatarUrl: 'http://www.gravatar.com/avatar/00000000000000000000000000000000',
 				fullName: 'Mike Hostetler',
+				loggedIn: ko.observable(false),
         router: router,
         search: function() {
             //It's really easy to show a message box.
