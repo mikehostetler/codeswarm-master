@@ -138,18 +138,17 @@ define([
 
 			 globalNavLoggedOut: function () {
 			 	var self = this;
-			 	console.log("Stupid");
-			 	// self.$document
-			 	// 	.on("click", function () {
-			 	// 		$(".global-nav").removeClass("global-nav--open");
-			 	// 	})
-			 	// 	.on("click", ".nav-trigger", function (e) {
-			 	// 		e.stopPropagation();
+			 	self.$document
+			 		.on("click", function () {
+			 			$(".global-nav").removeClass("global-nav--open");
+			 		})
+			 		.on("click", ".nav-trigger", function (e) {
+			 			e.stopPropagation();
 
-			 	// 		console.log("whatsup");
+			 			console.log("whatsup");
 
-			 	// 		$(".global-nav").addClass("global-nav--open");
-			 	// 	});
+			 			$(".global-nav").addClass("global-nav--open");
+			 		});
 			 },
 
 			/**
