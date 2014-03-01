@@ -15,7 +15,6 @@ define(['plugins/router', 'durandal/app', 'dom', 'session', 'knockout'], functio
                 { route: '',								moduleId: 'codeswarm/home/index',					title: 'Welcome',						nav: true },
                 { route: 'about',						moduleId: 'codeswarm/home/about',					title: 'About CodeSwarm',		nav: true },
                 { route: 'support',					moduleId: 'codeswarm/home/support',				title: 'Getting Support',		nav: true },
-                { route: 'contribute',			moduleId: 'codeswarm/home/contribute',		title: 'Contribute',				nav: true },
 
 								// Search
                 { route: 'search/*term',		moduleId: 'codeswarm/home/search',				title: 'Search',						nav: true },
