@@ -1,0 +1,24 @@
+<h1 class="page-title">
+  <i class="fa fa-lock"></i>
+  <span data-bind="html:displayName"></span>
+</h1>
+
+<div class="content-wrap">
+	<form id="login" class="global-form" data-bind="submit: tryLogin">
+		<div class="gf-col">
+			<label>User name</label>
+			<input type="text" placeholder="User name" name="username" data-bind="value: username">
+
+			<label>Password</label>
+			<input type="password" placeholder="Password" name="password" data-bind="value: password">
+		</div>
+
+		<div class="gf-actions">
+			<button class="btn">Login</button>
+			<a href="#/user/signup" class="btn btn-sec">Create new account</a>
+		</div>
+	</form>
+
+	<p><a href="#/user/forgot-password">Forgot your password?</a></p>
+
+</div>
