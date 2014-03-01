@@ -1,0 +1,124 @@
+.sidebar-list-contain {
+    float: left;
+    width: 100%;
+    margin: 1em 0 0;
+    background: white;
+    border-radius: 0 0 3px 3px;
+
+    @include breakpoint(63.75em) {
+    	margin: 0;
+    }
+}
+
+.sidebar-list-title {
+    font-weight: 400;
+    background: #e2e2e2;
+    padding: .5em;
+    border-radius: 3px 3px 0 0;
+}
+
+.sidebar-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    a {
+    	display: block;
+    	padding: 1.25em .5em;
+
+    	&:hover {
+    		color: #6d6d6d;
+    	}
+
+    	@include breakpoint(63.75em) {
+    		padding: 12px;
+    	}
+    }
+
+    li {
+	    position: relative;
+	    font-size: .938em;
+	    line-height: 1.25em;
+	    border-bottom: solid 1px #e2e2e2;
+
+	    ul {
+	    	display: none;
+
+	    	li {
+	    		border-bottom: 0;
+
+	    		a {
+	    			padding: .5em 1em .5em 2.25em;
+	    		}
+	    	}
+	    }
+
+	    span {
+		    display: inline-block;
+		    font-size: .875em;
+		    line-height: 1em;
+		}
+	}
+	
+	time {
+    	font-size: .875em;
+	}
+}
+
+.sidebar-list--active {
+    border-left: 3px solid #ff734b;
+
+    a {
+        color: #6d6d6d;
+    }
+}
+
+.build-groups-contain {
+    margin: 0 0 1em;
+
+    .sidebar-list > li::before {
+    	position: relative;
+	    content: "\f0d7";
+	    float: left;
+	    font-family: "FontAwesome";
+	    left: 0;
+	    margin: 1.375em .5em 0 1em;
+    }
+
+    .sidebar-list > li.accordion--open::before {
+	    content: "\f0d8";
+	}
+
+    .accordion--open {
+    	ul {
+	    	display: block;
+	    	margin-bottom: 1em;
+	    }
+
+	    & > a {
+	    	color: #6d6d6d;
+	    }
+	}
+
+	@include breakpoint(63.75em) {
+		margin: -18.5em 0 0;
+
+        .sidebar-list > li::before {
+            margin: .875em .5em 0 1em;
+        }
+	}
+}
+
+.sidebar-list-actions {
+    float: left;
+    width: 100%;
+    padding: 1.25em .5em;
+}
+
+@include breakpoint(63.75em) {
+	.content-wrap .sidebar-list-title {
+        font-size: 1em;
+        margin: 0;
+        padding: 12px;
+    }
+}

@@ -6,7 +6,7 @@ var modules = {
   users: require('./users')
 };
 
-function startSession(username, sessionId) {
+function startSession(email, sessionId) {
   var ret = {};
   Object.keys(modules).forEach(makeAvailable);
   return ret;
@@ -16,7 +16,7 @@ function startSession(username, sessionId) {
       var couch = db.wrap({
         url: db.base, cookie: 'AuthSession=' + encodeURIComponent(sessionId)
       });
-      return modules[module].session(couch, username, sessionId);
+      return modules[module].session(couch, email, sessionId);
     };
   }
 

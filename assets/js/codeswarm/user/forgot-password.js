@@ -1,9 +1,10 @@
 define([
   'knockout',
-  'request'
+  'request',
+  'dom'
 ],
 
-function(ko, request) {
+function(ko, request, dom) {
 
     var ctor = {
 
@@ -11,11 +12,11 @@ function(ko, request) {
         displayName: 'Forgot Password',
 
         // Setup model
-        username: ko.observable(),
+        email: ko.observable(),
 
         // Define request object
         resetPasswordRequest: {
-          url: '/api/session',
+          url: '/users/password',
           type: 'POST'
         },
 
@@ -23,15 +24,15 @@ function(ko, request) {
         tryResetPassword: function () {
             // Define request payload
             var payload = {
-              'username': this.username()
+              'email': this.email()
             };
             // Processes request obj
             var req = request(this.resetPasswordRequest, payload);
             req.done(function () {
-              console.log('DATA!');
+              dom.showNotification('success', 'Password reset, please check your email');
             });
             req.fail(function () {
-              console.log('FAIL');
+              dom.showNotification('error', 'There was a problem with the email you provided');
             });
         }
 

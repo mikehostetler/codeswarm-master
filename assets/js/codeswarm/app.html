@@ -1,53 +1,58 @@
 <div>
-		<div id="notification">
-			<a><i class="fa fa-times"></i></a>
-			<div></div>
-    </div>
+	<div id="notification">
+		<a><i class="fa fa-times"></i></a>
+		<div></div>
+	</div>
 
-    <header>
-			<a class="menu-button" href="/">
-				<i class="fa fa-check-circle"></i>CodeSwarm
+  <header>
+		<a class="global-logo" href="#"></a>
+
+		<div data-bind="if: loggedIn">
+			<a href="#" class="global-search--trigger fa fa-search"></a>
+		</div>
+
+		<form class="global-search" data-bind="if: loggedIn">
+			<input type="text" name="Search" placeholder="Search..." class="search-input">
+		</form>
+
+		<a class="fa fa-bars nav-trigger" data-bind="ifnot: loggedIn"></a>
+
+		<ul class="global-nav" data-bind="ifnot: loggedIn">
+			<li>
+				<a href="/#/user/signup">
+					Create
+				</a>
+			</li>
+			<li>
+				<a href="/#/user/login">
+					Login
+				</a>
+			</li>
+		</ul>
+
+		<div class="profile-nav" data-bind="if: loggedIn">
+			<a href="#" class="profile-nav--trigger">
+				<img data-bind="attr: { src: gravatarUrl }" src="http://www.gravatar.com/avatar/00000000000000000000000000000000" class="profile-nav--thumb">
+				<span data-bind="text: fullName">Welcome!</span>
+				<i class="fa fa-caret-down"></i>
 			</a>
 
-			<a href="#" class="global-search--trigger fa fa-search"></a>
-
-			<form class="global-search">
-				<input type="text" name="Search" placeholder="Search..." class="search-input">
-			</form>
-
-			<div class="profile-nav" data-bind="ifnot: loggedIn">
-				<a href="/#/user/signup" class="profile-nav--item">
-					Create <i class="fa fa-plus"></i>
-				</a>
-				<a href="/#/user/login" class="profile-nav--item">
-					Login <i class="fa fa-arrow-right"></i>
-				</a>
-			</div>
-			<div class="profile-nav" data-bind="if: loggedIn">
-				<a href="#" class="profile-nav--trigger">
-					<img data-bind="attr: { src: gravatarUrl }" src="http://www.gravatar.com/avatar/00000000000000000000000000000000" class="profile-nav--thumb">
-					<span data-bind="text: fullName">Welcome!</span>
-					<i class="fa fa-caret-down"></i>
-				</a>
-
-				<ul class="profile-nav--list">
-					<li><a href="/#/user"><i class="fa fa-user"></i>Your Profile</a></li>
-					<li><a href="/#/user/settings"><i class="fa fa-cog"></i>Account Settings</a></li>
-					<li><a href="/#/user/logout"><i class="fa fa-power-off"></i>Log Out</a></li>
-				</ul>
-			</div>
-		</header>
-
-		<div id="main">
-			<div class="container-fluid page-host" data-bind="router: { cacheViews: false}"></div>
-
-			<footer>
-				Awesome Footer
-				<a href="/#/about" class="fa fa-search">About</a>
-				<a href="/#/support" class="fa fa-search">Support</a>
-				<a href="/#/contribute" class="fa fa-search">Contribute</a>
-			</footer>
-
+			<ul class="profile-nav--list">
+				<li><a href="/#/user"><i class="fa fa-user"></i>Your Profile</a></li>
+				<li><a href="/#/user/settings"><i class="fa fa-cog"></i>Account Settings</a></li>
+				<li><a href="/#/user/logout"><i class="fa fa-power-off"></i>Log Out</a></li>
+			</ul>
 		</div>
+	</header>
+
+	<div id="main">
+		<div class="container-fluid page-host" data-bind="router: { cacheViews: false}"></div>
+
+		<footer>
+			<a href="/#/about" class="fa fa-search">About</a>
+			<a href="/#/support" class="fa fa-search">Support</a>
+			<a href="/#/contribute" class="fa fa-search">Contribute</a>
+		</footer>
+	</div>
 
 </div>

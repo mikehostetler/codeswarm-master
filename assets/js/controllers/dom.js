@@ -95,11 +95,12 @@ define([
 
 				// Fire globalNav & globalSearch
 				this.globalNav();
+				this.globalNavLoggedOut();
 				this.globalSearch();
 			},
 
 			/**
-			 * Show/hide global navigation
+			 * Show/hide global navigation (logged in)
 			 */
 			globalNav: function () {
 				var self = this,
@@ -130,6 +131,25 @@ define([
 					$nav.removeClass(navOpen);
 				});
 			},
+
+			/**
+			 * Show/hide global navigation (logged out)
+			 */
+
+			 globalNavLoggedOut: function () {
+			 	var self = this;
+			 	self.$document
+			 		.on("click", function () {
+			 			$(".global-nav").removeClass("global-nav--open");
+			 		})
+			 		.on("click", ".nav-trigger", function (e) {
+			 			e.stopPropagation();
+
+			 			console.log("whatsup");
+
+			 			$(".global-nav").addClass("global-nav--open");
+			 		});
+			 },
 
 			/**
 			 * Show/hide global search
