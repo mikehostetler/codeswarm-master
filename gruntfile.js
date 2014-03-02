@@ -159,7 +159,7 @@ module.exports = function (grunt) {
           expand: true,
           cwd: '.tmp/public',
           src: ['**/*'],
-          dest: 'www'
+          dest: 'assets'
         }
         ]
       }
@@ -168,8 +168,8 @@ module.exports = function (grunt) {
     compass: {
       main: {
         options: {
-          sassDir: './www/sass',
-          cssDir: './www/linker/styles',
+          sassDir: './assets/sass',
+          cssDir: './assets/linker/styles',
           outputStyle: 'compressed',
           require: 'breakpoint'
         }
@@ -178,7 +178,7 @@ module.exports = function (grunt) {
 
     clean: {
       dev: ['.tmp/public/**'],
-      build: ['www']
+      build: ['assets']
     },
 
     jst: {
