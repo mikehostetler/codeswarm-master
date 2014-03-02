@@ -168,8 +168,8 @@ module.exports = function (grunt) {
     compass: {
       main: {
         options: {
-          sassDir: './assets/sass',
-          cssDir: './assets/linker/styles',
+          sassDir: './www/sass',
+          cssDir: './www/linker/styles',
           outputStyle: 'compressed',
           require: 'breakpoint'
         }
@@ -217,7 +217,7 @@ module.exports = function (grunt) {
       }
     },
 
-		
+
 
     coffee: {
       dev: {
