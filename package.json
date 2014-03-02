@@ -32,7 +32,8 @@
     "start": "node app.js",
     "mon": "node_modules/.bin/nodemon app.js --dev",
     "debug": "node debug app.js",
-    "installfix": "npm install; cd node_modules/sails/node_modules/express; npm install cookie;"
+    "installfix": "npm install; cd node_modules/sails/node_modules/express; npm install cookie;",
+    "forever": "forever start app.js"
   },
   "main": "app.js",
   "repository": "",
