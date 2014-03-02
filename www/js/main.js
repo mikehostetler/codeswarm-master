@@ -35,8 +35,8 @@ define([
 
   app.start().then(function() {
     // Define viewLocator convention
-    viewLocator.useConvention();
+    viewLocator.useConvention('controllers', 'views');
     // Set app root
-    app.setRoot('codeswarm/app');
+    app.setRoot('controllers/app');
   });
 });
