@@ -37,10 +37,14 @@ define([
         { route: ':org/:repo/config',	moduleId: 'controllers/org/config', nav: true },
 
       ]).buildNavigationModel();
+
+      return router.activate();
+
     },
     compositionComplete: function () {
       // On composition, run dom controller activation
       dom.activate();
     }
   };
+
 });
