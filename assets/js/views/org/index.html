@@ -1,7 +1,114 @@
-﻿<h1 class="page-title" data-bind="html:displayName"> </h1>
+<h1 class="page-title">
+  <i class="fa fa-folder"></i>
+  Projects
+  {{#unless restricted}}
+  <a href="#/add-your-project" class="btn right"><i class="fa fa-plus-circle"></i>New Project</a>
+  {{/unless}}
+</h1>
 
 <div class="content-wrap">
-	Bacon ipsum dolor sit amet ham pastrami bacon shoulder ball tip beef andouille prosciutto kevin sirloin pork loin. Spare ribs pancetta prosciutto ball tip ham hock pig fatback jowl doner salami venison boudin kielbasa pastrami. Pork chop chicken ham biltong doner boudin swine andouille pork belly kevin ham hock. Beef cow tenderloin sirloin. Shank doner salami ball tip rump capicola meatball ribeye andouille jowl turducken beef bresaola pork chop boudin. Ball tip porchetta kevin, t-bone leberkas sausage turkey corned beef. Pork loin ham ground round kevin shoulder pancetta ball tip venison.
+    <table class="datatable">
+        <thead>
+            <tr>
+                <th width="115">Status</th>
+                <th>Project</th>
+                <th width="175">Last Build</th>
+            </tr>
+        </thead>
+        <tbody>
+        {{#each projects}}
+        <tr>
+            <td data-status="{{_id}}">
+              <div class="anchor-wrap">
+                {{#compare state "failed" operator="==="}}
+                <a href="#/{{_id}}/" title="Build Failing">
+                    <img src="../images/build-failing.png" alt="Build Failing">
+                </a>
+                {{/compare}}
 
-	Bacon ham landjaeger, salami venison biltong fatback andouille tongue tenderloin beef ribs flank ground round bresaola doner. Jerky tongue jowl sausage beef strip steak leberkas ham hock pig salami. Fatback cow t-bone, pastrami salami venison turkey beef meatball pork strip steak tri-tip ground round ball tip. T-bone beef ribs pork loin ground round pancetta salami boudin meatloaf frankfurter flank biltong drumstick kevin ham. Shankle sirloin sausage prosciutto chicken doner. Beef ribs flank t-bone ground round swine doner pork chop, kielbasa jowl.
+                {{#compare state "passed" operator="==="}}
+                <a href="#/{{_id}}/" title="Build Passing">
+                    <img src="../images/build-passing.png" alt="Build Passing">
+                </a>
+                {{/compare}}
+
+                {{#compare state "running" operator="==="}}
+                <a href="#/{{_id}}/" title="Processing">
+                    <img src="../images/build-pending.png" alt="Build Pending">
+                </a>
+                {{/compare}}
+
+                {{#compare state undefined operator="==="}}
+                <a title="No Builds"><i class="fa fa-circle"></i></a>
+                {{/compare}}
+              </div>
+            </td>
+
+            <td>
+              <div class="anchor-wrap">
+                <a href="{{this.view}}">
+            	{{#if this.view}}
+                <h4 class="project">{{this._id}}</h4>
+                {{/if}}
+                <em class="repo">{{this.repo}}</em>
+                </a>
+              </div>
+            </td>
+
+            <td>
+              <div class="anchor-wrap">
+                <a href="{{this.view}}">
+                    <span class="last-build" data-timestamp="{{this._id}}">
+                        <span class="last-build--title">Last build:</span>
+                        {{#if this.ended_at}}
+                          {{ended_at}}
+                        {{else}}
+                          Never
+                        {{/if}}
+                    </span>
+                </a>
+              </div>
+            </td>
+        </tr>
+
+        {{else}}
+        <tr>
+        	<td class="center empty-projects" colspan="5"><em>No projects currently exist. <a href="#/project/new">Create One &raquo;</a></em></td>
+        </tr>
+        {{/each}}
+        </tbody>
+    </table>
+
+    <div class="sidebar">
+      <div class="sidebar-list-contain">
+        <h3 class="sidebar-list-title">Recent project builds</h3>
+
+        <ul class="sidebar-list">
+          <li><a href="#">
+            <strong>jQuery/jQuery</strong> - <time>Feb 11, 2014</time>
+            <span>Commit d792e40 by rwaldron</span>
+          </a></li>
+          <li><a href="#">
+            <strong>guardian/frontend</strong> - <time>Feb 10, 2014</time>
+            <span>Commit d792e40 by trevanhetzel</span>
+          </a></li>
+          <li><a href="#">
+            <strong>jQuery/jQuery</strong> - <time>Feb 11, 2014</time>
+            <span>Commit d792e40 by rwaldron</span>
+          </a></li>
+          <li><a href="#">
+            <strong>guardian/frontend</strong> - <time>Feb 10, 2014</time>
+            <span>Commit d792e40 by trevanhetzel</span>
+          </a></li>
+          <li><a href="#">
+            <strong>jQuery/jQuery</strong> - <time>Feb 11, 2014</time>
+            <span>Commit d792e40 by rwaldron</span>
+          </a></li>
+        </ul>
+
+        <div class="sidebar-list-actions">
+          <a href="#" class="btn btn-sml">View all</a>
+        </div>
+      </div>
+    </div>
 </div>
