@@ -1,25 +1,35 @@
 var extend  = require('util')._extend;
 var cookie  = require('cookie');
+var joi     = require('joi');
 var db      = require('./');
-
-var forbiddenUserNames = ['public', 'root', 'admin'];
 
 /// create
 
 exports.create = createUser;
 
-function createUser(user, cb) {
-  if (! user) throw new Error('Need user');
-  if (! user.email) throw new Error('Need user.email');
-  if (! user.password) throw new Error('Need user.password');
+var userSchema = {
+  fname: joi.string().required(),
+  lname: joi.string(),
+  email: joi.string().email().required(),
+  password: joi.string().min(3)
+};
 
-  if (forbiddenUserNames.indexOf(user.email) >= 0)
-    return cb(new Error('Invalid user email'));
+function validateCreate(user) {
+  return joi.validate(user, userSchema);
+}
+
+function createUser(user, cb) {
+
+  var validationError = joi.validate(user, userSchema);
+  if (validationError) return cb(validationError);
 
   var id = userId(user.email);
 
+  console.log('ID:', id);
+
   user = {
-    _id:      id,
+    _id:       id,
+    name:      user.email,
     fname:     user.fname,
     lname:     user.lname,
     email:     user.email,

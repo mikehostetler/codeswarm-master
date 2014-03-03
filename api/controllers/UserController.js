@@ -28,6 +28,7 @@ module.exports = {
     users.create(req.body, replied);
 
     function replied(err) {
+      console.log('ERR:', err);
       if (err) res.send(err.status_code || 500, err);
       else res.json({ok: true});
     }
