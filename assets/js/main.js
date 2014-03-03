@@ -4,6 +4,7 @@ requirejs.config({
     'text': 'vendor/requirejs-text/text',
     'durandal':'vendor/durandal',
     'plugins' : 'vendor/durandal/plugins',
+    'transitions': 'vendor/durandal/transitions',
     'knockout': 'vendor/knockout/knockout-2.3.0',
     'jquery': 'vendor/jquery/jquery',
     'ansi_up': 'vendor/ansi_up/ansi_up',

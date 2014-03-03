@@ -3,7 +3,8 @@ define([
   'durandal/app',
   'dom',
   'session',
-  'knockout'
+  'knockout',
+  'transitions/entrance'
 ], function (router, app, dom, session, ko) {
   return {
     gravatarUrl: 'http://www.gravatar.com/avatar/00000000000000000000000000000000',
