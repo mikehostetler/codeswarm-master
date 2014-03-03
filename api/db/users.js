@@ -14,10 +14,6 @@ var userSchema = {
   password: joi.string().min(3)
 };
 
-function validateCreate(user) {
-  return joi.validate(user, userSchema);
-}
-
 function createUser(user, cb) {
 
   var validationError = joi.validate(user, userSchema);
