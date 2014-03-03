@@ -1,6 +1,8 @@
 @import "compass";
 @import "breakpoint";
 @import "reset";
+@import "fonts";
+@import "font-awesome";
 @import "base";
 
 // layout
@@ -25,3 +27,4 @@
 @import "modules/notifications";
 @import "modules/sidebar-list";
 @import "modules/tabs";
+@import "modules/ie10mobile";
