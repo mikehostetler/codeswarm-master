@@ -16,8 +16,8 @@ function(ko, request, dom) {
 
         // Define request object
         resetPasswordRequest: {
-          url: '/users/password',
-          type: 'POST'
+          url: '/user/password',
+          type: 'GET'
         },
 
         // Reset password handler method

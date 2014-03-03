@@ -20,7 +20,7 @@ function(ko, request, dom) {
 
         // Define request object
         signupRequest: {
-          url: '/users',
+          url: '/user',
           type: 'POST'
         },
 

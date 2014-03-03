@@ -25,7 +25,7 @@ function(ko, request) {
 
         // Define get-info request object
         getSettingsRequest: {
-          url: '/users',
+          url: '/user/settings',
           type: 'GET'
         },
 
@@ -45,7 +45,7 @@ function(ko, request) {
 
         // Define save-info request object
         saveSettingsRequest: {
-          url: '/api/user',
+          url: '/user/settings',
           type: 'PUT',
           done: function (data) {
             return data;
