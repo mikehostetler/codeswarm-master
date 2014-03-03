@@ -25,8 +25,6 @@ function createUser(user, cb) {
 
   var id = userId(user.email);
 
-  console.log('ID:', id);
-
   user = {
     _id:       id,
     name:      user.email,
@@ -61,7 +59,6 @@ function authenticate(email, password, callback) {
   db.public.auth(email, password, replied);
 
   function replied(err, body, headers) {
-    console.log('AUTHENTICATE REPLY:', body);
     if (err) callback(err);
     else {
       var sessionId;
