@@ -33,6 +33,7 @@ define([
 
         // Orgs
         { route: ':org', moduleId: 'controllers/org/index', nav: true },
+        { route: ':org/new-project', moduleId: 'controllers/org/new-project', nav: true },
         { route: ':org/:repo', moduleId: 'controllers/org/project', nav: true },
         { route: ':org/:repo/:build',	moduleId: 'controllers/org/build', nav: true },
         { route: ':org/:repo/config',	moduleId: 'controllers/org/config', nav: true },

@@ -1,8 +1,7 @@
 define([
   'knockout',
-  'request',
-  'dom'
-], function(ko, request, dom) {
+  'request'
+], function(ko, request) {
 
     var ctor = {
 
@@ -11,32 +10,34 @@ define([
 
         // Initialization
         activate: function (context) {
-          this.tryGetProjects();
+
         },
 
         // Define model
         SOMEPROPERTY: ko.observable(),
 
         // Define request
-        projectsReq: {
-          url: '/projects',
+        someReq: {
+          url: '/ENDPOINT',
           type: 'GET'
         },
 
-        tryGetProjects: function () {
+        trySomeReq: function () {
           // Set payload
-          var payload = {};
+          var payload = {
+
+          };
           // Make Request
-          var req = request(this.projectsReq, payload);
+          var req = request(this.someReq, payload);
 
           // On success
           req.done(function (data) {
-            console.log(data);
+
           });
 
           // On failure
           req.fail(function (err) {
-            dom.showNotification('error', JSON.parse(err.responseText).message);
+
           });
         }
 
