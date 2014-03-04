@@ -1,7 +1,7 @@
-define(function() {
-    var ctor = {
-      displayName: 'Support'
-    };
+define(function () {
+  var ctor = {
+    displayName: 'Support'
+  };
 
-    return ctor;
+  return ctor;
 });

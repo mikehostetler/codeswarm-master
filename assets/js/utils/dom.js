@@ -97,13 +97,13 @@ define([
       });
 
       self.$document
-      .on('click', function () {
-        $search.removeClass(searchOpen);
-        $searchTrigger.removeClass(searchTriggerOpen);
-      })
-      .on('click', '.global-search', function (e) {
-        e.stopPropagation();
-      });
+        .on('click', function () {
+          $search.removeClass(searchOpen);
+          $searchTrigger.removeClass(searchTriggerOpen);
+        })
+        .on('click', '.global-search', function (e) {
+          e.stopPropagation();
+        });
 
       $('.profile-nav--trigger').on('click', function () {
         $search.removeClass(searchOpen);

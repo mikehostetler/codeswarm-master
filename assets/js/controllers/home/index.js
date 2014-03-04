@@ -1,8 +1,8 @@
 define(function () {
 
-    var ctor = {
-        displayName: 'Welcome'
-    };
+  var ctor = {
+    displayName: 'Welcome'
+  };
 
-    return ctor;
+  return ctor;
 });

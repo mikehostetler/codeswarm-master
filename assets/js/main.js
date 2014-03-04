@@ -2,8 +2,8 @@
 requirejs.config({
   paths: {
     'text': 'vendor/requirejs-text/text',
-    'durandal':'vendor/durandal',
-    'plugins' : 'vendor/durandal/plugins',
+    'durandal': 'vendor/durandal',
+    'plugins': 'vendor/durandal/plugins',
     'transitions': 'vendor/durandal/transitions',
     'knockout': 'vendor/knockout/knockout-2.3.0',
     'jquery': 'vendor/jquery/jquery',
@@ -40,7 +40,7 @@ define([
     widget: true
   });
 
-  app.start().then(function() {
+  app.start().then(function () {
     // Define viewLocator convention
     viewLocator.useConvention('controllers', 'views');
     // Set app root

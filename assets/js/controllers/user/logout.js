@@ -1,18 +1,18 @@
 define([
   'session'
-], function(session) {
-    var ctor = {
+], function (session) {
+  var ctor = {
 
-        // Set displayName
-        displayName: 'Log Out',
+    // Set displayName
+    displayName: 'Log Out',
 
-        activate: function () {
-          // Ends session, returns to login screen
-          session.end();
-        }
+    activate: function () {
+      // Ends session, returns to login screen
+      session.end();
+    }
 
-    };
+  };
 
-    return ctor;
+  return ctor;
 
 });

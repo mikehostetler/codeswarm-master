@@ -1,1 +1,2 @@
-ui/src/js/vendor/**/*.js
+assets/js/vendor/**/*.js
+assets/js/socket.io.js

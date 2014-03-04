@@ -6,6 +6,8 @@ module.exports = function (grunt) {
   grunt.loadTasks(depsPath + '/grunt-contrib-watch/tasks');
   grunt.loadTasks(depsPath + '/grunt-contrib-copy/tasks');
   grunt.loadNpmTasks('grunt-contrib-compass');
+  grunt.loadNpmTasks('grunt-jsbeautifier');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
 
   // Project configuration.
   grunt.initConfig({
@@ -31,6 +33,27 @@ module.exports = function (grunt) {
           dest: 'assets'
         }
         ]
+      }
+    },
+
+    jsbeautifier: {
+      dev: {
+      src: ['assets/js/**/*.js', '!assets/js/vendor/**/*.js', '!assets/js/socket.io.js'],
+      options: {
+        config: '.jsbeautifyrc'
+      }
+      }
+    },
+
+    jshint: {
+      dev: {
+      options: {
+        jshintrc: '.jshintrc',
+        jshintignore: '.jshintignore'
+      },
+        files: {
+          src: ['assets/js/**/*.js']
+        }
       }
     },
 
