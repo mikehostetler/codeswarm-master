@@ -68,4 +68,10 @@ module.exports = function (grunt) {
     'watch'
   ]);
 
+  // When Sails is lifted in prod:
+  grunt.registerTask('prod', [
+    'compass',
+    'copy:build'
+  ]);
+
 };
