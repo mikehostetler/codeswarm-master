@@ -1,7 +1,7 @@
 define(function () {
 
     var ctor = {
-        displayName: 'Welcome to CodeSwarm'
+        displayName: 'Welcome'
     };
 
     return ctor;
