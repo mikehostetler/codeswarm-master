@@ -1,3 +1,3 @@
 define([
-  // Array of 'specs/file.js' here...
+  'specs/test-spec.js'
 ]);

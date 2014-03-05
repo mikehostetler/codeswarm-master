@@ -8,7 +8,8 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-compass');
   grunt.loadNpmTasks('grunt-jsbeautifier');
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks("grunt-blanket-mocha");
+  grunt.loadNpmTasks('grunt-mocha');
+  grunt.loadNpmTasks('grunt-blanket-mocha');
 
   // Project configuration.
   grunt.initConfig({
@@ -58,8 +59,15 @@ module.exports = function (grunt) {
       }
     },
 
-    blanket_mocha: {
+    mocha: {
       all: ['assets/tests/index.html'],
+      options: {
+        run: false
+      }
+    },
+
+    blanket_mocha: {
+      assets: ['assets/tests/index.html'],
       options: {
         threshold: 90,
         run: false
