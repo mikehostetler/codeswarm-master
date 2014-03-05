@@ -73,6 +73,7 @@ module.exports = function (grunt) {
         files: ['api/**/*']
       },
       assets: {
+        files: ['assets/**/*'],
         // When assets are changed:
         tasks: ['copy:dev']
       },
