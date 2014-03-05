@@ -72,7 +72,7 @@ define([
           // Processes request obj
           request(this.saveSettingsRequest, payload);
         } else {
-          alert("Your passwords don't match.");
+          alert('Your passwords don\'t match.');
         }
       }
 

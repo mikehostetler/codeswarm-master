@@ -16,7 +16,7 @@ define([
 
     data: function () {
       // Return parsed object from localStorage
-      system.log("Session", localStorage.getItem('session'));
+      system.log('Session', localStorage.getItem('session'));
       return JSON.parse(localStorage.getItem('session'));
     },
 
@@ -31,7 +31,7 @@ define([
     end: function () {
       // Clear localStorage
       localStorage.removeItem('session');
-      system.log("Logged Out", localStorage.getItem('session'));
+      system.log('Logged Out', localStorage.getItem('session'));
 
       // Return to login screen
       router.navigate('user/login');
