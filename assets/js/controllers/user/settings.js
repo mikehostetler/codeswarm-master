@@ -1,10 +1,11 @@
 define([
     'knockout',
     'request',
-    'dom'
+    'dom',
+    'plugins/router'
   ],
 
-  function (ko, request, dom) {
+  function (ko, request, dom, router) {
 
     var ctor = {
 
@@ -44,6 +45,8 @@ define([
         // Failure response
         req.fail(function (err) {
           dom.showNotification('error', JSON.parse(err.responseText).message);
+          // Send home
+          router.navigate('');
         });
       },
 
@@ -85,7 +88,7 @@ define([
         // Processes request obj
         var req = request(this.saveSettingsRequest, payload);
         req.done(function () {
-          location.href = '/';
+          dom.showNotification('success', 'Settings successfully saved');
         });
         req.fail(function (err) {
           dom.showNotification('error', JSON.parse(err.responseText).message);
