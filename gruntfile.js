@@ -87,6 +87,7 @@ module.exports = function (grunt) {
   // When Sails is lifted:
   grunt.registerTask('default', [
     'compass',
+    'jshint',
     'copy:dev',
     'watch'
   ]);
