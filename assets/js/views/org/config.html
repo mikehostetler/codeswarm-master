@@ -1,11 +1,14 @@
 <h1 class="page-title">
   <i class="fa fa-cog"></i>
-  <a href="/#/projects" class="breadcrumb-link">Projects</a>
-  <a href="/#/projects/{{_id}}" class="breadcrumb-link breadcrumb-hide">codeswarm/codeswarm</a>
-  <span class="breadcrumb-active breadcrumb-hide">Config</span>
-  {{#unless restricted}}
+  <a href="/#/projects" class="breadcrumb-link">Projects/</a>
+  <!-- ko if: title -->
+<a href="/#/projects/{{_id}}" class="breadcrumb-link breadcrumb-hide" data-bind="text: title"></a>
+  <!-- /ko -->
+  <!-- ko ifnot: title -->
+<a class="breadcrumb-link breadcrumb-hide" data-bind="text: title">New Project</a>
+  <!-- /ko -->
+  <span class="breadcrumb-active breadcrumb-hide"> Config</span>
   <a href="#/add-your-project" class="btn right"><i class="fa fa-plus-circle"></i>New Project</a>
-  {{/unless}}
 </h1>
 
 <div class="content-wrap">
@@ -32,22 +35,22 @@
 
   <form class="global-form project-config-form" id="project-config">
     <div class="gf-col">
+      <label>Title</label>
+      <input required="true" title="Enter the project title" placeholder="Project Title" data-bind="value: title, valueUpdate:'input'">
+
       <label>Repository</label>
-      <input id="project-repo" required="true" name="repo" type="text" title="Enter the clone URL" placeholder="git://github.com/username/project.git" value="{{repo}}">
+      <input required="true" title="Enter the project repository" type="text" placeholder="ssh://git@github.com:organization/project.git" data-bind="value: repo">
 
-      <label>Label</label>
-      <input type="text" placeholder="Text input">
+      <label>Branch</label>
+      <input required="true" type="text" title="Enter the default branch" placeholder="Branch Name" data-bind="value: branch">
 
-      <label>Label</label>
-      <input type="text" placeholder="Text input">
-
-      <label>Label</label>
-      <input type="text" placeholder="Text input">
+      <label>Release</label>
+      <input required="true" type="text" title="Enter the SHA of the release" placeholder="83ea63dfg64g26ffacb3b2bc76" data-bind="value: sha">
     </div>
 
     <div class="gf-col">
-      <label>Branch</label>
-      <input id="project-branch" required="true" name="branch" type="text" title="Enter the default branch" value="{{branch}}">
+      <label>Label</label>
+      <input type="text" placeholder="Text input">
 
       <label>Label</label>
       <input type="text" placeholder="Text input">

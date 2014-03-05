@@ -14,7 +14,7 @@ define([
     },
 
     // Define model
-    SOMEPROPERTY: ko.observable(),
+    title: ko.observable(),
 
     // Define request
     someReq: {
