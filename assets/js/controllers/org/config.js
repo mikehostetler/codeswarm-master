@@ -9,15 +9,18 @@ define([
     displayName: 'About CodeSwarm',
 
     // Initialization
-    activator: function (context) {
-
+    activate: function (context) {
+      console.log(context);
     },
 
     // Define model
     title: ko.observable(),
+    repo: ko.observable(),
+    sha: ko.observable(),
+    branch: ko.observable(),
 
     // Define request
-    someReq: {
+    getProjectRequest: {
       url: '/ENDPOINT',
       type: 'GET'
     },
