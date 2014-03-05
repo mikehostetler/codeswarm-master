@@ -8,6 +8,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-compass');
   grunt.loadNpmTasks('grunt-jsbeautifier');
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks("grunt-blanket-mocha");
 
   // Project configuration.
   grunt.initConfig({
@@ -57,6 +58,14 @@ module.exports = function (grunt) {
       }
     },
 
+    blanket_mocha: {
+      all: ['assets/tests/index.html'],
+      options: {
+        threshold: 90,
+        run: false
+      }
+    },
+
     compass: {
       main: {
         options: {
@@ -95,6 +104,13 @@ module.exports = function (grunt) {
   // When Sails is lifted in prod:
   grunt.registerTask('prod', [
     'copy:build'
+  ]);
+
+  // Tests
+  grunt.registerTask('test', [
+    'jshint',
+    'jsbeautifier',
+    'blanket_mocha'
   ]);
 
 };
