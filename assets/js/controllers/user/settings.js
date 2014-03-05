@@ -1,9 +1,10 @@
 define([
     'knockout',
-    'request'
+    'request',
+    'dom'
   ],
 
-  function (ko, request) {
+  function (ko, request, dom) {
 
     var ctor = {
 
@@ -14,7 +15,6 @@ define([
       fname: ko.observable(),
       lname: ko.observable(),
       email: ko.observable(),
-      username: ko.observable(),
       password: ko.observable(),
       confirm_password: ko.observable(),
 
@@ -35,45 +35,62 @@ define([
         var req = request(this.getSettingsRequest, {
           'user': user
         });
+        // Success, populate viewmodel
         req.done(function (data) {
-          console.log('WE GOT THE DATA!');
-          // Set the models...
-          self.fname('DATAS');
+          self.fname(data.fname);
+          self.lname(data.lname);
+          self.email(data.email);
         });
-        req.fail(function () {
-          console.log('WE NO HAVE THE DATAS!');
+        // Failure response
+        req.fail(function (err) {
+          dom.showNotification('error', JSON.parse(err.responseText).message);
         });
       },
 
       // Define save-info request object
       saveSettingsRequest: {
         url: '/user/settings',
-        type: 'PUT',
-        done: function (data) {
-          return data;
-        },
-        fail: function (err) {
-          console.log(err);
-        }
+        type: 'PUT'
       },
 
       // Save settings handler method
       trySaveSettings: function () {
-        // Ensure password match
-        if (this.password() === this.confirm_password()) {
-          // Define request payload
-          var payload = {
-            'fname': this.fname(),
-            'lname': this.lname(),
-            'email': this.email(),
-            'username': this.username(),
-            'password': this.password()
-          };
-          // Processes request obj
-          request(this.saveSettingsRequest, payload);
-        } else {
-          alert('Your passwords don\'t match.');
+        // Ensure all fields (sans email; tested later) contain values
+        if (this.fname() === undefined || this.lname() === undefined || this.password() === undefined) {
+          dom.showNotification('error', 'Please fill out all fields');
+          return;
         }
+
+        // Test email
+        if (!/\S+@\S+\.\S+/.test(this.email())) {
+          dom.showNotification('error', 'Invalid email address');
+          return;
+        }
+
+        // Check password confirm
+        if (this.password() !== this.confirm_password()) {
+          dom.showNotification('error', 'Your passwords do not match');
+          return;
+        }
+
+        // ALL TESTS PASSED
+
+        // Define request payload
+        var payload = {
+          'fname': this.fname(),
+          'lname': this.lname(),
+          'email': this.email(),
+          'password': this.password()
+        };
+        // Processes request obj
+        var req = request(this.saveSettingsRequest, payload);
+        req.done(function () {
+          location.href = '/';
+        });
+        req.fail(function (err) {
+          dom.showNotification('error', JSON.parse(err.responseText).message);
+        });
+
       }
 
     };
