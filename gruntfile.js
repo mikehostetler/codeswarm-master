@@ -86,7 +86,6 @@ module.exports = function (grunt) {
 
   // When Sails is lifted:
   grunt.registerTask('default', [
-    'compass',
     'jshint',
     'copy:dev',
     'watch'
@@ -94,7 +93,6 @@ module.exports = function (grunt) {
 
   // When Sails is lifted in prod:
   grunt.registerTask('prod', [
-    'compass',
     'copy:build'
   ]);
 
