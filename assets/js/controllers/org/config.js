@@ -72,7 +72,10 @@ define([
 
       // Set payload
       var payload = {
-
+        title: this.title(),
+        repo: this.title(),
+        sha: this.sha(),
+        branch: this.branch()
       };
 
       // If new project, set to POST

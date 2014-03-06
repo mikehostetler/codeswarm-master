@@ -35,7 +35,7 @@
     </section>
   </div>
 
-  <form class="global-form project-config-form" id="project-config">
+  <form class="global-form project-config-form" id="project-config" data-bind="submit: trySaveProject">
     <div class="gf-col">
       <label>Title</label>
       <input required="true" title="Enter the project title" placeholder="Project Title" data-bind="value: title, valueUpdate:'input'">
