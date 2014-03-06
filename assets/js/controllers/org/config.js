@@ -63,7 +63,11 @@ define([
     // Define save project request
     saveProjectRequest: {
       url: function () {
-        return '/projects/'+ctor.param_org+'/'+ctor.param_repo;
+        if (ctor.newProject) {
+          return '/projects';
+        } else {
+          return '/projects/'+ctor.param_org+'/'+ctor.param_repo;
+        }
       },
       type: 'PUT'
     },
