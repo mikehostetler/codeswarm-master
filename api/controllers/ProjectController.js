@@ -17,10 +17,6 @@
 
 var async    = require('async');
 var uuid     = require('../../lib/uuid');
-var extend   = require('util')._extend;
-var projects = require('../db/projects');
-var builds   = require('../db/builds');
-var Build    = require('../../lib/build');
 
 
 var repoRegexp = /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?\.git$/;
@@ -33,18 +29,7 @@ module.exports = {
    */
    create: function (req, res) {
 
-    var project = extend({}, req.body);
-    var match = project.repo.match(repoRegexp);
-    if (! match) return res.send(409, new Error('Invalid repo URL'));
-
-    if (! project.type) res.send(409, new Error('Please define a project type'));
-
-    var id = match[5];
-    project._id = id;
-    project.owners = [ req.session.username() ];
-    project.public = !! project.public;
-
-    projects.create(project, replied);
+    Project.create(req.body, replied);
 
     function replied(err, reply) {
       if (err) res.send(err.status_code || 500, err);
@@ -58,24 +43,14 @@ module.exports = {
    */
    update: function (req, res) {
 
+
     var id = req.param('owner') + '/' + req.param('repo');
-    var project = extend({}, req.body);
 
-    var match = project.repo.match(repoRegexp);
-    if (! match) return res.send(409, new Error('Invalid repo URL'));
+    Project.merge(id, req.body, saved);
 
-    var newId = match[5];
-
-    if (newId != id) return res.send(409, new Error('Repo URL cannot change'));
-
-
-    project.public = !! project.public;
-
-    projects.update(id, project, replied);
-
-    function replied(err, reply) {
-      if (err) res.send(err.status_code || 500, err);
-      else res.json({ok: true});
+    function saved(err, project) {
+      if (err) res.send(err.status_code, err);
+      else res.json(project);
     }
   },
 
@@ -86,14 +61,14 @@ module.exports = {
   find: function (req, res) {
 
     var id = req.param('owner') + '/' + req.param('repo');
-    var user = req.session.username();
 
-    projects.get(id, replied);
+    Project.findOne({id: id}, replied);
 
     function replied(err, project) {
       if (err) res.send(err.status_code || 500, err);
       else if (! project) res.send(404, new Error('Not found'));
       else {
+        var user = req.session.username();
         if (project.public || user && project.owners.indexOf(user) >= 0)
           res.send(filterProjectForUser(project, user));
         else res.send(404, new Error('Not Found'));
@@ -112,9 +87,9 @@ module.exports = {
     if (! user) {
       res.send(403, new Error('You need to be logged in for now'));
     } else if (! search) {
-      projects.listFor(user, replied);
+      Project.findByOwners(user, replied);
     } else {
-      projects.search(user, search, replied);
+      Project.findByOwnersAndId([user, search], replied);
     }
 
     function replied(err, projects) {
@@ -134,7 +109,7 @@ module.exports = {
   deploy: function(req, res) {
     var projectName = req.param('owner') + '/' + req.param('repo');
 
-    projects.get(projectName, gotProject);
+    Project.findOne({id: projectName}, gotProject);
 
     function gotProject(err, project) {
       if (! err && ! project) {
@@ -150,8 +125,8 @@ module.exports = {
       var time = Date.now();
 
       var build = {
-        _id: id,
-        project: project._id,
+        id: id,
+        project: project.id,
         previous_build: project.last_build,
         previous_successful_build: project.last_successful_build,
         created_at: time,
@@ -169,22 +144,13 @@ module.exports = {
       // Set state object
       build.state = 'pending';
 
-      builds.create(build, createdBuild);
+      Build.create(build, createdBuild);
     }
 
     function createdBuild(err, build) {
-      if (err) {
-        res.send(err.status_code || 500, err);
-      } else {
-        // Run build
-        Build(build, function(err) {
-          if (err) res.send(err.status_code || 500, err);
-          else res.json(build);
-        });
-      }
+      if (err) res.send(err.status_code || 500, err);
+      else res.jon(build);
     }
-
-
   },
 
 
@@ -202,7 +168,7 @@ module.exports = {
     var project;
 
     function getProject(cb) {
-      projects.get(projectName, gotProject);
+      Project.get(projectName, gotProject);
 
       function gotProject(err, _project) {
         if (_project) project = _project;
@@ -251,8 +217,8 @@ module.exports = {
       var id = uuid();
 
       var build = {
-        _id: id,
-        project: project._id,
+        id: id,
+        project: project.id,
         previous_build: project.last_build,
         previous_successful_build: project.last_successful_build,
         created_at: Date.now(),
@@ -266,18 +232,14 @@ module.exports = {
         plugins: project.plugins
       };
 
-      builds.create(build, createdBuild);
+      Build.create(build, createdBuild);
     }
 
     function createdBuild(err, build) {
       if (err) {
         res.send(err.status_code || 500, err);
       } else {
-        // Run build
-        Build(build, function(err) {
-          if (err) res.send(err.status_code || 500, err);
-          else res.json(build);
-        });
+        res.json(build);
       }
     }
 
@@ -290,11 +252,20 @@ module.exports = {
   updatePlugins: function updatePlugins(req, res) {
     var projectName = req.param('owner') + '/' + req.param('repo');
 
-    projects.update(projectName, { plugins: req.body}, updated);
+    Project.findOne({id: projectName}, foundProject);
 
-    function updated(err) {
+    function foundProject(err, project) {
       if (err) res.send(err.status_code || 500, err);
-      else res.json({ok: true});
+      else if (! project) res.send(404, new Error('No such project found'));
+      else {
+        project.plugins = req.body;
+        project.save(savedProject);
+      }
+    }
+
+    function savedProject(err, project) {
+      if (err) res.send(err.status_code || 500, err);
+      else res.json(project);
     }
 
   },

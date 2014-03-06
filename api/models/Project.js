@@ -1,0 +1,61 @@
+/**
+ * Foo
+ *
+ * @module      :: Model
+ * @description :: A short summary of how this model works and what it represents.
+ * @docs    :: http://sailsjs.org/#!documentation/models
+ */
+
+module.exports = {
+
+  adapter: 'couchdb',
+
+  autoCreatedAt: false,
+  autoUpdatedAt: false,
+
+  tableName: 'projects',
+
+  attributes: {
+
+    branch: {
+      type: 'string',
+      required: true
+    },
+
+    started_at: 'integer',
+    ended_at: 'integer',
+
+    last_build: 'string',
+    last_successful_build: 'string',
+
+    owners: 'array',
+
+    plugins: 'array',
+
+    public: {
+      type: 'boolean',
+      defaultsTo: 'false'
+    },
+
+    repo: {
+      type: 'string',
+      required: true,
+      regex: /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?\.git$/
+    },
+
+    secret: {
+      type: 'string',
+      required: true
+    },
+
+    state: 'string',
+
+    type: 'string'
+  },
+
+  beforeCreate: function beforeCreate(attrs, next) {
+    var match = attrs.repo.match(repoRegex);
+    project._id = match[5];
+    next();
+  }
+};

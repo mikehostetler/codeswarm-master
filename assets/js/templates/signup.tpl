@@ -7,8 +7,8 @@
 
   <form id="signup">
 
-      <label>Username</label>
-      <input type="text" placeholder="Username" name="username">
+      <label>Email</label>
+      <input type="text" placeholder="Email" name="email">
 
       <label>Password</label>
       <input type="password" placeholder="Password" name="password">

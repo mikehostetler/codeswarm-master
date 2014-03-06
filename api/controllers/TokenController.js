@@ -15,10 +15,6 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
-var db       = require('../db');
-var tokens   = require('../db/tokens');
-var users    = require('../db/users');
-
 var providers = {
   github: require('../../lib/github')
 };
@@ -58,12 +54,27 @@ module.exports = {
         else if (! req.session.token) res.send(500, 'User should have a token by now');
         else if (! req.session.remoteUsername) res.send(500, 'User should have a remote username by now');
         else {
-          tokens.create(req.user, providerName, req.session.token, req.session.remoteUsername, createdToken);
+          User.findOne({id: 'org.couchdb.user:' + req.user}, foundUser);
         }
       }
     }
 
-    function createdToken(err) {
+    function foundUser(err, user) {
+      console.log('FOUND USER', user);
+      if (err) res.send(err.status_code || 500, err);
+      else if (! user) res.send(404, new Error('No such user'));
+      else {
+        if (! user.tokens) user.tokens = {};
+        user.tokens[provider] = {
+          token: req.session.token,
+          username: req.session.remoteUsername
+        };
+        console.log('GOING TO SAVE USER %j'.red, user);
+        user.save(savedUser);
+      }
+    }
+
+    function savedUser(err) {
       if (err) res.send(err.status_code || 500, err);
       else res.redirect('/#/project/new');
     }
@@ -76,13 +87,14 @@ module.exports = {
   find: function (req, res) {
 
     var user = req.session.username();
-    if (! user) throw new Error('No username????');
+    if (! user) return res.send(403, new Error('No user session'));
 
     var provider = req.param('provider');
 
-    tokens.get(user, provider, replied);
+    User.findOne({id: 'org.couchdb.user:' + user}, foundUser);
 
-    function replied(err, token) {
+    function foundUser(err, user) {
+      var token = user && user.tokens && user.tokens[provider];
       if (err && err.status_code != 404) res.send(err.status_code || 500, err);
       else if (! token) res.send(404, new Error('Not found'));
       else res.json(token);

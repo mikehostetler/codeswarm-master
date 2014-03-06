@@ -18,7 +18,7 @@
 
 	<form id="project-config">
 
-    <input name="_id" type="hidden" value="{{_id}}">
+    <input name="id" type="hidden" value="{{id}}">
     <input name="_rev" type="hidden" value="{{_rev}}">
 
 		<h4>Repository</h4>
@@ -67,7 +67,7 @@
 
 
     {{#if isOwner}}
-      {{#if _id}}
+      {{#if id}}
         <button class="btn-left">Save</button>
       {{else}}
       	<button class="btn-left">Create</button>
@@ -78,13 +78,13 @@
 
   {{#if isOwner}}
 
-    {{#if _id}}
-      <p><button><a href="#/{{_id}}/plugins">Configure plugins</a></button></p>
+    {{#if id}}
+      <p><button><a href="#/{{id}}/plugins">Configure plugins</a></button></p>
     {{/if}}
 
   	<hr>
 
-  	{{#if _id}}
+  	{{#if id}}
   		<h4>Delete This Project</h4>
 
   		<p>Deleting the project will remove it, all logs, and the current build from the system.</p>

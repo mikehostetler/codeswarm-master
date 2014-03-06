@@ -81,7 +81,8 @@ define(function () {
 				}
 			}
 			if (this.beforeChange) this.beforeChange();
-			self.routes[matched].apply(this, args);
+			var route = self.routes[matched];
+			if (route) route.apply(this, args);
 		}
 
 		if (this.afterChange) this.afterChange();

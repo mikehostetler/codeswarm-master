@@ -226,9 +226,9 @@ define([
 			 * Update project status
 			 */
 			updateProject: function (project) {
-				var statusEl = this.$main.find("[data-status=\"" + project._id + "\"]");
-				var timestampEl = this.$main.find("[data-timestamp=\"" + project._id + "\"]");
-				var lightEl = this.$main.find("[data-light=\"" + project._id + "\"]");
+				var statusEl = this.$main.find("[data-status=\"" + project.id + "\"]");
+				var timestampEl = this.$main.find("[data-timestamp=\"" + project.id + "\"]");
+				var lightEl = this.$main.find("[data-light=\"" + project.id + "\"]");
 
 				var lastBuild = project.ended_at || project.started_at;
 
@@ -310,7 +310,7 @@ define([
 
 				// Confirm and process delete
 				this.$main.find("#project-confirm-delete").click(function () {
-					controller.deleteProject(self.$main.find("input[name=\"_id\"]").val());
+					controller.deleteProject(self.$main.find("input[name=\"id\"]").val());
 				});
 
 				// Cancel delete

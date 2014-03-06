@@ -4,9 +4,8 @@
   "version": "0.0.0",
   "description": "a Sails application",
   "dependencies": {
-    "sails": "0.9.8",
+    "sails": "0.9.11",
     "grunt": "0.4.1",
-    "sails-disk": "~0.9.0",
     "ejs": "0.8.4",
     "optimist": "0.3.4",
     "cookie": "~0.1.0",
@@ -23,7 +22,9 @@
     "grunt-contrib-sass": "~0.7.2",
     "handlebars": "~2.0.0-alpha.1",
     "codeswarm-node": "*",
-    "codeswarm-browser": "*"
+    "codeswarm-browser": "*",
+    "joi": "~2.7.0",
+    "sails-couchdb-orm": "*"
   },
   "scripts": {
     "start": "node app.js",

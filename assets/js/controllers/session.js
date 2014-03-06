@@ -45,10 +45,10 @@ define([
 			$(dom.login).on("submit", function (e) {
 				e.preventDefault();
 				var $this = $(this),
-					username = dom.getValue($this, "username"),
+					email = dom.getValue($this, "email"),
 					password = dom.getValue($this, "password"),
 					req = requests.post("/sessions", {
-						username: username,
+						email: email,
 						password: password
 					});
 

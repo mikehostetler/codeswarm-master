@@ -1,5 +1,5 @@
 <h1 class="page-title">
-  Plugins for {{project._id}}
+  Plugins for {{project.id}}
 </h1>
 
 <div class="content-wrap">
