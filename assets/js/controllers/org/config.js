@@ -1,7 +1,8 @@
 define([
   'knockout',
-  'request'
-], function (ko, request) {
+  'request',
+  'dom'
+], function (ko, request, dom) {
 
   var ctor = {
 
@@ -9,8 +10,14 @@ define([
     displayName: 'About CodeSwarm',
 
     // Initialization
-    activate: function (context) {
-      console.log(context);
+    activate: function (org, repo) {
+      // Set param props
+      this.param_org = org;
+      this.param_repo = repo;
+      // If not new project, load data from endpoint
+      if (repo!=='new-project') {
+        this.tryGetProject();
+      }
     },
 
     // Define model
@@ -19,28 +26,59 @@ define([
     sha: ko.observable(),
     branch: ko.observable(),
 
-    // Define request
+    // Define get request
     getProjectRequest: {
-      url: '/ENDPOINT',
+      url: '/projects/'+this.param_org+'/'+this.param_repo,
       type: 'GET'
     },
 
-    trySomeReq: function () {
-      // Set payload
-      var payload = {
+    // Get project
+    tryGetProject: function () {
+      var self = this;
 
-      };
       // Make Request
-      var req = request(this.someReq, payload);
+      var req = request(this.getProjectRequest);
 
       // On success
       req.done(function (data) {
-
+        console.log(data);
+        // Loop through data response
+        for (var prop in data) {
+          // Assing model attr value with returned val
+          self[prop](data[prop]);
+        }
       });
 
       // On failure
       req.fail(function (err) {
+        dom.showNotification('error', JSON.parse(err.responseText).message);
+      });
+    },
 
+    // Define save project request
+    saveProjectRequest: {
+      url: '/projects/'+this.param_org+'/'+this.param_repo,
+      type: 'PUT'
+    },
+
+    trySaveProject: function () {
+
+      // Set payload
+      var payload = {
+
+      };
+
+      // Make request
+      var req = request(this.saveProjectRequest, payload);
+
+      // On success
+      req.done(function (data) {
+        dom.showNotification('success', 'Project successfully saved');
+      });
+
+      // On failure
+      req.fail(function (err) {
+        dom.showNotification('error', JSON.parse(err.responseText).message);
       });
     }
 
