@@ -1,6 +1,4 @@
 var Cookie = require('cookie');
-var db     = require('../db');
-var users  = require('../db/users');
 
 /**
  * SessionController
@@ -34,7 +32,7 @@ module.exports = {
    */
    create: function (req, res) {
 
-    users.authenticate(req.param('email'), req.param('password'), replied);
+    User.authenticate(req.param('email'), req.param('password'), replied);
 
     function replied(err, sessionId, email, roles) {
       if (err) res.send(err.status_code || 500, err);
