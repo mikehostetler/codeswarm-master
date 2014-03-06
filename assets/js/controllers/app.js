@@ -81,18 +81,22 @@ define([
         {
           route: ':org',
           moduleId: 'controllers/org/index',
+          title: 'Projects List',
           nav: true
         }, {
           route: ':org/:repo',
           moduleId: 'controllers/org/project',
+          title: 'Project View',
           nav: true
         }, {
           route: ':org/:repo/config',
           moduleId: 'controllers/org/config',
+          title: 'Project Config',
           nav: true
         }, {
           route: ':org/:repo/:build',
           moduleId: 'controllers/org/build',
+          title: 'Project Build',
           nav: true
         }
 

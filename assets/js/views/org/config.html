@@ -1,14 +1,16 @@
 <h1 class="page-title">
   <i class="fa fa-cog"></i>
-  <a href="/#/projects" class="breadcrumb-link">Projects/</a>
+  <a href="/#/projects" class="breadcrumb-link">Projects /</a>
   <!-- ko if: title -->
 <a href="/#/projects/{{_id}}" class="breadcrumb-link breadcrumb-hide" data-bind="text: title"></a>
   <!-- /ko -->
   <!-- ko ifnot: title -->
-<a class="breadcrumb-link breadcrumb-hide" data-bind="text: title">New Project</a>
+<a class="breadcrumb-link breadcrumb-hide">New Project</a>
   <!-- /ko -->
-  <span class="breadcrumb-active breadcrumb-hide"> Config</span>
+  <span class="breadcrumb-active breadcrumb-hide">&nbsp;Config</span>
+  <!-- ko ifnot: newProject -->
   <a href="#/add-your-project" class="btn right"><i class="fa fa-plus-circle"></i>New Project</a>
+  <!-- /ko -->
 </h1>
 
 <div class="content-wrap">

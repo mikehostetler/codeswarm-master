@@ -7,7 +7,7 @@ define([
   var ctor = {
 
     // Set displayName
-    displayName: 'About CodeSwarm',
+    displayName: 'Project Config',
 
     // Initialization
     activate: function (org, repo) {
@@ -17,6 +17,9 @@ define([
       // If not new project, load data from endpoint
       if (repo!=='new-project') {
         this.tryGetProject();
+        this.newProject = ko.observable(false);
+      } else {
+        this.newProject = ko.observable(true);
       }
     },
 
@@ -28,7 +31,9 @@ define([
 
     // Define get request
     getProjectRequest: {
-      url: '/projects/'+this.param_org+'/'+this.param_repo,
+      url: function () {
+        return '/projects/'+ctor.param_org+'/'+ctor.param_repo;
+      },
       type: 'GET'
     },
 
@@ -57,7 +62,9 @@ define([
 
     // Define save project request
     saveProjectRequest: {
-      url: '/projects/'+this.param_org+'/'+this.param_repo,
+      url: function () {
+        return '/projects/'+ctor.param_org+'/'+ctor.param_repo;
+      },
       type: 'PUT'
     },
 
@@ -67,6 +74,11 @@ define([
       var payload = {
 
       };
+
+      // If new project, set to POST
+      if (this.newProject()) {
+        this.saveProjectRequest.type = 'POST';
+      }
 
       // Make request
       var req = request(this.saveProjectRequest, payload);
