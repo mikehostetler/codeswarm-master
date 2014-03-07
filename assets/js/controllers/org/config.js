@@ -26,8 +26,8 @@ define([
     // Define model
     title: ko.observable(),
     repo: ko.observable(),
-    sha: ko.observable(),
     branch: ko.observable(),
+    public: ko.observable(),
 
     // Define get request
     getProjectRequest: {

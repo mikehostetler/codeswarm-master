@@ -41,9 +41,19 @@
         <label>Branch</label>
         <input required="true" type="text" title="Enter the default branch" placeholder="Branch Name" data-bind="value: branch">
 
-        <label>Release</label>
-        <input required="true" type="text" title="Enter the SHA of the release" placeholder="83ea63dfg64g26ffacb3b2bc76" data-bind="value: sha">
+        <label style="clear: both; display: inline">
+          <input type="checkbox" name="public" class="checkbox" data-bind="checked: public">
+          Public
+        </label>
       </div>
+
+      <!-- ko ifnot: newProject -->
+      <button class="btn-left">Save</button>
+      <!-- /ko -->
+      <!-- ko if: newProject -->
+    	<button class="btn-left">Create</button>
+      <!-- /ko -->
+
     </form>
   </section>
 
