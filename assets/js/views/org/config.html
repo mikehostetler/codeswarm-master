@@ -20,55 +20,38 @@
 
       <ul class="sidebar-list">
         <li class="sidebar-list--active">
-          <a href="#"><strong>Repository</strong></a>
+          <a class="show-repo"><strong>Repository</strong></a>
         </li>
         <li>
-          <a href="#"><strong>GitHub</strong></a>
-        </li>
-        <li>
-          <a href="#"><strong>Pivotal Tracker</strong></a>
-        </li>
-        <li>
-          <a href="#"><strong>Google Apps</strong></a>
+          <a class="show-github"><strong>GitHub</strong></a>
         </li>
       </ul>
     </section>
   </div>
 
-  <form class="global-form project-config-form" id="project-config" data-bind="submit: trySaveProject">
+  <section class="view-repo">
+    <form class="global-form project-config-form" id="project-config" data-bind="submit: trySaveProject">
+      <div class="gf-col">
+        <label>Title</label>
+        <input required="true" title="Enter the project title" placeholder="Project Title" data-bind="value: title, valueUpdate:'input'">
+
+        <label>Repository</label>
+        <input required="true" title="Enter the project repository" type="text" placeholder="ssh://git@github.com:organization/project.git" data-bind="value: repo">
+
+        <label>Branch</label>
+        <input required="true" type="text" title="Enter the default branch" placeholder="Branch Name" data-bind="value: branch">
+
+        <label>Release</label>
+        <input required="true" type="text" title="Enter the SHA of the release" placeholder="83ea63dfg64g26ffacb3b2bc76" data-bind="value: sha">
+      </div>
+    </form>
+  </section>
+
+  <section class="view-github">
     <div class="gf-col">
-      <label>Title</label>
-      <input required="true" title="Enter the project title" placeholder="Project Title" data-bind="value: title, valueUpdate:'input'">
-
-      <label>Repository</label>
-      <input required="true" title="Enter the project repository" type="text" placeholder="ssh://git@github.com:organization/project.git" data-bind="value: repo">
-
-      <label>Branch</label>
-      <input required="true" type="text" title="Enter the default branch" placeholder="Branch Name" data-bind="value: branch">
-
-      <label>Release</label>
-      <input required="true" type="text" title="Enter the SHA of the release" placeholder="83ea63dfg64g26ffacb3b2bc76" data-bind="value: sha">
+      Github Repos...
     </div>
-
-    <div class="gf-col">
-      <label>Label</label>
-      <input type="text" placeholder="Text input">
-
-      <label>Label</label>
-      <input type="text" placeholder="Text input">
-
-      <label>Label</label>
-      <input type="text" placeholder="Text input">
-
-      <label>Label</label>
-      <input type="text" placeholder="Text input">
-    </div>
-
-    <div class="gf-actions">
-      <button type="submit" class="btn">Save</button>
-      <button class="btn btn-sec">Cancel</button>
-    </div>
-  </form>
+  </section>
 
 
 </div>
