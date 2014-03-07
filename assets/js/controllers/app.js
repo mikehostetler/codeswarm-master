@@ -12,14 +12,20 @@ define([
     loggedIn: ko.observable(false),
     router: router,
     activate: function () {
+
       var self = this;
-      session.data(function (err, data) {
-        if (err) {
-          self.loggedIn = ko.observable(false);
-        } else {
-          self.loggedIn = ko.observable(true);
-        }
+      // Handle header checks
+      router.on('router:navigation:complete', function () {
+        session.data(function (err, data) {
+          if (err) {
+            self.loggedIn(false);
+          } else {
+            self.loggedIn(true);
+          }
+        });
       });
+
+      // Map routes
       router.map([
 
         // Static Routes

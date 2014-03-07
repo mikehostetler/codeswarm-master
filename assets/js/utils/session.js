@@ -9,7 +9,10 @@ define([
 
     data: function (cb) {
       // Return session info
-      var req = request({ url: '/session', type: 'GET' });
+      var req = request({
+        url: '/session',
+        type: 'GET'
+      });
 
       // Success
       req.done(function (data) {

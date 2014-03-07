@@ -24,7 +24,7 @@ define([
     // Define get request
     getProjectRequest: {
       url: function () {
-        return '/projects/'+ctor.param_org+'/'+ctor.param_repo;
+        return '/projects/' + ctor.param_org + '/' + ctor.param_repo;
       },
       type: 'GET'
     },

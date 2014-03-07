@@ -26,7 +26,7 @@ define([
         if (err) {
           console.log('NOPE');
         } else {
-          console.log('YEP! ',data);
+          console.log('YEP! ', data);
         }
       });
     },
@@ -145,9 +145,9 @@ define([
       $('.sidebar-list li').on('click', 'a', function () {
         var type = $(this).data('link');
         $('.sidebar-list--active').removeClass();
-        $('.show-'+type).parent('li').addClass('sidebar-list--active');
+        $('.show-' + type).parent('li').addClass('sidebar-list--active');
         $('section.view').hide();
-        $('section.view-'+type).show();
+        $('section.view-' + type).show();
       });
     },
 

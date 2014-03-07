@@ -15,7 +15,7 @@ define([
       this.param_org = org;
       this.param_repo = repo;
       // If not new project, load data from endpoint
-      if (repo!=='new-project') {
+      if (repo !== 'new-project') {
         this.tryGetProject();
         this.newProject = ko.observable(false);
       } else {
@@ -32,7 +32,7 @@ define([
     // Define get request
     getProjectRequest: {
       url: function () {
-        return '/projects/'+ctor.param_org+'/'+ctor.param_repo;
+        return '/projects/' + ctor.param_org + '/' + ctor.param_repo;
       },
       type: 'GET'
     },
@@ -66,7 +66,7 @@ define([
         if (ctor.newProject) {
           return '/projects';
         } else {
-          return '/projects/'+ctor.param_org+'/'+ctor.param_repo;
+          return '/projects/' + ctor.param_org + '/' + ctor.param_repo;
         }
       },
       type: 'PUT'
