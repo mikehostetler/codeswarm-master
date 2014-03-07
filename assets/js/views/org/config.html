@@ -20,16 +20,16 @@
 
       <ul class="sidebar-list">
         <li class="sidebar-list--active">
-          <a class="show-repo"><strong>Repository</strong></a>
+          <a class="show-repo" data-link="repo"><strong>Repository</strong></a>
         </li>
         <li>
-          <a class="show-github"><strong>GitHub</strong></a>
+          <a class="show-github" data-link="github"><strong>GitHub</strong></a>
         </li>
       </ul>
     </section>
   </div>
 
-  <section class="view-repo">
+  <section class="view view-repo">
     <form class="global-form project-config-form" id="project-config" data-bind="submit: trySaveProject">
       <div class="gf-col">
         <label>Title</label>
@@ -47,7 +47,7 @@
     </form>
   </section>
 
-  <section class="view-github">
+  <section class="view view-github" style="display: none;">
     <div class="gf-col">
       Github Repos...
     </div>
