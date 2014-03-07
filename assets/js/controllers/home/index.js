@@ -1,7 +1,16 @@
-define(function () {
+define([
+  'session'
+  ], function (session) {
 
   var ctor = {
-    displayName: 'Welcome'
+    displayName: 'Welcome',
+
+    activate: function () {
+      session.data(function () {
+        console.log(arguments);
+      });
+    }
+
   };
 
   return ctor;

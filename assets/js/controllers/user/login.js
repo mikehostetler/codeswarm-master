@@ -38,7 +38,7 @@ define([
         // Processes request obj
         var req = request(this.loginRequest, payload);
         req.done(function (data) {
-          session.start(data);
+          router.navigate('user');
         });
         req.fail(function (err) {
           dom.showNotification('error', JSON.parse(err.responseText).message);

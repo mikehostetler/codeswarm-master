@@ -1,37 +1,43 @@
 define([
   'plugins/router',
-  'durandal/system'
-], function (router, system) {
+  'durandal/system',
+  'request'
+], function (router, system, request) {
 
   // Client side maintenance of user session information
   var session = {
 
-    start: function (data) {
-      // Set localStorage JSON
-      localStorage.setItem('session', JSON.stringify(data));
+    data: function (cb) {
+      // Return session info
+      var req = request({ url: '/sessions', type: 'GET' });
 
-      // Send to home
-      router.navigate('');
-    },
+      // Success
+      req.done(function (data) {
+        if (cb && typeof cb === 'function') {
+          cb(false, JSON.parse(data));
+        }
+      });
 
-    data: function () {
-      // Return parsed object from localStorage
-      system.log('Session', localStorage.getItem('session'));
-      return JSON.parse(localStorage.getItem('session'));
+      // Session fail / DNE
+      req.fail(function (err) {
+        if (cb && typeof cb === 'function') {
+          cb(true, err);
+        }
+      });
     },
 
     isLoggedIn: function () {
-      var session = this.data();
-      if (session !== null) {
-        return true;
-      }
-      return false;
+      this.data(function (err, data) {
+        if (err) {
+          return false;
+        } else {
+          return true;
+        }
+      });
     },
 
     end: function () {
-      // Clear localStorage
-      localStorage.removeItem('session');
-      system.log('Logged Out', localStorage.getItem('session'));
+      // Need a way to end sessions
 
       // Return to login screen
       router.navigate('user/login');
