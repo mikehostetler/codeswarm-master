@@ -13,7 +13,7 @@ define(['jquery'], function ($) {
     return $.ajax({
       url: req.url,
       type: req.type,
-      data: payload || {}
+      data: payload || null
     });
   };
 

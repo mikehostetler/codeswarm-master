@@ -9,12 +9,12 @@ define([
 
     data: function (cb) {
       // Return session info
-      var req = request({ url: '/sessions', type: 'GET' });
+      var req = request({ url: '/session', type: 'GET' });
 
       // Success
       req.done(function (data) {
         if (cb && typeof cb === 'function') {
-          cb(false, JSON.parse(data));
+          cb(false, data);
         }
       });
 
@@ -31,7 +31,7 @@ define([
         if (err) {
           return false;
         } else {
-          return true;
+          return data;
         }
       });
     },

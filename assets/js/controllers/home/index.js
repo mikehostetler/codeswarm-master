@@ -1,6 +1,6 @@
 define([
   'session'
-  ], function (session) {
+], function (session) {
 
   var ctor = {
     displayName: 'Welcome',

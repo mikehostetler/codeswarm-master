@@ -1,6 +1,7 @@
 define([
+  'session',
   'jquery'
-], function ($) {
+], function (session, $) {
 
   var dom = {
 
@@ -17,6 +18,17 @@ define([
       this.floatHeader();
       this.accordion();
       this.sidebarSwitcher();
+    },
+
+    // Load header based on session auth
+    loadHeader: function () {
+      session.data(function (err, data) {
+        if (err) {
+          console.log('NOPE');
+        } else {
+          console.log('YEP! ',data);
+        }
+      });
     },
 
     // Show notification modal

@@ -12,6 +12,7 @@ define([
     loggedIn: ko.observable(false),
     router: router,
     activate: function () {
+      dom.loadHeader();
       router.map([
 
         // Static Routes
