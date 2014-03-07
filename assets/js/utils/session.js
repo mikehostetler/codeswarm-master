@@ -38,7 +38,7 @@ define([
 
     end: function () {
       // Need a way to end sessions
-
+      document.cookie = 'sid=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
       // Return to login screen
       router.navigate('user/login');
     }

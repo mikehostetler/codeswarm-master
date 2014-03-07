@@ -7,30 +7,19 @@
     <header>
 		<a class="global-logo" href="/"></a>
 
-		<div data-bind="if: loggedIn">
+    <!-- ko if: loggedIn -->
+
+		<div>
 			<a href="#" class="global-search--trigger fa fa-search"></a>
 		</div>
 
-		<form class="global-search" data-bind="if: loggedIn">
+		<form class="global-search">
 			<input type="text" name="Search" placeholder="Search..." class="search-input">
 		</form>
 
 		<a class="fa fa-bars nav-trigger" data-bind="ifnot: loggedIn"></a>
 
-		<ul class="global-nav" data-bind="ifnot: loggedIn">
-			<li>
-				<a href="/#/user/signup">
-					Create
-				</a>
-			</li>
-			<li>
-				<a href="/#/user/login">
-					Login
-				</a>
-			</li>
-		</ul>
-
-		<div class="profile-nav" data-bind="if: loggedIn">
+		<div class="profile-nav">
 			<a href="#" class="profile-nav--trigger">
 				<img data-bind="attr: { src: gravatarUrl }" src="http://www.gravatar.com/avatar/00000000000000000000000000000000" class="profile-nav--thumb">
 				<span data-bind="text: fullName">Welcome!</span>
@@ -43,6 +32,26 @@
 				<li><a href="/#/user/logout"><i class="fa fa-power-off"></i>Log Out</a></li>
 			</ul>
 		</div>
+
+		<!-- /ko -->
+
+		<!-- ko ifNot: loggedIn -->
+
+		<ul class="global-nav">
+			<li>
+				<a href="/#/user/signup">
+					Create
+				</a>
+			</li>
+			<li>
+				<a href="/#/user/login">
+					Login
+				</a>
+			</li>
+		</ul>
+
+		<!-- /ko -->
+
 	</header>
 
 	<div id="main">
