@@ -22,6 +22,8 @@ define([
             router.navigate('user');
           }
         });
+
+        return true;
       },
 
       // Set displayName
