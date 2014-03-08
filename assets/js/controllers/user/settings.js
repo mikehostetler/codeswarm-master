@@ -11,13 +11,11 @@ define([
 
       // Before activate, get info...
       canActivate: function () {
-        console.log('CAN AC');
         this.getSettings();
         return true;
       },
 
       activate: function () {
-        console.log('ACT');
       },
 
       // Set displayName
