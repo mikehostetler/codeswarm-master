@@ -1,8 +1,9 @@
 define([
   'knockout',
   'request',
-  'dom'
-], function (ko, request, dom) {
+  'dom',
+  'utils/github'
+], function (ko, request, dom, github) {
 
   var ctor = {
 
@@ -22,7 +23,7 @@ define([
         this.newProject = ko.observable(true);
       }
       // Get tokens
-      this.tryGetTokens();
+      this.tryGetRepos();
     },
 
     // Define model
@@ -30,28 +31,11 @@ define([
     repo: ko.observable(),
     branch: ko.observable(),
     public: ko.observable(),
-    tokens: ko.observable(),
+    repos: ko.observableArray(),
 
-    // Define token request
-    getTokensRequest: {
-      url: '/tokens/github',
-      type: 'GET'
-    },
-
-    // Get tokens (Github)
-    tryGetTokens: function () {
-      var self = this;
-      var req = request(this.getTokensRequest);
-
-      // Success
-      req.done(function () {
-        self.tokens(true);
-      });
-
-      // Fail
-      req.fail(function () {
-        self.tokens(false);
-      });
+    // Try to get repos
+    tryGetRepos: function () {
+      github.getRepos();
     },
 
     // Define get request

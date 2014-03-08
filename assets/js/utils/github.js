@@ -6,6 +6,21 @@ define([
 
   var github = {
 
+    // Get tokens
+    getToken: function (cb) {
+      var req = request({ url: '/tokens/github', type: 'GET' });
+
+      // Success
+      req.done(function (data) {
+        cb(data.token);
+      });
+
+      // Fail
+      req.fail(function () {
+        cb(false);
+      });
+    },
+
     getAvailableRepos: function (cb) {
       async.parallel({
         githubRepos: this.getGithubRepos,
@@ -15,7 +30,7 @@ define([
 
     getGithubRepos: function (cb) {
       var github = new Github({
-        token: token,
+        token: this.token,
         auth: 'oauth'
       });
       var user = github.getUser();
@@ -23,17 +38,20 @@ define([
     },
 
     getUserRepos: function (cb) {
-      requests.get('/projects').
+      request({ url: '/projects', type: 'GET' }).
         done(function(repos) {
         cb(null, repos);
       }).
-      fail(error.xhrToCallback(cb));
+      fail(function (err) {
+        cb(err);
+      });
     },
 
     gotRepos: function(err, results) {
+      var githubRepos, userRepos, repos;
       if (results) {
-        var githubRepos = results.githubRepos;
-        var userRepos = results.userRepos;
+        githubRepos = results.githubRepos;
+        userRepos = results.userRepos;
       }
 
       if (githubRepos) {
@@ -46,22 +64,21 @@ define([
           userReposMap[userRepo._id] = userRepo;
         });
 
-        var repos = githubRepos.map(function(githubRepo) {
+        repos = githubRepos.map(function(githubRepo) {
           var repoId = githubRepo.full_name;
           var userRepo = userReposMap[repoId];
           return {
             github: githubRepo,
             userRepo: userRepo,
             userHasRepo: !! userRepo
-          }
+          };
         });
-      },
-
-      sortGithubRepos: function (a, b) {
-        return a.full_name < b.full_name ? -1 : 1;
       }
-    }
+    },
 
+    sortGithubRepos: function (a, b) {
+      return a.full_name < b.full_name ? -1 : 1;
+    }
 
   };
 
