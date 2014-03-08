@@ -12,6 +12,8 @@ module.exports = {
   autoCreatedAt: false,
   autoUpdatedAt: false,
 
+  autoPK: false, /// HACK
+
   attributes: {
 
     email: {
@@ -46,6 +48,10 @@ module.exports = {
     roles: {
       type: 'array',
       defaultsTo: []
+    },
+
+    tokens: {
+      type: 'json'
     }
 
   },
