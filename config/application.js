@@ -17,6 +17,8 @@ module.exports = {
 
 function session(req, res, next) {
 
+  if (! req.session) req.session = {};
+
   var header = req.headers.cookie;
   var sid;
 
@@ -32,7 +34,13 @@ function session(req, res, next) {
     });
 
     sessionDB.session(replied);
-  } else next();
+  } else {
+    req.session.username = function() {
+      return null;
+    };
+
+    next();
+  }
 
   function replied(err, session) {
     if (err) res.send(err.status_code || 500, err);

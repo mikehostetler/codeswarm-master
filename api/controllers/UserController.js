@@ -28,12 +28,26 @@ module.exports = {
     users.create(req.body, replied);
 
     function replied(err) {
-      console.log('ERR:', err);
       if (err) res.send(err.status_code || 500, err);
       else res.json({ok: true});
     }
   },
 
+
+  /**
+   *    `GET /user`
+   */
+  get: function (req, res) {
+    var user = req.session.username();
+    if (! user) return res.send(403, new Error('No user in session'));
+
+    users.get(user, replied);
+
+    function replied(err, user) {
+      if (err) res.send(err.status_code || 500, err);
+      else res.json(user);
+    }
+  },
 
   /**
    * Overrides for the settings in `config/controllers.js`

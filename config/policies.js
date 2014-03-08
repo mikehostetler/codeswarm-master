@@ -59,6 +59,19 @@ module.exports.policies = {
 
 	PluginController: {
 		list: 'isAuthenticated'
+	},
+
+	SessionController: {
+		get: 'isAuthenticated'
+	},
+
+	SessionController: {
+		get: 'isAuthenticated',
+		destroy: 'isAuthenticated'
+	},
+
+	UserController: {
+		get: 'isAuthenticated'
 	}
 
 };
