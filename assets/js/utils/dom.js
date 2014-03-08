@@ -54,7 +54,7 @@ define([
         $nav = $('.profile-nav'),
         navOpen = 'profile-nav--open';
 
-      $navTrigger.click(function (e) {
+      $navTrigger.on('click', function (e) {
         e.stopPropagation();
         e.preventDefault();
 
