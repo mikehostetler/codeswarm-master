@@ -67,7 +67,8 @@ define([
       // Save settings handler method
       trySaveSettings: function () {
         // Ensure all fields (sans email; tested later) contain values
-        if (this.fname() === undefined || this.lname() === undefined || this.password() === undefined) {
+        if (this.fname() === undefined 
+						|| this.lname() === undefined) {
           dom.showNotification('error', 'Please fill out all fields');
           return;
         }
