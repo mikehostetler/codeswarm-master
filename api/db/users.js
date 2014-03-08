@@ -7,7 +7,7 @@ var db      = require('./');
 
 exports.create = createUser;
 
-var userSchema = {
+var userCreateSchema = {
   fname: joi.string().required(),
   lname: joi.string(),
   email: joi.string().email().required(),
@@ -16,7 +16,7 @@ var userSchema = {
 
 function createUser(user, cb) {
 
-  var validationError = joi.validate(user, userSchema);
+  var validationError = joi.validate(user, userCreateSchema);
   if (validationError) return cb(validationError);
 
   var id = userId(user.email);
@@ -43,6 +43,23 @@ function createUser(user, cb) {
     if (err && err.status_code == '409')
       err.message = 'User already exists';
     cb(err, body);
+  }
+}
+
+
+/// get
+
+exports.get = getUser;
+
+function getUser(email, cb) {
+  db.privileged('_users', function(err, users) {
+    if (err) cb(err);
+    else users.get(userId(email), replied);
+  });
+
+  function replied(err, user) {
+    if (err) cb(err);
+    else cb(null, forReply(user));
   }
 }
 
@@ -97,4 +114,14 @@ exports.userId = userId;
 
 function userId(id) {
   return 'org.couchdb.user:' + id;
+}
+
+function forReply(user) {
+  delete user._id;
+  delete user.derived_key;
+  delete user.iterations;
+  delete user.password_scheme;
+  delete user.salt;
+
+  return user;
 }

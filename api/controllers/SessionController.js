@@ -1,3 +1,4 @@
+var extend = require('util')._extend;
 var Cookie = require('cookie');
 var db     = require('../db');
 var users  = require('../db/users');
@@ -85,6 +86,18 @@ module.exports = {
         res.json({ session: sid, user: session.userCtx.email });
       }
     }
+  },
+
+
+  /**
+   *    `DELETE /session`
+   */
+  destroy: function (req, res) {
+    var options = extend({}, cookieOptions);
+    extend(options, { expires: new Date() });
+    var cookie = Cookie.serialize('sid', '', cookieOptions);
+    res.setHeader('Set-Cookie', cookie);
+    res.json({ok: true});
   },
 
 

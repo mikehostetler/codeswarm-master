@@ -98,11 +98,13 @@ module.exports.routes = {
   /// Users
 
   'post /users': 'UserController.create',
+  'get /user': 'UserController.get',
 
 
   /// Sessions
 
   'get /session': 'SessionController.get',
+  'delete /session': 'SessionController.destroy',
 
 
   /// Projects
