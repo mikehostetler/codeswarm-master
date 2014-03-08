@@ -40,10 +40,18 @@ define([
     },
 
     end: function () {
-      // Need a way to end sessions
-      document.cookie = 'sid=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-      // Return to login screen
-      router.navigate('user/login');
+      var req = request({
+        url: '/session',
+        type: 'DELETE'
+      });
+
+      req.done(function () {
+        router.navigate('user/login');
+      });
+
+      req.fail(function () {
+        router.navigate('user/login');
+      });
     }
 
   };
