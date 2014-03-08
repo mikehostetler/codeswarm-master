@@ -6,9 +6,10 @@ define([
     // Set displayName
     displayName: 'Log Out',
 
-    activate: function () {
+    canActivate: function () {
       // Ends session, returns to login screen
       session.end();
+      return true;
     }
 
   };

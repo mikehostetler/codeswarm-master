@@ -9,6 +9,17 @@ define([
 
     var ctor = {
 
+      // Before activate, get info...
+      canActivate: function () {
+        console.log('CAN AC');
+        this.getSettings();
+        return true;
+      },
+
+      activate: function () {
+        console.log('ACT');
+      },
+
       // Set displayName
       displayName: 'User Settings',
 
@@ -18,15 +29,6 @@ define([
       email: ko.observable(),
       password: ko.observable(),
       confirm_password: ko.observable(),
-
-      // Before activate, get info...
-      canActivate: function () {
-        this.getSettings();
-        return true;
-      },
-
-      activate: function () {
-      },
 
       // Define get-info request object
       getSettingsRequest: {
@@ -50,7 +52,7 @@ define([
         req.fail(function (err) {
           dom.showNotification('error', JSON.parse(err.responseText).message);
           // Send home
-          router.navigate('');
+          router.navigate('/user');
         });
       },
 
