@@ -4,14 +4,32 @@ define([
   'dom',
   'session',
   'knockout',
-  'transitions/entrance'
-], function (router, app, dom, session, ko) {
+  'gravatar',
+  'transitions/entrance',
+], function (router, app, dom, session, ko, gravatar) {
   return {
-    gravatarUrl: 'http://www.gravatar.com/avatar/00000000000000000000000000000000',
-    fullName: 'Mike Hostetler',
+    gravatarUrl: ko.observable('http://www.gravatar.com/avatar/00000000000000000000000000000000'),
+    fullName: ko.observable(),
     loggedIn: ko.observable(false),
     router: router,
     activate: function () {
+
+      var self = this;
+      // Handle header checks
+      router.on('router:navigation:complete', function () {
+        session.data(function (err, data) {
+          if (err) {
+            self.loggedIn(false);
+          } else {
+            var gUrl = gravatar(data.email, 50);
+            self.fullName(data.fname + ' ' + data.lname);
+            self.gravatarUrl(gUrl);
+            self.loggedIn(true);
+          }
+        });
+      });
+
+      // Map routes
       router.map([
 
         // Static Routes
@@ -81,24 +99,24 @@ define([
         {
           route: ':org',
           moduleId: 'controllers/org/index',
-          nav: true
-        }, {
-          route: ':org/new-project',
-          moduleId: 'controllers/org/new-project',
+          title: 'Projects List',
           nav: true
         }, {
           route: ':org/:repo',
           moduleId: 'controllers/org/project',
-          nav: true
-        }, {
-          route: ':org/:repo/:build',
-          moduleId: 'controllers/org/build',
+          title: 'Project View',
           nav: true
         }, {
           route: ':org/:repo/config',
           moduleId: 'controllers/org/config',
+          title: 'Project Config',
           nav: true
-        },
+        }, {
+          route: ':org/:repo/:build',
+          moduleId: 'controllers/org/build',
+          title: 'Project Build',
+          nav: true
+        }
 
       ]).buildNavigationModel();
 

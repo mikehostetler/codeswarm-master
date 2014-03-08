@@ -1,43 +1,112 @@
 define([
   'knockout',
-  'request'
-], function (ko, request) {
+  'request',
+  'dom',
+  'utils/github'
+], function (ko, request, dom, github) {
 
   var ctor = {
 
     // Set displayName
-    displayName: 'About CodeSwarm',
+    displayName: 'Project Config',
 
     // Initialization
-    activator: function (context) {
-
+    activate: function (org, repo) {
+      // Set param props
+      this.param_org = org;
+      this.param_repo = repo;
+      // If not new project, load data from endpoint
+      if (repo !== 'new-project') {
+        this.tryGetProject();
+        this.newProject = ko.observable(false);
+      } else {
+        this.newProject = ko.observable(true);
+      }
+      // Get tokens
+      this.tryGetRepos();
     },
 
     // Define model
-    SOMEPROPERTY: ko.observable(),
+    title: ko.observable(),
+    repo: ko.observable(),
+    branch: ko.observable(),
+    public: ko.observable(),
+    repos: ko.observableArray(),
 
-    // Define request
-    someReq: {
-      url: '/ENDPOINT',
+    // Try to get repos
+    tryGetRepos: function () {
+      github.getRepos();
+    },
+
+    // Define get request
+    getProjectRequest: {
+      url: function () {
+        return '/projects/' + ctor.param_org + '/' + ctor.param_repo;
+      },
       type: 'GET'
     },
 
-    trySomeReq: function () {
-      // Set payload
-      var payload = {
+    // Get project
+    tryGetProject: function () {
+      var self = this;
 
-      };
       // Make Request
-      var req = request(this.someReq, payload);
+      var req = request(this.getProjectRequest);
 
       // On success
       req.done(function (data) {
-
+        console.log(data);
+        // Loop through data response
+        for (var prop in data) {
+          // Assing model attr value with returned val
+          self[prop](data[prop]);
+        }
       });
 
       // On failure
       req.fail(function (err) {
+        dom.showNotification('error', JSON.parse(err.responseText).message);
+      });
+    },
 
+    // Define save project request
+    saveProjectRequest: {
+      url: function () {
+        if (ctor.newProject) {
+          return '/projects';
+        } else {
+          return '/projects/' + ctor.param_org + '/' + ctor.param_repo;
+        }
+      },
+      type: 'PUT'
+    },
+
+    trySaveProject: function () {
+
+      // Set payload
+      var payload = {
+        title: this.title(),
+        repo: this.title(),
+        sha: this.sha(),
+        branch: this.branch()
+      };
+
+      // If new project, set to POST
+      if (this.newProject()) {
+        this.saveProjectRequest.type = 'POST';
+      }
+
+      // Make request
+      var req = request(this.saveProjectRequest, payload);
+
+      // On success
+      req.done(function (data) {
+        dom.showNotification('success', 'Project successfully saved');
+      });
+
+      // On failure
+      req.fail(function (err) {
+        dom.showNotification('error', JSON.parse(err.responseText).message);
       });
     }
 

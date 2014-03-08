@@ -1,6 +1,7 @@
 define([
+  'session',
   'jquery'
-], function ($) {
+], function (session, $) {
 
   var dom = {
 
@@ -16,6 +17,18 @@ define([
       this.globalSearch();
       this.floatHeader();
       this.accordion();
+      this.sidebarSwitcher();
+    },
+
+    // Load header based on session auth
+    loadHeader: function () {
+      session.data(function (err, data) {
+        if (err) {
+          console.log('NOPE');
+        } else {
+          console.log('YEP! ', data);
+        }
+      });
     },
 
     // Show notification modal
@@ -41,7 +54,7 @@ define([
         $nav = $('.profile-nav'),
         navOpen = 'profile-nav--open';
 
-      $navTrigger.click(function (e) {
+      $navTrigger.on('click', function (e) {
         e.stopPropagation();
         e.preventDefault();
 
@@ -124,7 +137,19 @@ define([
           $this.parent('li').removeClass('accordion--open');
         }
       });
-    }
+    },
+
+    // Switch views through sidebar
+    // Switch view via sidebar
+    sidebarSwitcher: function () {
+      $('.sidebar-list li').on('click', 'a', function () {
+        var type = $(this).data('link');
+        $('.sidebar-list--active').removeClass();
+        $('.show-' + type).parent('li').addClass('sidebar-list--active');
+        $('section.view').hide();
+        $('section.view-' + type).show();
+      });
+    },
 
   };
 

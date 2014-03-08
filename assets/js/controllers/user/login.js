@@ -10,10 +10,21 @@ define([
   function (ko, request, session, dom, system, router) {
 
     if (session.isLoggedIn()) {
-      router.navigate('user');
+
     }
 
     var ctor = {
+
+      canActivate: function () {
+        // If session active, goto profile
+        session.data(function (err, data) {
+          if (!err) {
+            router.navigate('user');
+          }
+        });
+
+        return true;
+      },
 
       // Set displayName
       displayName: 'Login',
@@ -38,7 +49,7 @@ define([
         // Processes request obj
         var req = request(this.loginRequest, payload);
         req.done(function (data) {
-          session.start(data);
+          router.navigate('user');
         });
         req.fail(function (err) {
           dom.showNotification('error', JSON.parse(err.responseText).message);
