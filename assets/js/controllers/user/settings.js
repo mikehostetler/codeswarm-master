@@ -15,8 +15,7 @@ define([
         return true;
       },
 
-      activate: function () {
-      },
+      activate: function () {},
 
       // Set displayName
       displayName: 'User Settings',

@@ -14,11 +14,15 @@ requirejs.config({
     'underscore': 'vendor/underscore/underscore-min',
     'request': 'utils/request',
     'dom': 'utils/dom',
-    'session': 'utils/session'
+    'session': 'utils/session',
+    'gravatar': 'vendor/gravatar/gravatar'
   },
   shim: {
     'socketio': {
       exports: 'io'
+    },
+    'gravatar': {
+      exports: 'gravatar'
     }
   }
 });

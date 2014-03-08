@@ -8,7 +8,10 @@ define([
 
     // Get tokens
     getToken: function (cb) {
-      var req = request({ url: '/tokens/github', type: 'GET' });
+      var req = request({
+        url: '/tokens/github',
+        type: 'GET'
+      });
 
       // Success
       req.done(function (data) {
@@ -38,8 +41,11 @@ define([
     },
 
     getUserRepos: function (cb) {
-      request({ url: '/projects', type: 'GET' }).
-        done(function(repos) {
+      request({
+        url: '/projects',
+        type: 'GET'
+      }).
+      done(function (repos) {
         cb(null, repos);
       }).
       fail(function (err) {
@@ -47,7 +53,7 @@ define([
       });
     },
 
-    gotRepos: function(err, results) {
+    gotRepos: function (err, results) {
       var githubRepos, userRepos, repos;
       if (results) {
         githubRepos = results.githubRepos;
@@ -60,11 +66,11 @@ define([
 
       if (githubRepos && userRepos) {
         var userReposMap = {};
-        userRepos.forEach(function(userRepo) {
+        userRepos.forEach(function (userRepo) {
           userReposMap[userRepo._id] = userRepo;
         });
 
-        repos = githubRepos.map(function(githubRepo) {
+        repos = githubRepos.map(function (githubRepo) {
           var repoId = githubRepo.full_name;
           var userRepo = userReposMap[repoId];
           return {

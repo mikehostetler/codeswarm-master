@@ -4,11 +4,12 @@ define([
   'dom',
   'session',
   'knockout',
-  'transitions/entrance'
-], function (router, app, dom, session, ko) {
+  'transitions/entrance',
+  'gravatar'
+], function (router, app, dom, session, ko, gravatar) {
   return {
-    gravatarUrl: 'http://www.gravatar.com/avatar/00000000000000000000000000000000',
-    fullName: 'Mike Hostetler',
+    gravatarUrl: ko.observable('http://www.gravatar.com/avatar/00000000000000000000000000000000'),
+    fullName: ko.observable(),
     loggedIn: ko.observable(false),
     router: router,
     activate: function () {
@@ -20,6 +21,12 @@ define([
           if (err) {
             self.loggedIn(false);
           } else {
+            console.log('DATA', data.email);
+            var gUrl = gravatar(data.email, 50);
+            //console.log(md5er);
+            console.log('GURL:'+gUrl);
+            self.fullName(data.fname + ' ' + data.lname);
+            self.gravatarUrl(gUrl);
             self.loggedIn(true);
           }
         });
