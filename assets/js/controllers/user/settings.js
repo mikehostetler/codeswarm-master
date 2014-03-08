@@ -2,10 +2,11 @@ define([
     'knockout',
     'request',
     'dom',
-    'plugins/router'
+    'plugins/router',
+		'gravatar',
   ],
 
-  function (ko, request, dom, router) {
+  function (ko, request, dom, router, gravatar) {
 
     var ctor = {
 
@@ -26,6 +27,7 @@ define([
       email: ko.observable(),
       password: ko.observable(),
       confirm_password: ko.observable(),
+			gravatarUrl: ko.observable('http://www.gravatar.com/avatar/00000000000000000000000000000000?s=120'),
 
       // Define get-info request object
       getSettingsRequest: {
@@ -42,6 +44,7 @@ define([
           self.fname(data.fname);
           self.lname(data.lname);
           self.email(data.email);
+					self.gravatarUrl(gravatar(data.email, 120));
         });
         // Failure response
         req.fail(function (err) {
