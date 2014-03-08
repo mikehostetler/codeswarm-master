@@ -49,6 +49,23 @@ module.exports = {
     }
   },
 
+
+  /**
+   *    `PUT /user`
+   */
+  update: function (req, res) {
+    var user = req.session.username();
+    if (! user) return res.send(403, new Error('No user in session'));
+
+    users.update(user, req.body, replied);
+
+    function replied(err) {
+      if (err) res.send(err.status_code || 500, err);
+      else res.json({ok: true});
+    }
+  },
+
+
   /**
    * Overrides for the settings in `config/controllers.js`
    * (specific to SessionController)

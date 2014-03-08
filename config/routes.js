@@ -99,6 +99,7 @@ module.exports.routes = {
 
   'post /users': 'UserController.create',
   'get /user': 'UserController.get',
+  'put /user': 'UserController.update',
 
 
   /// Sessions

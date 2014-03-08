@@ -71,7 +71,8 @@ module.exports.policies = {
 	},
 
 	UserController: {
-		get: 'isAuthenticated'
+		get: 'isAuthenticated',
+		update: 'isAuthenticated'
 	}
 
 };
