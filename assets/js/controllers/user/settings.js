@@ -19,25 +19,29 @@ define([
       password: ko.observable(),
       confirm_password: ko.observable(),
 
-      // On activate, get info...
-      activate: function (context) {
-        this.getSettings(context);
+      // Before activate, get info...
+      canActivate: function () {
+        this.getSettings();
+        return true;
+      },
+
+      activate: function () {
       },
 
       // Define get-info request object
       getSettingsRequest: {
-        url: '/user/settings',
+        url: '/user',
         type: 'GET'
       },
 
       // Request info to populate model
-      getSettings: function (user) {
+      getSettings: function () {
+        console.log('SHOULD MAKE REQ');
         var self = this;
-        var req = request(this.getSettingsRequest, {
-          'user': user
-        });
+        var req = request(this.getSettingsRequest);
         // Success, populate viewmodel
         req.done(function (data) {
+          console.log('DATA ', data);
           self.fname(data.fname);
           self.lname(data.lname);
           self.email(data.email);
