@@ -21,10 +21,7 @@ define([
           if (err) {
             self.loggedIn(false);
           } else {
-            console.log('DATA', data.email);
             var gUrl = gravatar(data.email, 50);
-            //console.log(md5er);
-            console.log('GURL:'+gUrl);
             self.fullName(data.fname + ' ' + data.lname);
             self.gravatarUrl(gUrl);
             self.loggedIn(true);

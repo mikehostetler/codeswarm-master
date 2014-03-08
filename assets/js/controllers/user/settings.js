@@ -35,12 +35,10 @@ define([
 
       // Request info to populate model
       getSettings: function () {
-        console.log('SHOULD MAKE REQ');
         var self = this;
         var req = request(this.getSettingsRequest);
         // Success, populate viewmodel
         req.done(function (data) {
-          console.log('DATA ', data);
           self.fname(data.fname);
           self.lname(data.lname);
           self.email(data.email);
