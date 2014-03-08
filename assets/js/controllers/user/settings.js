@@ -56,7 +56,7 @@ define([
 
       // Define save-info request object
       saveSettingsRequest: {
-        url: '/user/settings',
+        url: '/user',
         type: 'PUT'
       },
 
