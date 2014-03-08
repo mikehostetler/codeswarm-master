@@ -16,6 +16,10 @@ define([
         return true;
       },
 
+			cancelBtnClick: function() {
+				router.navigateBack();
+			},
+
       activate: function () {},
 
       // Set displayName
