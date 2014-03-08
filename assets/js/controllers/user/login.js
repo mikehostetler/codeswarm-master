@@ -10,10 +10,19 @@ define([
   function (ko, request, session, dom, system, router) {
 
     if (session.isLoggedIn()) {
-      router.navigate('user');
+
     }
 
     var ctor = {
+
+      canActivate: function () {
+        // If session active, goto profile
+        session.data(function (err, data) {
+          if (!err) {
+            router.navigate('user');
+          }
+        });
+      },
 
       // Set displayName
       displayName: 'Login',

@@ -1,12 +1,23 @@
 define([
     'knockout',
     'request',
-    'dom'
+    'dom',
+    'session',
+    'plugins/router'
   ],
 
-  function (ko, request, dom) {
+  function (ko, request, dom, session, router) {
 
     var ctor = {
+
+      canActivate: function () {
+        // If session active, goto profile
+        session.data(function (err, data) {
+          if (!err) {
+            router.navigate('user');
+          }
+        });
+      },
 
       // Set displayName
       displayName: 'Signup',
