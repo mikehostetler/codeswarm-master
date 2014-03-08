@@ -20,9 +20,6 @@ requirejs.config({
   shim: {
     'socketio': {
       exports: 'io'
-    },
-    'gravatar': {
-      exports: 'gravatar'
     }
   }
 });
