@@ -9,6 +9,7 @@ requirejs.config({
     'jquery': 'vendor/jquery/jquery',
     'socketio': 'socket.io.js',
     'ansi_up': 'vendor/ansi_up/ansi_up',
+    'async': 'vendor/async/async',
     'github': 'vendor/github/github',
     'underscore': 'vendor/underscore/underscore-min',
     'request': 'utils/request',
