@@ -45,7 +45,8 @@
           <input type="checkbox" name="public" class="checkbox" data-bind="checked: public">
           Public
         </label>
-      </div>
+
+      <br>
 
       <!-- ko ifnot: newProject -->
       <button class="btn">Save</button>
@@ -55,13 +56,30 @@
     	<button class="btn">Create</button>
       <!-- /ko -->
 
+      </div>
+
     </form>
   </section>
 
   <section class="view view-github" style="display: none;">
     <div class="gf-col">
-      Github Repos...
+      <!-- ko ifnot: tokens -->
+      <p>You need to be logged in to github in order to add a project.</p>
+
+      <br>
+
+        <form method="post" action="/tokens/github">
+
+            <button class="btn">Login to Github</button>
+
+        </form>
+
+      <!-- /ko -->
+      <!-- ko if: tokens -->
+      <p>This is where the repo list will go...</p>
+      <!-- /ko -->
     </div>
+
   </section>
 
 

@@ -21,6 +21,8 @@ define([
       } else {
         this.newProject = ko.observable(true);
       }
+      // Get tokens
+      this.tryGetTokens();
     },
 
     // Define model
@@ -28,6 +30,29 @@ define([
     repo: ko.observable(),
     branch: ko.observable(),
     public: ko.observable(),
+    tokens: ko.observable(),
+
+    // Define token request
+    getTokensRequest: {
+      url: '/tokens/github',
+      type: 'GET'
+    },
+
+    // Get tokens (Github)
+    tryGetTokens: function () {
+      var self = this;
+      var req = request(this.getTokensRequest);
+
+      // Success
+      req.done(function () {
+        self.tokens(true);
+      });
+
+      // Fail
+      req.fail(function () {
+        self.tokens(false);
+      });
+    },
 
     // Define get request
     getProjectRequest: {
