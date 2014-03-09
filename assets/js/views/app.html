@@ -7,19 +7,17 @@
     <header>
 		<a class="global-logo" href="/"></a>
 
-    <!-- ko if: loggedIn -->
-
-		<div>
+		<div data-bind="visible: loggedIn()">
 			<a href="#" class="global-search--trigger fa fa-search"></a>
 		</div>
 
-		<form class="global-search">
+		<form class="global-search"  data-bind="visible: loggedIn()">
 			<input type="text" name="Search" placeholder="Search..." class="search-input">
 		</form>
 
-		<a class="fa fa-bars nav-trigger" data-bind="ifnot: loggedIn"></a>
+		<a class="fa fa-bars nav-trigger" data-bind="ifnot: loggedIn" data-bind="visible: loggedIn()"></a>
 
-		<div class="profile-nav">
+		<div class="profile-nav"  data-bind="visible: loggedIn()">
 			<a class="profile-nav--trigger">
 				<img data-bind="attr: { src: gravatarUrl }" class="profile-nav--thumb">
 				<span data-bind="text: fullName">Welcome!</span>
@@ -33,11 +31,7 @@
 			</ul>
 		</div>
 
-		<!-- /ko -->
-
-		<!-- ko ifnot: loggedIn -->
-
-		<ul class="global-nav">
+		<ul class="global-nav"  data-bind="visible: !loggedIn()">
 			<li>
 				<a href="/#/user/signup">
 					Create

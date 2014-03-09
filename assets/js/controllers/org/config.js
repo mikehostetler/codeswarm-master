@@ -2,10 +2,23 @@ define([
   'knockout',
   'request',
   'dom',
-  'utils/github'
-], function (ko, request, dom, github) {
+  'utils/github',
+  'session',
+  'plugins/router'
+], function (ko, request, dom, github, session, router) {
 
   var ctor = {
+
+    // Check that user is logged in
+    canActivate: function () {
+      session.isLoggedIn(function (sess) {
+        if (!sess) {
+          router.navigate('/user/login');
+        }
+      });
+      // This is required for Durandal
+      return true;
+    },
 
     // Set displayName
     displayName: 'Project Config',
@@ -35,7 +48,7 @@ define([
 
     // Try to get repos
     tryGetRepos: function () {
-      github.getRepos();
+      //github.getRepos();
     },
 
     // Define get request

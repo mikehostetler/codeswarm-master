@@ -1,9 +1,22 @@
 define([
   'knockout',
-  'request'
-], function (ko, request) {
+  'request',
+  'session',
+  'plugins/router'
+], function (ko, request, session, router) {
 
   var ctor = {
+
+    // Check that user is logged in
+    canActivate: function () {
+      session.isLoggedIn(function (sess) {
+        if (!sess) {
+          router.navigate('/user/login');
+        }
+      });
+      // This is required for Durandal
+      return true;
+    },
 
     // Set displayName
     displayName: 'About CodeSwarm',

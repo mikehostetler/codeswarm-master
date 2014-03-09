@@ -29,12 +29,12 @@ define([
       });
     },
 
-    isLoggedIn: function () {
+    isLoggedIn: function (cb) {
       this.data(function (err, data) {
         if (err) {
-          return false;
+          cb(false);
         } else {
-          return data;
+          cb(true);
         }
       });
     },

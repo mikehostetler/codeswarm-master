@@ -12,10 +12,11 @@ requirejs.config({
     'async': 'vendor/async/async',
     'github': 'vendor/github/github',
     'underscore': 'vendor/underscore/underscore-min',
+    'gravatar': 'vendor/gravatar/gravatar',
+    'base64': 'vendor/base64/base64',
     'request': 'utils/request',
     'dom': 'utils/dom',
-    'session': 'utils/session',
-    'gravatar': 'vendor/gravatar/gravatar'
+    'session': 'utils/session'
   },
   shim: {
     'socketio': {
