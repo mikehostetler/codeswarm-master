@@ -34,7 +34,7 @@ define([
         if (err) {
           return false;
         } else {
-          return data;
+          return true;
         }
       });
     },

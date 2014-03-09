@@ -35,7 +35,7 @@ define([
 
     // Try to get repos
     tryGetRepos: function () {
-      github.getRepos();
+      //github.getRepos();
     },
 
     // Define get request

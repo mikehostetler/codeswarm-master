@@ -1,7 +1,8 @@
 define([
   'request',
   'async',
-  'github'
+  'github',
+  'base64'
 ], function (request, async, Github) {
 
   var github = {
