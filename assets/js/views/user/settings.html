@@ -30,14 +30,13 @@
 	  <div class="user-config-image">
 			<label>Profile image</label>
 			<div class="image-contain">
-				<a href="#" class="image-edit-trigger btn btn-sml modal-trigger" id="modal-image-upload--trigger">Edit</a>
-				<img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?s=120">
+				<img data-bind="attr: { src: gravatarUrl }">
 			</div>
 		</div>
 
 		<div class="gf-actions">
       <button type="submit" class="btn">Save</button>
-      <button class="btn btn-sec">Cancel</button>
+      <button class="btn btn-sec" data-bind="click: cancelBtnClick">Cancel</button>
     </div>
 
     <div class="modal" id="modal-image-upload">

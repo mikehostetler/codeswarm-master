@@ -2,10 +2,11 @@ define([
     'knockout',
     'request',
     'dom',
-    'plugins/router'
+    'plugins/router',
+		'gravatar',
   ],
 
-  function (ko, request, dom, router) {
+  function (ko, request, dom, router, gravatar) {
 
     var ctor = {
 
@@ -14,6 +15,10 @@ define([
         this.getSettings();
         return true;
       },
+
+			cancelBtnClick: function() {
+				router.navigateBack();
+			},
 
       activate: function () {},
 
@@ -26,6 +31,7 @@ define([
       email: ko.observable(),
       password: ko.observable(),
       confirm_password: ko.observable(),
+			gravatarUrl: ko.observable('http://www.gravatar.com/avatar/00000000000000000000000000000000?s=120'),
 
       // Define get-info request object
       getSettingsRequest: {
@@ -42,6 +48,7 @@ define([
           self.fname(data.fname);
           self.lname(data.lname);
           self.email(data.email);
+					self.gravatarUrl(gravatar(data.email, 120));
         });
         // Failure response
         req.fail(function (err) {
@@ -53,14 +60,15 @@ define([
 
       // Define save-info request object
       saveSettingsRequest: {
-        url: '/user/settings',
+        url: '/user',
         type: 'PUT'
       },
 
       // Save settings handler method
       trySaveSettings: function () {
         // Ensure all fields (sans email; tested later) contain values
-        if (this.fname() === undefined || this.lname() === undefined || this.password() === undefined) {
+        if (this.fname() === undefined 
+						|| this.lname() === undefined) {
           dom.showNotification('error', 'Please fill out all fields');
           return;
         }
