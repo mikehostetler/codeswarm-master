@@ -2,11 +2,12 @@ define([
   'plugins/router',
   'durandal/app',
   'dom',
+  'jquery',
   'session',
   'knockout',
   'gravatar',
   'transitions/entrance',
-], function (router, app, dom, session, ko, gravatar) {
+], function (router, app, dom, $, session, ko, gravatar) {
   return {
     gravatarUrl: ko.observable('http://www.gravatar.com/avatar/00000000000000000000000000000000'),
     fullName: ko.observable(),
@@ -123,15 +124,9 @@ define([
       return router.activate();
 
     },
-    openProfileNav: function (obj, el) {
-      console.log('CLICKED');
-      console.log(el);
-      var navOpen = 'profile-nav--open';
-      if (!$('.profile-nav').hasClass(navOpen)) {
-        $('.profile-nav').addClass(navOpen);
-      } else {
-        $('.profile-nav').removeClass(navOpen);
-      }
+    compositionComplete: function () {
+      // On composition, run dom controller activation
+      dom.activate();
     }
   };
 

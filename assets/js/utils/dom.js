@@ -70,7 +70,7 @@ define([
         e.stopPropagation();
       });
 
-      $('.global-search--trigger').on('click', function () {
+      $('.global-search--trigger, .profile-nav a').on('click', function () {
         $nav.removeClass(navOpen);
       });
     },
