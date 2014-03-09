@@ -62,17 +62,22 @@ define([
         });
       },
 
+      // Email change notification
+      changeEmailNote: function () {
+        dom.showNotification('error', 'Please contact support to change your email');
+      },
+
       // Define save-info request object
       saveSettingsRequest: {
-        url: '/user/settings',
+        url: '/user',
         type: 'PUT'
       },
 
       // Save settings handler method
       trySaveSettings: function () {
         // Ensure all fields (sans email; tested later) contain values
-        if (this.fname() === undefined || this.lname() === undefined || this.password() === undefined) {
-          dom.showNotification('error', 'Please fill out all fields');
+        if (this.fname() === undefined || this.lname() === undefined) {
+          dom.showNotification('error', 'Please provide First and Last name and Email');
           return;
         }
 
@@ -94,9 +99,14 @@ define([
         var payload = {
           'fname': this.fname(),
           'lname': this.lname(),
-          'email': this.email(),
-          'password': this.password()
+          'email': this.email()
         };
+
+        // Check for password change
+        if (this.password() !== undefined) {
+          payload.password = this.password();
+        }
+
         // Processes request obj
         var req = request(this.saveSettingsRequest, payload);
         req.done(function () {

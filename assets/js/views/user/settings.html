@@ -13,8 +13,8 @@
 	      <label>Last Name</label>
 	      <input type="text" placeholder="Last Name" data-bind="value: lname">
 
-	      <label>Email</label>
-	      <input type="text" placeholder="Email Address" data-bind="value: email">
+	      <label data-bind="click: changeEmailNote">Email - Locked <i class="fa fa-question-circle"></i></label>
+	      <input disabled="disabled" type="text" placeholder="Email Address" data-bind="value: email, click: changeEmailNote">
 
 	    </div>
 
@@ -24,19 +24,21 @@
 
 	      <label>Confirm Password</label>
 	      <input type="password" placeholder="Confirm password" data-bind="value: confirm_password">
+
+	      <p><i class="note">Leave password fields blank to retain your current password.</i></p>
+
 	    </div>
 	  </div>
 
 	  <div class="user-config-image">
 			<label>Profile image</label>
 			<div class="image-contain">
-				<img data-bind="attr: {src: gravatar}" src="http://www.gravatar.com/avatar/00000000000000000000000000000000?s=120">
+				<img data-bind="attr: {src: gravatar}" src="http://www.gravatar.com/avatar/00000000000000000000000000000000">
 			</div>
 		</div>
 
 		<div class="gf-actions">
       <button type="submit" class="btn">Save</button>
-      <button class="btn btn-sec">Cancel</button>
     </div>
 
     <div class="modal" id="modal-image-upload">
