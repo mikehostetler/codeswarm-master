@@ -2,20 +2,29 @@ define([
     'knockout',
     'request',
     'dom',
-    'plugins/router'
+    'gravatar',
+    'session',
+    'plugins/router',
   ],
 
-  function (ko, request, dom, router) {
+  function (ko, request, dom, gravatar, session, router) {
 
     var ctor = {
 
-      // Before activate, get info...
+      // Check that user is logged in
       canActivate: function () {
-        this.getSettings();
+        session.isLoggedIn(function (sess) {
+          if (!sess) {
+            router.navigate('/user/login');
+          }
+        });
+        // This is required for Durandal
         return true;
       },
 
-      activate: function () {},
+      activate: function () {
+        this.getSettings();
+      },
 
       // Set displayName
       displayName: 'User Settings',
@@ -26,6 +35,7 @@ define([
       email: ko.observable(),
       password: ko.observable(),
       confirm_password: ko.observable(),
+      gravatar: ko.observable(),
 
       // Define get-info request object
       getSettingsRequest: {
@@ -42,6 +52,7 @@ define([
           self.fname(data.fname);
           self.lname(data.lname);
           self.email(data.email);
+          self.gravatar(gravatar(data.email));
         });
         // Failure response
         req.fail(function (err) {
