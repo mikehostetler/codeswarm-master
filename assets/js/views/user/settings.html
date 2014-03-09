@@ -13,8 +13,8 @@
 	      <label>Last Name</label>
 	      <input type="text" placeholder="Last Name" data-bind="value: lname">
 
-	      <label>Email</label>
-	      <input type="text" placeholder="Email Address" data-bind="value: email">
+	      <label data-bind="click: changeEmailNote">Email - Locked <i class="fa fa-question-circle"></i></label>
+	      <input disabled="disabled" type="text" placeholder="Email Address" data-bind="value: email, click: changeEmailNote">
 
 	    </div>
 
@@ -24,6 +24,9 @@
 
 	      <label>Confirm Password</label>
 	      <input type="password" placeholder="Confirm password" data-bind="value: confirm_password">
+
+	      <p><i class="note">Leave password fields blank to retain your current password.</i></p>
+
 	    </div>
 	  </div>
 

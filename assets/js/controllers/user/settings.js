@@ -2,25 +2,34 @@ define([
     'knockout',
     'request',
     'dom',
+    'gravatar',
+    'session',
     'plugins/router',
-		'gravatar',
   ],
 
-  function (ko, request, dom, router, gravatar) {
+  function (ko, request, dom, gravatar, session, router) {
 
     var ctor = {
 
-      // Before activate, get info...
+      // Check that user is logged in
       canActivate: function () {
-        this.getSettings();
+        session.isLoggedIn(function (sess) {
+          if (!sess) {
+            router.navigate('/user/login');
+          }
+        });
+        // This is required for Durandal
         return true;
       },
+
 
 			cancelBtnClick: function() {
 				router.navigateBack();
 			},
 
-      activate: function () {},
+      activate: function () {
+        this.getSettings();
+      },
 
       // Set displayName
       displayName: 'User Settings',
@@ -32,6 +41,7 @@ define([
       password: ko.observable(),
       confirm_password: ko.observable(),
 			gravatarUrl: ko.observable('http://www.gravatar.com/avatar/00000000000000000000000000000000?s=120'),
+
 
       // Define get-info request object
       getSettingsRequest: {
@@ -48,7 +58,7 @@ define([
           self.fname(data.fname);
           self.lname(data.lname);
           self.email(data.email);
-					self.gravatarUrl(gravatar(data.email, 120));
+          self.gravatarUrl(gravatar(data.email, 120));
         });
         // Failure response
         req.fail(function (err) {
@@ -56,6 +66,11 @@ define([
           // Send home
           router.navigate('/user');
         });
+      },
+
+      // Email change notification
+      changeEmailNote: function () {
+        dom.showNotification('error', 'Please contact support to change your email');
       },
 
       // Define save-info request object
@@ -67,9 +82,9 @@ define([
       // Save settings handler method
       trySaveSettings: function () {
         // Ensure all fields (sans email; tested later) contain values
-        if (this.fname() === undefined 
-						|| this.lname() === undefined) {
-          dom.showNotification('error', 'Please fill out all fields');
+
+        if (this.fname() === undefined || this.lname() === undefined) {
+          dom.showNotification('error', 'Please provide First and Last name and Email');
           return;
         }
 
@@ -91,9 +106,14 @@ define([
         var payload = {
           'fname': this.fname(),
           'lname': this.lname(),
-          'email': this.email(),
-          'password': this.password()
+          'email': this.email()
         };
+
+        // Check for password change
+        if (this.password() !== undefined) {
+          payload.password = this.password();
+        }
+
         // Processes request obj
         var req = request(this.saveSettingsRequest, payload);
         req.done(function () {
