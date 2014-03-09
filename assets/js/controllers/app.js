@@ -2,12 +2,11 @@ define([
   'plugins/router',
   'durandal/app',
   'dom',
-  'jquery',
   'session',
   'knockout',
   'gravatar',
   'transitions/entrance',
-], function (router, app, dom, $, session, ko, gravatar) {
+], function (router, app, dom, session, ko, gravatar) {
   return {
     gravatarUrl: ko.observable('http://www.gravatar.com/avatar/00000000000000000000000000000000'),
     fullName: ko.observable(),
