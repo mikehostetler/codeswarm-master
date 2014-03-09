@@ -9,9 +9,6 @@ define(function () {
 
       size = size || 80;
 
-      console.log('GRAV');
-      console.log(MD5(email));
-
       return 'http://www.gravatar.com/avatar/' + MD5(email) + '.jpg?s=' + size;
   };
 
