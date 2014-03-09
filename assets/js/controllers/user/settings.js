@@ -22,10 +22,9 @@ define([
         return true;
       },
 
-
-			cancelBtnClick: function() {
-				router.navigateBack();
-			},
+      cancelBtnClick: function () {
+        router.navigateBack();
+      },
 
       activate: function () {
         this.getSettings();
@@ -40,8 +39,7 @@ define([
       email: ko.observable(),
       password: ko.observable(),
       confirm_password: ko.observable(),
-			gravatarUrl: ko.observable('http://www.gravatar.com/avatar/00000000000000000000000000000000?s=120'),
-
+      gravatarUrl: ko.observable('http://www.gravatar.com/avatar/00000000000000000000000000000000?s=120'),
 
       // Define get-info request object
       getSettingsRequest: {
