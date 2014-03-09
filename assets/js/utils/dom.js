@@ -50,11 +50,10 @@ define([
     // Control global header
     globalNav: function () {
       var self = this,
-        $navTrigger = $('.profile-nav--trigger'),
         $nav = $('.profile-nav'),
         navOpen = 'profile-nav--open';
 
-      $navTrigger.on('click', function (e) {
+      this.$document.on('click', '.profile-nav--trigger', function (e) {
         e.stopPropagation();
         e.preventDefault();
 
