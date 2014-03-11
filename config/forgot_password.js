@@ -1,0 +1,1 @@
+exports.secret_link_expiration_minutes = 60;
