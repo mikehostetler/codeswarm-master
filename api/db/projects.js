@@ -69,7 +69,7 @@ function projectListFor(username, cb) {
   }
 
   function replied(err, reply) {
-    if (err && err.status_code == 404 && err.reason == 'missing') {
+    if (err && err.status_code == 404 && err.reason == 'missing_named_view') {
       createViews(function(err) {
         console.log(err);
         if (err) cb(err);
