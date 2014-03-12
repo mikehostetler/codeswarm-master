@@ -12,8 +12,6 @@ module.exports = {
   autoCreatedAt: false,
   autoUpdatedAt: false,
 
-  autoPK: false, /// HACK
-
   attributes: {
 
     email: {
@@ -57,7 +55,7 @@ module.exports = {
   },
 
   beforeValidation: function beforeValidation(attrs, next) {
-    if (! attrs._id) attrs._id = userIdFromEmail(attrs.email);
+    if (! attrs.id) attrs.id = userIdFromEmail(attrs.email);
     if(! attrs.name) attrs.name = attrs.email;
     if (! attrs.roles) attrs.roles = [];
     next();
