@@ -21,6 +21,8 @@ module.exports = {
 
   attributes: {
 
+    id: 'string',
+
     branch: {
       type: 'string',
       required: true
@@ -66,5 +68,26 @@ module.exports = {
     var match = attrs.repo.match(repoRegex);
     attrs.id = match && match[5];
     next();
+  },
+
+  views: {
+    owner_id_begins_with: {
+      map:
+        function(doc) {
+          var project = doc._id;
+          var projectParts = project.split('/');
+          var repoOwner = projectParts[0];
+          var repoRepo = projectParts[1];
+          var owners = [];
+          if (doc.public) owners.push('public');
+          if (doc.owners) owners = owners.concat(doc.owners);
+
+          owners.forEach(function(owner) {
+            emit([owner, repoOwner], doc);
+            emit([owner, repoRepo], doc);
+            emit([owner, project], doc);
+          });
+        }
+    }
   }
 };

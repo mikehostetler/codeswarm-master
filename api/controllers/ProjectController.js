@@ -95,7 +95,7 @@ module.exports = {
     } else if (! search) {
       Project.findByOwners(user, replied);
     } else {
-      Project.findByOwnersAndId([user, search], replied);
+      doSearch();
     }
 
     function replied(err, projects) {
@@ -105,6 +105,49 @@ module.exports = {
 
     function filterProject(project) {
       return filterProjectForUser(project, user);
+    }
+
+    function doSearch() {
+      async.parallel({
+        owner: searchOwner,
+        public: searchPublic
+      }, results);
+
+
+      function searchOwner(cb) {
+        searchUser(user, cb);
+      }
+
+      function searchPublic(cb) {
+        searchUser('public', cb);
+      }
+
+      function searchUser(user, cb) {
+        Project.view('owner_id_begins_with', {
+          startkey: [user, search],
+          endkey: [user, search + '\ufff0']}, cb);
+      }
+
+      function results(err, results) {
+        var projects = [];
+        var scannedProjects = {};
+        if (err) res.send(err.status_code || 500, err);
+        else {
+          Object.keys(results).forEach(function(type) {
+            var typeResults = results[type];
+            typeResults.forEach(maybeAddProject);
+          });
+
+          return projects.sort(byId);
+        }
+
+        function maybeAddProject(project) {
+          if (! scannedProjects[project.id]) {
+            scannedProjects[project.id] = true;
+            projects.push(project);
+          }
+        }
+      }
     }
   },
 
@@ -289,4 +332,9 @@ function filterProjectForUser(project, user) {
     delete project.secret;
 
   return project;
+}
+
+
+function byId(projA, projB) {
+  return projA < projB ? -1 : 1;
 }
