@@ -11,7 +11,6 @@ var goBuild = require('../../lib/build');
 
 module.exports = {
 
-
   tableName: 'builds',
 
   autoCreatedAt: false,
