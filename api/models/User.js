@@ -19,18 +19,9 @@ module.exports = {
       required: true
     },
 
-    fname: {
-      type: 'string',
-      required: false
-    },
-
-    lname: {
-      type: 'string'
-    },
-
-    password: {
-      type: 'string'
-    },
+    fname: 'string',
+    lname: 'string',
+    password: 'string',
 
     type: {
       type: 'string',
@@ -50,7 +41,12 @@ module.exports = {
 
     tokens: {
       type: 'json'
-    }
+    },
+
+    derived_key: 'string',
+    iterations: 'integer',
+    password_scheme: 'string',
+    salt: 'string'
 
   },
 

@@ -54,27 +54,18 @@ module.exports = {
         else if (! req.session.token) res.send(500, 'User should have a token by now');
         else if (! req.session.remoteUsername) res.send(500, 'User should have a remote username by now');
         else {
-          User.findOne({id: 'org.couchdb.user:' + req.user}, foundUser);
+          var tokens = {};
+          tokens[providerName] = {
+            token: req.session.token,
+            username: req.session.remoteUsername
+          };
+
+          User.merge(User.userIdFromEmail(req.user), {tokens: tokens}, savedTokens);
         }
       }
     }
 
-    function foundUser(err, user) {
-      console.log('FOUND USER', user);
-      if (err) res.send(err.status_code || 500, err);
-      else if (! user) res.send(404, new Error('No such user'));
-      else {
-        if (! user.tokens) user.tokens = {};
-        user.tokens[provider] = {
-          token: req.session.token,
-          username: req.session.remoteUsername
-        };
-        console.log('GOING TO SAVE USER %j'.red, user);
-        user.save(savedUser);
-      }
-    }
-
-    function savedUser(err) {
+    function savedTokens(err) {
       if (err) res.send(err.status_code || 500, err);
       else res.redirect('/#/project/new');
     }
@@ -91,7 +82,7 @@ module.exports = {
 
     var provider = req.param('provider');
 
-    User.findOne({id: 'org.couchdb.user:' + user}, foundUser);
+    User.findOne({id: User.userIdFromEmail(user)}, foundUser);
 
     function foundUser(err, user) {
       var token = user && user.tokens && user.tokens[provider];
@@ -99,15 +90,7 @@ module.exports = {
       else if (! token) res.send(404, new Error('Not found'));
       else res.json(token);
     }
-  },
-
-
-
-  /**
-   * Overrides for the settings in `config/controllers.js`
-   * (specific to ProjectController)
-   */
-  _config: {}
+  }
 
 
 };

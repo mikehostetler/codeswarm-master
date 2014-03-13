@@ -44,28 +44,29 @@ define([
 
 			$(dom.login).on("submit", function (e) {
 				e.preventDefault();
-				var $this = $(this),
-					email = dom.getValue($this, "email"),
-					password = dom.getValue($this, "password"),
-					req = requests.post("/sessions", {
-						email: email,
-						password: password
-					});
+				var $this = $(this);
+				var email = dom.getValue($this, "email");
+				var password = dom.getValue($this, "password");
 
-				req.done(function (response) {
-					self.set(response.session);
-					users.setCurrent(response.user);
-					if (localStorage.getItem("route")) {
-						// User has saved route, pass them there
-						router.go(localStorage.getItem("route"));
-						localStorage.removeItem("route");
-					} else {
-						// "Fresh" login, send to projects list
-						router.go("/projects");
-					}
-				});
+				requests.post("/sessions", {
+					email: email,
+					password: password
+				}).
 
-				req.fail(dom.showXhrError);
+					done(function (response) {
+						self.set(response.session);
+						users.setCurrent(response.user);
+						if (localStorage.getItem("route")) {
+							// User has saved route, pass them there
+							router.go(localStorage.getItem("route"));
+							localStorage.removeItem("route");
+						} else {
+							// "Fresh" login, send to projects list
+							router.go("/projects");
+						}
+					}).
+
+					fail(dom.showXhrError);
 			});
 		},
 

@@ -32,7 +32,12 @@ module.exports = {
    */
    create: function (req, res) {
 
-    User.authenticate(req.param('email'), req.param('password'), replied);
+    var email = req.param('email');
+    var password = req.param('password');
+
+    if (! email || ! password) return res.send(400, new Error('Need username and password'));
+
+    User.authenticate(email, password, replied);
 
     function replied(err, sessionId, username, roles) {
       if (err) res.send(err.status_code || 500, err);
