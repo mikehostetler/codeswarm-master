@@ -40,6 +40,7 @@ define([
 			socket.watchBuild(build);
 
 			req.done(function (build) {
+				console.log('BUILD:', build);
 				build = Build.forShow(build);
 				dom.loadLogOutput(project, build);
 			});

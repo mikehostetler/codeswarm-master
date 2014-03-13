@@ -49,7 +49,7 @@ module.exports = {
       if (err) res.send(err.status_code || 500, err);
       else if (! build) res.send(404, new Error('Build not found'));
       else if (build.project != project) return res.send(404, new Error('Build not found'));
-      else res.json(builds.forShow(build));
+      else res.json(Build.forShow(build));
     }
   },
 

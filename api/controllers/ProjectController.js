@@ -155,7 +155,7 @@ module.exports = {
 
     function createdBuild(err, build) {
       if (err) res.send(err.status_code || 500, err);
-      else res.jon(build);
+      else res.json(build);
     }
   },
 
@@ -274,16 +274,7 @@ module.exports = {
       else res.json(project);
     }
 
-  },
-
-
-
-
-  /**
-   * Overrides for the settings in `config/controllers.js`
-   * (specific to ProjectController)
-   */
-  _config: {}
+  }
 
 
 };
