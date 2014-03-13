@@ -25,7 +25,8 @@ define([
       });
     },
 
-    getAvailableRepos: function (cb) {
+    getAvailableRepos: function (token, cb) {
+      this.token = token;
       async.parallel({
         githubRepos: this.getGithubRepos,
         userRepos: this.getUserRepos

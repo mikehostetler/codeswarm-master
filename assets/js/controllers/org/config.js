@@ -36,7 +36,7 @@ define([
         this.newProject = ko.observable(true);
       }
       // Get tokens
-      this.tryGetRepos();
+      this.getToken();
     },
 
     compositionComplete: function () {
@@ -45,16 +45,26 @@ define([
     },
 
     // Define model
+    token: ko.observable(false),
     title: ko.observable(),
     repo: ko.observable(),
     branch: ko.observable(),
     public: ko.observable(),
     repos: ko.observableArray(),
 
+    getToken: function () {
+      var self = this;
+      github.getToken(function (token) {
+        if (token) {
+          self.token(token);
+        }
+      });
+    },
+
     // Try to get repos
     tryGetRepos: function () {
       var self = this;
-      github.getAvailableRepos(function (err, repos) {
+      github.getAvailableRepos(this.token(), function (err, repos) {
         if (err) {
           console.log('GH ERROR:', err);
         } else {
