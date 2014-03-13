@@ -39,6 +39,11 @@ define([
       this.tryGetRepos();
     },
 
+    compositionComplete: function () {
+      // Activate sidebar switcher
+      dom.sidebarSwitcher();
+    },
+
     // Define model
     title: ko.observable(),
     repo: ko.observable(),
@@ -48,7 +53,13 @@ define([
 
     // Try to get repos
     tryGetRepos: function () {
-      //github.getRepos();
+      github.getAvailableRepos(function (err, repos) {
+        if (err) {
+          console.log("GH ERROR:", err);
+        } else {
+          console.log('REPOS', repos);
+        }
+      });
     },
 
     // Define get request
