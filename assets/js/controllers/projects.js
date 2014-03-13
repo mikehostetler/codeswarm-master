@@ -175,7 +175,7 @@ define([
 
 			function addRepo(repo) {
 				dom.loadProject({
-					repo: repo.github.git_url }, self);
+					repo: repo.github.git_url, isOwner: true }, self);
 			}
 
 			function removeRepo(repo) {

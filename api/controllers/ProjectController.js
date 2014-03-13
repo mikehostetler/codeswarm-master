@@ -29,10 +29,16 @@ module.exports = {
    */
    create: function (req, res) {
 
-    Project.create(req.body, replied);
+    var project = req.body;
+    project.public = project.public == 'true';
+    project.owners = [req.session.username()];
+
+    Project.create(project, replied);
 
     function replied(err, reply) {
-      if (err) res.send(err.status_code || 500, err);
+      if (err) {
+        res.json(err.status_code || 500, err);
+      }
       else res.json(reply);
     }
   },

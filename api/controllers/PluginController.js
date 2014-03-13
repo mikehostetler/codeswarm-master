@@ -18,6 +18,8 @@ module.exports = {
     var plugins = projectTypes[type] || [];
     var configs = {};
 
+    console.log('plugins for project type %s are: %j', type, plugins);
+
     plugins.forEach(function(plugin) {
       var config = require(plugin).config;
       if (config) configs[plugin] = config;

@@ -64,7 +64,7 @@ module.exports = {
   userIdFromEmail: userIdFromEmail,
 
   tokenFor: function tokenFor(username, provider, cb) {
-    this.findOne({_id: userIdFromEmail(username)}, replied);
+    this.findOne({id: userIdFromEmail(username)}, replied);
 
     function replied(err, user) {
       if (err) cb(err);

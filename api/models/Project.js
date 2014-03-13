@@ -6,6 +6,10 @@
  * @docs    :: http://sailsjs.org/#!documentation/models
  */
 
+var uuid = require('../../lib/uuid');
+
+var repoRegex = /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?\.git$/;
+
 module.exports = {
 
   adapter: 'couchdb',
@@ -30,17 +34,17 @@ module.exports = {
 
     owners: 'array',
 
-    plugins: 'array',
+    plugins: 'json',
 
     public: {
       type: 'boolean',
-      defaultsTo: 'false'
+      defaultsTo: false
     },
 
     repo: {
       type: 'string',
       required: true,
-      regex: /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?\.git$/
+      regex: repoRegex
     },
 
     secret: {
@@ -53,9 +57,14 @@ module.exports = {
     type: 'string'
   },
 
+  beforeValidation: function beforeValidation(attrs, next) {
+    attrs.secret = uuid();
+    next();
+  },
+
   beforeCreate: function beforeCreate(attrs, next) {
     var match = attrs.repo.match(repoRegex);
-    project._id = match[5];
+    attrs.id = match && match[5];
     next();
   }
 };
