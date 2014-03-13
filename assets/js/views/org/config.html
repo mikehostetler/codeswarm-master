@@ -63,7 +63,7 @@
 
   <section class="view view-github" style="display: none;">
     <div class="gf-col">
-      <!-- ko ifnot: tokens -->
+      <!-- ko ifnot: repos -->
       <p>You need to be logged in to github in order to add a project.</p>
 
       <br>
@@ -75,7 +75,7 @@
         </form>
 
       <!-- /ko -->
-      <!-- ko if: tokens -->
+      <!-- ko if: repos -->
       <p>This is where the repo list will go...</p>
       <!-- /ko -->
     </div>

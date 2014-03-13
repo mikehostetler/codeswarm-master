@@ -53,11 +53,13 @@ define([
 
     // Try to get repos
     tryGetRepos: function () {
+      var self = this;
       github.getAvailableRepos(function (err, repos) {
         if (err) {
-          console.log("GH ERROR:", err);
+          console.log('GH ERROR:', err);
         } else {
           console.log('REPOS', repos);
+          self.repos(repos);
         }
       });
     },
