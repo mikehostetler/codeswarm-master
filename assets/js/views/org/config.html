@@ -79,7 +79,14 @@
       <label>Select Repo</label>
       <ul class="repo-list" data-bind="foreach: repos">
         <li>
-          <a data-bind="text: name, attr: { 'data-url': url }"></a>
+          <a data-bind="attr: { 'data-url': url }">
+            <span data-bind="text: name"></span>
+            <span class="repo-meta">
+            <i class="fa fa-code-fork"></i><span data-bind="text: forks"></span>
+            <i class="fa fa-star"></i><span data-bind="text: stars"></span>
+            <i class="fa fa-eye"></i><span data-bind="text: watchers"></span>
+            </span>
+          </a>
         </li>
       </ul>
       <!-- /ko -->

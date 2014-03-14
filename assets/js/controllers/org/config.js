@@ -112,7 +112,10 @@ define([
       for (var i=0, z=repos.length; i<z; i++) {
         this.repos.push({
           name: repos[i].full_name,
-          url: repos[i].ssh_url
+          url: repos[i].ssh_url,
+          forks: repos[i].forks_count,
+          stars: repos[i].stargazers_count,
+          watchers: repos[i].watchers_count
         });
       }
     },
