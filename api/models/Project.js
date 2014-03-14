@@ -70,24 +70,29 @@ module.exports = {
     next();
   },
 
-  views: {
-    owner_id_begins_with: {
-      map:
-        function(doc) {
-          var project = doc._id;
-          var projectParts = project.split('/');
-          var repoOwner = projectParts[0];
-          var repoRepo = projectParts[1];
-          var owners = [];
-          if (doc.public) owners.push('public');
-          if (doc.owners) owners = owners.concat(doc.owners);
+  config: {
+    views: 'abc'
+  },
 
-          owners.forEach(function(owner) {
-            emit([owner, repoOwner], doc);
-            emit([owner, repoRepo], doc);
-            emit([owner, project], doc);
-          });
-        }
-    }
-  }
+
+  // views: {
+  //   owner_id_begins_with: {
+  //     map:
+  //       function(doc) {
+  //         var project = doc._id;
+  //         var projectParts = project.split('/');
+  //         var repoOwner = projectParts[0];
+  //         var repoRepo = projectParts[1];
+  //         var owners = [];
+  //         if (doc.public) owners.push('public');
+  //         if (doc.owners) owners = owners.concat(doc.owners);
+
+  //         owners.forEach(function(owner) {
+  //           emit([owner, repoOwner], doc);
+  //           emit([owner, repoRepo], doc);
+  //           emit([owner, project], doc);
+  //         });
+  //       }
+  //   }
+  // }
 };
