@@ -1,6 +1,7 @@
 define([
   'session',
-  'jquery'
+  'jquery',
+  'jqcustomselect'
 ], function (session, $) {
 
   var dom = {
@@ -154,6 +155,14 @@ define([
         $('.sidebar-list li a[data-link="'+link+'"]').click();
       }
     },
+
+    // Custom select box styling
+    customSelect: function (el) {
+      // Need to force width into css property
+      $('.customSelect').css({ 'width': $(el).outerWidth() });
+      // Apply customselect
+      $(el).customSelect();
+    }
 
   };
 

@@ -112,7 +112,7 @@ define([
       for (var i=0, z=repos.length; i<z; i++) {
         this.repos.push({
           name: repos[i].full_name,
-          url: repos[i].ssh_url,
+          url: repos[i].clone_url,
           forks: repos[i].forks_count,
           stars: repos[i].stargazers_count,
           watchers: repos[i].watchers_count,
@@ -128,14 +128,14 @@ define([
       dom.sidebarSwitcher('repo');
       // Set values
       ctor.title(data.name);
-      ctor.repo('ssh://'+data.url);
+      ctor.repo(data.url);
       ctor.availableBranches.push(['GETTING BRANCHES...']);
       // Populate branches
       var github = new Github({
         token: ctor.token(),
         auth: 'oauth'
       });
-      
+
       // Populate availableBranches
       var repo_opts = data.name.split('/');
       var repo = github.getRepo(repo_opts[0], repo_opts[1]);
@@ -153,6 +153,8 @@ define([
               ctor.availableBranches.push(branches[i]);
             }
           }
+          // Apply style
+          dom.customSelect('select');
         }
       });
     },
@@ -210,7 +212,7 @@ define([
       var payload = {
         title: this.title(),
         repo: this.title(),
-        sha: this.sha(),
+        public: this.public(),
         branch: this.branch()
       };
 

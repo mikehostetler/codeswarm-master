@@ -14,6 +14,7 @@ requirejs.config({
     'underscore': 'vendor/underscore/underscore-min',
     'gravatar': 'vendor/gravatar/gravatar',
     'base64': 'vendor/base64/base64',
+    'jqcustomselect': 'vendor/jquery.customselect/jquery.customselect.min',
     'request': 'utils/request',
     'dom': 'utils/dom',
     'session': 'utils/session'
@@ -24,6 +25,9 @@ requirejs.config({
     },
     'underscore': {
       exports: '_'
+    },
+    'jqcustomselect': {
+      exports: 'jqcustomselect'
     }
   }
 });
