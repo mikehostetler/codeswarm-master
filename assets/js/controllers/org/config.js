@@ -2,10 +2,11 @@ define([
   'knockout',
   'request',
   'dom',
-  'utils/github',
+  'github',
   'session',
-  'plugins/router'
-], function (ko, request, dom, github, session, router) {
+  'plugins/router',
+  'base64',
+], function (ko, request, dom, Github, session, router) {
 
   var ctor = {
 
@@ -52,28 +53,58 @@ define([
     public: ko.observable(),
     repos: ko.observableArray(),
 
+    // GITHUB INTEGRATION ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     getToken: function () {
       var self = this;
-      github.getToken(function (token) {
-        if (token) {
-          self.token(token);
-          self.tryGetRepos();
-        }
+      var req = request({
+        url: '/tokens/github',
+        type: 'GET'
+      });
+
+      req.done(function (data) {
+        self.token(data.token);
+        self.tryGetUser();
+      });
+
+      req.fail(function (err) {
+        console.error(err);
       });
     },
 
-    // Try to get repos
-    tryGetRepos: function () {
-      var self = this;
-      github.getGithubRepos(this.token(), function (err, repos) {
-        if (err) {
-          console.log('GH ERROR:', err);
-        } else {
-          console.log('REPOS', repos);
-          self.repos(repos);
+    // Try to get user
+    tryGetUser: function (data) {
+      var github = new Github({
+        token: this.token(),
+        auth: 'oauth'
+      });
+      var user = github.getUser();
+      this.tryGetRepos(user);
+    },
+
+    // Try to get org and user repos
+    tryGetRepos: function (user) {
+      user.repos('admin', function (err, repos) {
+        console.log(repos);
+      });
+
+      // Get orgs
+      user.orgs(function (err, orgs) {
+        if (!err) {
+          for (var org in orgs) {
+            getOrgRepos(orgs[org].login);
+          }
         }
       });
+
+      var getOrgRepos = function (org) {
+        user.orgRepos(org, function(err, repos) {
+          console.log(repos);
+        });
+      };
     },
+
+    // GET PROJECT ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     // Define get request
     getProjectRequest: {
@@ -105,6 +136,8 @@ define([
         dom.showNotification('error', JSON.parse(err.responseText).message);
       });
     },
+
+    // SAVE PROJECT ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     // Define save project request
     saveProjectRequest: {

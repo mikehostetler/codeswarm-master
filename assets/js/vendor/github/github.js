@@ -5,9 +5,10 @@
 // http://substance.io/michael/github
 
 define([
-  'base64'
+  'base64',
+  'underscore'
   ],
-  function(Base64) {
+  function(Base64, _) {
 
   // Initial Setup
   // -------------
@@ -50,7 +51,6 @@ define([
       };
       xhr.setRequestHeader('Accept','application/vnd.github.raw+json');
       xhr.setRequestHeader('Content-Type','application/json;charset=UTF-8');
-      console.log("GHUTIL: ", options.token);
       if ((options.token) || (options.username && options.password)) {
            xhr.setRequestHeader('Authorization', options.token
              ? 'token '+ options.token

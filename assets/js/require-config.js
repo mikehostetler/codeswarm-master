@@ -21,6 +21,9 @@ requirejs.config({
   shim: {
     'socketio': {
       exports: 'io'
+    },
+    'underscore': {
+      exports: '_'
     }
   }
 });
