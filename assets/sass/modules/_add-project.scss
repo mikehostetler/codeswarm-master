@@ -78,15 +78,16 @@
 
   &:before {
     position: absolute;
-    left: 0;
+    left: -15px;
     opacity: 0;
     content: '\25BA';
-    @include transition(opacity .8s ease);
+    @include transition(opacity .5s ease, left .3s ease);
   }
 
   &:hover {
     &:before {
       opacity: 1;
+      left: 0;
     }
   }
 }
