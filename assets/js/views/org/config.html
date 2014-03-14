@@ -39,7 +39,12 @@
         <input required="true" title="Enter the project repository" type="text" placeholder="ssh://git@github.com:organization/project.git" data-bind="value: repo">
 
         <label>Branch</label>
+        <!-- ko if: availableBranches().length -->
+        <select data-bind="options: availableBranches, value: branch"></select>
+        <!-- /ko -->
+        <!-- ko ifnot: availableBranches().length -->
         <input required="true" type="text" title="Enter the default branch" placeholder="Branch Name" data-bind="value: branch">
+        <!-- /ko -->
 
         <label style="clear: both; display: inline">
           <input type="checkbox" name="public" class="checkbox" data-bind="checked: public">
@@ -79,7 +84,7 @@
       <label>Select Repo</label>
       <ul class="repo-list" data-bind="foreach: repos">
         <li>
-          <a data-bind="attr: { 'data-url': url }">
+          <a data-bind="attr: { 'data-url': url, 'data-branches-url': branches_url }, click: $parent.selectRepo">
             <span data-bind="text: name"></span>
             <span class="repo-meta">
             <i class="fa fa-code-fork"></i><span data-bind="text: forks"></span>

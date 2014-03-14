@@ -52,6 +52,7 @@ define([
     branch: ko.observable(),
     public: ko.observable(),
     repos: ko.observableArray(),
+    availableBranches: ko.observableArray(),
 
     // GITHUB INTEGRATION ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -108,16 +109,45 @@ define([
 
     // List out repo in DOM via bindings
     listRepos: function (repos) {
-      var $repoList = $('.repo-list');
       for (var i=0, z=repos.length; i<z; i++) {
         this.repos.push({
           name: repos[i].full_name,
           url: repos[i].ssh_url,
           forks: repos[i].forks_count,
           stars: repos[i].stargazers_count,
-          watchers: repos[i].watchers_count
+          watchers: repos[i].watchers_count,
+          branches_url: repos[i].branches_url
         });
       }
+    },
+
+    // Handle selection from repo list
+    selectRepo: function (data) {
+      // Switch to repo view
+      dom.sidebarSwitcher('repo');
+      // Set values
+      ctor.title(data.name);
+      ctor.repo('ssh://'+data.url);
+      ctor.availableBranches.push(['GETTING BRANCHES...']);
+      // Populate branches
+      var github = new Github({
+        token: ctor.token(),
+        auth: 'oauth'
+      });
+
+      var repo_opts = data.name.split('/');
+      var repo = github.getRepo(repo_opts[0], repo_opts[1]);
+      repo.listBranches(function (err, branches) {
+        // Clear array
+        ctor.availableBranches([]);
+        if (err) {
+          ctor.availableBranches.push('master');
+        } else {
+          for (var i = 0, z =branches.length; i<z; i++) {
+            ctor.availableBranches.push(branches[i]);
+          }
+        }
+      });
     },
 
     // GET PROJECT ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
