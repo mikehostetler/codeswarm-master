@@ -21,6 +21,7 @@ var extend   = require('util')._extend;
 var projects = require('../db/projects');
 var builds   = require('../db/builds');
 var Build    = require('../../lib/build');
+var testConfig = require('../../config/test');
 
 
 var repoRegexp = /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?\.git$/;
@@ -145,6 +146,14 @@ module.exports = {
       if (err) return res.send(err.status_code || 500, err);
 
       if (! project.type) return res.send(500, new Error('no project type defined'));
+
+      var run = true;
+      if (project.state == 'running') {
+        var timeout = project.started_at + testConfig.timeout_ms;
+        run = timeout < Date.now();
+      }
+
+      if (! run) return res.send(400, new Error('Build is still running, please wait...'));
 
       var id = uuid();
       var time = Date.now();
