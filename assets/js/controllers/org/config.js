@@ -57,6 +57,7 @@ define([
       github.getToken(function (token) {
         if (token) {
           self.token(token);
+          self.tryGetRepos();
         }
       });
     },
@@ -64,7 +65,7 @@ define([
     // Try to get repos
     tryGetRepos: function () {
       var self = this;
-      github.getAvailableRepos(this.token(), function (err, repos) {
+      github.getGithubRepos(this.token(), function (err, repos) {
         if (err) {
           console.log('GH ERROR:', err);
         } else {

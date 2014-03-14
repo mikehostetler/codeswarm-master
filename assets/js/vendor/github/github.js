@@ -50,6 +50,7 @@ define([
       };
       xhr.setRequestHeader('Accept','application/vnd.github.raw+json');
       xhr.setRequestHeader('Content-Type','application/json;charset=UTF-8');
+      console.log("GHUTIL: ", options.token);
       if ((options.token) || (options.username && options.password)) {
            xhr.setRequestHeader('Authorization', options.token
              ? 'token '+ options.token

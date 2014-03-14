@@ -26,31 +26,37 @@ define([
     },
 
     getAvailableRepos: function (token, cb) {
-      this.token = token;
+      /*var self = this;
+      console.log('TRYING GITHUB WITH '+token, this);
+      self.token = token;*/
       async.parallel({
         githubRepos: this.getGithubRepos,
         userRepos: this.getUserRepos
       }, this.gotRepos);
     },
 
-    getGithubRepos: function (cb) {
+    getGithubRepos: function (token, cb) {
+      console.log('TOKEN? ', token);
       var github = new Github({
-        token: this.token,
+        token: token,
         auth: 'oauth'
       });
       var user = github.getUser();
+      console.log(user);
       user.repos('admin', cb);
     },
 
     getUserRepos: function (cb) {
-      request({
+      var req = request({
         url: '/projects',
         type: 'GET'
-      }).
-      done(function (repos) {
+      });
+
+      req.done(function (repos) {
         cb(null, repos);
-      }).
-      fail(function (err) {
+      });
+
+      req.fail(function (err) {
         cb(err);
       });
     },
