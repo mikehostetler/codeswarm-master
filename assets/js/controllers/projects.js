@@ -51,9 +51,7 @@ define([
 				dom.showSuccess("Starting build...");
 			});
 
-			req.fail(function () {
-				dom.showError("Could not start build");
-			});
+			req.fail(error.handleXhrError);
 
 		},
 
