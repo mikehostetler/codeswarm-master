@@ -76,7 +76,11 @@
 
       <!-- /ko -->
       <!-- ko if: repos -->
-      <p>This is where the repo list will go...</p>
+      <ul class="repo-list" data-bind="foreach: repos">
+        <li>
+          <a data-bind="text: name, attr: { 'data-url': url }"></a>
+        </li>
+      </ul>
       <!-- /ko -->
     </div>
 

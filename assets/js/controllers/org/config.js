@@ -55,6 +55,7 @@ define([
 
     // GITHUB INTEGRATION ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+    // Check for GH API token
     getToken: function () {
       var self = this;
       var req = request({
@@ -84,8 +85,9 @@ define([
 
     // Try to get org and user repos
     tryGetRepos: function (user) {
+      var self = this;
       user.repos('admin', function (err, repos) {
-        console.log(repos);
+        self.listRepos(repos);
       });
 
       // Get orgs
@@ -99,9 +101,20 @@ define([
 
       var getOrgRepos = function (org) {
         user.orgRepos(org, function(err, repos) {
-          console.log(repos);
+          self.listRepos(repos);
         });
       };
+    },
+
+    // List out repo in DOM via bindings
+    listRepos: function (repos) {
+      var $repoList = $('.repo-list');
+      for (var i=0, z=repos.length; i<z; i++) {
+        this.repos.push({
+          name: repos[i].full_name,
+          url: repos[i].ssh_url
+        });
+      }
     },
 
     // GET PROJECT ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
