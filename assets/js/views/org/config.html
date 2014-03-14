@@ -47,7 +47,7 @@
         <!-- /ko -->
 
         <label style="clear: both; display: inline">
-          <input type="checkbox" name="public" class="checkbox" data-bind="checked: public">
+          <input type="checkbox" name="public" class="checkbox" data-bind="checked: type">
           Public
         </label>
 
@@ -80,7 +80,8 @@
         </form>
 
       <!-- /ko -->
-      <!-- ko if: repos -->
+
+      <!-- ko if: token -->
       <label>Select Repo</label>
       <ul class="repo-list" data-bind="foreach: repos">
         <li>

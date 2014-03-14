@@ -50,7 +50,7 @@ define([
     title: ko.observable(),
     repo: ko.observable(),
     branch: ko.observable(),
-    public: ko.observable(),
+    type: ko.observable(),
     repos: ko.observableArray(),
     availableBranches: ko.observableArray(),
 
@@ -127,7 +127,7 @@ define([
       // Switch to repo view
       dom.sidebarSwitcher('repo');
       // Set values
-      ctor.title(data.name);
+      ctor.title(data.name.substring(data.name.indexOf('/') + 1));
       ctor.repo(data.url);
       ctor.availableBranches.push(['GETTING BRANCHES...']);
       // Populate branches
@@ -211,8 +211,8 @@ define([
       // Set payload
       var payload = {
         title: this.title(),
-        repo: this.title(),
-        public: this.public(),
+        repo: this.repo(),
+        type: this.type() || 0,
         branch: this.branch()
       };
 
