@@ -161,7 +161,8 @@ module.exports = {
         branch: project.branch,
         commit: 'HEAD',
         type: project.type,
-        plugins: project.plugins
+        plugins: project.plugins,
+        state: 'pending'
       };
 
       build.branch = project.branch;
