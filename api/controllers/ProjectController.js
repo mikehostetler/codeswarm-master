@@ -174,11 +174,6 @@ module.exports = {
         state: 'pending'
       };
 
-      build.branch = project.branch;
-
-      // Set state object
-      build.state = 'pending';
-
       builds.create(build, createdBuild);
     }
 
