@@ -116,7 +116,8 @@ define([
           forks: repos[i].forks_count,
           stars: repos[i].stargazers_count,
           watchers: repos[i].watchers_count,
-          branches_url: repos[i].branches_url
+          branches_url: repos[i].branches_url,
+          default_branch: repos[i].default_branch
         });
       }
     },
@@ -134,7 +135,8 @@ define([
         token: ctor.token(),
         auth: 'oauth'
       });
-
+      
+      // Populate availableBranches
       var repo_opts = data.name.split('/');
       var repo = github.getRepo(repo_opts[0], repo_opts[1]);
       repo.listBranches(function (err, branches) {
@@ -143,8 +145,13 @@ define([
         if (err) {
           ctor.availableBranches.push('master');
         } else {
+          // Set default branch as first option
+          ctor.availableBranches.push(data.default_branch);
+          // Loop and add all other branches
           for (var i = 0, z =branches.length; i<z; i++) {
-            ctor.availableBranches.push(branches[i]);
+            if (branches[i]!==data.default_branch) {
+              ctor.availableBranches.push(branches[i]);
+            }
           }
         }
       });
