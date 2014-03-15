@@ -22,13 +22,18 @@ define([
     // Set displayName
     displayName: 'About CodeSwarm',
 
-    // Initialization
-    activate: function (context) {
-      this.tryGetProjects();
-    },
-
     // Define model
     projects: ko.observableArray(),
+    org: ko.observable(),
+
+    // Initialization
+    activate: function (org) {
+      // Check org
+      if (org !== 'projects') {
+        this.org(org.toLowerCase());
+      }
+      this.tryGetProjects();
+    },
 
     // Define request
     projectsReq: {
@@ -41,12 +46,17 @@ define([
       // Make Request
       var req = request(this.projectsReq);
 
+      // Empty observableArray
+      this.projects([]);
+
       // On success
       req.done(function (data) {
-        console.log('PROJECTS');
-        console.log(data);
+        var org;
         for (var i=0, z=data.length; i<z; i++) {
-          self.projects.push(data[i]);
+          org = data[i]._id.substr(0, data[i]._id.indexOf('/')).toLowerCase();
+          if (self.org() && org === self.org()) {
+            self.projects.push(data[i]);
+          }
         }
       });
 

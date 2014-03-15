@@ -31,10 +31,10 @@ define([
       this.param_repo = repo;
       // If not new project, load data from endpoint
       if (!org || !repo) {
+        this.newProject = ko.observable(true);
+      } else {
         this.tryGetProject();
         this.newProject = ko.observable(false);
-      } else {
-        this.newProject = ko.observable(true);
       }
       // Get tokens
       this.getToken();

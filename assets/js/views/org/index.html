@@ -17,14 +17,14 @@
         <tr>
             <td>
               <div class="anchor-wrap">
-                <a href="#/{{_id}}/" title="Build Passing">
+                <a data-bind="attr: { 'href': _id }" title="Build Passing">
                     <img src="../images/build-passing.png" alt="Build Passing">
                 </a>
               </div>
             </td>
             <td>
               <div class="anchor-wrap">
-                <a>
+                <a  data-bind="attr: { 'href': _id }">
                 <h4 class="project" data-bind="text: _id"></h4>
                 <em class="repo" data-bind="text: repo"></em>
                 </a>
