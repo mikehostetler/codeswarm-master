@@ -14,34 +14,14 @@
             </tr>
         </thead>
         <tbody data-bind="foreach: projects">
-        <!-- ko if: projects().length -->
         <tr>
             <td>
               <div class="anchor-wrap">
-                <!--{{#compare state "failed" operator="==="}}
-                <a href="#/{{_id}}/" title="Build Failing">
-                    <img src="../images/build-failing.png" alt="Build Failing">
-                </a>
-                {{/compare}}
-
-                {{#compare state "passed" operator="==="}}-->
                 <a href="#/{{_id}}/" title="Build Passing">
                     <img src="../images/build-passing.png" alt="Build Passing">
                 </a>
-                <!--{{/compare}}
-
-                {{#compare state "running" operator="==="}}
-                <a href="#/{{_id}}/" title="Processing">
-                    <img src="../images/build-pending.png" alt="Build Pending">
-                </a>
-                {{/compare}}
-
-                {{#compare state undefined operator="==="}}
-                <a title="No Builds"><i class="fa fa-circle"></i></a>
-                {{/compare}}-->
               </div>
             </td>
-
             <td>
               <div class="anchor-wrap">
                 <a>
@@ -50,7 +30,6 @@
                 </a>
               </div>
             </td>
-
             <td>
               <div class="anchor-wrap">
                 <a>
@@ -61,16 +40,11 @@
             </td>
         </tr>
 
-        <!-- /ko -->
-        
-        <!-- ko ifnot: projects().length -->
-        
-        <tr>
+
+        <!--<tr>
         	<td class="center empty-projects" colspan="5"><em>No projects currently exist. <a href="#/project/new">Create One &raquo;</a></em></td>
-        </tr>
-        
-        <!-- /ko -->
-        
+        </tr>-->
+
         </tbody>
     </table>
 
