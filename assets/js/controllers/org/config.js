@@ -101,7 +101,7 @@ define([
       });
 
       var getOrgRepos = function (org) {
-        user.orgRepos(org, function(err, repos) {
+        user.orgRepos(org, function (err, repos) {
           self.listRepos(repos);
         });
       };
@@ -109,7 +109,7 @@ define([
 
     // List out repo in DOM via bindings
     listRepos: function (repos) {
-      for (var i=0, z=repos.length; i<z; i++) {
+      for (var i = 0, z = repos.length; i < z; i++) {
         this.repos.push({
           name: repos[i].full_name,
           url: repos[i].clone_url,
@@ -148,8 +148,8 @@ define([
           // Set default branch as first option
           ctor.availableBranches.push(data.default_branch);
           // Loop and add all other branches
-          for (var i = 0, z =branches.length; i<z; i++) {
-            if (branches[i]!==data.default_branch) {
+          for (var i = 0, z = branches.length; i < z; i++) {
+            if (branches[i] !== data.default_branch) {
               ctor.availableBranches.push(branches[i]);
             }
           }

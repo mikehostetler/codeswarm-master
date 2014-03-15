@@ -152,14 +152,16 @@ define([
         });
       } else {
         // Link passed, fire click event
-        $('.sidebar-list li a[data-link="'+link+'"]').click();
+        $('.sidebar-list li a[data-link="' + link + '"]').click();
       }
     },
 
     // Custom select box styling
     customSelect: function (el) {
       // Need to force width into css property
-      $('.customSelect').css({ 'width': $(el).outerWidth() });
+      $('.customSelect').css({
+        'width': $(el).outerWidth()
+      });
       // Apply customselect
       $(el).customSelect();
     }

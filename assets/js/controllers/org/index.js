@@ -32,9 +32,7 @@ define([
     // Initialization
     activate: function (org) {
       this.orgs([]);
-
       this.org(org.toLowerCase());
-
       // Setup orgs list
       this.getToken();
       // Load projects
@@ -77,29 +75,24 @@ define([
       console.log('USER', user);
       user.orgs(function (err, orgs) {
         if (!err) {
-          for (var i=0, z=orgs.length; i<z; i++) {
+          for (var i = 0, z = orgs.length; i < z; i++) {
             self.orgs.push(orgs[i].login.toLowerCase());
           }
           // Have to use jQuery because Durandal messes up the
           // observable assigned to 'value' on the view's <select> bindings
           // @TODO: FIX IT!
           $('#org-filter').
-            on('change', function () {
-              var goto = $(this).val();
-              router.navigate(goto);
-            }).
-            find('option').filter(function() {
-              return $(this).text() === self.org();
-            }).prop('selected', true);
-            // Apply custom UI
+          on('change', function () {
+            var goto = $(this).val();
+            router.navigate(goto);
+          }).
+          find('option').filter(function () {
+            return $(this).text() === self.org();
+          }).prop('selected', true);
+          // Apply custom UI
           dom.customSelect('select');
         }
       });
-    },
-
-    changeOrg: function () {
-      //router.navigate('/'+this.org());
-      console.log('ROUTE ', this.org());
     },
 
     // Get Projects ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -121,7 +114,7 @@ define([
       // On success
       req.done(function (data) {
         var org;
-        for (var i=0, z=data.length; i<z; i++) {
+        for (var i = 0, z = data.length; i < z; i++) {
           org = data[i]._id.substr(0, data[i]._id.indexOf('/')).toLowerCase();
           if (self.org() === 'projects') {
             self.projects.push(data[i]);
