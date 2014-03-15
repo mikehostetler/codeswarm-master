@@ -30,7 +30,7 @@ define([
       this.param_org = org;
       this.param_repo = repo;
       // If not new project, load data from endpoint
-      if (repo !== 'new-project') {
+      if (!org || !repo) {
         this.tryGetProject();
         this.newProject = ko.observable(false);
       } else {
