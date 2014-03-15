@@ -54,8 +54,8 @@ define([
         var org;
         for (var i=0, z=data.length; i<z; i++) {
           org = data[i]._id.substr(0, data[i]._id.indexOf('/')).toLowerCase();
-          if (self.org() && org === self.org()) {
-            self.projects.push(data[i]);
+          if (ctor.org() === undefined || org === self.org()) {
+            ctor.projects.push(data[i]);
           }
         }
       });
