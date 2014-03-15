@@ -32,7 +32,7 @@ define([
     // Initialization
     activate: function (org) {
       this.org(null);
-      this.orgs([ { name: 'All Projects', rel: '/#projects' } ]);
+      this.orgs([ { login: 'All Projects', rel: '/#projects' } ]);
       // Check org
       if (org !== 'projects') {
         this.org(org.toLowerCase());
@@ -55,7 +55,7 @@ define([
 
       req.done(function (data) {
         self.token(data.token);
-        self.tryGetOrgs();
+        self.tryGetUser(data);
       });
 
       req.fail(function (err) {
@@ -74,7 +74,16 @@ define([
     },
 
     tryGetOrgs: function (user) {
-
+      var self = this;
+      user.orgs(function (err, orgs) {
+        if (!err) {
+          for (var i=0, z=orgs.length; i<z; i++) {
+            orgs[i].rel = '#'+orgs[i].login;
+            self.orgs.push(orgs[i]);
+          }
+          dom.customSelect('select');
+        }
+      });
     },
 
     // Get Projects ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
