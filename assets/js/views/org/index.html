@@ -13,6 +13,7 @@
                 <th width="175">Last Build</th>
             </tr>
         </thead>
+        <!-- ko if: projects().length -->
         <tbody data-bind="foreach: projects">
         <tr>
             <td>
@@ -39,11 +40,19 @@
               </div>
             </td>
         </tr>
+        </tbody>
 
+        <!-- /ko -->
 
-        <!--<tr>
-        	<td class="center empty-projects" colspan="5"><em>No projects currently exist. <a href="#/project/new">Create One &raquo;</a></em></td>
-        </tr>-->
+        <!-- ko ifnot: projects().length -->
+        <tbody>
+        <tr>
+        	<td class="center empty-projects" colspan="3">
+        	  <em>No projects currently exist. <a href="#/new-project">Create One &raquo;</a></em>
+        	</td>
+        </tr>
+        </tbody>
+        <!-- /ko -->
 
         </tbody>
     </table>
