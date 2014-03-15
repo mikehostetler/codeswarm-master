@@ -28,6 +28,7 @@ define([
 
     // Initialization
     activate: function (org) {
+      this.org(null);
       // Check org
       if (org !== 'projects') {
         this.org(org.toLowerCase());
@@ -54,8 +55,12 @@ define([
         var org;
         for (var i=0, z=data.length; i<z; i++) {
           org = data[i]._id.substr(0, data[i]._id.indexOf('/')).toLowerCase();
-          if (ctor.org() === undefined || org === self.org()) {
-            ctor.projects.push(data[i]);
+          if (self.org() === null) {
+            self.projects.push(data[i]);
+          } else {
+            if (org === self.org()) {
+              self.projects.push(data[i]);
+            }
           }
         }
       });
