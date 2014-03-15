@@ -31,12 +31,10 @@ define([
 
     // Initialization
     activate: function (org) {
-      this.org(null);
-      this.orgs([ { login: 'All Projects', rel: '/#projects' } ]);
-      // Check org
-      if (org !== 'projects') {
-        this.org(org.toLowerCase());
-      }
+      this.orgs([]);
+
+      this.org(org.toLowerCase());
+
       // Setup orgs list
       this.getToken();
       // Load projects
@@ -75,15 +73,33 @@ define([
 
     tryGetOrgs: function (user) {
       var self = this;
+      this.orgs.push('projects');
+      console.log('USER', user);
       user.orgs(function (err, orgs) {
         if (!err) {
           for (var i=0, z=orgs.length; i<z; i++) {
-            orgs[i].rel = '#'+orgs[i].login;
-            self.orgs.push(orgs[i]);
+            self.orgs.push(orgs[i].login.toLowerCase());
           }
+          // Have to use jQuery because Durandal messes up the
+          // observable assigned to 'value' on the view's <select> bindings
+          // @TODO: FIX IT!
+          $('#org-filter').
+            on('change', function () {
+              var goto = $(this).val();
+              router.navigate(goto);
+            }).
+            find('option').filter(function() {
+              return $(this).text() === self.org();
+            }).prop('selected', true);
+            // Apply custom UI
           dom.customSelect('select');
         }
       });
+    },
+
+    changeOrg: function () {
+      //router.navigate('/'+this.org());
+      console.log('ROUTE ', this.org());
     },
 
     // Get Projects ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -107,7 +123,7 @@ define([
         var org;
         for (var i=0, z=data.length; i<z; i++) {
           org = data[i]._id.substr(0, data[i]._id.indexOf('/')).toLowerCase();
-          if (self.org() === null) {
+          if (self.org() === 'projects') {
             self.projects.push(data[i]);
           } else {
             if (org === self.org()) {

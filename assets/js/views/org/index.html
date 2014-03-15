@@ -65,19 +65,14 @@
 
       <!-- ko if: token -->
           <h3 class="sidebar-list-title">Filter</h3>
-
-          <!--<select data-bind="options: orgs,
-                             optionsText: function(org) {
-                               return org.login
-                             },
-                             value: function (org) {
-                               return org.rel
-                             }">
-          </select>-->
-          <select data-bind="
+          <select id="org-filter" data-bind="
               options: orgs,
-              optionsText: 'login',
-              optionsValue: 'rel'">
+              optionsText: function (org) {
+                if (org==='projects') {
+                  return 'View All'
+                }
+                return org
+              }">
           </select>
       <!-- /ko -->
       </div>
