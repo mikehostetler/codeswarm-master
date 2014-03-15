@@ -64,8 +64,12 @@ define([
         token: this.token(),
         auth: 'oauth'
       });
-      var repo = github.getRepo(this.org(), this.repo());
-      console.log('REPO', repo);
+      var repo = github.getRepo(this.repo(), this.org());
+      repo.show(function (err, data) {
+        if (!err) {
+          console.log('REPO', data);
+        }
+      });
       this.tryGetProject();
     },
 
