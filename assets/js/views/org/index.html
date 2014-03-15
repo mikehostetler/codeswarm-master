@@ -13,9 +13,10 @@
                 <th width="175">Last Build</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody data-bind="foreach: projects">
+        <!-- ko if: projects().length -->
         <tr>
-            <td data-status="{{_id}}">
+            <td>
               <div class="anchor-wrap">
                 <!--{{#compare state "failed" operator="==="}}
                 <a href="#/{{_id}}/" title="Build Failing">
@@ -43,36 +44,33 @@
 
             <td>
               <div class="anchor-wrap">
-                <a href="{{this.view}}">
-            	<!--{{#if this.view}}-->
-                <h4 class="project">{{this._id}}</h4>
-                <!--{{/if}}-->
-                <em class="repo">{{this.repo}}</em>
+                <a>
+                <h4 class="project" data-bind="text: _id"></h4>
+                <em class="repo" data-bind="text: repo"></em>
                 </a>
               </div>
             </td>
 
             <td>
               <div class="anchor-wrap">
-                <a href="{{this.view}}">
+                <a>
                     <span class="last-build" data-timestamp="{{this._id}}">
-                        <span class="last-build--title">Last build:</span>
-                        {{#if this.ended_at}}
-                          {{ended_at}}
-                        {{else}}
-                          Never
-                        {{/if}}
                     </span>
                 </a>
               </div>
             </td>
         </tr>
 
-        <!--
+        <!-- /ko -->
+        
+        <!-- ko ifnot: projects().length -->
+        
         <tr>
         	<td class="center empty-projects" colspan="5"><em>No projects currently exist. <a href="#/project/new">Create One &raquo;</a></em></td>
         </tr>
-        -->
+        
+        <!-- /ko -->
+        
         </tbody>
     </table>
 

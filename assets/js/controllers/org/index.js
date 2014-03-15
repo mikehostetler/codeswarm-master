@@ -28,7 +28,7 @@ define([
     },
 
     // Define model
-    SOMEPROPERTY: ko.observable(),
+    projects: ko.observableArray(),
 
     // Define request
     projectsReq: {
@@ -37,14 +37,17 @@ define([
     },
 
     tryGetProjects: function () {
-      // Set payload
-      var payload = {};
+      var self = this;
       // Make Request
-      var req = request(this.projectsReq, payload);
+      var req = request(this.projectsReq);
 
       // On success
       req.done(function (data) {
+        console.log('PROJECTS');
         console.log(data);
+        for (var i=0, z=data.length; i<z; i++) {
+          self.projects.push(data[i]);
+        }
       });
 
       // On failure
