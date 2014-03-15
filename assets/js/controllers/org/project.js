@@ -3,8 +3,9 @@ define([
   'request',
   'dom',
   'session',
+  'github',
   'plugins/router'
-], function (ko, request, dom, session, router) {
+], function (ko, request, dom, session, Github, router) {
 
   var ctor = {
 
@@ -22,22 +23,60 @@ define([
     // Set displayName
     displayName: 'Project',
 
+    // Define model
+    _id: ko.observable(),
+    title: ko.observable(),
+    org: ko.observable(),
+    repo: ko.observable(),
+    branch: ko.observable(),
+    token: ko.observable(),
+
     // Initialization
-    activator: function (org, repo) {
-      this.param_org = org;
-      this.param_repo = repo;
+    activate: function (org, repo) {
+      this.org(org);
+      this.repo(repo);
+      this.getToken();
     },
 
-    // Define model
-    title: ko.observable(),
-    repo: ko.observable(),
-    sha: ko.observable(),
-    branch: ko.observable(),
+    // Github Integration ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    // Check for GH API token
+    getToken: function () {
+      var self = this;
+      var req = request({
+        url: '/tokens/github',
+        type: 'GET'
+      });
+
+      req.done(function (data) {
+        self.token(data.token);
+        self.tryGetRepo();
+      });
+
+      req.fail(function (err) {
+        console.error(err);
+      });
+    },
+
+    // Try to get user
+    tryGetRepo: function (data) {
+      var github = new Github({
+        token: this.token(),
+        auth: 'oauth'
+      });
+      var repo = github.getRepo(this.org(), this.repo());
+      console.log('REPO', repo);
+      this.tryGetProject();
+    },
+
+    // Get Data ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
 
     // Define get request
     getProjectRequest: {
       url: function () {
-        return '/projects/' + ctor.param_org + '/' + ctor.param_repo;
+        return '/projects/' + ctor.org() + '/' + ctor.repo();
       },
       type: 'GET'
     },
@@ -51,12 +90,11 @@ define([
 
       // On success
       req.done(function (data) {
-        console.log(data);
         // Loop through data response
-        for (var prop in data) {
-          // Assing model attr value with returned val
-          self[prop](data[prop]);
-        }
+        self._id(data._id);
+        self.title(data.title);
+        self.repo(data.repo);
+        self.branch(data.branch);
       });
 
       // On failure
