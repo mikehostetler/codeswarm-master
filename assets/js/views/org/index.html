@@ -50,6 +50,30 @@
 
     <div class="sidebar">
       <div class="sidebar-list-contain">
+        <!-- ko ifnot: token -->
+        <p>You need to be logged in to github in order to add a project.</p>
+
+        <br>
+
+          <form method="post" action="/tokens/github">
+
+              <button class="btn">Login to Github</button>
+
+          </form>
+
+      <!-- /ko -->
+
+      <!-- ko if: token -->
+          <h3 class="sidebar-list-title">Orgs</h3>
+
+          <ul class="sidebar-list">
+            <li class="sidebar-list--active">
+              <a class="show-repo" data-link="repo"><strong>Some Org...</strong></a>
+            </li>
+          </ul>
+      <!-- /ko -->
+      </div>
+      <!--<div class="sidebar-list-contain">
         <h3 class="sidebar-list-title">Recent project builds</h3>
 
         <ul class="sidebar-list">
@@ -78,6 +102,6 @@
         <div class="sidebar-list-actions">
           <a href="#" class="btn btn-sml">View all</a>
         </div>
-      </div>
+      </div>-->
     </div>
 </div>

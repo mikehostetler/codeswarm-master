@@ -3,8 +3,9 @@ define([
   'request',
   'dom',
   'session',
+  'github',
   'plugins/router'
-], function (ko, request, dom, session, router) {
+], function (ko, request, dom, session, Github, router) {
 
   var ctor = {
 
@@ -25,16 +26,58 @@ define([
     // Define model
     projects: ko.observableArray(),
     org: ko.observable(),
+    orgs: ko.observableArray(),
+    token: ko.observable(),
 
     // Initialization
     activate: function (org) {
       this.org(null);
+      this.orgs([ { name: 'All Projects', rel: '/#projects' } ]);
       // Check org
       if (org !== 'projects') {
         this.org(org.toLowerCase());
       }
+      // Setup orgs list
+      this.getToken();
+      // Load projects
       this.tryGetProjects();
     },
+
+    // Github Integration ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    // Check for GH API token
+    getToken: function () {
+      var self = this;
+      var req = request({
+        url: '/tokens/github',
+        type: 'GET'
+      });
+
+      req.done(function (data) {
+        self.token(data.token);
+        self.tryGetOrgs();
+      });
+
+      req.fail(function (err) {
+        console.error(err);
+      });
+    },
+
+    // Try to get user
+    tryGetUser: function (data) {
+      var github = new Github({
+        token: this.token(),
+        auth: 'oauth'
+      });
+      var user = github.getUser();
+      this.tryGetOrgs(user);
+    },
+
+    tryGetOrgs: function (user) {
+
+    },
+
+    // Get Projects ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     // Define request
     projectsReq: {
