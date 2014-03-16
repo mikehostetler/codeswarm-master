@@ -30,6 +30,7 @@ define([
     repo: ko.observable(),
     branch: ko.observable(),
     token: ko.observable(),
+    stats: ko.observable(),
 
     // Initialization
     activate: function (org, repo) {
@@ -60,15 +61,22 @@ define([
 
     // Try to get user
     tryGetRepo: function (data) {
+      var self = this;
       var github = new Github({
         token: this.token(),
         auth: 'oauth'
       });
       var repo = github.getRepo(this.repo(), this.org());
-      repo.show(function (err, data) {
-        if (!err) {
-          console.log('REPO', data);
-        }
+      repo.show(function (err, repo) {
+        console.log(repo);
+        self.stats({
+          watchers: repo.watchers,
+          subscribers: repo.subscribers_count,
+          issues: repo.open_issues,
+          forks: repo.forks_count,
+          access: (repo.private) ? 'private' : 'public'
+        });
+
       });
       this.tryGetProject();
     },

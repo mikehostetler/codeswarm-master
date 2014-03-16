@@ -27,7 +27,13 @@
   <div class="sidebar">
     <section class="sidebar-glance-contain">
       <h3 class="sidebar-glance-title">At a Glance</h3>
-      <p class="sidebar-glance"><span><strong>6</strong> authors</span> have pushed <span><strong>66</strong> commits</span> to all branches, excluding merges. On master, <span><strong>70</strong> files</span> have changed and there have been <span><strong>50,134</strong> additions</span> and <span><strong>729</strong> deletions</span>.</p>
+      <p class="sidebar-glance" data-bind="foreach: stats">
+        This is a <span><strong data-bind="text: access"></strong> repository</span>
+        with <span><strong data-bind="text: forks"></strong> forks</span>,
+        <span><strong data-bind="text: watchers"></strong> watchers</span>, a total of
+        <span><strong data-bind="text: subscribers"></strong> subscribers</span> and
+        <span><strong data-bind="text: issues"></strong> open issues</span>.
+      </p>
     </section>
 
     <section class="sidebar-list-contain">
