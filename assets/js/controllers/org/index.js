@@ -3,9 +3,9 @@ define([
   'request',
   'dom',
   'session',
-  'github',
+  'utils/github',
   'plugins/router'
-], function (ko, request, dom, session, Github, router) {
+], function (ko, request, dom, session, github, router) {
 
   var ctor = {
 
@@ -34,64 +34,36 @@ define([
       this.orgs([]);
       this.org(org.toLowerCase());
       // Setup orgs list
-      this.getToken();
+      this.tryGetOrgs();
       // Load projects
       this.tryGetProjects();
     },
 
     // Github Integration ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    // Check for GH API token
-    getToken: function () {
-      var self = this;
-      var req = request({
-        url: '/tokens/github',
-        type: 'GET'
-      });
-
-      req.done(function (data) {
-        self.token(data.token);
-        self.tryGetUser(data);
-      });
-
-      req.fail(function (err) {
-        console.error(err);
-      });
-    },
-
-    // Try to get user
-    tryGetUser: function (data) {
-      var github = new Github({
-        token: this.token(),
-        auth: 'oauth'
-      });
-      var user = github.getUser();
-      this.tryGetOrgs(user);
-    },
-
     tryGetOrgs: function (user) {
       var self = this;
+      // Push default (all)
       this.orgs.push('projects');
-      console.log('USER', user);
-      user.orgs(function (err, orgs) {
-        if (!err) {
-          for (var i = 0, z = orgs.length; i < z; i++) {
-            self.orgs.push(orgs[i].login.toLowerCase());
+      github.gitUser(function (err, user) {
+        user.orgs(function (err, orgs) {
+          if (!err) {
+            for (var i = 0, z = orgs.length; i < z; i++) {
+              self.orgs.push(orgs[i].login.toLowerCase());
+            }
+            // Have to use jQuery because Durandal messes up the
+            // observable assigned to 'value' on the view's <select> bindings
+            // @TODO: FIX IT!
+            $('#org-filter').on('change', function () {
+              var goto = $(this).val();
+              router.navigate(goto);
+            }).find('option').filter(function () {
+              return $(this).text() === self.org();
+            }).prop('selected', true);
+            // Apply custom select UI
+            dom.customSelect('select');
           }
-          // Have to use jQuery because Durandal messes up the
-          // observable assigned to 'value' on the view's <select> bindings
-          // @TODO: FIX IT!
-          $('#org-filter').
-          on('change', function () {
-            var goto = $(this).val();
-            router.navigate(goto);
-          }).
-          find('option').filter(function () {
-            return $(this).text() === self.org();
-          }).prop('selected', true);
-          // Apply custom UI
-          dom.customSelect('select');
-        }
+        });
       });
     },
 
