@@ -121,8 +121,13 @@ define([
 
       // Populate availableBranches
       var repo_opts = data.name.split('/');
+      ctor.getBranches(repo_opts[0], repo_opts[1], data.default_branch);
 
-      github.getRepo(repo_opts[0], repo_opts[1], function (err, repo) {
+    },
+
+    // Gets available branches
+    getBranches: function (org, repo, default_branch) {
+      github.getRepo(org, org, function (err, repo) {
         if (err) {
           dom.showNotification('error', err);
         } else {
@@ -134,10 +139,10 @@ define([
               ctor.availableBranches.push('master');
             } else {
               // Set default branch as first option
-              ctor.availableBranches.push(data.default_branch);
+              ctor.availableBranches.push(default_branch);
               // Loop and add all other branches
               for (var i = 0, z = branches.length; i < z; i++) {
-                if (branches[i] !== data.default_branch) {
+                if (branches[i] !== default_branch) {
                   ctor.availableBranches.push(branches[i]);
                 }
               }
