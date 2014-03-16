@@ -39,6 +39,7 @@ define([
       // Set param props
       this.param_org = org;
       this.param_repo = repo;
+      this.availableBranches([]);
       // If not new project, load data from endpoint
       if (!org || !repo) {
         this.newProject = ko.observable(true);
@@ -46,12 +47,12 @@ define([
         this.repo(null);
         this.branch(null);
         this.type(null);
+        // Get repos list
+        this.tryGetRepos();
       } else {
         this.tryGetProject();
         this.newProject = ko.observable(false);
       }
-      // Get tokens
-      this.tryGetRepos();
     },
 
     compositionComplete: function () {
@@ -179,11 +180,10 @@ define([
         self.branch(data.branch);
         self.type(data.type);
         self.public(data.public);
-        
+
         // Load branches
         var repo_opts = data._id.split('/');
         ctor.getBranches(repo_opts[0], repo_opts[1], data.branch);
-        self.getBranches();
       });
 
       // On failure
