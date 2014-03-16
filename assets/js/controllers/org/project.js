@@ -67,7 +67,7 @@ define([
         token: this.token(),
         auth: 'oauth'
       });
-      var repo = github.getRepo(this.repo(), this.org());
+      var repo = github.getRepo(this.org(), this.repo());
       repo.show(function (err, repo) {
         self.stats({
           watchers: repo.watchers,
