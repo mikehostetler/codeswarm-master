@@ -179,6 +179,11 @@ define([
         self.branch(data.branch);
         self.type(data.type);
         self.public(data.public);
+        
+        // Load branches
+        var repo_opts = data._id.split('/');
+        ctor.getBranches(repo_opts[0], repo_opts[1], data.branch);
+        self.getBranches();
       });
 
       // On failure
