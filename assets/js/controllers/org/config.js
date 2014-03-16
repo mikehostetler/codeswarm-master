@@ -168,7 +168,6 @@ define([
 
       // On success
       req.done(function (data) {
-        console.log('DATA', data);
         // Loop through data response
         self._id(data._id);
         self.repo(data.repo);
@@ -188,7 +187,7 @@ define([
     // Define save project request
     saveProjectRequest: {
       url: function () {
-        if (ctor.newProject) {
+        if (ctor.newProject()) {
           return '/projects';
         } else {
           return '/projects/' + ctor.param_org + '/' + ctor.param_repo;
