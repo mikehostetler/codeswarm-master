@@ -31,6 +31,7 @@ define([
     branch: ko.observable(),
     token: ko.observable(),
     stats: ko.observable(),
+    config_url: ko.observable(),
 
     // Initialization
     activate: function (org, repo) {
@@ -68,7 +69,6 @@ define([
       });
       var repo = github.getRepo(this.repo(), this.org());
       repo.show(function (err, repo) {
-        console.log(repo);
         self.stats({
           watchers: repo.watchers,
           subscribers: repo.subscribers_count,
@@ -76,7 +76,6 @@ define([
           forks: repo.forks_count,
           access: (repo.private) ? 'private' : 'public'
         });
-
       });
       this.tryGetProject();
     },
@@ -107,6 +106,9 @@ define([
         self.title(data.title);
         self.repo(data.repo);
         self.branch(data.branch);
+        
+        // Config URL
+        self.config_url('/#/' + data._id + '/config');
       });
 
       // On failure
