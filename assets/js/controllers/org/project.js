@@ -82,8 +82,6 @@ define([
 
     // Get Data ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-
-
     // Define get request
     getProjectRequest: {
       url: function () {
@@ -106,7 +104,7 @@ define([
         self.title(data.title);
         self.repo(data.repo);
         self.branch(data.branch);
-        
+
         // Config URL
         self.config_url('/#/' + data._id + '/config');
       });
