@@ -48,7 +48,6 @@ define([
     // Define model
     token: ko.observable(false),
     _id: ko.observable(),
-    title: ko.observable(),
     repo: ko.observable(),
     branch: ko.observable(),
     type: ko.observable(),
@@ -128,7 +127,6 @@ define([
       // Switch to repo view
       dom.sidebarSwitcher('repo');
       // Set values
-      ctor.title(data.name.substring(data.name.indexOf('/') + 1));
       ctor.repo(data.url);
       ctor.availableBranches.push(['GETTING BRANCHES...']);
       // Populate branches
@@ -179,10 +177,9 @@ define([
 
       // On success
       req.done(function (data) {
-        console.log(data);
+        console.log('DATA',data);
         // Loop through data response
         self._id = data._id;
-        self.title = data.title;
         self.repo = data.repo;
         self.branch = data.branch;
         self.type = data.type;
@@ -212,7 +209,6 @@ define([
 
       // Set payload
       var payload = {
-        title: this.title(),
         repo: this.repo(),
         type: this.type() || 0,
         branch: this.branch()
