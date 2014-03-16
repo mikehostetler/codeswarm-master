@@ -68,24 +68,29 @@ define([
       var self = this;
 
       github.getUser(function (err, user) {
-        user.repos('admin', function (err, repos) {
-          self.listRepos(repos);
-        });
-
-        // Get orgs
-        user.orgs(function (err, orgs) {
-          if (!err) {
-            for (var org in orgs) {
-              getOrgRepos(orgs[org].login);
-            }
-          }
-        });
-
-        var getOrgRepos = function (org) {
-          user.orgRepos(org, function (err, repos) {
+        if (err) {
+          dom.showNotification('error', err);
+        } else {
+          self.token(true);
+          user.repos('admin', function (err, repos) {
             self.listRepos(repos);
           });
-        };
+  
+          // Get orgs
+          user.orgs(function (err, orgs) {
+            if (!err) {
+              for (var org in orgs) {
+                getOrgRepos(orgs[org].login);
+              }
+            }
+          });
+  
+          var getOrgRepos = function (org) {
+            user.orgRepos(org, function (err, repos) {
+              self.listRepos(repos);
+            });
+          };
+        }
       });
     },
 
