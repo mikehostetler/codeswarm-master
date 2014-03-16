@@ -122,7 +122,7 @@ define([
       // Populate availableBranches
       var repo_opts = data.name.split('/');
 
-      github.getRepos(repo_opts[0], repo_opts[1], function (err, repo) {
+      github.getRepo(repo_opts[0], repo_opts[1], function (err, repo) {
         if (err) {
           dom.showNotification('error', err);
         } else {
@@ -170,11 +170,11 @@ define([
       req.done(function (data) {
         console.log('DATA', data);
         // Loop through data response
-        self._id = data._id;
-        self.repo = data.repo;
-        self.branch = data.branch;
-        self.type = data.type;
-        self.public = data.public;
+        self._id(data._id);
+        self.repo(data.repo);
+        self.branch(data.branch);
+        self.type(data.type);
+        self.public(data.public);
       });
 
       // On failure
