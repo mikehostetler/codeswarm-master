@@ -8,7 +8,7 @@
 <a class="breadcrumb-link breadcrumb-hide">New Project</a>
   <!-- /ko -->
   <span class="breadcrumb-active breadcrumb-hide">&nbsp;Config</span>
-  <!-- ko ifnot: newProject -->
+  <!-- ko if: _id -->
   <a href="#/new-project" class="btn right"><i class="fa fa-plus-circle"></i>New Project</a>
   <!-- /ko -->
 </h1>
@@ -22,9 +22,11 @@
         <li class="sidebar-list--active">
           <a class="show-repo" data-link="repo"><strong>Repository</strong></a>
         </li>
+        <!-- ko ifnot: _id -->
         <li>
           <a class="show-github" data-link="github"><strong>GitHub</strong></a>
         </li>
+        <!-- /ko -->
       </ul>
     </section>
   </div>
