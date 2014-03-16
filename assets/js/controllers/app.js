@@ -98,6 +98,11 @@ define([
 
         // Orgs
         {
+          route: 'new-project',
+          moduleId: 'controllers/org/config',
+          title: 'New Project',
+          nav: true
+        }, {
           route: ':org',
           moduleId: 'controllers/org/index',
           title: 'Projects List',

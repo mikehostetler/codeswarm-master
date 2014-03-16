@@ -6,12 +6,12 @@
 </h1>
 
 <div class="content-wrap">
-  <h1 class="project-title"><span data-bind="text: id">BUILD ID</span>
+  <h1 class="project-title"><span data-bind="text: _id"></span>
     <span class="project-title--status">
       <img src="../images/build-failing.png" alt="Build Failing">
     </span>
 
-    <a href="#/{{_id}}/config" class="btn btn-sec"><i class="fa fa-cog"></i>Config</a>
+    <a data-bind="attr: { 'href': config_url }" class="btn btn-sec"><i class="fa fa-cog"></i>Config</a>
   </h1>
 
   <ul class="tabs-horiz">
@@ -27,7 +27,13 @@
   <div class="sidebar">
     <section class="sidebar-glance-contain">
       <h3 class="sidebar-glance-title">At a Glance</h3>
-      <p class="sidebar-glance"><span><strong>6</strong> authors</span> have pushed <span><strong>66</strong> commits</span> to all branches, excluding merges. On master, <span><strong>70</strong> files</span> have changed and there have been <span><strong>50,134</strong> additions</span> and <span><strong>729</strong> deletions</span>.</p>
+      <p class="sidebar-glance" data-bind="foreach: stats">
+        This is a <span><strong data-bind="text: access"></strong> repository</span>
+        with <span><strong data-bind="text: forks"></strong> forks</span>,
+        <span><strong data-bind="text: watchers"></strong> watchers</span>, a total of
+        <span><strong data-bind="text: subscribers"></strong> subscribers</span> and
+        <span><strong data-bind="text: issues"></strong> open issues</span>.
+      </p>
     </section>
 
     <section class="sidebar-list-contain">

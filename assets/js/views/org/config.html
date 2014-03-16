@@ -1,15 +1,15 @@
 <h1 class="page-title">
   <i class="fa fa-cog"></i>
-  <a href="/#/projects" class="breadcrumb-link">Projects /</a>
-  <!-- ko if: title -->
-<a href="/#/projects/{{_id}}" class="breadcrumb-link breadcrumb-hide" data-bind="text: title"></a>
+  <a href="/#/projects" class="breadcrumb-link">Projects &raquo;</a>
+  <!-- ko if: _id -->
+<a class="breadcrumb-link breadcrumb-hide" data-bind="text: _id, attr: { 'href': _id }"></a>
   <!-- /ko -->
-  <!-- ko ifnot: title -->
+  <!-- ko ifnot: _id -->
 <a class="breadcrumb-link breadcrumb-hide">New Project</a>
   <!-- /ko -->
   <span class="breadcrumb-active breadcrumb-hide">&nbsp;Config</span>
   <!-- ko ifnot: newProject -->
-  <a href="#/add-your-project" class="btn right"><i class="fa fa-plus-circle"></i>New Project</a>
+  <a href="#/new-project" class="btn right"><i class="fa fa-plus-circle"></i>New Project</a>
   <!-- /ko -->
 </h1>
 
@@ -32,17 +32,20 @@
   <section class="view view-repo">
     <form class="global-form project-config-form" id="project-config" data-bind="submit: trySaveProject">
       <div class="gf-col">
-        <label>Title</label>
-        <input required="true" title="Enter the project title" placeholder="Project Title" data-bind="value: title, valueUpdate:'input'">
 
         <label>Repository</label>
         <input required="true" title="Enter the project repository" type="text" placeholder="ssh://git@github.com:organization/project.git" data-bind="value: repo">
 
         <label>Branch</label>
+        <!-- ko if: availableBranches().length -->
+        <select data-bind="options: availableBranches, value: branch"></select>
+        <!-- /ko -->
+        <!-- ko ifnot: availableBranches().length -->
         <input required="true" type="text" title="Enter the default branch" placeholder="Branch Name" data-bind="value: branch">
+        <!-- /ko -->
 
         <label style="clear: both; display: inline">
-          <input type="checkbox" name="public" class="checkbox" data-bind="checked: public">
+          <input type="checkbox" name="public" class="checkbox" value="true" data-bind="checked: public">
           Public
         </label>
 
@@ -63,7 +66,7 @@
 
   <section class="view view-github" style="display: none;">
     <div class="gf-col">
-      <!-- ko ifnot: tokens -->
+      <!-- ko ifnot: token -->
       <p>You need to be logged in to github in order to add a project.</p>
 
       <br>
@@ -75,8 +78,21 @@
         </form>
 
       <!-- /ko -->
-      <!-- ko if: tokens -->
-      <p>This is where the repo list will go...</p>
+
+      <!-- ko if: token -->
+      <label>Select Repo</label>
+      <ul class="repo-list" data-bind="foreach: repos">
+        <li>
+          <a data-bind="attr: { 'data-url': url, 'data-branches-url': branches_url, 'data-default-branch': default_branch }, click: $root.selectRepo">
+            <span data-bind="text: name"></span>
+            <span class="repo-meta">
+            <i class="fa fa-code-fork"></i><span data-bind="text: forks"></span>
+            <i class="fa fa-star"></i><span data-bind="text: stars"></span>
+            <i class="fa fa-eye"></i><span data-bind="text: watchers"></span>
+            </span>
+          </a>
+        </li>
+      </ul>
       <!-- /ko -->
     </div>
 

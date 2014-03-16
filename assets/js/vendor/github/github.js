@@ -5,9 +5,10 @@
 // http://substance.io/michael/github
 
 define([
-  'base64'
+  'base64',
+  'underscore'
   ],
-  function(Base64) {
+  function(Base64, _) {
 
   // Initial Setup
   // -------------

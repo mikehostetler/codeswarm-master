@@ -58,3 +58,47 @@
 	padding-left: .625em;
 	color: #aaa;
 }
+
+.repo-list {
+  display: block;
+  border-top: 1px solid #ccc;
+  padding-top: 15px;
+  margin-top: 15px;
+}
+
+.repo-list li a {
+  display: block;
+  position: relative;
+  margin: 3px 0;
+  padding: 5px 0;
+  border: none;
+  border-bottom: 1px solid #e1e1e1;
+  color: #666;
+  @include transition(.3s padding-left ease, .3s color ease);
+
+  &:before {
+    position: absolute;
+    left: -15px;
+    opacity: 0;
+    content: '\25BA';
+    @include transition(opacity .5s ease, left .3s ease);
+  }
+
+  &:hover {
+    &:before {
+      opacity: 1;
+      left: 0;
+    }
+  }
+}
+
+.repo-list li a:hover {
+  padding-left: 20px;
+  color: #000;
+}
+
+.repo-list li a .repo-meta {
+  float: right;
+  color: #666;
+  font-size: .8em;
+}

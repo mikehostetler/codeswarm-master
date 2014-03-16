@@ -19,7 +19,7 @@ define([
         // If session active, goto profile
         session.data(function (err, data) {
           if (!err) {
-            router.navigate('/user');
+            router.navigate('/projects');
           }
         });
 
@@ -49,7 +49,7 @@ define([
         // Processes request obj
         var req = request(this.loginRequest, payload);
         req.done(function (data) {
-          router.navigate('/user');
+          router.navigate('/projects');
         });
         req.fail(function (err) {
           dom.showNotification('error', JSON.parse(err.responseText).message);

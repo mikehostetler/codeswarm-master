@@ -1,6 +1,7 @@
 define([
   'session',
-  'jquery'
+  'jquery',
+  'jqcustomselect'
 ], function (session, $) {
 
   var dom = {
@@ -139,16 +140,31 @@ define([
     },
 
     // Switch views through sidebar
-    // Switch view via sidebar
-    sidebarSwitcher: function () {
-      $('.sidebar-list li').on('click', 'a', function () {
-        var type = $(this).data('link');
-        $('.sidebar-list--active').removeClass();
-        $('.show-' + type).parent('li').addClass('sidebar-list--active');
-        $('section.view').hide();
-        $('section.view-' + type).show();
-      });
+    sidebarSwitcher: function (link) {
+      if (!link) {
+        // No link, bind to object
+        $('.sidebar-list li').on('click', 'a', function () {
+          var type = $(this).data('link');
+          $('.sidebar-list--active').removeClass();
+          $('.show-' + type).parent('li').addClass('sidebar-list--active');
+          $('section.view').hide();
+          $('section.view-' + type).show();
+        });
+      } else {
+        // Link passed, fire click event
+        $('.sidebar-list li a[data-link="' + link + '"]').click();
+      }
     },
+
+    // Custom select box styling
+    customSelect: function (el) {
+      // Need to force width into css property
+      $('.customSelect').css({
+        'width': $(el).outerWidth()
+      });
+      // Apply customselect
+      $(el).customSelect();
+    }
 
   };
 

@@ -65,7 +65,7 @@ module.exports = {
 
     function createdToken(err) {
       if (err) res.send(err.status_code || 500, err);
-      else res.redirect('/#/project/new');
+      else res.redirect('/#/new-project');
     }
   },
 
