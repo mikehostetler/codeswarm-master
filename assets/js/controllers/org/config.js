@@ -47,6 +47,7 @@ define([
 
     // Define model
     token: ko.observable(false),
+    _id: ko.observable(),
     title: ko.observable(),
     repo: ko.observable(),
     branch: ko.observable(),
@@ -180,10 +181,11 @@ define([
       req.done(function (data) {
         console.log(data);
         // Loop through data response
-        for (var prop in data) {
-          // Assing model attr value with returned val
-          self[prop](data[prop]);
-        }
+        self._id = data._id;
+        self.title = data.title;
+        self.repo = data.repo;
+        self.branch = data.branch;
+        self.type = data.type;
       });
 
       // On failure
