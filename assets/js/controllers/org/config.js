@@ -23,6 +23,16 @@ define([
 
     // Set displayName
     displayName: 'Project Config',
+    
+    // Define model
+    token: ko.observable(false),
+    _id: ko.observable(),
+    repo: ko.observable(),
+    branch: ko.observable(),
+    type: ko.observable(),
+    repos: ko.observableArray(),
+    availableBranches: ko.observableArray(),
+    public: ko.observable(false),
 
     // Initialization
     activate: function (org, repo) {
@@ -48,15 +58,6 @@ define([
       // Activate sidebar switcher
       dom.sidebarSwitcher();
     },
-
-    // Define model
-    token: ko.observable(false),
-    _id: ko.observable(),
-    repo: ko.observable(),
-    branch: ko.observable(),
-    type: ko.observable(),
-    repos: ko.observableArray(),
-    availableBranches: ko.observableArray(),
 
     // GITHUB INTEGRATION ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -183,11 +184,13 @@ define([
 
       // On success
       req.done(function (data) {
+        console.log('DATA', data);
         // Loop through data response
         self._id = data._id;
         self.repo = data.repo;
         self.branch = data.branch;
         self.type = data.type;
+        self.public = data.public;
       });
 
       // On failure
@@ -215,7 +218,7 @@ define([
       // Set payload
       var payload = {
         repo: this.repo(),
-        type: this.type() || 0,
+        public: this.public() || false,
         branch: this.branch()
       };
 
