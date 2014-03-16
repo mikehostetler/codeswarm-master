@@ -18,14 +18,14 @@
         <tr>
             <td>
               <div class="anchor-wrap">
-                <a data-bind="attr: { 'href': _id }" title="Build Passing">
+                <a data-bind="attr: { 'href': project_url }" title="Build Passing">
                     <img src="../images/build-passing.png" alt="Build Passing">
                 </a>
               </div>
             </td>
             <td>
               <div class="anchor-wrap">
-                <a  data-bind="attr: { 'href': _id }">
+                <a  data-bind="attr: { 'href': project_url }">
                 <h4 class="project" data-bind="text: _id"></h4>
                 <em class="repo" data-bind="text: repo"></em>
                 </a>
@@ -34,7 +34,7 @@
             <td>
               <div class="anchor-wrap">
                 <a>
-                    <span class="last-build" data-timestamp="{{this._id}}">
+                    <span class="last-build" data-timestamp="">
                     </span>
                 </a>
               </div>
