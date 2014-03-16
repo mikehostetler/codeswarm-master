@@ -35,6 +35,22 @@ define([
             cb(err, null);
           }
         });
+      },
+      
+      // Get User object
+      getUser: function (cb) {
+        this.getToken(function (err, token) {
+          if (!err) {
+            var github = new Github({
+              token: token,
+              auth: 'oauth'
+            });
+            var user_obj = github.getUser();
+            cb(null, user_obj);
+          } else {
+            cb(err, null);
+          }
+        });
       }
     };
 

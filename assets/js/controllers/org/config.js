@@ -2,11 +2,11 @@ define([
   'knockout',
   'request',
   'dom',
-  'github',
+  'utils/github',
   'session',
   'plugins/router',
   'base64',
-], function (ko, request, dom, Github, session, router) {
+], function (ko, request, dom, github, session, router) {
 
   var ctor = {
 
@@ -23,7 +23,7 @@ define([
 
     // Set displayName
     displayName: 'Project Config',
-    
+
     // Define model
     token: ko.observable(false),
     _id: ko.observable(),
@@ -51,7 +51,7 @@ define([
         this.newProject = ko.observable(false);
       }
       // Get tokens
-      this.getToken();
+      this.tryGetRepos();
     },
 
     compositionComplete: function () {
@@ -61,56 +61,32 @@ define([
 
     // GITHUB INTEGRATION ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    // Check for GH API token
-    getToken: function () {
-      var self = this;
-      var req = request({
-        url: '/tokens/github',
-        type: 'GET'
-      });
-
-      req.done(function (data) {
-        self.token(data.token);
-        self.tryGetUser();
-      });
-
-      req.fail(function (err) {
-        console.error(err);
-      });
-    },
-
-    // Try to get user
-    tryGetUser: function (data) {
-      var github = new Github({
-        token: this.token(),
-        auth: 'oauth'
-      });
-      var user = github.getUser();
-      this.tryGetRepos(user);
-    },
-
     // Try to get org and user repos
-    tryGetRepos: function (user) {
+    tryGetRepos: function () {
+
       this.repos([]);
       var self = this;
-      user.repos('admin', function (err, repos) {
-        self.listRepos(repos);
-      });
 
-      // Get orgs
-      user.orgs(function (err, orgs) {
-        if (!err) {
-          for (var org in orgs) {
-            getOrgRepos(orgs[org].login);
-          }
-        }
-      });
-
-      var getOrgRepos = function (org) {
-        user.orgRepos(org, function (err, repos) {
+      github.getUser(function (err, user) {
+        user.repos('admin', function (err, repos) {
           self.listRepos(repos);
         });
-      };
+
+        // Get orgs
+        user.orgs(function (err, orgs) {
+          if (!err) {
+            for (var org in orgs) {
+              getOrgRepos(orgs[org].login);
+            }
+          }
+        });
+
+        var getOrgRepos = function (org) {
+          user.orgRepos(org, function (err, repos) {
+            self.listRepos(repos);
+          });
+        };
+      });
     },
 
     // List out repo in DOM via bindings
