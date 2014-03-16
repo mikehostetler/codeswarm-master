@@ -15,6 +15,7 @@ requirejs.config({
     'gravatar': 'vendor/gravatar/gravatar',
     'base64': 'vendor/base64/base64',
     'jqcustomselect': 'vendor/jquery.customselect/jquery.customselect.min',
+    'utils': 'utils',
     'request': 'utils/request',
     'dom': 'utils/dom',
     'session': 'utils/session'

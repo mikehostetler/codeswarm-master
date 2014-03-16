@@ -3,9 +3,9 @@ define([
   'request',
   'dom',
   'session',
-  'github',
+  'utils/github',
   'plugins/router'
-], function (ko, request, dom, session, Github, router) {
+], function (ko, request, dom, session, github, router) {
 
   var ctor = {
 
@@ -37,46 +37,30 @@ define([
     activate: function (org, repo) {
       this.org(org);
       this.repo(repo);
-      this.getToken();
+      this.tryGetRepo(org, repo);
     },
 
     // Github Integration ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    // Check for GH API token
-    getToken: function () {
-      var self = this;
-      var req = request({
-        url: '/tokens/github',
-        type: 'GET'
-      });
-
-      req.done(function (data) {
-        self.token(data.token);
-        self.tryGetRepo();
-      });
-
-      req.fail(function (err) {
-        console.error(err);
-      });
-    },
-
     // Try to get user
-    tryGetRepo: function (data) {
+    tryGetRepo: function (org, repo) {
       var self = this;
-      var github = new Github({
-        token: this.token(),
-        auth: 'oauth'
+      github.getRepo(org, repo, function (err, repo) {
+        if (err) {
+          dom.showNotification('error', err);
+        } else {
+          repo.show(function (err, repo) {
+            self.stats({
+              watchers: repo.watchers,
+              subscribers: repo.subscribers_count,
+              issues: repo.open_issues,
+              forks: repo.forks_count,
+              access: (repo.private) ? 'private' : 'public'
+            });
+          });
+        }
       });
-      var repo = github.getRepo(this.org(), this.repo());
-      repo.show(function (err, repo) {
-        self.stats({
-          watchers: repo.watchers,
-          subscribers: repo.subscribers_count,
-          issues: repo.open_issues,
-          forks: repo.forks_count,
-          access: (repo.private) ? 'private' : 'public'
-        });
-      });
+      // Load project
       this.tryGetProject();
     },
 
