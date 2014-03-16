@@ -27,7 +27,7 @@ define([
     projects: ko.observableArray(),
     org: ko.observable(),
     orgs: ko.observableArray(),
-    token: ko.observable(),
+    token: ko.observable(false),
 
     // Initialization
     activate: function (org) {
@@ -45,7 +45,8 @@ define([
       var self = this;
       // Push default (all)
       this.orgs.push('projects');
-      github.gitUser(function (err, user) {
+      github.getUser(function (err, user) {
+        self.token(true);
         user.orgs(function (err, orgs) {
           if (!err) {
             for (var i = 0, z = orgs.length; i < z; i++) {
@@ -96,6 +97,10 @@ define([
             }
           }
         }
+        // Sort
+        self.projects.sort(function(left, right) {
+          return (left._id === right._id) ? 0 : (left._id < right._id ? -1 : 1);
+        });
       });
 
       // On failure
