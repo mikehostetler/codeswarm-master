@@ -111,6 +111,7 @@ define([
 
     // Handle selection from repo list
     selectRepo: function (data) {
+
       // Switch to repo view
       dom.sidebarSwitcher('repo');
       // Set values

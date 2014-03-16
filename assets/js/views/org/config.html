@@ -83,7 +83,7 @@
       <label>Select Repo</label>
       <ul class="repo-list" data-bind="foreach: repos">
         <li>
-          <a data-bind="attr: { 'data-url': url, 'data-branches-url': branches_url, 'data-default-branch': default_branch }, click: $parent.selectRepo">
+          <a data-bind="attr: { 'data-url': url, 'data-branches-url': branches_url, 'data-default-branch': default_branch }, click: $root.selectRepo">
             <span data-bind="text: name"></span>
             <span class="repo-meta">
             <i class="fa fa-code-fork"></i><span data-bind="text: forks"></span>
