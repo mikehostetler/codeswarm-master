@@ -32,6 +32,10 @@ define([
       // If not new project, load data from endpoint
       if (!org || !repo) {
         this.newProject = ko.observable(true);
+        this._id(null);
+        this.repo(null);
+        this.branch(null);
+        this.type(null);
       } else {
         this.tryGetProject();
         this.newProject = ko.observable(false);
@@ -86,6 +90,7 @@ define([
 
     // Try to get org and user repos
     tryGetRepos: function (user) {
+      this.repos([]);
       var self = this;
       user.repos('admin', function (err, repos) {
         self.listRepos(repos);
@@ -127,6 +132,7 @@ define([
       // Switch to repo view
       dom.sidebarSwitcher('repo');
       // Set values
+      ctor._id(data.name);
       ctor.repo(data.url);
       ctor.availableBranches.push(['GETTING BRANCHES...']);
       // Populate branches
@@ -177,7 +183,6 @@ define([
 
       // On success
       req.done(function (data) {
-        console.log('DATA',data);
         // Loop through data response
         self._id = data._id;
         self.repo = data.repo;
