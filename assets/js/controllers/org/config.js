@@ -75,7 +75,7 @@ define([
           user.repos('admin', function (err, repos) {
             self.listRepos(repos);
           });
-  
+
           // Get orgs
           user.orgs(function (err, orgs) {
             if (!err) {
@@ -84,7 +84,7 @@ define([
               }
             }
           });
-  
+
           var getOrgRepos = function (org) {
             user.orgRepos(org, function (err, repos) {
               self.listRepos(repos);
@@ -117,31 +117,33 @@ define([
       ctor._id(data.name);
       ctor.repo(data.url);
       ctor.availableBranches.push(['GETTING BRANCHES...']);
-      // Populate branches
-      var github = new Github({
-        token: ctor.token(),
-        auth: 'oauth'
-      });
 
       // Populate availableBranches
       var repo_opts = data.name.split('/');
-      var repo = github.getRepo(repo_opts[0], repo_opts[1]);
-      repo.listBranches(function (err, branches) {
-        // Clear array
-        ctor.availableBranches([]);
+
+      github.getRepos(repo_opts[0], repo_opts[1], function (err, repo) {
         if (err) {
-          ctor.availableBranches.push('master');
+          dom.showNotification('error', err);
         } else {
-          // Set default branch as first option
-          ctor.availableBranches.push(data.default_branch);
-          // Loop and add all other branches
-          for (var i = 0, z = branches.length; i < z; i++) {
-            if (branches[i] !== data.default_branch) {
-              ctor.availableBranches.push(branches[i]);
+
+          repo.listBranches(function (err, branches) {
+            // Clear array
+            ctor.availableBranches([]);
+            if (err) {
+              ctor.availableBranches.push('master');
+            } else {
+              // Set default branch as first option
+              ctor.availableBranches.push(data.default_branch);
+              // Loop and add all other branches
+              for (var i = 0, z = branches.length; i < z; i++) {
+                if (branches[i] !== data.default_branch) {
+                  ctor.availableBranches.push(branches[i]);
+                }
+              }
+              // Apply style
+              dom.customSelect('select');
             }
-          }
-          // Apply style
-          dom.customSelect('select');
+          });
         }
       });
     },
