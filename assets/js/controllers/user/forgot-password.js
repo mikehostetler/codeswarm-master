@@ -16,7 +16,7 @@ define([
 
       // Define request object
       resetPasswordRequest: {
-        url: '/user/password',
+        url: '/forgot-password',
         type: 'GET'
       },
 

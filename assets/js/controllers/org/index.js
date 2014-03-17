@@ -100,9 +100,7 @@ define([
         }
         // Sort
         self.projects.sort(function(left, right) {
-          return (left._id.toLowerCase() === right._id.toLowerCase())
-            ? 0
-            : (left._id.toLowerCase() < right._id.toLowerCase() ? -1 : 1);
+          return (left._id.toLowerCase() === right._id.toLowerCase()) ? 0 : (left._id.toLowerCase() < right._id.toLowerCase() ? -1 : 1);
         });
       });
 
