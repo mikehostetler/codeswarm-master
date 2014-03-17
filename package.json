@@ -28,7 +28,9 @@
     "grunt-contrib-sass": "~0.7.2",
     "handlebars": "~2.0.0-alpha.1",
     "joi": "~2.7.0",
-    "mailgun": "~0.4.2"
+    "mailgun": "~0.4.2",
+    "codeswarm-node": "*",
+    "codeswarm-sauce": "*"
   },
   "scripts": {
     "start": "node app.js",
