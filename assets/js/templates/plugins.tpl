@@ -14,6 +14,10 @@
         <input type="text" name="{{../../name}}/{{name}}" value="{{value}}" {{#if required}}required{{/if}}>
       {{/compare}}
 
+      {{#compare type "password" operator="==="}}
+        <input type="password" name="{{../../name}}/{{name}}" value="{{value}}" {{#if required}}required{{/if}}>
+      {{/compare}}
+
       {{#compare type "text" operator="==="}}
         <textarea name="{{../../name}}/{{name}}" {{#if required}}required{{/if}}>{{value}}</textarea>
       {{/compare}}
