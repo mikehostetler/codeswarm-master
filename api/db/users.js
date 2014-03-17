@@ -73,12 +73,8 @@ function updateUser(email, attrs, cb) {
   // delete forbidden attribute updates
   delete attrs._id;
   delete attrs.id;
-  delete attrs.iterations;
-  delete attrs.salt;
   delete attrs.roles;
   delete attrs.type;
-  delete attrs.derived_key;
-  delete attrs.password_scheme;
   delete attrs.email;
 
   db.privileged('_users', function(err, users) {
@@ -88,6 +84,11 @@ function updateUser(email, attrs, cb) {
       if (err) cb(err);
       else {
         extend(user, attrs);
+        delete attrs.salt;
+        delete attrs.password_scheme;
+        delete attrs.derived_key;
+        delete attrs.iterations;
+
         users.insert(user, user._id, cb);
       }
     }

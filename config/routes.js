@@ -102,6 +102,11 @@ module.exports.routes = {
   'put /user': 'UserController.update',
 
 
+  /// Forgot password
+  'post /forgot-password': 'UserController.forgot_password',
+  'post /recover-password': 'UserController.recover_password',
+
+
   /// Sessions
 
   'get /session': 'SessionController.get',
