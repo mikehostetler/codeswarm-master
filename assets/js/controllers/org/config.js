@@ -46,7 +46,7 @@ define([
         this._id(null);
         this.repo(null);
         this.branch(null);
-        this.type(null);
+        this.type("0");
         // Get repos list
         this.tryGetRepos();
       } else {
@@ -212,7 +212,8 @@ define([
       var payload = {
         repo: this.repo(),
         public: this.public() || false,
-        branch: this.branch()
+        branch: this.branch(),
+        type: this.type()
       };
 
       // If new project, set to POST
