@@ -47,7 +47,7 @@ define([
         this._id(null);
         this.repo(null);
         this.branch(null);
-        this.type("0");
+        this.type('0');
         // Get repos list
         this.tryGetRepos();
       } else {
@@ -164,7 +164,10 @@ define([
       var self = this;
 
       // Make Request
-      var req = request({ url: '/projects/' + ctor.param_org + '/' + ctor.param_repo, type: 'GET' });
+      var req = request({
+        url: '/projects/' + ctor.param_org + '/' + ctor.param_repo,
+        type: 'GET'
+      });
 
       // On success
       req.done(function (data) {
@@ -237,7 +240,10 @@ define([
         this.deleteBtn('Click to Confirm Delete');
       } else {
         // SECOND CLICK - Remove the project, on success return to project list
-        var req = request({ url: '/projects/' + this.param_org + '/' + this.param_repo, type: 'DELETE' });
+        var req = request({
+          url: '/projects/' + this.param_org + '/' + this.param_repo,
+          type: 'DELETE'
+        });
         req.done(function () {
           router.navigate('#projects');
         });

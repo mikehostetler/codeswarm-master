@@ -89,7 +89,7 @@ define([
         var org;
         for (var i = 0, z = data.length; i < z; i++) {
           org = data[i]._id.substr(0, data[i]._id.indexOf('/')).toLowerCase();
-          data[i].project_url = '#'+data[i]._id;
+          data[i].project_url = '#' + data[i]._id;
           if (self.org() === 'projects') {
             self.projects.push(data[i]);
           } else {
@@ -99,7 +99,7 @@ define([
           }
         }
         // Sort
-        self.projects.sort(function(left, right) {
+        self.projects.sort(function (left, right) {
           return (left._id.toLowerCase() === right._id.toLowerCase()) ? 0 : (left._id.toLowerCase() < right._id.toLowerCase() ? -1 : 1);
         });
       });

@@ -71,7 +71,10 @@ define([
       var self = this;
 
       // Make Request
-      var req = request({ url: '/projects/' + this.org() + '/' + this.repo(), type: 'GET'});
+      var req = request({
+        url: '/projects/' + this.org() + '/' + this.repo(),
+        type: 'GET'
+      });
 
       // On success
       req.done(function (data) {
