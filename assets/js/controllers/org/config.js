@@ -231,21 +231,13 @@ define([
 
     // DELETE PROJECT ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    // Define get request
-    deleteProjectRequest: {
-      url: function () {
-        return '/projects/' + ctor.param_org + '/' + ctor.param_repo;
-      },
-      type: 'DELETE'
-    },
-
     deleteProject: function () {
       if (this.deleteBtn() === 'Delete') {
         // FIRST CLICK - Change button for confirmation...
         this.deleteBtn('Click to Confirm Delete');
       } else {
         // SECOND CLICK - Remove the project, on success return to project list
-        var req = request(this.deleteProjectRequest);
+        var req = request({ url: '/projects/' + this.param_org + '/' + this.param_repo, type: 'DELETE' });
         req.done(function () {
           router.navigate('#projects');
         });
