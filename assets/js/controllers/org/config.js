@@ -128,7 +128,7 @@ define([
 
     // Gets available branches
     getBranches: function (org, repo, default_branch) {
-      github.getRepo(org, org, function (err, repo) {
+      github.getRepo(org, repo, function (err, repo) {
         if (err) {
           dom.showNotification('error', err);
         } else {
