@@ -171,7 +171,8 @@ module.exports = {
         commit: 'HEAD',
         type: project.type,
         plugins: project.plugins,
-        state: 'pending'
+        state: 'pending',
+        fresh: true
       };
 
       build.branch = project.branch;
@@ -273,7 +274,8 @@ module.exports = {
         state: 'pending',
         commit: payload.after,
         type: project.type,
-        plugins: project.plugins
+        plugins: project.plugins,
+        fresh: true
       };
 
       builds.create(build, createdBuild);
