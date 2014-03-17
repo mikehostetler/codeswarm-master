@@ -33,6 +33,7 @@ define([
     repos: ko.observableArray(),
     availableBranches: ko.observableArray(),
     public: ko.observable(false),
+    deleteBtn: ko.observable('Delete'),
 
     // Initialization
     activate: function (org, repo) {
@@ -52,6 +53,7 @@ define([
       } else {
         this.tryGetProject();
         this.newProject = ko.observable(false);
+        this.deleteBtn('Delete');
       }
     },
 
@@ -157,20 +159,12 @@ define([
 
     // GET PROJECT ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    // Define get request
-    getProjectRequest: {
-      url: function () {
-        return '/projects/' + ctor.param_org + '/' + ctor.param_repo;
-      },
-      type: 'GET'
-    },
-
     // Get project
     tryGetProject: function () {
       var self = this;
 
       // Make Request
-      var req = request(this.getProjectRequest);
+      var req = request({ url: '/projects/' + ctor.param_org + '/' + ctor.param_repo, type: 'GET' });
 
       // On success
       req.done(function (data) {
@@ -233,6 +227,32 @@ define([
       req.fail(function (err) {
         dom.showNotification('error', JSON.parse(err.responseText).message);
       });
+    },
+
+    // DELETE PROJECT ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    // Define get request
+    deleteProjectRequest: {
+      url: function () {
+        return '/projects/' + ctor.param_org + '/' + ctor.param_repo;
+      },
+      type: 'DELETE'
+    },
+
+    deleteProject: function () {
+      if (this.deleteBtn() === 'Delete') {
+        // FIRST CLICK - Change button for confirmation...
+        this.deleteBtn('Click to Confirm Delete');
+      } else {
+        // SECOND CLICK - Remove the project, on success return to project list
+        var req = request(this.deleteProjectRequest);
+        req.done(function () {
+          router.navigate('#projects');
+        });
+        req.fail(function (err) {
+          dom.showNotification('error', JSON.parse(err.responseText).message);
+        });
+      }
     }
 
   };

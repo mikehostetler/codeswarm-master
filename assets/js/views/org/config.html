@@ -55,7 +55,7 @@
 
       <!-- ko ifnot: newProject -->
       <button class="btn">Save</button>
-      <button class="btn btn-sec">Delete</button>
+      <button class="btn btn-sec" data-bind="text: deleteBtn, click: deleteProject">Delete</button>
       <!-- /ko -->
       <!-- ko if: newProject -->
     	<button class="btn">Create</button>
