@@ -17,7 +17,7 @@ define([
       // Define request object
       resetPasswordRequest: {
         url: '/forgot-password',
-        type: 'GET'
+        type: 'POST'
       },
 
       // Reset password handler method
