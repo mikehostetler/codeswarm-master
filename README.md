@@ -2,37 +2,51 @@
 
 ## Install
 
+### codeswarm-node
+
 Checkout plugin `codeswarm-node`:
 
 ```
-$ cd projects
+$ cd <project dir>
 $ git clone git@github.com:CodeSwarm/codeswarm-node.git
 $ cd codeswarm-node
 $ npm link
 ```
 
+### codeswarm-sauce
+
 Checkout plugin `codeswarm-sauce`:
 
 ```
-$ cd projects
+$ cd <project dir>
 $ git clone git@github.com:CodeSwarm/codeswarm-sauce.git
 $ cd codeswarm-sauce
 $ npm link
 ```
 
+### codeswarm-plato
+
 Checkout plugin `codeswarm-plato`:
 
 ```
-$ cd projects
+$ cd <project dir>
 $ git clone git@github.com:CodeSwarm/codeswarm-plato.git
 $ cd codeswarm-plato
 $ npm link
 ```
 
+Install module `plato` globally:
+
+```bash
+$ npm install plato --save
+```
+
+### codeswarm-gateway
+
 Checkout plugin `codeswarm-gateway`:
 
 ```
-$ cd projects
+$ cd <project dir>
 $ git clone git@github.com:CodeSwarm/codeswarm-gateway.git
 $ cd codeswarm-gateway
 $ npm link
@@ -41,7 +55,7 @@ $ npm link
 Link them:
 
 ```
-$ cd  projects/codeswarm
+$ cd  <path to your codeswarm project>
 $ npm link codeswarm-node
 $ npm link codeswarm-sauce
 $ npm link codeswarm-plato
