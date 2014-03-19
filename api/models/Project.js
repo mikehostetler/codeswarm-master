@@ -12,8 +12,6 @@ var repoRegex = /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^
 
 module.exports = {
 
-  adapter: 'couchdb',
-
   autoCreatedAt: false,
   autoUpdatedAt: false,
 
@@ -70,29 +68,24 @@ module.exports = {
     next();
   },
 
-  config: {
-    views: 'abc'
-  },
+  views: {
+    owner_id_begins_with: {
+      map:
+        function(doc) {
+          var project = doc._id;
+          var projectParts = project.split('/');
+          var repoOwner = projectParts[0];
+          var repoRepo = projectParts[1];
+          var owners = [];
+          if (doc.public) owners.push('public');
+          if (doc.owners) owners = owners.concat(doc.owners);
 
-
-  // views: {
-  //   owner_id_begins_with: {
-  //     map:
-  //       function(doc) {
-  //         var project = doc._id;
-  //         var projectParts = project.split('/');
-  //         var repoOwner = projectParts[0];
-  //         var repoRepo = projectParts[1];
-  //         var owners = [];
-  //         if (doc.public) owners.push('public');
-  //         if (doc.owners) owners = owners.concat(doc.owners);
-
-  //         owners.forEach(function(owner) {
-  //           emit([owner, repoOwner], doc);
-  //           emit([owner, repoRepo], doc);
-  //           emit([owner, project], doc);
-  //         });
-  //       }
-  //   }
-  // }
+          owners.forEach(function(owner) {
+            emit([owner, repoOwner], doc);
+            emit([owner, repoRepo], doc);
+            emit([owner, project], doc);
+          });
+        }
+    }
+  }
 };

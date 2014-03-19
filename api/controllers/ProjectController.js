@@ -138,7 +138,7 @@ module.exports = {
             typeResults.forEach(maybeAddProject);
           });
 
-          return projects.sort(byId);
+          res.json(projects.map(filterProject).sort(byId));
         }
 
         function maybeAddProject(project) {
@@ -336,5 +336,5 @@ function filterProjectForUser(project, user) {
 
 
 function byId(projA, projB) {
-  return projA < projB ? -1 : 1;
+  return projA.id < projB.id ? -1 : 1;
 }
