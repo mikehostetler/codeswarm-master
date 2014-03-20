@@ -23,7 +23,9 @@
     "grunt-contrib-sass": "~0.7.2",
     "handlebars": "~2.0.0-alpha.1",
     "codeswarm-node": "*",
-    "codeswarm-sauce": "*"
+    "codeswarm-sauce": "*",
+    "codeswarm-plato": "*",
+    "codeswarm-custom": "*"
   },
   "scripts": {
     "start": "node app.js",
