@@ -31,6 +31,8 @@
   "scripts": {
     "start": "node app.js",
     "mon": "node_modules/.bin/nodemon app.js --dev",
+		"forever": "forever start app.js",
+		"foreverstop": "forever stop app.js",
     "debug": "node debug app.js"
   },
   "main": "app.js",
