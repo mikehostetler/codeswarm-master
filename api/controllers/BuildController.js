@@ -16,9 +16,6 @@
  */
 
 
-var extend = require('util')._extend;
-var builds = require('../db/builds');
-
 module.exports = {
 
 
@@ -30,7 +27,7 @@ module.exports = {
    index: function (req, res) {
 
     var project = req.param('owner') + '/' + req.param('repo');
-    builds.list(project, replied);
+    Build.findByProject(project, replied);
 
     function replied(err, builds) {
       if (err) res.send(err.status_code || 500, err);
@@ -46,12 +43,13 @@ module.exports = {
    find: function (req, res) {
 
     var project = req.param('owner') + '/' + req.param('repo');
-    builds.get(project, req.param('build'), replied);
+    Build.findOne({id: req.param('build')}, replied);
 
     function replied(err, build) {
       if (err) res.send(err.status_code || 500, err);
       else if (! build) res.send(404, new Error('Build not found'));
-      else res.json(builds.forShow(build));
+      else if (build.project != project) return res.send(404, new Error('Build not found'));
+      else res.json(Build.forShow(build));
     }
   },
 
@@ -69,7 +67,7 @@ module.exports = {
 
 function forList(build) {
   return {
-    _id: build._id,
+    id: build.id,
     created_at: build.created_at,
     started_at: build.started_at,
     ended_at:   build.ended_at,

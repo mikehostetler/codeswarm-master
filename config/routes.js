@@ -103,6 +103,7 @@ module.exports.routes = {
   /// Sessions
 
   'get /session': 'SessionController.get',
+  'post /sessions': 'SessionController.create',
 
 
   /// Projects

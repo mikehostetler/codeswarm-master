@@ -15,10 +15,6 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
-var db       = require('../db');
-var tokens   = require('../db/tokens');
-var users    = require('../db/users');
-
 var providers = {
   github: require('../../lib/github')
 };
@@ -58,12 +54,18 @@ module.exports = {
         else if (! req.session.token) res.send(500, 'User should have a token by now');
         else if (! req.session.remoteUsername) res.send(500, 'User should have a remote username by now');
         else {
-          tokens.create(req.user, providerName, req.session.token, req.session.remoteUsername, createdToken);
+          var tokens = {};
+          tokens[providerName] = {
+            token: req.session.token,
+            username: req.session.remoteUsername
+          };
+
+          User.merge(User.userIdFromEmail(req.user), {tokens: tokens}, savedTokens);
         }
       }
     }
 
-    function createdToken(err) {
+    function savedTokens(err) {
       if (err) res.send(err.status_code || 500, err);
       else res.redirect('/#/project/new');
     }
@@ -76,26 +78,19 @@ module.exports = {
   find: function (req, res) {
 
     var user = req.session.username();
-    if (! user) throw new Error('No username????');
+    if (! user) return res.send(403, new Error('No user session'));
 
     var provider = req.param('provider');
 
-    tokens.get(user, provider, replied);
+    User.findOne({id: User.userIdFromEmail(user)}, foundUser);
 
-    function replied(err, token) {
+    function foundUser(err, user) {
+      var token = user && user.tokens && user.tokens[provider];
       if (err && err.status_code != 404) res.send(err.status_code || 500, err);
       else if (! token) res.send(404, new Error('Not found'));
       else res.json(token);
     }
-  },
-
-
-
-  /**
-   * Overrides for the settings in `config/controllers.js`
-   * (specific to ProjectController)
-   */
-  _config: {}
+  }
 
 
 };

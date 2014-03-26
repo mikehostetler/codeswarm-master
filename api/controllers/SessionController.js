@@ -1,6 +1,4 @@
 var Cookie = require('cookie');
-var db     = require('../db');
-var users  = require('../db/users');
 
 /**
  * SessionController
@@ -34,7 +32,12 @@ module.exports = {
    */
    create: function (req, res) {
 
-    users.authenticate(req.param('username'), req.param('password'), replied);
+    var email = req.param('email');
+    var password = req.param('password');
+
+    if (! email || ! password) return res.send(400, new Error('Need username and password'));
+
+    User.authenticate(email, password, replied);
 
     function replied(err, sessionId, username, roles) {
       if (err) res.send(err.status_code || 500, err);
@@ -69,12 +72,7 @@ module.exports = {
     }
 
     if (sid) {
-      var sessionDB = db.wrap({
-        url: db.base,
-        cookie: 'AuthSession=' + encodeURIComponent(sid)
-      });
-
-      sessionDB.session(replied);
+      User.session(sid, replied);
     } else {
       res.json(404, new Error('No session'));
     }

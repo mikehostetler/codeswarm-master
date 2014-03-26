@@ -69,7 +69,7 @@ define([
 
 				req.done(function (project) {
 					if (project.secret)
-					  project.hook = hook + '/' + project._id + '/webhook?secret=' + project.secret;
+					  project.hook = hook + '/' + project.id + '/webhook?secret=' + project.secret;
 
 					// Load project
 					dom.loadProject(project, self);
@@ -137,7 +137,7 @@ define([
 					if (githubRepos && userRepos) {
 						var userReposMap = {};
 						userRepos.forEach(function(userRepo) {
-							userReposMap[userRepo._id] = userRepo;
+							userReposMap[userRepo.id] = userRepo;
 						});
 
 						var repos = githubRepos.map(function(githubRepo) {
@@ -198,7 +198,7 @@ define([
 				req = requests.get("/projects/" + project);
 
 				req.done(function (data) {
-					data.hook = hook + '/' + data._id + '/deploy';
+					data.hook = hook + '/' + data.id + '/deploy';
 					// Load project
 					dom.loadProject(data, self);
 				});
@@ -217,7 +217,7 @@ define([
 			if (!data.branch) data.branch = 'master';
 
 			// Send to API
-			if (!data._id) {
+			if (!data.id) {
 
 				requests.post("/projects", {
 					repo: data.repo,
@@ -233,7 +233,7 @@ define([
 
 			} else {
 				// Modify object
-				requests.put("/projects/" + data._id, data).
+				requests.put("/projects/" + data.id, data).
 				done(function () {
 					dom.showSuccess("Project successfully saved");
 				}).
@@ -283,7 +283,7 @@ define([
 			}
 
 			function save(config) {
-				requests.put('/projects/' + project._id + '/plugins', config).
+				requests.put('/projects/' + project.id + '/plugins', config).
 				done(function() {
 					dom.showSuccess('Plugin settings saved');
 				}).
@@ -304,7 +304,7 @@ define([
 
 	function prepareProject(project) {
 		var base_href = location.protocol + "//" + location.hostname + (location.port ? ":" + location.port : "");
-		project.view = base_href + "/#/" + project._id;
+		project.view = base_href + "/#/" + project.id;
 		if (project.started_at) project.started_at = timestamp(project.started_at);
 		if (project.ended_at) project.ended_at = timestamp(project.ended_at);
 		socket.addProject(project);

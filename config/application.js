@@ -1,7 +1,6 @@
 var extend   = require('util')._extend;
 var Cookie   = require('cookie');
 var passport = require('../lib/passport');
-var db       = require('../api/db');
 
 module.exports = {
 
@@ -25,16 +24,10 @@ function session(req, res, next) {
     sid = cookies.sid;
   }
 
-  if (sid) {
-    var sessionDB = db.wrap({
-      url: db.base,
-      cookie: 'AuthSession=' + encodeURIComponent(sid)
-    });
+  if (sid) User.session(sid, gotSession);
+  else next();
 
-    sessionDB.session(replied);
-  } else next();
-
-  function replied(err, session) {
+  function gotSession(err, session) {
     if (err) res.send(err.status_code || 500, err);
     else {
       if (! req.session) req.session = {};

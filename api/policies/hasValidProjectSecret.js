@@ -1,12 +1,10 @@
-var projects = require('../db/projects');
-
 module.exports = hasValidProjectSecret;
 
 function hasValidProjectSecret(req, res, next) {
   var projectId = req.param('owner') + '/' + req.param('repo');
   var secret = req.param('secret');
 
-  projects.get(projectId, gotProject);
+  Project.findOne({id: projectId}, gotProject);
 
   function gotProject(err, project) {
     if (err) res.send(err.status_code || 500, err);
