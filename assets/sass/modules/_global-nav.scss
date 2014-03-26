@@ -20,11 +20,11 @@
         float: left;
         width: 100%;
         display: block;
-        color: #f2f2f2;
+        color: #5c6771;
         padding: 1em;
 
         &:hover {
-            background: #494e51;
+            background: #f28b20;
         }
     }
 
@@ -50,12 +50,13 @@
                 width: 100%;
                 height: 100%;
                 padding: .75em 1em;
-                color: #f2f2f2;
+                color: #5c6771;
                 font-size: .938em;
                 line-height: 2.375em;
 
                 &:hover {
-                    background: #494e51;
+                    background: #f28b20;
+                    color: white;
 
                     .fa {
                         color: #999;
@@ -74,14 +75,14 @@
     position: absolute;
     right: 0;
     display: block;
-    color: #fff;
+    color: #5c6771;
     padding: .3em .5em;
     margin: 0;
     font-size: 1.75em;
 
     &:hover {
         color: #fff;
-        background: #30373a;
+        background: #f28b20;
     }
 
     @include breakpoint(37.5em) {
@@ -100,17 +101,26 @@ a.profile-nav--trigger {
     border-left: solid 1px #f2f2f2;
     border-right: solid 1px #f2f2f2;
 
+    .fa-caret-down {
+        display: none;
+        color: #999;
+        -webkit-transition: none;
+        -moz-transition: none;
+        -o-transition: none;
+        transition: none;
+    }
+
     &:hover {
-        background: #30373a;
+        background: #f28b20;
+        color: white;
+
+        .fa-caret-down {
+            color: white;
+        }
     }
 
     span {
         display: none;
-    }
-
-    .fa-caret-down {
-        display: none;
-        color: white;
     }
 
     @include breakpoint(37.5em) {
@@ -152,9 +162,9 @@ a.profile-nav--trigger {
     display: none;
     margin: 0;
     list-style: none;
-    background: #30373a;
+    background: #f2f2f2;
     z-index: 100;
-    border: solid 1px #262d31;
+    border: solid 1px #e2e2e2;
     border-top: 0;
 
     li {
@@ -167,11 +177,11 @@ a.profile-nav--trigger {
             width: 100%;
             height: 100%;
             padding: .75em .5em;
-            color: #f2f2f2;
+            color: #5c6771;
             font-size: .938em;
 
             &:hover {
-                background: #494e51;
+                background: #e2e2e2;
 
                 .fa {
                     color: #999;
@@ -196,7 +206,12 @@ a.profile-nav--trigger {
 
 .profile-nav--open {
     a.profile-nav--trigger {
-        background: #30373a;
+        background: #f28b20;
+        color: white;
+
+        .fa-caret-down {
+            color: white;
+        }
     }
 
     .profile-nav--list {
