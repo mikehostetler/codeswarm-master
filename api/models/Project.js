@@ -58,7 +58,7 @@ module.exports = {
   },
 
   beforeValidation: function beforeValidation(attrs, next) {
-    attrs.secret = uuid();
+    if (! attrs.secret) attrs.secret = uuid();
     next();
   },
 
