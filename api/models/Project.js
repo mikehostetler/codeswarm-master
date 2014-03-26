@@ -68,6 +68,8 @@ module.exports = {
     next();
   },
 
+  afterUpdate: afterUpdate,
+
   views: {
     owner_id_begins_with: {
       map:
@@ -89,3 +91,13 @@ module.exports = {
     }
   }
 };
+
+
+function afterUpdate(project, cb) {
+  var id = project.id;
+  var sockets = sails.io.sockets.in(id);
+  for(var attr in project) {
+    sockets.emit('update', id, attr, project[attr]);
+  }
+  cb();
+}
