@@ -72,7 +72,12 @@ module.exports = {
     state: 'string',
     success: 'boolean',
 
-    triggered_by: 'string'
+    triggered_by: 'string',
+
+    fresh: {
+      type: 'boolean',
+      defaultsTo: true
+    }
 
   },
 
