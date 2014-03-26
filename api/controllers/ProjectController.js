@@ -52,6 +52,8 @@ module.exports = {
 
     var id = req.param('owner') + '/' + req.param('repo');
 
+    req.body.public = !! req.body.public;
+
     Project.merge(id, req.body, saved);
 
     function saved(err, project) {

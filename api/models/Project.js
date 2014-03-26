@@ -59,6 +59,7 @@ module.exports = {
 
   beforeValidation: function beforeValidation(attrs, next) {
     if (! attrs.secret) attrs.secret = uuid();
+    if ('boolean' != typeof attrs.public) attrs.public = !! attrs.public;
     next();
   },
 
