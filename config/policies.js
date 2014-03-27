@@ -43,6 +43,7 @@ module.exports.policies = {
 		tags: ['isAuthenticated', 'userOwnsProjectOrPublic'],
 		starTag: ['isAuthenticated', 'userOwnsProject'],
 		unstarTag: ['isAuthenticated', 'userOwnsProject'],
+		saveTagContent: ['isAuthenticated', 'userOwnsProject'],
 		deploy: ['isAuthenticated', 'userOwnsProject'],
 		webhook: ['hasValidProjectSecret'],
 		destroy: ['isAuthenticated', 'userOwnsProject'],

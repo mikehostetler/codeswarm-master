@@ -297,7 +297,7 @@ define([
 			requests.get(url).
 				fail(error.handleXhrError).
 				done(function(tags) {
-					dom.loadTags(projectName, tags, star, unstar);
+					dom.loadTags(projectName, tags, star, unstar, saveContent);
 				});
 
 			function star(tag, cb) {
@@ -312,6 +312,13 @@ define([
 					'/projects/' + projectName + '/tags/' + encodeURIComponent(tag) + '/star').
 				  fail(error.handleXhrError).
 				  done(cb);
+			}
+
+			function saveContent(tag, tagContent, cb) {
+				requests.put(
+					'/projects/' + projectName + '/tags/' + encodeURIComponent(tag) + '/content', tagContent).
+					fail(error.handleXhrError).
+					done(cb);
 			}
 		}
 

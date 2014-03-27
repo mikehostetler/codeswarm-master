@@ -65,6 +65,11 @@ module.exports = {
     starred_tags: {
       type: 'array',
       defaultsTo: []
+    },
+
+    tag_content: {
+      type: 'json',
+      defaultsTo: {}
     }
   },
 
@@ -121,7 +126,6 @@ function afterUpdate(project, cb) {
 
 
 function enrichWithGithubTags(project, cb) {
-  console.log('enrichWithGithubTags', project);
   github.tags(project, gotTags);
 
   function gotTags(err, tags) {

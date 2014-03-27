@@ -16,6 +16,7 @@
  */
 
 var async    = require('async');
+var extend   = require('util')._extend;
 var uuid     = require('../../lib/uuid');
 var testConfig = require('../../config/test');
 
@@ -98,8 +99,11 @@ module.exports = {
       else {
         var tags = project.tags || [];
         var starredTags = project.starred_tags || [];
+        var tagContent = project.tag_content || {};
         tags.forEach(function(tag) {
           if (starredTags.indexOf(tag.name) >= 0) tag.starred = true;
+          var content = tagContent[tag.name];
+          if (content) extend(tag, content);
         });
         res.json(tags);
       }
@@ -149,6 +153,28 @@ module.exports = {
         if (idx >= 0) project.starred_tags.splice(idx, 1);
         project.save(savedProject);
       };
+    }
+
+    function savedProject(err) {
+      if (err) res.send(res.status_code || 500, err);
+      else res.json({ok: true});
+    }
+  },
+
+
+  /**
+   *    `PUT /projects/:owner/:repo/tags/:tag/content`
+   */
+  saveTagContent: function (req, res) {
+    var id = req.param('owner') + '/' + req.param('repo');
+    var tag = req.param('tag');
+
+    Project.findOne({id: id}, replied);
+
+    function replied(err, project) {
+      if (! project.tag_content) project.tag_content = {};
+      project.tag_content[tag] = req.body;
+      project.save(savedProject);
     }
 
     function savedProject(err) {

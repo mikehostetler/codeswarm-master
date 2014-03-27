@@ -9,7 +9,9 @@
             <tr>
                 <th class="center" width="100">Starred</th>
                 <th class="center" width="200">Name</th>
-                <th class="center">Commit hash</th>
+                <th class="center">Label</th>
+                <th class="center">Description</th>
+                <th class="center">Edit</th>
             </tr>
         </thead>
         <tbody>
@@ -19,7 +21,9 @@
                     <i data-starred="{{starred}}" data-tag="{{name}}" class="star fa fa-star {{#if starred}}yellow{{/if}}"></i>
                 </td>
                 <td class="center">{{name}}</td>
-                <td class="center">{{commit.sha}}</td>
+                <td data-tag="{{name}}" class="label center">{{label}}</td>
+                <td data-tag="{{name}}" class="description center">{{description}}</td>
+                <td><button class="edit" data-tag="{{name}}">Edit</button></td>
             </tr>
           {{/each}}
         </tr></td>

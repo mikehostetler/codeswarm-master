@@ -387,7 +387,11 @@ define([
 			/**
 			 * Screen for project tags
 			 */
-			loadTags: function(project, _tags, star, unstar) {
+			loadTags: function(project, _tags, star, unstar, saveContent) {
+				if (! _tags) tags = [];
+
+				var self = this;
+
 				var template = Handlebars.compile(tags);
 				console.log('loadTags', arguments);
 				var html = template({
@@ -411,6 +415,68 @@ define([
 						}
 					});
 				});
+
+				this.$main.find('button.edit').click(editButtonClicked);
+
+				function editButtonClicked() {
+					var $this = $(this);
+
+					var tag = $this.attr('data-tag');
+					var tagObject = findTag(tag);
+
+					var labelEditor = $('<input type="text" maxlength="50" value="' + htmlEncode(tagObject.label || '') + '">');
+				  var labelPlace = self.$main.find('.label[data-tag="' + tag +'"]');
+				  var oldLabel = labelPlace.html();
+				  labelPlace.html(labelEditor);
+
+					var descriptionEditor = $('<textarea>' + htmlEncode(tagObject.description || '') + '</textarea>');
+				  var descriptionPlace = self.$main.find('.description[data-tag="' + tag +'"]');
+				  var oldDescription = descriptionPlace.html();
+				  descriptionPlace.html(descriptionEditor);
+
+				  var buttonPlace = $this.parent();
+				  var oldButtons = buttonPlace.children();
+
+				  var saveButton = $('<button>Save</button>');
+				  $this.replaceWith(saveButton);
+				  var cancelButton = $('<button>Cancel</button>');
+				  saveButton.after(cancelButton);
+
+				  saveButton.click(function() {
+				 	  var label = labelEditor.val();
+				 	  var description = descriptionEditor.val();
+				 	  saveContent(tag, { label: label, description: description}, savedContent);
+
+				 	  function savedContent() {
+				 	  	tagObject.label = label;
+				 	  	tagObject.description = description;
+
+				 	  	labelPlace.text(label);
+				 	  	descriptionPlace.text(description);
+				 	  	buttonPlace.html(oldButtons);
+				 	  	oldButtons.click(editButtonClicked);
+				 	  }
+
+				  });
+
+
+				  cancelButton.click(function() {
+				  	labelPlace.html(oldLabel);
+				  	descriptionPlace.html(oldDescription);
+				  	buttonPlace.html(oldButtons);
+				  	oldButtons.click(editButtonClicked);
+				  });
+
+				}
+
+				function findTag(tag) {
+					console.log('findTag', tag);
+					var t;
+					for(var i = 0 ; i < _tags.length; i ++) {
+						t = _tags[i];
+						if (t.name == tag) return t;
+					}
+				}
 			},
 
 			/**
@@ -642,3 +708,7 @@ define([
 		return dom;
 
 	});
+
+function htmlEncode(value){
+  return $('<div/>').text(value).html();
+}
