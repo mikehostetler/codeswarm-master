@@ -63,15 +63,19 @@
         @include border-radius(4px);
 
         &:focus {
-            border: 1px solid #b1d928;
+            border: 1px solid #f28b20;
             outline: none;
-            @include box-shadow(inset 0 -1px #b1d928);
+            @include box-shadow(inset 0 -1px #f28b20);
         }
 
         @include breakpoint(50em) {
             padding: .875em;
             font-size: 1em;
         }
+    }
+
+    input:disabled {
+        color: #ccc;
     }
 
     input.checkbox {
