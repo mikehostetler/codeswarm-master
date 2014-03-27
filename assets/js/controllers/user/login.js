@@ -9,10 +9,6 @@ define([
 
   function (ko, request, session, dom, system, router) {
 
-    if (session.isLoggedIn()) {
-
-    }
-
     var ctor = {
 
       canActivate: function () {
