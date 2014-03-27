@@ -26,7 +26,8 @@
     "codeswarm-plato": "*",
     "codeswarm-custom": "*",
     "joi": "~2.7.0",
-    "sails-couchdb-orm": "*"
+    "sails-couchdb-orm": "*",
+    "request": "~2.34.0"
   },
   "scripts": {
     "start": "node app.js",
@@ -38,7 +39,6 @@
   "author": "",
   "license": "",
   "devDependencies": {
-    "nodemon": "~1.0.14",
-    "request": "~2.34.0"
+    "nodemon": "~1.0.14"
   }
 }
