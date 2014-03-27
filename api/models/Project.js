@@ -113,6 +113,7 @@ function afterUpdate(project, cb) {
 
 
 function enrichWithGithubTags(project, cb) {
+  console.log('enrichWithGithubTags', project);
   github.tags(project, gotTags);
 
   function gotTags(err, tags) {
