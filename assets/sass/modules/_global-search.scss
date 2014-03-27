@@ -49,6 +49,7 @@
         left: 0;
         background: #30373a;
         z-index: 100;
+        border-bottom: solid 1px #e2e2e2;
     }
 
     @include breakpoint(max-width 37.5em) {
@@ -63,13 +64,13 @@ a.global-search--trigger {
     padding: .3em .5em;
     margin-right: 35px;
     width: 2.625em;
-    color: white;
+    color: #333;
     text-align: center;
     line-height: 2em;
 
     @include breakpoint(37.5em) {
         margin-right: 41px;
-        height: 3.5em;
+        height: 3em;
         width: 2.75em;
         line-height: 2.375em;
         font-size: 1.25em;
@@ -82,5 +83,6 @@ a.global-search--trigger {
 
 a.global-search--trigger--open,
 a.global-search--trigger:hover {
-    background: #30373a;
+    background: #f28b20;
+    color: white;
 }
