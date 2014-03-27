@@ -1,8 +1,10 @@
 .datatable {
     width: 100%;
     border-spacing: 0;
+    border-collapse: separate;
     table-layout: fixed;
     overflow: hidden;
+    border: solid 1px #e2e2e2;
     @include border-radius(3px);
 
     thead tr {
@@ -38,7 +40,6 @@
         padding: 12px;
         text-align: left;
         background: #e2e2e2;
-        border: solid 1px #e2e2e2;
         border-right: solid 1px #ccc;
     }
 
@@ -49,7 +50,11 @@
 
     td {
         background: white;
-        border: 1px solid #e2e2e2;
+        border-right: 1px solid #e2e2e2;
+
+        &:last-child {
+            border-right: 0;
+        }
 
         a {
             display: block;
@@ -106,6 +111,15 @@
         em {
             display: block;
             padding: 2em 0;
+        }
+
+        a {
+            display: inline;
+            float: none;
+            padding: 0 !important;
+            position: static;
+            width: auto;
+            height: auto;
         }
     }
 
