@@ -77,7 +77,9 @@ module.exports = {
     fresh: {
       type: 'boolean',
       defaultsTo: true
-    }
+    },
+
+    git: 'json'
 
   },
 
