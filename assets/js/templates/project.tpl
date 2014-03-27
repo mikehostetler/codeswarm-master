@@ -80,7 +80,10 @@
   {{#if isOwner}}
 
     {{#if id}}
-      <p><button><a href="#/{{id}}/plugins">Configure plugins</a></button></p>
+      <p>
+        <button><a href="#/{{id}}/plugins">Configure plugins</a></button>
+        <button><a href="#/{{id}}/tags">Tags</a></button>
+      </p>
     {{/if}}
 
   	<hr>

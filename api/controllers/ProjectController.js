@@ -84,6 +84,80 @@ module.exports = {
     }
   },
 
+  /**
+   *    `GET /projects/:owner/:repo/tags`
+   */
+  tags: function (req, res) {
+    var id = req.param('owner') + '/' + req.param('repo');
+
+    Project.findOne({id: id}, replied);
+
+    function replied(err, project) {
+      if (err) res.send(res.status_code || 500, err);
+      else if (! project) res.send(404, new Error('Not found'));
+      else {
+        var tags = project.tags || [];
+        var starredTags = project.starred_tags || [];
+        tags.forEach(function(tag) {
+          if (starredTags.indexOf(tag.name) >= 0) tag.starred = true;
+        });
+        res.json(tags);
+      }
+    }
+  },
+
+  /**
+   *    `PUT /projects/:owner/:repo/tags/:tag/star`
+   */
+  starTag: function (req, res) {
+    var id = req.param('owner') + '/' + req.param('repo');
+
+    Project.findOne({id: id}, replied);
+
+    function replied(err, project) {
+      if (err) res.send(res.status_code || 500, err);
+      else if (! project) res.send(404, new Error('Not found'));
+      else {
+        var tag = req.param('tag');
+        if (! project.starred_tags) project.starred_tags = [];
+        if (project.starred_tags.indexOf(tag) < 0) project.starred_tags.push(tag);
+        project.save(savedProject);
+      };
+    }
+
+    function savedProject(err) {
+      if (err) res.send(res.status_code || 500, err);
+      else res.json({ok: true});
+    }
+  },
+
+  /**
+   *    `DELETE /projects/:owner/:repo/tags/:tag/star`
+   */
+  unstarTag: function (req, res) {
+    var id = req.param('owner') + '/' + req.param('repo');
+
+    Project.findOne({id: id}, replied);
+
+    function replied(err, project) {
+      if (err) res.send(res.status_code || 500, err);
+      else if (! project) res.send(404, new Error('Not found'));
+      else {
+        var tag = req.param('tag');
+        if (! project.starred_tags) project.starred_tags = [];
+        var idx = project.starred_tags.indexOf(tag);
+        if (idx >= 0) project.starred_tags.splice(idx, 1);
+        project.save(savedProject);
+      };
+    }
+
+    function savedProject(err) {
+      if (err) res.send(res.status_code || 500, err);
+      else res.json({ok: true});
+    }
+  },
+
+
 
   /**
    *    `GET /projects`
@@ -343,6 +417,8 @@ function filterProjectForUser(project, user) {
 
   if (! project.isOwner)
     delete project.secret;
+
+  delete project.tags;
 
   return project;
 }

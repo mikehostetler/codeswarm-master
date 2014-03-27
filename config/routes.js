@@ -110,6 +110,9 @@ module.exports.routes = {
 
   'get /projects': 'ProjectController.list',
   'get /projects/:owner/:repo': 'ProjectController.find',
+  'get /projects/:owner/:repo/tags': 'ProjectController.tags',
+  'put /projects/:owner/:repo/tags/:tag/star': 'ProjectController.starTag',
+  'delete /projects/:owner/:repo/tags/:tag/star': 'ProjectController.unstarTag',
   'post /projects': 'ProjectController.create',
   'post /:owner/:repo/deploy': 'ProjectController.deploy',
   'post /:owner/:repo/webhook': 'ProjectController.webhook',

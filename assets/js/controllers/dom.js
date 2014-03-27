@@ -14,9 +14,10 @@ define([
 		"text!templates/logview.tpl",
 		"text!templates/tokens.tpl",
 		"text!templates/github_repos.tpl",
-		"text!templates/plugins.tpl"
+		"text!templates/plugins.tpl",
+		"text!templates/tags.tpl"
 	],
-	function ($, Handlebars, _, timestamp, header, signup, login, menu, projects, projects_table, project, builds, logview, tokens, github_repos, plugins) {
+	function ($, Handlebars, _, timestamp, header, signup, login, menu, projects, projects_table, project, builds, logview, tokens, github_repos, plugins, tags) {
 		var dom;
 
 		dom = {
@@ -380,6 +381,35 @@ define([
 					}
 
 					save(config);
+				});
+			},
+
+			/**
+			 * Screen for project tags
+			 */
+			loadTags: function(project, _tags, star, unstar) {
+				var template = Handlebars.compile(tags);
+				console.log('loadTags', arguments);
+				var html = template({
+					project: project,
+					tags: _tags
+				});
+
+				this.$main.html(html);
+
+				this.$main.find('.star').click(function() {
+					$this = $(this);
+					var tag = $this.attr('data-tag');
+					var starred = $this.attr('data-starred') == 'true';
+					var fn = starred ? unstar : star;
+					fn.call(null, tag, function() {
+						$this.attr('data-starred', starred ? 'false' : 'true');
+						if (starred) {
+							$this.removeClass('yellow');
+						} else {
+							$this.addClass('yellow');
+						}
+					});
 				});
 			},
 

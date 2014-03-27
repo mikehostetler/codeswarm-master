@@ -57,7 +57,15 @@ module.exports = {
 
     type: 'string',
 
-    tags: 'array'
+    tags: {
+      type: 'array',
+      defaultsTo: []
+    },
+
+    starred_tags: {
+      type: 'array',
+      defaultsTo: []
+    }
   },
 
   beforeValidation: function beforeValidation(attrs, next) {
