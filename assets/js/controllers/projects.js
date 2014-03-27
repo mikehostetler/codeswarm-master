@@ -290,6 +290,36 @@ define([
 				fail(error.handleXhrError);
 			}
 
+		},
+
+		configTags: function (projectName){
+			var url = '/projects/' + projectName + '/tags';
+			requests.get(url).
+				fail(error.handleXhrError).
+				done(function(tags) {
+					dom.loadTags(projectName, tags, star, unstar, saveContent);
+				});
+
+			function star(tag, cb) {
+				requests.put(
+					'/projects/' + projectName + '/tags/' + encodeURIComponent(tag) + '/star').
+				  fail(error.handleXhrError).
+				  done(cb);
+			}
+
+			function unstar(tag, cb) {
+				requests.delete(
+					'/projects/' + projectName + '/tags/' + encodeURIComponent(tag) + '/star').
+				  fail(error.handleXhrError).
+				  done(cb);
+			}
+
+			function saveContent(tag, tagContent, cb) {
+				requests.put(
+					'/projects/' + projectName + '/tags/' + encodeURIComponent(tag) + '/content', tagContent).
+					fail(error.handleXhrError).
+					done(cb);
+			}
 		}
 
 	};

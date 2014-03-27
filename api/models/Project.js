@@ -6,7 +6,8 @@
  * @docs    :: http://sailsjs.org/#!documentation/models
  */
 
-var uuid = require('../../lib/uuid');
+var uuid   = require('../../lib/uuid');
+var github = require('../../lib/github');
 
 var repoRegex = /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?\.git$/;
 
@@ -54,7 +55,22 @@ module.exports = {
 
     state: 'string',
 
-    type: 'string'
+    type: 'string',
+
+    tags: {
+      type: 'array',
+      defaultsTo: []
+    },
+
+    starred_tags: {
+      type: 'array',
+      defaultsTo: []
+    },
+
+    tag_content: {
+      type: 'json',
+      defaultsTo: {}
+    }
   },
 
   beforeValidation: function beforeValidation(attrs, next) {
@@ -66,7 +82,12 @@ module.exports = {
   beforeCreate: function beforeCreate(attrs, next) {
     var match = attrs.repo.match(repoRegex);
     attrs.id = match && match[5];
-    next();
+
+    enrichWithGithubTags(attrs, next);
+  },
+
+  beforeUpdate: function beforeUpdate(attrs, next) {
+    enrichWithGithubTags(attrs, next);
   },
 
   afterUpdate: afterUpdate,
@@ -101,4 +122,17 @@ function afterUpdate(project, cb) {
     sockets.emit('update', id, attr, project[attr]);
   }
   cb();
+}
+
+
+function enrichWithGithubTags(project, cb) {
+  github.tags(project, gotTags);
+
+  function gotTags(err, tags) {
+    if (err) cb(err);
+    else {
+      project.tags = tags;
+      cb();
+    }
+  }
 }
