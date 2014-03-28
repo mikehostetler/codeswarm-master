@@ -28,7 +28,9 @@
     "grunt-contrib-sass": "~0.7.2",
     "handlebars": "~2.0.0-alpha.1",
     "joi": "~2.7.0",
-    "mailgun": "~0.4.2"
+    "mailgun": "~0.4.2",
+    "codeswarm-node": "*",
+    "codeswarm-sauce": "*"
   },
   "scripts": {
     "start": "node app.js",
@@ -43,11 +45,12 @@
   "author": "",
   "license": "",
   "devDependencies": {
-    "nodemon": "~1.0.14",
+    "nodemon": "~1.0.17",
     "request": "~2.34.0",
     "grunt-contrib-jshint": "~0.6.4",
     "grunt-jsbeautifier": "~0.2.0",
     "grunt-mocha": "~0.2.0",
     "grunt-blanket-mocha": "~0.3.3"
   }
+
 }
