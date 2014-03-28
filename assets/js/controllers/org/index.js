@@ -45,7 +45,7 @@ define([
       var self = this;
       // Push default (all)
       this.orgs.push('projects');
-      github.gitUser(function (err, user) {
+      github.getUser(function (err, user) {
         user.orgs(function (err, orgs) {
           if (!err) {
             for (var i = 0, z = orgs.length; i < z; i++) {
