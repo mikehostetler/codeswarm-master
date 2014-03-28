@@ -33,25 +33,28 @@ define([
     repos: ko.observableArray(),
     availableBranches: ko.observableArray(),
     public: ko.observable(false),
+    deleteBtn: ko.observable('Delete'),
 
     // Initialization
     activate: function (org, repo) {
       // Set param props
       this.param_org = org;
       this.param_repo = repo;
+      this.availableBranches([]);
       // If not new project, load data from endpoint
       if (!org || !repo) {
         this.newProject = ko.observable(true);
         this._id(null);
         this.repo(null);
         this.branch(null);
-        this.type(null);
+        this.type('0');
+        // Get repos list
+        this.tryGetRepos();
       } else {
         this.tryGetProject();
         this.newProject = ko.observable(false);
+        this.deleteBtn('Delete');
       }
-      // Get tokens
-      this.tryGetRepos();
     },
 
     compositionComplete: function () {
@@ -121,8 +124,13 @@ define([
 
       // Populate availableBranches
       var repo_opts = data.name.split('/');
+      ctor.getBranches(repo_opts[0], repo_opts[1], data.default_branch);
 
-      github.getRepo(repo_opts[0], repo_opts[1], function (err, repo) {
+    },
+
+    // Gets available branches
+    getBranches: function (org, repo, default_branch) {
+      github.getRepo(org, repo, function (err, repo) {
         if (err) {
           dom.showNotification('error', err);
         } else {
@@ -134,10 +142,10 @@ define([
               ctor.availableBranches.push('master');
             } else {
               // Set default branch as first option
-              ctor.availableBranches.push(data.default_branch);
+              ctor.availableBranches.push(default_branch);
               // Loop and add all other branches
               for (var i = 0, z = branches.length; i < z; i++) {
-                if (branches[i] !== data.default_branch) {
+                if (branches[i] !== default_branch) {
                   ctor.availableBranches.push(branches[i]);
                 }
               }
@@ -151,20 +159,15 @@ define([
 
     // GET PROJECT ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    // Define get request
-    getProjectRequest: {
-      url: function () {
-        return '/projects/' + ctor.param_org + '/' + ctor.param_repo;
-      },
-      type: 'GET'
-    },
-
     // Get project
     tryGetProject: function () {
       var self = this;
 
       // Make Request
-      var req = request(this.getProjectRequest);
+      var req = request({
+        url: '/projects/' + ctor.param_org + '/' + ctor.param_repo,
+        type: 'GET'
+      });
 
       // On success
       req.done(function (data) {
@@ -174,6 +177,10 @@ define([
         self.branch(data.branch);
         self.type(data.type);
         self.public(data.public);
+
+        // Load branches
+        var repo_opts = data._id.split('/');
+        ctor.getBranches(repo_opts[0], repo_opts[1], data.branch);
       });
 
       // On failure
@@ -202,7 +209,8 @@ define([
       var payload = {
         repo: this.repo(),
         public: this.public() || false,
-        branch: this.branch()
+        branch: this.branch(),
+        type: this.type()
       };
 
       // If new project, set to POST
@@ -222,6 +230,27 @@ define([
       req.fail(function (err) {
         dom.showNotification('error', JSON.parse(err.responseText).message);
       });
+    },
+
+    // DELETE PROJECT ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    deleteProject: function () {
+      if (this.deleteBtn() === 'Delete') {
+        // FIRST CLICK - Change button for confirmation...
+        this.deleteBtn('Click to Confirm Delete');
+      } else {
+        // SECOND CLICK - Remove the project, on success return to project list
+        var req = request({
+          url: '/projects/' + this.param_org + '/' + this.param_repo,
+          type: 'DELETE'
+        });
+        req.done(function () {
+          router.navigate('#projects');
+        });
+        req.fail(function (err) {
+          dom.showNotification('error', JSON.parse(err.responseText).message);
+        });
+      }
     }
 
   };

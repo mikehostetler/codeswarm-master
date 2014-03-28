@@ -85,6 +85,10 @@ define([
           moduleId: 'controllers/user/forgot-password',
           nav: true
         }, {
+          route: 'recover-password/:secret',
+          moduleId: 'controllers/user/recover-password',
+          nav: true
+        }, {
           route: 'user/signup',
           moduleId: 'controllers/user/signup',
           title: 'Signup',

@@ -26,8 +26,8 @@ define([
     // Define model
     _id: ko.observable(),
     title: ko.observable(),
-    org: ko.observable(),
-    repo: ko.observable(),
+    org: ko.observable(null),
+    repo: ko.observable(null),
     branch: ko.observable(),
     token: ko.observable(),
     stats: ko.observable(),
@@ -37,15 +37,15 @@ define([
     activate: function (org, repo) {
       this.org(org);
       this.repo(repo);
-      this.tryGetRepo(org, repo);
+      this.tryGetRepo();
     },
 
     // Github Integration ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     // Try to get user
-    tryGetRepo: function (org, repo) {
+    tryGetRepo: function () {
       var self = this;
-      github.getRepo(org, repo, function (err, repo) {
+      github.getRepo(this.org(), this.repo(), function (err, repo) {
         if (err) {
           dom.showNotification('error', err);
         } else {
@@ -66,20 +66,15 @@ define([
 
     // Get Data ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    // Define get request
-    getProjectRequest: {
-      url: function () {
-        return '/projects/' + ctor.org() + '/' + ctor.repo();
-      },
-      type: 'GET'
-    },
-
     // Get project
     tryGetProject: function () {
       var self = this;
 
       // Make Request
-      var req = request(this.getProjectRequest);
+      var req = request({
+        url: '/projects/' + this.org() + '/' + this.repo(),
+        type: 'GET'
+      });
 
       // On success
       req.done(function (data) {
