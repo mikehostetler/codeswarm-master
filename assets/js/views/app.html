@@ -15,7 +15,7 @@
 			<input type="text" name="Search" placeholder="Search..." class="search-input">
 		</form>
 
-		<a class="fa fa-bars nav-trigger" data-bind="ifnot: loggedIn" data-bind="visible: loggedIn()"></a>
+		<a class="fa fa-bars nav-trigger" data-bind="visible: !loggedIn()"></a>
 
 		<div class="profile-nav"  data-bind="visible: loggedIn()">
 			<a class="profile-nav--trigger">
