@@ -37,8 +37,21 @@ function processProject(project, cb) {
     }, inserted);
 
     function inserted(err) {
-      if (err && err.status_code != 409) cb(err);
+      if (err && err.status_code != 409) merge(pullRequest, cb);
       else cb();
+    }
+  }
+
+  function merge(pullRequest, cb) {
+    PullRequest.findOne({id: pullRequest.id}, gotPullRequest);
+
+    function gotPullRequest(err, ourPullRequest) {
+      if (err) cb(err);
+      else if (ourPullRequest.github_data.updated_at == pullRequest.updated_at) return cb();
+      else {
+        ourPullRequest.github_data = pullRequest;
+        ourPullRequest.save(cb);
+      }
     }
   }
 }
