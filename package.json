@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "description": "a Sails application",
   "dependencies": {
-    "sails": "0.9.8",
+    "sails": "0.9.15",
     "grunt": "0.4.1",
     "sails-disk": "~0.9.0",
     "ejs": "0.8.4",
@@ -16,6 +16,8 @@
     "codeswarm-node": "git+ssh://git@github.com:codeswarm/codeswarm-node.git",
     "codeswarm-plato": "git+ssh://git@github.com:codeswarm/codeswarm-plato.git",
     "codeswarm-browser": "git+ssh://git@github.com:codeswarm/codeswarm-browser.git",
+    "codeswarm-browserstack": "git+ssh://git@github.com:codeswarm/codeswarm-browserstack.git",
+    "codeswarm-sauce": "git+ssh://git@github.com:codeswarm/codeswarm-sauce.git",
     "remote-test": "git+ssh://git@github.com:codeswarm/remote-test.git",
     "colors": "~0.6.2",
     "eventemitter2": "~0.4.13",
@@ -28,9 +30,7 @@
     "grunt-contrib-sass": "~0.7.2",
     "handlebars": "~2.0.0-alpha.1",
     "joi": "~2.7.0",
-    "mailgun": "~0.4.2",
-    "codeswarm-node": "*",
-    "codeswarm-sauce": "*"
+    "mailgun": "~0.4.2"
   },
   "scripts": {
     "start": "node app.js",
