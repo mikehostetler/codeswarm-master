@@ -69,15 +69,14 @@ function projectListFor(username, cb) {
   }
 
   function replied(err, reply) {
-    if (err && err.status_code == 404 && err.reason == 'missing_named_view') {
-      createViews(function(err) {
-        console.log(err);
+    if (err && err.status_code == 404 && err.reason == 'no_db_file') {
+      createProjectsDB(function(err) {
         if (err) cb(err);
         else _projectListFor();
       });
-    }
-    else if (err && err.status_code == 404 && err.reason == 'no_db_file') {
-      createProjectsDB(function(err) {
+    } else if (err && err.status_code == 404) {
+      createViews(function(err) {
+        console.log(err);
         if (err) cb(err);
         else _projectListFor();
       });

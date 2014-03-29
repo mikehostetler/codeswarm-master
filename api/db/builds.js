@@ -17,15 +17,15 @@ function listBuilds(project, cb) {
   }
 
   function replied(err, reply) {
-    if (err && err.status_code == 404 && err.reason == 'missing') {
-      createByProjectView(function(err) {
-        console.log(err);
+    if (err && err.status_code == 404 && err.reason == 'no_db_file') {
+      createBuildsDB(function(err) {
         if (err) cb(err);
         else _list();
       });
     }
-    else if (err && err.status_code == 404 && err.reason == 'no_db_file') {
-      createBuildsDB(function(err) {
+    else if (err && err.status_code == 404) {
+      createByProjectView(function(err) {
+        console.log(err);
         if (err) cb(err);
         else _list();
       });
