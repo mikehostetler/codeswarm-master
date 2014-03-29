@@ -14,6 +14,10 @@
         <input type="text" name="{{../../name}}/{{name}}" value="{{value}}" {{#if required}}required{{/if}}>
       {{/compare}}
 
+      {{#compare type "checkbox" operator="==="}}
+        <input type="checkbox" name="{{../../name}}/{{name}}" {{#compare value "on" operator="==="}}checked{{/compare}}>
+      {{/compare}}
+
       {{#compare type "text" operator="==="}}
         <textarea name="{{../../name}}/{{name}}" {{#if required}}required{{/if}}>{{value}}</textarea>
       {{/compare}}
@@ -35,6 +39,8 @@
         {{/each}}
         </ul>
       {{/compare}}
+
+
 
     {{/each}}
 

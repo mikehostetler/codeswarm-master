@@ -47,6 +47,7 @@
           <option value="">Select one</option>
           <option value="node">Node.js</option>
           <option value="browser">Browser</option>
+          <option value="custom">Custom</option>
         {{/select}}
       </select>
     {{else}}
@@ -79,7 +80,10 @@
   {{#if isOwner}}
 
     {{#if id}}
-      <p><button><a href="#/{{id}}/plugins">Configure plugins</a></button></p>
+      <p>
+        <button><a href="#/{{id}}/plugins">Configure plugins</a></button>
+        <button><a href="#/{{id}}/tags">Tags</a></button>
+      </p>
     {{/if}}
 
   	<hr>

@@ -11,11 +11,50 @@ $ cd codeswarm-node
 $ npm link
 ```
 
-Link it:
+Checkout plugin `codeswarm-sauce`:
+
+```
+$ cd projects
+$ git clone git@github.com:CodeSwarm/codeswarm-sauce.git
+$ cd codeswarm-sauce
+$ npm link
+```
+
+Checkout plugin `codeswarm-plato`:
+
+```
+$ cd projects
+$ git clone git@github.com:CodeSwarm/codeswarm-plato.git
+$ cd codeswarm-plato
+$ npm link
+```
+
+Checkout plugin `codeswarm-custom`:
+
+```
+$ cd projects
+$ git clone git@github.com:CodeSwarm/codeswarm-custom.git
+$ cd codeswarm-custom
+$ npm link
+```
+
+Checkout plugin `codeswarm-gateway`:
+
+```
+$ cd projects
+$ git clone git@github.com:CodeSwarm/codeswarm-gateway.git
+$ cd codeswarm-gateway
+$ npm link
+```
+
+Link them:
 
 ```
 $ cd  projects/codeswarm
 $ npm link codeswarm-node
+$ npm link codeswarm-sauce
+$ npm link codeswarm-plato
+$ npm link codeswarm-custom
 ```
 
 ## Run

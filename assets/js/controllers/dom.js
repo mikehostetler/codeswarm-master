@@ -14,9 +14,10 @@ define([
 		"text!templates/logview.tpl",
 		"text!templates/tokens.tpl",
 		"text!templates/github_repos.tpl",
-		"text!templates/plugins.tpl"
+		"text!templates/plugins.tpl",
+		"text!templates/tags.tpl"
 	],
-	function ($, Handlebars, _, timestamp, header, signup, login, menu, projects, projects_table, project, builds, logview, tokens, github_repos, plugins) {
+	function ($, Handlebars, _, timestamp, header, signup, login, menu, projects, projects_table, project, builds, logview, tokens, github_repos, plugins, tags) {
 		var dom;
 
 		dom = {
@@ -384,6 +385,101 @@ define([
 			},
 
 			/**
+			 * Screen for project tags
+			 */
+			loadTags: function(project, _tags, star, unstar, saveContent) {
+				if (! _tags) tags = [];
+
+				var self = this;
+
+				var template = Handlebars.compile(tags);
+				console.log('loadTags', arguments);
+				var html = template({
+					project: project,
+					tags: _tags
+				});
+
+				this.$main.html(html);
+
+				this.$main.find('.star').click(function() {
+					$this = $(this);
+					var tag = $this.attr('data-tag');
+					var starred = $this.attr('data-starred') == 'true';
+					var fn = starred ? unstar : star;
+					fn.call(null, tag, function() {
+						$this.attr('data-starred', starred ? 'false' : 'true');
+						if (starred) {
+							$this.removeClass('yellow');
+						} else {
+							$this.addClass('yellow');
+						}
+					});
+				});
+
+				this.$main.find('button.edit').click(editButtonClicked);
+
+				function editButtonClicked() {
+					var $this = $(this);
+
+					var tag = $this.attr('data-tag');
+					var tagObject = findTag(tag);
+
+					var labelEditor = $('<input type="text" maxlength="50" value="' + htmlEncode(tagObject.label || '') + '">');
+				  var labelPlace = self.$main.find('.label[data-tag="' + tag +'"]');
+				  var oldLabel = labelPlace.html();
+				  labelPlace.html(labelEditor);
+
+					var descriptionEditor = $('<textarea>' + htmlEncode(tagObject.description || '') + '</textarea>');
+				  var descriptionPlace = self.$main.find('.description[data-tag="' + tag +'"]');
+				  var oldDescription = descriptionPlace.html();
+				  descriptionPlace.html(descriptionEditor);
+
+				  var buttonPlace = $this.parent();
+				  var oldButtons = buttonPlace.children();
+
+				  var saveButton = $('<button>Save</button>');
+				  $this.replaceWith(saveButton);
+				  var cancelButton = $('<button>Cancel</button>');
+				  saveButton.after(cancelButton);
+
+				  saveButton.click(function() {
+				 	  var label = labelEditor.val();
+				 	  var description = descriptionEditor.val();
+				 	  saveContent(tag, { label: label, description: description}, savedContent);
+
+				 	  function savedContent() {
+				 	  	tagObject.label = label;
+				 	  	tagObject.description = description;
+
+				 	  	labelPlace.text(label);
+				 	  	descriptionPlace.text(description);
+				 	  	buttonPlace.html(oldButtons);
+				 	  	oldButtons.click(editButtonClicked);
+				 	  }
+
+				  });
+
+
+				  cancelButton.click(function() {
+				  	labelPlace.html(oldLabel);
+				  	descriptionPlace.html(oldDescription);
+				  	buttonPlace.html(oldButtons);
+				  	oldButtons.click(editButtonClicked);
+				  });
+
+				}
+
+				function findTag(tag) {
+					console.log('findTag', tag);
+					var t;
+					for(var i = 0 ; i < _tags.length; i ++) {
+						t = _tags[i];
+						if (t.name == tag) return t;
+					}
+				}
+			},
+
+			/**
 			 * Request Github Token
 			 */
 			requestGithubToken: function() {
@@ -612,3 +708,7 @@ define([
 		return dom;
 
 	});
+
+function htmlEncode(value){
+  return $('<div/>').text(value).html();
+}

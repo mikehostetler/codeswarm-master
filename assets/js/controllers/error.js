@@ -37,7 +37,7 @@ define([
   }
 
   function proceedAfterXhr(xhr) {
-    if (xhr.status == 401) {
+    if (xhr.status == 401 && session) {
       session.unset();
       dom.showError('User is not logged in. <a href="#/">Log in</a>.');
       return false;
