@@ -9,10 +9,11 @@ bootstrap(['Project', 'User', 'PullRequest'], next);
 var projectIndex = 0-1;
 var pageSize = 1;
 
-function process(project, cb) {
+function processProject(project, cb) {
   if (project.id.charAt(0) == '_') return cb();
 
-  console.log('project opwners:', project);
+  console.log(project.id);
+
   async.map(project.owners || [], getUserGithubKey, gotOwnerKeys);
 
   function gotOwnerKeys(err, tokens) {
@@ -33,7 +34,12 @@ function process(project, cb) {
       id: pullRequest.id,
       project: project.id,
       github_data: pullRequest
-    }, cb);
+    }, inserted);
+
+    function inserted(err) {
+      if (err && err.status_code != 409) cb(err);
+      else cb();
+    }
   }
 }
 
@@ -60,15 +66,13 @@ function fetchOne() {
 }
 
 function foundProject(err, projects) {
-  console.log('found');
   if (err) return ended(err);
   if (! projects.length) return ended();
   if (projects.length > pageSize) throw new Error('got more than ' + pageSize + ' projects');
   var project = projects[0];
-  console.log('Project:' + project.id);
   projectIndex ++;
 
-  process(project, processed);
+  processProject(project, processed);
 
   function processed(err) {
     if (err) console.error(err.stack);
@@ -82,7 +86,7 @@ function ended(err) {
     console.error('\n' + err.stack);
     process.exit(err.code || 1);
     return;
-  } else console.log('ended.');
+  } else process.exit(0);
 }
 
 
