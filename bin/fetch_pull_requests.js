@@ -6,7 +6,7 @@ var github    = require('../lib/github');
 
 bootstrap(['Project', 'User', 'PullRequest'], next);
 
-var projectIndex = 0-1;
+var projectIndex = -1;
 var pageSize = 1;
 
 function processProject(project, cb) {
