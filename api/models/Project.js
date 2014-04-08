@@ -70,7 +70,9 @@ module.exports = {
     tag_content: {
       type: 'json',
       defaultsTo: {}
-    }
+    },
+
+    getTagsForCommit: getTagsForCommit
   },
 
   beforeValidation: function beforeValidation(attrs, next) {
@@ -163,4 +165,21 @@ function enrichWithGithubBranches(project, cb) {
       cb();
     }
   }
+}
+
+
+/// getTagsForCommit
+
+function getTagsForCommit(targetCommit) {
+  var tag;
+  var tags = [];
+  if (! this.tags) return tags;
+
+
+  this.tags.forEach(function(tag) {
+    var commit = tag.commit && tag.commit.sha;
+    if (targetCommit == commit) tags.push(tag.name);
+  });
+
+  return tags;
 }

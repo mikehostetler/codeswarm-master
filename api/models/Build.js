@@ -79,14 +79,45 @@ module.exports = {
       defaultsTo: true
     },
 
-    git: 'json'
+    git: 'json',
+
+    tags: {
+      type: 'array',
+      defaultsTo: []
+    }
 
   },
+
+  beforeUpdate: searchTags,
+  beforeCreate: searchTags,
 
   afterCreate: goBuild,
 
   forShow: forShow
 };
+
+
+/// searchTags
+
+function searchTags(build, cb) {
+  var project = build.project;
+  if (! project) return cb();
+
+  var commit = build.git && build.git.commit;
+  if (! commit) return cb();
+
+  Project.findOne({id: project}, foundProject);
+
+  function foundProject(err, project) {
+    if (err || ! project) return cb(err);
+
+    build.tags = project.getTagsForCommit(commit);
+    cb();
+  }
+}
+
+
+/// forShow
 
 function forShow(build) {
   build = extend({}, build);
