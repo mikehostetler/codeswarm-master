@@ -5,6 +5,7 @@
             <th class="center" width="65">Build</th>
             <th>Project</th>
             <th class="center" width="60">Logs</th>
+            <th class="center" width="60">Tags</th>
             {{#unless restricted}}
             <th class="center" width="75">Config</th>
             {{/unless}}
@@ -97,6 +98,10 @@
             {{else}}
             N/A
             {{/if}}
+        </td>
+        <td class="center logs-col">
+            <br>
+            <a href="#/{{this.id}}/tags"><i class="fa fa-tags"></i></a>
         </td>
         {{#unless ../restricted}}
         <td class="center settings-col">

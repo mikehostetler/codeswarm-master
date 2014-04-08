@@ -15,9 +15,10 @@ define([
 		"text!templates/tokens.tpl",
 		"text!templates/github_repos.tpl",
 		"text!templates/plugins.tpl",
-		"text!templates/tags.tpl"
+		"text!templates/tags.tpl",
+		"text!templates/builds_by_tag.tpl"
 	],
-	function ($, Handlebars, _, timestamp, header, signup, login, menu, projects, projects_table, project, builds, logview, tokens, github_repos, plugins, tags) {
+	function ($, Handlebars, _, timestamp, header, signup, login, menu, projects, projects_table, project, builds, logview, tokens, github_repos, plugins, tags, builds_by_tag) {
 		var dom;
 
 		dom = {
@@ -385,7 +386,48 @@ define([
 			},
 
 			/**
-			 * Screen for project tags
+			 * Screen for project builds by tag
+			 */
+			loadBuildTags: function(project, buildsByTag, runBuild) {
+				var template = Handlebars.compile(builds_by_tag);
+
+				var tagsByTag = {};
+				var tags = [];
+
+				Object.keys(buildsByTag).forEach(function(tag) {
+					var tagObj = tagsByTag[tag];
+					if (! tagObj) {
+
+						tagObj = tagsByTag[tag] = {
+							name: tag,
+							builds: []
+						};
+						tags.push(tagObj);
+					}
+
+					tagObj.builds = tagObj.builds.concat(buildsByTag[tag] || []);
+				});
+
+				var html = template({
+					project: project,
+					tags: tags
+				});
+
+				this.$main.html(html);
+
+				// Watch for build trigger
+				this.$main.find(".project-run-build").click(function () {
+					var $this = $(this);
+					// Spin teh icon!
+					$this.find("i").addClass("fa-spin");
+					var project = $this.data("project");
+					var tag = $this.data("tag");
+					runBuild(project, tag);
+				});
+			},
+
+			/**
+			 * Screen for project tags config
 			 */
 			loadTags: function(project, _tags, star, unstar, saveContent) {
 				if (! _tags) tags = [];

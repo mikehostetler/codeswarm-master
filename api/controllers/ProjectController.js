@@ -293,7 +293,7 @@ module.exports = {
         repo: project.repo,
         dir: id,
         branch: project.branch,
-        commit: 'HEAD',
+        commit: req.body.tag || 'HEAD',
         type: project.type,
         plugins: project.plugins,
         state: 'pending',

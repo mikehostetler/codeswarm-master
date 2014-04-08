@@ -9,6 +9,7 @@
             <tr>
                 <th width="75">Status</th>
                 <th>Data</th>
+                <th width="200">Tags</th>
                 <th width="70">Open</th>
             </tr>
         </thead>
@@ -36,6 +37,7 @@
             <td class="logs">
                 Started at {{started_at}}, Triggered by {{triggered_by}}
             </td>
+            <td>{{tags}}</td>
             <td class="center logs-col">
                 <a href="#/{{project}}/builds/{{id}}"><i class="fa fa-clipboard"></i></a>
             </td>

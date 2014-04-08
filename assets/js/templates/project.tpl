@@ -83,7 +83,7 @@
     {{#if id}}
       <p>
         <button><a href="#/{{id}}/plugins">Configure plugins</a></button>
-        <button><a href="#/{{id}}/tags">Tags</a></button>
+        <button><a href="#/{{id}}/tags/config">Tags</a></button>
       </p>
     {{/if}}
 
