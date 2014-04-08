@@ -74,6 +74,7 @@ function forList(build) {
     state:      build.state,
     branch:     build.branch,
     triggered_by: build.triggered_by,
-    project: build.project
+    project:    build.project,
+    tags:       build.tags
   }
 }

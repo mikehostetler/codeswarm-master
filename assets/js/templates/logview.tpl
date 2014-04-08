@@ -5,9 +5,34 @@
 
 <div class="content-wrap">
 
-  <h2 class="{{status}}" style="font-size: 100%; margin-bottom: 1em">{{status}}</h2>
 
-  <h2 style="font-size: 150%; margin-bottom: 1em">Stages:</h2>
+
+  <table class="datatable">
+    <tbody>
+
+      <tr>
+        <th width="150">Status</th>
+        <td class="{{status}}">{{status}}</td>
+      </tr>
+
+      {{#if git.commit}}
+        <tr>
+          <th width="150">Git Commit</th>
+          <td>{{git.commit}}</td>
+        </tr>
+      {{/if}}
+
+      {{#if tags}}
+        <tr>
+          <th width="150">Git Tags</th>
+          <td>{{tags}}</td>
+        </tr>
+      {{/if}}
+
+    </tbody>
+  </table>
+
+  <h2 style="font-size: 150%; margin-bottom: 1em; margin-top: 1em">Stages:</h2>
   {{#each stages}}
     <h3>{{name}}</h3>
     {{#each commands}}
