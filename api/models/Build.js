@@ -88,6 +88,18 @@ module.exports = {
 
   },
 
+  views: {
+    'by_project_and_tag': {
+      map:
+        function(doc) {
+          doc.tags.forEach(function(tag) {
+            if (! doc.project || ! doc.tags) return;
+            emit([doc.project, tag, doc.started_at], doc);
+          });
+        }
+    }
+  },
+
   beforeUpdate: searchTags,
   beforeCreate: searchTags,
 

@@ -292,6 +292,16 @@ define([
 
 		},
 
+		tags: function (projectName) {
+			var url = '/projects/' + projectName + '/builds/tags';
+
+			requests.get(url).
+				fail(error.handleXhrError).
+				done(function(tags) {
+					dom.loadBuildTags(projectName, tags);
+				});
+		},
+
 		configTags: function (projectName){
 			var url = '/projects/' + projectName + '/tags';
 			requests.get(url).

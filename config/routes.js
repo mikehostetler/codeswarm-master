@@ -123,6 +123,7 @@ module.exports.routes = {
   'put /projects/:owner/:repo': 'ProjectController.update',
   'put /projects/:owner/:repo/plugins': 'ProjectController.updatePlugins',
   'get /projects/:owner/:repo/builds': 'BuildController.index',
+  'get /projects/:owner/:repo/builds/tags': 'BuildController.byTag',
   'get /projects/:owner/:repo/builds/:build': 'BuildController.find',
 
   /// Tokens
