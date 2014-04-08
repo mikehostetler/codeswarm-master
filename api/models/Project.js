@@ -83,11 +83,26 @@ module.exports = {
     var match = attrs.repo.match(repoRegex);
     attrs.id = match && match[5];
 
-    enrichWithGithubTags(attrs, next);
+    async.parallel([
+      function(cb) {
+        enrichWithGithubTags(attrs, cb);
+      },
+      function(cb) {
+        enrichWithGithubBranches(attrs, cb);
+      }
+      ], next);
+
   },
 
   beforeUpdate: function beforeUpdate(attrs, next) {
-    enrichWithGithubTags(attrs, next);
+    async.parallel([
+      function(cb) {
+        enrichWithGithubTags(attrs, cb);
+      },
+      function(cb) {
+        enrichWithGithubBranches(attrs, cb);
+      }
+      ], next);
   },
 
   afterUpdate: afterUpdate,
@@ -132,6 +147,19 @@ function enrichWithGithubTags(project, cb) {
     if (err) cb(err);
     else {
       project.tags = tags;
+      cb();
+    }
+  }
+}
+
+
+function enrichWithGithubBranches(project, cb) {
+  github.branches(project, gotBranches);
+
+  function gotBranches(err, branches) {
+    if (err) cb(err);
+    else {
+      project.branches = branches;
       cb();
     }
   }
