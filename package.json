@@ -21,13 +21,14 @@
     "github": "~0.1.14",
     "grunt-contrib-sass": "~0.7.2",
     "handlebars": "~2.0.0-alpha.1",
+    "joi": "~2.7.0",
+    "request": "~2.34.0",
     "codeswarm-node": "git+ssh://git@github.com:codeswarm/codeswarm-node.git",
     "codeswarm-sauce": "git+ssh://git@github.com:codeswarm/codeswarm-sauce.git",
+    "codeswarm-browserstack": "git+ssh://git@github.com:codeswarm/codeswarm-node.git",
     "codeswarm-plato": "git+ssh://git@github.com:codeswarm/codeswarm-plato.git",
     "codeswarm-custom": "git+ssh://git@github.com:codeswarm/codeswarm-custom.git",
-    "joi": "~2.7.0",
-    "sails-couchdb-orm": "git+ssh://git@github.com:codeswarm/sails-couchdb-orm.git",
-    "request": "~2.34.0"
+    "sails-couchdb-orm": "git+ssh://git@github.com:codeswarm/sails-couchdb-orm.git"
   },
   "scripts": {
     "start": "node app.js",

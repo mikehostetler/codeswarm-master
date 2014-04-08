@@ -46,7 +46,8 @@
         {{#select type}}
           <option value="">Select one</option>
           <option value="node">Node.js</option>
-          <option value="browser">Browser</option>
+          <option value="browser">Browser (Saucelabs)</option>
+          <option value="browser_browserstack">Browser (Browserstack)</option>
           <option value="custom">Custom</option>
         {{/select}}
       </select>
