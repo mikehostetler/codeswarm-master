@@ -101,7 +101,7 @@
         </td>
         <td class="center logs-col">
             <br>
-            <a href="#/{{this.id}}/tags"><i class="fa fa-th-list"></i></a>
+            <a href="#/{{this.id}}/tags"><i class="fa fa-tags"></i></a>
         </td>
         {{#unless ../restricted}}
         <td class="center settings-col">
