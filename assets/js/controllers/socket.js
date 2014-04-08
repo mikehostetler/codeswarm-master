@@ -33,9 +33,9 @@ define([
   }
 
   function addProject(project) {
-    projects[project._id] = project;
-    joinEvents.push(['join project', project._id]);
-    socket.emit('join project', project._id);
+    projects[project.id] = project;
+    joinEvents.push(['join project', project.id]);
+    socket.emit('join project', project.id);
   }
 
   function addBuilds(_project, _builds) {
@@ -94,7 +94,7 @@ define([
     if (build.project != project) return;
 
     for(i = 0 ; i < builds.length; i ++) {
-      if (builds[i]._id == build._id) {
+      if (builds[i].id == build.id) {
         found = true;
         break;
       }

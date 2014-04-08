@@ -4,9 +4,8 @@
   "version": "0.0.0",
   "description": "a Sails application",
   "dependencies": {
-    "sails": "0.9.8",
+    "sails": "0.9.15",
     "grunt": "0.4.1",
-    "sails-disk": "~0.9.0",
     "ejs": "0.8.4",
     "optimist": "0.3.4",
     "cookie": "~0.1.0",
@@ -22,14 +21,19 @@
     "github": "~0.1.14",
     "grunt-contrib-sass": "~0.7.2",
     "handlebars": "~2.0.0-alpha.1",
-    "codeswarm-node": "*",
-    "codeswarm-sauce": "*",
-    "codeswarm-plato": "*",
-    "codeswarm-custom": "*"
+    "codeswarm-node": "git+ssh://git@github.com:codeswarm/codeswarm-node.git",
+    "codeswarm-sauce": "git+ssh://git@github.com:codeswarm/codeswarm-sauce.git",
+    "codeswarm-plato": "git+ssh://git@github.com:codeswarm/codeswarm-plato.git",
+    "codeswarm-custom": "git+ssh://git@github.com:codeswarm/codeswarm-custom.git",
+    "joi": "~2.7.0",
+    "sails-couchdb-orm": "git+ssh://git@github.com:codeswarm/sails-couchdb-orm.git",
+    "request": "~2.34.0"
   },
   "scripts": {
     "start": "node app.js",
     "mon": "node_modules/.bin/nodemon app.js --dev",
+		"forever": "forever start app.js",
+		"foreverstop": "forever stop app.js",
     "debug": "node debug app.js"
   },
   "main": "app.js",
@@ -37,7 +41,6 @@
   "author": "",
   "license": "",
   "devDependencies": {
-    "nodemon": "~1.0.14",
-    "request": "~2.34.0"
+    "nodemon": "~1.0.14"
   }
 }

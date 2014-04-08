@@ -7,8 +7,8 @@
 
 	<form id="login">
 
-	    <label>User name</label>
-	    <input type="text" placeholder="User name" name="username">
+	    <label>Email</label>
+	    <input type="text" placeholder="Email" name="email">
 
       <label>Password</label>
       <input type="password" placeholder="Password" name="password">
