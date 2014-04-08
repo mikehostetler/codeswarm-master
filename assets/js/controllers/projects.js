@@ -44,11 +44,16 @@ define([
 			  fail(error.handleXhrError);
 		},
 
-		runBuild: function (project) {
-			var req = requests.post(project + '/deploy');
+		runBuild: function (project, tag) {
+			var req = requests.post(project + '/deploy', {
+				tag: tag
+			});
 
 			req.done(function (build) {
 				dom.showSuccess("Starting build...");
+				setTimeout(function() {
+					router.go('/' + project + '/builds/' + build.id);
+				}, 2000);
 			});
 
 			req.fail(error.handleXhrError);
@@ -293,12 +298,13 @@ define([
 		},
 
 		tags: function (projectName) {
+			var self = this;
 			var url = '/projects/' + projectName + '/builds/tags';
 
 			requests.get(url).
 				fail(error.handleXhrError).
 				done(function(tags) {
-					dom.loadBuildTags(projectName, tags);
+					dom.loadBuildTags(projectName, tags, self.runBuild.bind(self));
 				});
 		},
 

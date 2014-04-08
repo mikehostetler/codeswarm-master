@@ -388,7 +388,7 @@ define([
 			/**
 			 * Screen for project builds by tag
 			 */
-			loadBuildTags: function(project, buildsByTag) {
+			loadBuildTags: function(project, buildsByTag, runBuild) {
 				var template = Handlebars.compile(builds_by_tag);
 
 				var tagsByTag = {};
@@ -414,6 +414,16 @@ define([
 				});
 
 				this.$main.html(html);
+
+				// Watch for build trigger
+				this.$main.find(".project-run-build").click(function () {
+					var $this = $(this);
+					// Spin teh icon!
+					$this.find("i").addClass("fa-spin");
+					var project = $this.data("project");
+					var tag = $this.data("tag");
+					runBuild(project, tag);
+				});
 			},
 
 			/**
