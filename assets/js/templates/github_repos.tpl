@@ -11,7 +11,7 @@
       <li class="remote-repo">
         {{github.full_name}}
         {{#if userHasRepo}}
-          <button class="remove-repo" data-target="{{userRepo._id}}">Remove</button>
+          <button class="remove-repo" data-target="{{userRepo.id}}">Remove</button>
         {{else}}
           <button class="add-repo" data-target="{{github.git_url}}">Add</button>
         {{/if}}

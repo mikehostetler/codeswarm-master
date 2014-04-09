@@ -16,9 +16,6 @@
  */
 
 
-var extend = require('util')._extend;
-var builds = require('../db/builds');
-
 module.exports = {
 
 
@@ -30,7 +27,7 @@ module.exports = {
    index: function (req, res) {
 
     var project = req.param('owner') + '/' + req.param('repo');
-    builds.list(project, replied);
+    Build.findByProject(project, replied);
 
     function replied(err, builds) {
       if (err) res.send(err.status_code || 500, err);
@@ -46,12 +43,64 @@ module.exports = {
    find: function (req, res) {
 
     var project = req.param('owner') + '/' + req.param('repo');
-    builds.get(project, req.param('build'), replied);
+    Build.findOne({id: req.param('build')}, replied);
 
     function replied(err, build) {
       if (err) res.send(err.status_code || 500, err);
       else if (! build) res.send(404, new Error('Build not found'));
-      else res.json(builds.forShow(build));
+      else if (build.project != project) return res.send(404, new Error('Build not found'));
+      else res.json(Build.forShow(build));
+    }
+  },
+
+  byTag: function (req, res) {
+    var project = req.param('owner') + '/' + req.param('repo');
+
+    async.parallel({
+      project: loadProject,
+      buildsByTag: loadBuildsByTag
+    }, done);
+
+    function loadProject(cb) {
+      Project.findOne({id: project}, cb);
+    }
+
+    function loadBuildsByTag(cb) {
+      Build.view('by_project_and_tag', {
+        startkey: [project, '\u0000', 0],
+        endkey: [project, '\ufff0', Number.MAX_VALUE]
+      }, foundBuilds);
+
+      function foundBuilds(err, builds) {
+        if (err) return cb(err);
+
+        var tags = {};
+        builds.forEach(function(build) {
+          (build.tags || []).forEach(function(tag) {
+            var builds = tags[tag];
+            if (! builds) builds = tags[tag] = [];
+            builds.push(forList(build));
+          });
+        });
+
+        cb(null, tags);
+      }
+    }
+
+
+    function done(err, results) {
+      if (err) return res.send(err.status_code || 500, err);
+      var tags = {};
+
+      var project = results.project;
+      var buildsByTag = results.buildsByTag;
+
+      (project.tags || []).forEach(function(tag) {
+        tag = tag.name;
+        tags[tag] = buildsByTag[tag] || [];
+      });
+
+      res.json(tags);
     }
   },
 
@@ -69,13 +118,23 @@ module.exports = {
 
 function forList(build) {
   return {
-    _id: build._id,
+    id: build.id,
     created_at: build.created_at,
     started_at: build.started_at,
     ended_at:   build.ended_at,
     state:      build.state,
     branch:     build.branch,
     triggered_by: build.triggered_by,
-    project: build.project
+    project:    build.project,
+    tags:       build.tags
   }
+}
+
+
+/// Misc
+
+function prop(p) {
+  return function(o) {
+    return o[p];
+  };
 }

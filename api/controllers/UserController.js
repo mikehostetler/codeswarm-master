@@ -1,6 +1,3 @@
-var db     = require('../db');
-var users  = require('../db/users');
-
 /**
  * SessionController
  *
@@ -25,7 +22,7 @@ module.exports = {
    *    `POST /users`
    */
   create: function (req, res) {
-    users.create(req.body, replied);
+    User.create(req.body, replied);
 
     function replied(err) {
       if (err) res.send(err.status_code || 500, err);

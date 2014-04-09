@@ -29,6 +29,15 @@ $ cd codeswarm-plato
 $ npm link
 ```
 
+Checkout plugin `codeswarm-custom`:
+
+```
+$ cd projects
+$ git clone git@github.com:CodeSwarm/codeswarm-custom.git
+$ cd codeswarm-custom
+$ npm link
+```
+
 Checkout plugin `codeswarm-gateway`:
 
 ```
@@ -45,6 +54,7 @@ $ cd  projects/codeswarm
 $ npm link codeswarm-node
 $ npm link codeswarm-sauce
 $ npm link codeswarm-plato
+$ npm link codeswarm-custom
 ```
 
 ## Run

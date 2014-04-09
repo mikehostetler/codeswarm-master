@@ -16,12 +16,14 @@ define([
         console.log('submitting');
         e.preventDefault();
         var $this = $(this),
-          username = dom.getValue($this, "username"),
+          email = dom.getValue($this, "email"),
           password = dom.getValue($this, "password"),
           req = requests.post("/users", {
-            username: username,
+            email: email,
             password: password
           });
+
+          console.log('EMAIL:', email);
 
         req.done(function () {
           router.go("/");

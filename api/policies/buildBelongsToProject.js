@@ -1,13 +1,11 @@
-var builds = require('../db/builds');
-
 module.exports = buildBelongsToProject;
 
 function buildBelongsToProject(req, res, next) {
-  var project = req.project._id;
+  var project = req.project.id;
   if (! project) return res.send(404, new Error('Project not found'));
   var build = req.param('build');
 
-  builds.get(project, build, replied);
+  Build.findOne({id: build}, replied);
 
   function replied(err, build) {
     if (err) res.send(err.status_code || 500, err);

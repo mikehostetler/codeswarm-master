@@ -94,6 +94,16 @@ define([
 				});
 			});
 
+			router.on("/:owner/:repo/tags", function(owner, repo) {
+				projects.tags(owner + '/' + repo);
+			});
+
+			router.on("/:owner/:repo/tags/config", function(owner, repo) {
+				authenticated(function () {
+					projects.configTags(owner + '/' + repo);
+				});
+			});
+
 			// Build list
 			router.on("/:owner/:repo/builds", function (owner, repo) {
 				var project = owner + '/' + repo;

@@ -14,9 +14,11 @@ define([
 		"text!templates/logview.tpl",
 		"text!templates/tokens.tpl",
 		"text!templates/github_repos.tpl",
-		"text!templates/plugins.tpl"
+		"text!templates/plugins.tpl",
+		"text!templates/tags.tpl",
+		"text!templates/builds_by_tag.tpl"
 	],
-	function ($, Handlebars, _, timestamp, header, signup, login, menu, projects, projects_table, project, builds, logview, tokens, github_repos, plugins) {
+	function ($, Handlebars, _, timestamp, header, signup, login, menu, projects, projects_table, project, builds, logview, tokens, github_repos, plugins, tags, builds_by_tag) {
 		var dom;
 
 		dom = {
@@ -226,9 +228,9 @@ define([
 			 * Update project status
 			 */
 			updateProject: function (project) {
-				var statusEl = this.$main.find("[data-status=\"" + project._id + "\"]");
-				var timestampEl = this.$main.find("[data-timestamp=\"" + project._id + "\"]");
-				var lightEl = this.$main.find("[data-light=\"" + project._id + "\"]");
+				var statusEl = this.$main.find("[data-status=\"" + project.id + "\"]");
+				var timestampEl = this.$main.find("[data-timestamp=\"" + project.id + "\"]");
+				var lightEl = this.$main.find("[data-light=\"" + project.id + "\"]");
 
 				var lastBuild = project.ended_at || project.started_at;
 
@@ -310,7 +312,7 @@ define([
 
 				// Confirm and process delete
 				this.$main.find("#project-confirm-delete").click(function () {
-					controller.deleteProject(self.$main.find("input[name=\"_id\"]").val());
+					controller.deleteProject(self.$main.find("input[name=\"id\"]").val());
 				});
 
 				// Cancel delete
@@ -381,6 +383,142 @@ define([
 
 					save(config);
 				});
+			},
+
+			/**
+			 * Screen for project builds by tag
+			 */
+			loadBuildTags: function(project, buildsByTag, runBuild) {
+				var template = Handlebars.compile(builds_by_tag);
+
+				var tagsByTag = {};
+				var tags = [];
+
+				Object.keys(buildsByTag).forEach(function(tag) {
+					var tagObj = tagsByTag[tag];
+					if (! tagObj) {
+
+						tagObj = tagsByTag[tag] = {
+							name: tag,
+							builds: []
+						};
+						tags.push(tagObj);
+					}
+
+					tagObj.builds = tagObj.builds.concat(buildsByTag[tag] || []);
+				});
+
+				var html = template({
+					project: project,
+					tags: tags
+				});
+
+				this.$main.html(html);
+
+				// Watch for build trigger
+				this.$main.find(".project-run-build").click(function () {
+					var $this = $(this);
+					// Spin teh icon!
+					$this.find("i").addClass("fa-spin");
+					var project = $this.data("project");
+					var tag = $this.data("tag");
+					runBuild(project, tag);
+				});
+			},
+
+			/**
+			 * Screen for project tags config
+			 */
+			loadTags: function(project, _tags, star, unstar, saveContent) {
+				if (! _tags) tags = [];
+
+				var self = this;
+
+				var template = Handlebars.compile(tags);
+				console.log('loadTags', arguments);
+				var html = template({
+					project: project,
+					tags: _tags
+				});
+
+				this.$main.html(html);
+
+				this.$main.find('.star').click(function() {
+					$this = $(this);
+					var tag = $this.attr('data-tag');
+					var starred = $this.attr('data-starred') == 'true';
+					var fn = starred ? unstar : star;
+					fn.call(null, tag, function() {
+						$this.attr('data-starred', starred ? 'false' : 'true');
+						if (starred) {
+							$this.removeClass('yellow');
+						} else {
+							$this.addClass('yellow');
+						}
+					});
+				});
+
+				this.$main.find('button.edit').click(editButtonClicked);
+
+				function editButtonClicked() {
+					var $this = $(this);
+
+					var tag = $this.attr('data-tag');
+					var tagObject = findTag(tag);
+
+					var labelEditor = $('<input type="text" maxlength="50" value="' + htmlEncode(tagObject.label || '') + '">');
+				  var labelPlace = self.$main.find('.label[data-tag="' + tag +'"]');
+				  var oldLabel = labelPlace.html();
+				  labelPlace.html(labelEditor);
+
+					var descriptionEditor = $('<textarea>' + htmlEncode(tagObject.description || '') + '</textarea>');
+				  var descriptionPlace = self.$main.find('.description[data-tag="' + tag +'"]');
+				  var oldDescription = descriptionPlace.html();
+				  descriptionPlace.html(descriptionEditor);
+
+				  var buttonPlace = $this.parent();
+				  var oldButtons = buttonPlace.children();
+
+				  var saveButton = $('<button>Save</button>');
+				  $this.replaceWith(saveButton);
+				  var cancelButton = $('<button>Cancel</button>');
+				  saveButton.after(cancelButton);
+
+				  saveButton.click(function() {
+				 	  var label = labelEditor.val();
+				 	  var description = descriptionEditor.val();
+				 	  saveContent(tag, { label: label, description: description}, savedContent);
+
+				 	  function savedContent() {
+				 	  	tagObject.label = label;
+				 	  	tagObject.description = description;
+
+				 	  	labelPlace.text(label);
+				 	  	descriptionPlace.text(description);
+				 	  	buttonPlace.html(oldButtons);
+				 	  	oldButtons.click(editButtonClicked);
+				 	  }
+
+				  });
+
+
+				  cancelButton.click(function() {
+				  	labelPlace.html(oldLabel);
+				  	descriptionPlace.html(oldDescription);
+				  	buttonPlace.html(oldButtons);
+				  	oldButtons.click(editButtonClicked);
+				  });
+
+				}
+
+				function findTag(tag) {
+					console.log('findTag', tag);
+					var t;
+					for(var i = 0 ; i < _tags.length; i ++) {
+						t = _tags[i];
+						if (t.name == tag) return t;
+					}
+				}
 			},
 
 			/**
@@ -612,3 +750,7 @@ define([
 		return dom;
 
 	});
+
+function htmlEncode(value){
+  return $('<div/>').text(value).html();
+}

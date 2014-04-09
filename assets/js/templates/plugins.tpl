@@ -1,5 +1,5 @@
 <h1 class="page-title">
-  Plugins for {{project._id}}
+  Plugins for {{project.id}}
 </h1>
 
 <div class="content-wrap">
@@ -16,6 +16,10 @@
 
       {{#compare type "password" operator="==="}}
         <input type="password" name="{{../../name}}/{{name}}" value="{{value}}" {{#if required}}required{{/if}}>
+      {{/compare}}
+
+      {{#compare type "checkbox" operator="==="}}
+        <input type="checkbox" name="{{../../name}}/{{name}}" {{#compare value "on" operator="==="}}checked{{/compare}}>
       {{/compare}}
 
       {{#compare type "text" operator="==="}}
@@ -39,6 +43,8 @@
         {{/each}}
         </ul>
       {{/compare}}
+
+
 
     {{/each}}
 

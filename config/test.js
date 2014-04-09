@@ -1,3 +1,3 @@
 module.exports = {
-  timeout_ms: 1000 * 60 * 45 // 45 minutes
+  timeout_ms: 1000 * 60 * 60 // 60 minutes
 };
