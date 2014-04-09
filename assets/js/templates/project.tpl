@@ -48,6 +48,7 @@
           <option value="node">Node.js</option>
           <option value="browser">Browser (Saucelabs)</option>
           <option value="browser_browserstack">Browser (Browserstack)</option>
+          <option value="browser_testling">Browser (Testling)</option>
           <option value="custom">Custom</option>
         {{/select}}
       </select>
