@@ -40,7 +40,7 @@ function login(cb) {
 }
 
 function replied(err, res, headers) {
-  console.log('privileged replied: %j'.red, arguments);
+  //console.log('privileged replied: %j'.red, arguments);
   var sessionId, header;
 
   loggingIn = false;
@@ -56,7 +56,7 @@ function replied(err, res, headers) {
 
     header = headers['set-cookie'][0];
     if (header) sessionId = cookie.parse(header).AuthSession;
-    console.log('COUICHDB AUTH SESSION:', sessionId);
+    //console.log('COUICHDB AUTH SESSION:', sessionId);
     if (! sessionId) globalError(new Error('no AuthSession cookie found'));
     else {
       privilegedCouch = nano({

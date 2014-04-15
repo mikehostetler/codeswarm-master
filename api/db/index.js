@@ -2,7 +2,6 @@ var nano = require('nano');
 var config = require('../../config/couchdb');
 
 var base = exports.base = config.url || 'http://localhost:5984';
-console.log('CouchDB: %s', base);
 
 exports.public     = nano(base);
 exports.privileged = require('./privileged');
