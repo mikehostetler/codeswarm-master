@@ -44,9 +44,26 @@ define([
 
 			$(dom.login).on("submit", function (e) {
 				e.preventDefault();
-				var $this = $(this);
-				var email = dom.getValue($this, "email");
-				var password = dom.getValue($this, "password");
+				var $this = $(this),
+					username = dom.getValue($this, "username"),
+					password = dom.getValue($this, "password"),
+					req = requests.post("/session", {
+						username: username,
+						password: password
+					});
+
+				req.done(function (response) {
+					self.set(response.session);
+					users.setCurrent(response.user);
+					if (localStorage.getItem("route")) {
+						// User has saved route, pass them there
+						router.go(localStorage.getItem("route"));
+						localStorage.removeItem("route");
+					} else {
+						// "Fresh" login, send to projects list
+						router.go("/projects");
+					}
+				});
 
 				requests.post("/sessions", {
 					email: email,
