@@ -44,25 +44,27 @@ module.exports.bootstrap = function (cb) {
 
 	function welcomeMessage(cb) {
 
-		sails.log.info("   _____             _                    ");
-		sails.log.info("  /  __ \\           | |                   ");
-		sails.log.info("  | /  \\/  ___    __| |  ___              ");
-		sails.log.info("  | |     / _ \\  / _` | / _ \\             ");
-		sails.log.info("  | \\__/\\| (_) || (_| ||  __/             ");
-		sails.log.info("   \\____/ \\___/  \\__,_| \\___|             ");
-		sails.log.info("   _____                                  ");
-		sails.log.info("  /  ___|                                 ");
-		sails.log.info("  \\ `--. __      __ __ _  _ __  _ __ ___  ");
-		sails.log.info("   `--. \\\\ \\ /\\ / // _` || '__|| '_ ` _ \\ ");
-		sails.log.info("  /\\__/ / \\ V  V /| (_| || |   | | | | | |");
-		sails.log.info("  \\____/   \\_/\\_/  \\__,_||_|   |_| |_| |_|");
-		sails.log.info("                                          ");
+		sails.log.info("  .-. . .-..----..-.    .---. .----..-.   .-..----.    .---. .----.    ");
+		sails.log.info("  | |/ \\| || {_  | |   /  ___}  {}  \\  `.'  || {_     {_   _}  {}  \\   ");
+		sails.log.info("  |  .'.  || {__ | `--.\\     }      / |\\ /| || {__      | | \\      /   ");
+		sails.log.info("  `-'   `-'`----'`----' `---' `----'`-' ` `-'`----'     `-'  `----'    ");
+		sails.log.info("            .---..-. .-..----.                                         ");
+		sails.log.info("           {_   _} {_} || {_                                           ");
+		sails.log.info("             | | | { } || {__                                          ");
+		sails.log.info("             `-' `-' `-'`----'  ");
+		sails.log.info("   _____           _        _____                              ");
+		sails.log.info("  /  __ \\         | |      /  ___|                             ");
+		sails.log.info("  | /  \\/ ___   __| | ___  \\ `--.__      ____ _ _ __ _ __ ___  ");
+		sails.log.info("  | |    / _ \\ / _` |/ _ \\  `--. \\ \\ /\\ / / _` | '__| '_ ` _ \\ ");
+		sails.log.info("  | \\__/\\ (_) | (_| |  __/ /\\__/ /\\ V  V / (_| | |  | | | | | |");
+		sails.log.info("   \\____/\\___/ \\__,_|\\___| \\____/  \\_/\\_/ \\__,_|_|  |_| |_| |_|");
+		sails.log.info("                                                               ");
 		
 		sails.log.info(('To see your app, visit ' + (sails.getBaseurl()||'').underline));
 		sails.log.info(('To shut down CodeSwarm, press <CTRL> + C at any time.'));
-		sails.log.debug("");
 		sails.log('--------------------------------------------------------'.grey);
 		sails.log((':: ' + new Date()).grey);
+		sails.log('');
 		sails.log('Environment : ' + sails.config.environment);
 
 		// Only log the host if an explicit host is set

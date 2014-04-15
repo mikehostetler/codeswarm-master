@@ -47,7 +47,7 @@ define([
 				var $this = $(this),
 					username = dom.getValue($this, "username"),
 					password = dom.getValue($this, "password"),
-					req = requests.post("/sessions", {
+					req = requests.post("/session", {
 						username: username,
 						password: password
 					});
