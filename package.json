@@ -25,6 +25,7 @@
     "grunt-mocha-test": "^0.10.2",
     "grunt-mocha": "^0.4.10",
     "grunt-blanket-mocha": "^0.4.0",
+    "grunt-contrib-jshint": "^0.10.0",
     "optimist": "0.3.4",
     "cookie": "~0.1.0",
     "nano": "~4.4.0",
