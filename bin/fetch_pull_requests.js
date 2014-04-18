@@ -1,0 +1,110 @@
+#!/usr/bin/env node
+
+var async     = require('async');
+var bootstrap = require('./bootstrap');
+var github    = require('../lib/github');
+
+bootstrap(['Project', 'User', 'PullRequest'], next);
+
+var projectIndex = -1;
+var pageSize = 1;
+
+function processProject(project, cb) {
+  if (project.id.charAt(0) == '_') return cb();
+
+  console.log(project.id);
+
+  async.map(project.owners || [], getUserGithubKey, gotOwnerKeys);
+
+  function gotOwnerKeys(err, tokens) {
+    if (err) return cb(err);
+
+    var token = tokens.filter(exists)[0];
+    if (! token) return cb(new Error('no github token found for project ' + project.id));
+    else fetchPullRequests(project.id, token.token, gotPullRequests);
+  }
+
+  function gotPullRequests(err, pullRequests) {
+    if (err) cb(err);
+    else async.eachSeries(pullRequests, insertPullRequest, cb);
+  }
+
+  function insertPullRequest(pullRequest, cb) {
+    PullRequest.create({
+      id: pullRequest.id,
+      project: project.id,
+      github_data: pullRequest
+    }, inserted);
+
+    function inserted(err) {
+      if (err && err.status_code != 409) merge(pullRequest, cb);
+      else cb();
+    }
+  }
+
+  function merge(pullRequest, cb) {
+    PullRequest.findOne({id: pullRequest.id}, gotPullRequest);
+
+    function gotPullRequest(err, ourPullRequest) {
+      if (err) cb(err);
+      else if (ourPullRequest.github_data.updated_at == pullRequest.updated_at) return cb();
+      else {
+        ourPullRequest.github_data = pullRequest;
+        ourPullRequest.save(cb);
+      }
+    }
+  }
+}
+
+
+function fetchPullRequests(project, token, cb) {
+  github.getPullRequests(project, token, cb);
+}
+
+
+function getUserGithubKey(user, cb) {
+  User.tokenFor(user, 'github', function(err, key) {
+    if (err) cb(err);
+    else cb(null, key);
+  });
+}
+
+function next() {
+  projectIndex ++;
+  fetchOne();
+}
+
+function fetchOne() {
+  Project.find().limit(pageSize).skip(projectIndex).exec(foundProject);
+}
+
+function foundProject(err, projects) {
+  if (err) return ended(err);
+  if (! projects.length) return ended();
+  if (projects.length > pageSize) throw new Error('got more than ' + pageSize + ' projects');
+  var project = projects[0];
+  projectIndex ++;
+
+  processProject(project, processed);
+
+  function processed(err) {
+    if (err) console.error(err.stack);
+    next();
+  }
+}
+
+function ended(err) {
+  if (err) {
+    console.error('ended with error: ' + err.message);
+    console.error('\n' + err.stack);
+    process.exit(err.code || 1);
+    return;
+  } else process.exit(0);
+}
+
+
+/// Misc
+
+function exists(o) {
+  return !! o;
+}

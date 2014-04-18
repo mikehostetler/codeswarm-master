@@ -34,9 +34,6 @@ module.exports.routes = {
   // (This would also work if you had a file at: `/views/home.ejs`)
   '/': 'SiteController',
 
-  '/twproject': 'SiteController.twproject',
-  '/twbuild': 'SiteController.twbuild',
-
   /*
   // But what if you want your home page to display
   // a signup form located at `views/user/signup.ejs`?
@@ -103,12 +100,19 @@ module.exports.routes = {
   /// Sessions
 
   'get /session': 'SessionController.get',
+  'post /sessions': 'SessionController.create',
 
 
   /// Projects
 
   'get /projects': 'ProjectController.list',
   'get /projects/:owner/:repo': 'ProjectController.find',
+
+  'get /projects/:owner/:repo/tags': 'ProjectController.tags',
+  'put /projects/:owner/:repo/tags/:tag/star': 'ProjectController.starTag',
+  'delete /projects/:owner/:repo/tags/:tag/star': 'ProjectController.unstarTag',
+  'put /projects/:owner/:repo/tags/:tag/content': 'ProjectController.saveTagContent',
+
   'post /projects': 'ProjectController.create',
   'post /:owner/:repo/deploy': 'ProjectController.deploy',
   'post /:owner/:repo/webhook': 'ProjectController.webhook',
@@ -116,6 +120,7 @@ module.exports.routes = {
   'put /projects/:owner/:repo': 'ProjectController.update',
   'put /projects/:owner/:repo/plugins': 'ProjectController.updatePlugins',
   'get /projects/:owner/:repo/builds': 'BuildController.index',
+  'get /projects/:owner/:repo/builds/tags': 'BuildController.byTag',
   'get /projects/:owner/:repo/builds/:build': 'BuildController.find',
 
   /// Tokens

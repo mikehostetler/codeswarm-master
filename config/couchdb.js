@@ -1,14 +1,26 @@
-var Url = require('url');
+var connections = require('./connections').connections;
+var couchdb = connections.couchdb;
 
-exports = module.exports = {
-  "url": process.env.COUCHDB_URL || "http://localhost:5984",
-  "admin": {
-      "username": process.env.COUCHDB_USERNAME || "admin",
-      "password": process.env.COUCHDB_PASSWORD || "admin"
+if (! couchdb) 
+	throw new Error('Need CouchDB connection defined in config/connections.js');
+
+exports.url = urlForConfig(couchdb);
+
+function urlForConfig(config) {
+  var schema = 'http';
+  if (config.https) schema += 's';
+
+  var auth = '';
+  if (config.username && config.password) {
+    auth = encodeURIComponent(config.username) + ':' + encodeURIComponent(config.password) + '@';
   }
-};
 
-var url = Url.parse(exports.url);
-url.auth = exports.admin.username + ':' + exports.admin.password;
-
-exports.admin_url = Url.format(url);
+  return [
+    schema,
+    '://',
+    auth,
+    config.host || 'localhost',
+    ':',
+    config.port || 5984
+  ].join('');
+}

@@ -345,5 +345,4 @@ define([
     };
 
     return projects;
-
 });

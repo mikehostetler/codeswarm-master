@@ -1,0 +1,31 @@
+{
+  "name": "codeswarm",
+  "version": "0.1.13",
+  "homepage": "https://github.com/codeswarm/codeswarm",
+  "authors": [
+    "CodeSwarm <hello@codeswarm.com>"
+  ],
+  "description": "Continuous Integration for Node.js and Client-Side JavaScript",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    "codeswarm"
+  ],
+  "license": "Apache2",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "assets/js/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "handlebars": "~1.1.0",
+    "jquery": "~2.0.0",
+    "requirejs-text": "~2.0.0",
+    "requirejs": "~2.1.8"
+  }
+}
