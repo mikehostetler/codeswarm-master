@@ -11,7 +11,14 @@ define([
 
 		get: function () {
 			var session = localStorage.getItem("session");
-			if (session) session = JSON.parse(session);
+			if (session) {
+				try {
+					session = JSON.parse(session);
+				} catch (e) {
+					session = {};
+				}
+				
+			}
 			return session;
 		},
 
@@ -45,32 +52,13 @@ define([
 			$(dom.login).on("submit", function (e) {
 				e.preventDefault();
 				var $this = $(this),
-					username = dom.getValue($this, "username"),
-					password = dom.getValue($this, "password"),
-					req = requests.post("/session", {
-						username: username,
-						password: password
-					});
-
-				req.done(function (response) {
-					self.set(response.session);
-					users.setCurrent(response.user);
-					if (localStorage.getItem("route")) {
-						// User has saved route, pass them there
-						router.go(localStorage.getItem("route"));
-						localStorage.removeItem("route");
-					} else {
-						// "Fresh" login, send to projects list
-						router.go("/projects");
-					}
-				});
+					email		 = dom.getValue($this, "email"),
+					password = dom.getValue($this, "password");
 
 				requests.post("/sessions", {
 					email: email,
 					password: password
-				}).
-
-					done(function (response) {
+				}).done(function (response) {
 						self.set(response.session);
 						users.setCurrent(response.user);
 						if (localStorage.getItem("route")) {
@@ -81,9 +69,7 @@ define([
 							// "Fresh" login, send to projects list
 							router.go("/projects");
 						}
-					}).
-
-					fail(dom.showXhrError);
+					}).fail(dom.showXhrError);
 			});
 		},
 
