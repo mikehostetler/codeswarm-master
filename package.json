@@ -43,7 +43,7 @@
     "request": "~2.34.0",
     "codeswarm-node": "git+ssh://git@github.com:codeswarm/codeswarm-node.git",
     "codeswarm-sauce": "git+ssh://git@github.com:codeswarm/codeswarm-sauce.git",
-    "codeswarm-browserstack": "git+ssh://git@github.com:codeswarm/codeswarm-node.git",
+    "codeswarm-browserstack": "git+ssh://git@github.com:codeswarm/codeswarm-browserstack.git",
     "codeswarm-plato": "git+ssh://git@github.com:codeswarm/codeswarm-plato.git",
     "codeswarm-custom": "git+ssh://git@github.com:codeswarm/codeswarm-custom.git",
     "sails-couchdb-orm": "git+ssh://git@github.com:codeswarm/sails-couchdb-orm.git"
@@ -57,6 +57,7 @@
   "scripts": {
     "start": "node app.js",
     "mon": "node_modules/.bin/nodemon app.js --dev",
+		"silly": "node_modules/.bin/nodemon ./node_modules/sails/bin/sails.js lift --silly",
     "forever": "forever start app.js",
     "foreverstop": "forever stop app.js",
     "debug": "node debug app.js"

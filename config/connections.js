@@ -75,7 +75,7 @@ module.exports.connections = {
     database  : 'YOUR_POSTGRES_DB'
   },
 
-  couchdb: {
+  "couchdb": {
     adapter		: 'sails-couchdb-orm',
     host			: url && url.hostname,
     https			: url && (url.protocol === 'https'),
