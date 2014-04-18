@@ -10,11 +10,16 @@ define([
 	session = {
 
 		get: function () {
-			var session = localStorage.getItem('session');
-			if (session) {
-                session = JSON.parse(session);
-            }
 
+			var session = localStorage.getItem("session");
+			if (session) {
+				try {
+					session = JSON.parse(session);
+				} catch (e) {
+					session = {};
+				}
+
+			}
 			return session;
 		},
 
@@ -47,28 +52,24 @@ define([
 			$(dom.login).on('submit', function (e) {
 				e.preventDefault();
 				var $this = $(this),
-					username = dom.getValue($this, 'username'),
-					password = dom.getValue($this, 'password'),
-					req = requests.post('/sessions', {
-						username: username,
-						password: password
-					});
+					email		 = dom.getValue($this, "email"),
+					password = dom.getValue($this, "password");
 
-				req.done(function (response) {
-					self.set(response.session);
-					users.setCurrent(response.user);
-
-					if (localStorage.getItem('route')) {
-						// User has saved route, pass them there
-						app.go2(localStorage.getItem('route'));
-						localStorage.removeItem('route');
-					} else {
-						// 'Fresh' login, send to projects list
-						app.go2('projects', true);
-					}
-				});
-
-				req.fail(dom.showXhrError);
+				requests.post("/sessions", {
+					email: email,
+					password: password
+				}).done(function (response) {
+						self.set(response.session);
+						users.setCurrent(response.user);
+						if (localStorage.getItem("route")) {
+							// User has saved route, pass them there
+							router.go(localStorage.getItem("route"));
+							localStorage.removeItem("route");
+						} else {
+							// "Fresh" login, send to projects list
+							router.go("/projects");
+						}
+					}).fail(dom.showXhrError);
 			});
 		},
 
