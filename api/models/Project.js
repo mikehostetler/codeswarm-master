@@ -72,6 +72,8 @@ module.exports = {
       defaultsTo: {}
     },
 
+    github_deploy_key: 'json',
+
     getTagsForCommit: getTagsForCommit
   },
 

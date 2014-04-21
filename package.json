@@ -29,13 +29,14 @@
     "codeswarm-testling": "git+ssh://git@github.com:codeswarm/codeswarm-testling.git",
     "codeswarm-plato": "git+ssh://git@github.com:codeswarm/codeswarm-plato.git",
     "codeswarm-custom": "git+ssh://git@github.com:codeswarm/codeswarm-custom.git",
-    "sails-couchdb-orm": "git+ssh://git@github.com:codeswarm/sails-couchdb-orm.git"
+    "sails-couchdb-orm": "git+ssh://git@github.com:codeswarm/sails-couchdb-orm.git",
+    "ssh-keypair": "~1.0.1"
   },
   "scripts": {
     "start": "node app.js",
     "mon": "node_modules/.bin/nodemon app.js --dev",
-		"forever": "forever start app.js",
-		"foreverstop": "forever stop app.js",
+    "forever": "forever start app.js",
+    "foreverstop": "forever stop app.js",
     "debug": "node debug app.js"
   },
   "main": "app.js",
