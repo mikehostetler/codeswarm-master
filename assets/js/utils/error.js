@@ -1,7 +1,7 @@
 define([
-    'controllers/dom',
+    'utils/dom',
     'plugins/router',
-    'controllers/session'
+    'utils/session'
 ], function (dom, router, session) {
 
     var error = {

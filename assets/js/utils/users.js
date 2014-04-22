@@ -1,6 +1,6 @@
 define([
-    'controllers/dom',
-    'controllers/requests',
+    'utils/dom',
+    'utils/requests',
     'durandal/app'
 ], function (dom, requests, app) {
     var users;

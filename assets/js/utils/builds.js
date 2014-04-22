@@ -1,9 +1,9 @@
 define([
-	'controllers/dom',
-	'controllers/requests',
-	'controllers/timestamp',
-	'controllers/socket',
-	'controllers/build'
+	'utils/dom',
+	'utils/requests',
+	'utils/timestamp',
+	'utils/socket',
+	'utils/build'
 ], function (dom, requests, timestamp, socket, Build) {
 	var builds;
 

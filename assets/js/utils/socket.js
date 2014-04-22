@@ -1,7 +1,7 @@
 define([
-    'controllers/dom',
-    'controllers/timestamp',
-    'controllers/build'
+    'utils/dom',
+    'utils/timestamp',
+    'utils/build'
 ], function (dom, timestamp, Build) {
 
         var socket = io.connect(location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : ''));
