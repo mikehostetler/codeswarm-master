@@ -1,9 +1,9 @@
 define([
-	'controllers/dom',
-	'controllers/requests',
+	'utils/dom',
+	'utils/requests',
 	'durandal/app',
-	'controllers/error',
-	'controllers/users'
+	'utils/error',
+	'utils/users'
 ], function (dom, requests, app, error, users) {
 	var session;
 

@@ -1,5 +1,5 @@
 define([
-    'controllers/timestamp',
+    'utils/timestamp',
     'vendor/ansi_up/ansi_up'
 ], function (timestamp) {
 

@@ -1,4 +1,4 @@
-define(['plugins/router', 'controllers/session', 'controllers/dom'], function (router, session, dom) {
+define(['plugins/router', 'utils/session', 'utils/dom'], function (router, session, dom) {
 
 	var lastAuthenticatedBackendCheck,
         maxRecheckCacheMs = 1000 * 60;

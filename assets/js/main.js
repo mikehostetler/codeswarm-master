@@ -4,24 +4,25 @@ require(['require-config'], function() {
 		'durandal/app', 
 		'durandal/viewLocator', 
 		'plugins/router', 
-		'controllers/session', 
-		'controllers/socket', 
-		'controllers/dom'
+		'utils/session', 
+		'utils/socket', 
+		'utils/dom'
 	], function (system, app, viewLocator, router, session, socket, dom) {
 
 		system.debug(true);
+
+		app.title = 'Welcome to CodeSwarm!';
 
     app.configurePlugins({
         router: true
     });
 
-		app.title = 'Welcome to CodeSwarm!';
-
     app.start().then(function () {
-				var routing;
-				socket.reset();
-				dom.init();
+				//var routing;
+				//socket.reset();
+				//dom.init();
 
+			/*
 				routing = {
 					router: router,
 					activate: function () {
@@ -43,9 +44,12 @@ require(['require-config'], function() {
 				};
 
 				routing.activate();
+				*/
 
 				// Define viewLocator convention
 				viewLocator.useConvention('controllers', 'views');
+
+				app.setRoot('controllers/app');
 		});
 
     app.go2 = function (fragment) {

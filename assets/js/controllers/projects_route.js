@@ -1,7 +1,7 @@
 define(function (require) {
     var projects = require('controllers/projects'),
         dom = require('controllers/dom'),
-        auth = require('auth');
+        auth = require('controllers/auth');
 
     return {
         activate: function () {

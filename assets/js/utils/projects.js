@@ -1,12 +1,12 @@
 define([
-    'controllers/dom',
-    'controllers/requests',
-    'controllers/session',
+    'utils/dom',
+    'utils/requests',
+    'utils/session',
     'durandal/app',
-    'controllers/timestamp',
-    'controllers/error',
-    'controllers/socket',
-    'controllers/users',
+    'utils/timestamp',
+    'utils/error',
+    'utils/socket',
+    'utils/users',
     'github',
     'async'
 ], function (dom, requests, session, app, timestamp, error, socket, users, Github, async) {
