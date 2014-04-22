@@ -1,0 +1,202 @@
+.datatable {
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: separate;
+    table-layout: fixed;
+    overflow: hidden;
+    border: solid 1px #e2e2e2;
+    @include border-radius(3px);
+
+    thead tr {
+        @include breakpoint(max-width 63.74em) {
+            display: none;
+        }
+    }
+
+    .datatable .status-col,
+    .datatable .run-col,
+    .datatable .logs-col,
+    .datatable .settings-col {
+        @include breakpoint(max-width 63.74em) {
+            display: none;
+        }
+    }
+
+    .datatable tr:nth-child(even) td {
+        @include breakpoint(max-width 63.74em) {
+            background: #f8f8f8;
+            border-top: 0;
+            border-bottom: 0;
+        }
+    }
+
+    th, td {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    th {
+        padding: 12px;
+        text-align: left;
+        background: #e2e2e2;
+        border-right: solid 1px #ccc;
+    }
+
+    .anchor-wrap {
+        position: relative;
+        height: 60px;
+    }
+
+    td {
+        background: white;
+        border-right: 1px solid #e2e2e2;
+
+        &:last-child {
+            border-right: 0;
+        }
+
+        a {
+            display: block;
+            position: absolute;
+            float: left;
+            width: 100%;
+            height: 100%;
+            padding: 6px 12px;
+
+            @include breakpoint(63.75em) {
+                padding: 12px;
+            }
+        }
+
+        &:first-child a ,
+        &:last-child a {
+            padding: 12px;
+        }
+
+        @include breakpoint(max-width 63.74em) {
+            display: block;
+            height: auto;
+            white-space: inherit;
+            border-bottom: 0;
+            border-top: 0;
+
+            a {
+                position: static;
+            }
+        }
+    }
+
+    tr {
+        &:hover {
+            td {
+                a {
+                    background: #f8f8f8;
+                }
+            }
+        }
+
+        &:first-child {
+            th:last-child {
+                border-right: 0;
+            }
+        }
+    }
+
+    .center {
+        text-align: center;
+    }
+
+    .empty-projects {
+        em {
+            display: block;
+            padding: 2em 0;
+        }
+
+        a {
+            display: inline;
+            float: none;
+            padding: 0 !important;
+            position: static;
+            width: auto;
+            height: auto;
+        }
+    }
+
+    .last-build {
+        font-size: .85em;
+        display: block;
+        padding-top: .5em;
+        color: #999;
+        
+        @include breakpoint(max-width 63.74em) {
+            padding-top: 0;
+        }
+    }
+
+    @include breakpoint(63.75em) {
+        float: left;
+        width: 75%;
+
+        .last-build--title {
+            display: none;
+        }
+    }
+}
+
+.datatable-wide {
+    td {
+        height: 50px;
+
+        &:first-child a ,
+        &:last-child a {
+            padding: 23px 12px 12px;
+        }
+    }
+
+    tr:nth-child(even) {
+        a {
+            background: #f8f8f8;
+        }
+
+        @include breakpoint(63.75em) {
+            a {
+                background: #fefefe;
+            }
+        }
+    }
+
+    @include breakpoint(63.75em) {
+        width: 100%;
+    }
+}
+
+.logs {
+    font-size: .938em;
+}
+
+h4.project {
+    margin: 0;
+    padding: 0;
+    padding-bottom: .125em;
+    font-size: 1em;
+    font-weight: 500;
+    color: #6d6d6d;
+}
+
+span.project {
+    font-size: .85em;
+    display: block;
+    color: #6d6d6d;
+
+    @include breakpoint(63.75em) {
+        padding-top: .5em;
+    }
+}
+
+em.repo {
+    display: inline-block;
+    padding-bottom: 10px;
+    font-size: .938em;
+    color: #999;
+}

@@ -1,0 +1,74 @@
+.build-info {
+	float: left;
+	width: 100%;
+	margin: 1em 0 0;
+	padding: .375em;
+	background: white;
+	border: 1px solid #e2e2e2;
+	border-top: 3px solid #e2e2e2;
+	@include border-radius(3px);
+
+	@include breakpoint(63.75em) {
+		width: 75%;
+	}
+}
+
+.build-info-left,
+.build-info-mid,
+.build-info-right {
+	float: left;
+	padding: .75em;
+	width: 100%;
+
+	div {
+		font-size: .938em;
+		line-height: 1.5em;
+	}
+}
+
+.build-info-left {
+	@include breakpoint(42em) {
+		width: 35%;
+	}
+}
+
+.build-info-mid {
+	@include breakpoint(42em) {
+		width: 45%;
+	}
+}
+
+.build-info-right {
+	@include breakpoint(42em) {
+		width: 20%;
+	}
+}
+
+.build-info--title {
+	float: left;
+	width: 100%;
+	margin: 0 0 1em;
+	padding: 0 0 .5em;
+	border-bottom: 2px solid #e2e2e2;
+	font-weight: 500;
+	font-size: 1em;
+}
+
+.build-info--author {
+	img {
+		float: left;
+		width: 35px;
+		height: auto;
+	}
+
+	span {
+		display: inline-block;
+		padding: .75em 0 0 .75em;
+	}
+}
+
+.build-info--commit {
+	a {
+		display: block;
+	}
+}

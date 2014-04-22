@@ -1,0 +1,78 @@
+.tabs-horiz {
+    display: table;
+    list-style: none;
+    margin: 1em 0;
+    padding: 0;
+    float: left;
+    width: 100%;
+    background: white;
+    @include border-radius(3px);
+    border: 1px solid #e2e2e2;
+    border-top: 0;
+
+    li {
+        display: block;
+        font-size: .875em;
+        border-left: 3px solid #e2e2e2;
+
+        a, .tab-cont {
+            display: block;
+            width: 100%;
+            height: 100%;
+            padding: .75em 0 .75em 1em;
+        }
+
+        a {
+            &:hover {
+                background: #f8f8f8;
+
+                .fa {
+                    color: black;
+                }
+            }
+        }
+
+        @include breakpoint(28em) {
+            display: table-cell;
+            font-size: .938em;
+            border-left: 0;
+            border-top: 3px solid #e2e2e2;
+
+            a, .tab-cont {
+                padding: 1em 0;
+            }
+        }
+    }
+
+    @include breakpoint(28em) {
+        text-align: center;
+    }
+
+    @include breakpoint(63.75em) {
+        width: 75%;
+    }
+}
+
+.search-results-tabs {
+    width: 100%;
+}
+
+.tabs-horiz .active-tab,
+.builds--builds .builds-tab,
+.builds--pull-requests .pull-requests-tab,
+.builds--branches .branches-tab,
+.build--build .build-tab,
+.build--analysis .analysis-tab,
+.build--source .source-tab {
+    font-weight: bold;
+    border-left: 3px solid #ff734b;
+
+    .fa {
+        color: black;
+    }
+
+    @include breakpoint(28em) {
+        border-left: 0;
+        border-top: 3px solid #ff734b;
+    }
+}

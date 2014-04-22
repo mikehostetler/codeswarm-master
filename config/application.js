@@ -10,7 +10,10 @@ module.exports = {
       app.use(session);
       app.use(passport.initialize());
     }
-  }
+  },
+	paths: {
+		public: __dirname + "/../assets"		
+	}
 
 };
 
