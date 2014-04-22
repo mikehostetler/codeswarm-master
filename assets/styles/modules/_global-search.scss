@@ -1,0 +1,88 @@
+.global-search {
+    display: none;
+    float: left;
+
+    @include breakpoint(42em) {
+        display: block;
+    }
+}
+
+.search-input {
+    margin: 0;
+    float: left;
+    width: 100%;
+    background: white;
+    border: solid 1px #f2f2f2;
+    font-size: .938em;
+    padding: 8px 12px;
+
+    &:focus {
+        outline: none;
+    }
+
+    @include breakpoint(42em) {
+        margin: .875em 0 0 2em;
+        @include border-radius(3px);
+
+        &:focus {
+            border: 1px solid #bdc3c7;
+        }
+    }
+
+    @include breakpoint(max-width 42em) {
+        border: none;
+        padding: 18px 12px;
+
+        &:focus {
+            border: none;
+            padding: 18px 12px;
+        }
+    }
+}
+
+.global-search--open {
+    @include breakpoint(max-width 42em) {
+        display: block;
+        position: absolute;
+        width: 100%;
+        top: 3.75em;
+        left: 0;
+        background: #30373a;
+        z-index: 100;
+        border-bottom: solid 1px #e2e2e2;
+    }
+
+    @include breakpoint(max-width 37.5em) {
+        top: 2.75em;
+    }
+}
+
+a.global-search--trigger {
+    display: block;
+    float: right;
+    height: 2.75em;
+    padding: .3em .5em;
+    margin-right: 35px;
+    width: 2.625em;
+    color: #333;
+    text-align: center;
+    line-height: 2em;
+
+    @include breakpoint(37.5em) {
+        margin-right: 41px;
+        height: 3em;
+        width: 2.75em;
+        line-height: 2.375em;
+        font-size: 1.25em;
+    }
+
+    @include breakpoint(42em) {
+        display: none;
+    }
+}
+
+a.global-search--trigger--open,
+a.global-search--trigger:hover {
+    background: #f28b20;
+    color: white;
+}

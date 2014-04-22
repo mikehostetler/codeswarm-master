@@ -1,0 +1,92 @@
+* {
+    @include box-sizing(border-box);
+}
+
+html {
+    width: 100%;
+    height: 100%;
+    font: normal 1em 'Roboto', 'Helvetica Neue', Helvetica, Arial, serif;
+    color: #6d6d6d;
+}
+
+body {
+    position: absolute;
+    max-width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    right: 0;
+    left: 0;
+    padding: 0;
+    background: #f2f2f2;
+}
+
+/* Common
+==================================================================== */
+
+strong {
+  font-weight: 800;
+}
+
+
+/* Pre/Code
+==================================================================== */
+
+code {
+    display: block;
+    overflow: scroll;
+    margin: 5px 0;
+    padding: 15px;
+    border: 1px solid #ccc;
+    font-family: 'Ubuntu-Mono', 'monospace', sans-serif;
+    font-size: 13px;
+    line-height: 140%;
+    box-shadow: inset 0 0 10px 0 rgba(0, 0, 0, .1);
+    border-radius: 5px;
+    background: #1a1a1a;
+    color: #fff;
+    text-shadow: none;
+
+    .annotation {
+        float: right;
+
+        &.pass {
+            color: green;
+        }
+
+        &.fail {
+            color: red;
+        }
+    }
+}
+
+.code-output {
+    float: left;
+    width: 100%;
+
+    @include breakpoint(63.75em) {
+        width: 75%;
+    }
+}
+
+/* Aside
+==================================================================== */
+
+aside {
+    display: none;
+}
+
+/* Status Indicators
+==================================================================== */
+
+i.red, i.red:hover { color: #ad0505; }
+i.green, i.green:hover { color: #0fa80f; }
+i.yellow, i.yellow:hover { color: #ffcc00; }
+
+/* Misc
+==================================================================== */
+
+i.note {
+  color: #999;
+  font-size: .8em;
+  font-style: italic;
+}

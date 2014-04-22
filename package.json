@@ -26,6 +26,7 @@
     "grunt-mocha": "^0.4.10",
     "grunt-blanket-mocha": "^0.4.0",
     "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-compass": "^0.7.2",
     "optimist": "0.3.4",
     "cookie": "~0.1.0",
     "nano": "~4.4.0",
@@ -57,7 +58,7 @@
   "scripts": {
     "start": "node app.js",
     "mon": "node_modules/.bin/nodemon app.js --dev",
-		"silly": "node_modules/.bin/nodemon ./node_modules/sails/bin/sails.js lift --silly",
+    "silly": "node_modules/.bin/nodemon ./node_modules/sails/bin/sails.js lift --silly",
     "forever": "forever start app.js",
     "foreverstop": "forever stop app.js",
     "debug": "node debug app.js"

@@ -1,0 +1,104 @@
+.tabs-horiz.add-project-steps {
+	@include breakpoint(63.75em) {
+		width: 100%;
+	}
+
+	.current-step {
+		color: black;
+		font-weight: bold;
+	    border-left: 3px solid #ff734b;
+
+	    .project-step-icon {
+	    	border-color: black;
+	    	color: black;
+	    }
+
+	    .tab-cont span {
+	    	color: black;
+	    }
+
+	    @include breakpoint(28em) {
+	        border-left: 0;
+	        border-top: 3px solid #ff734b;
+	    }
+	}
+
+	.completed-step {
+		border-left: 3px solid #b1d928;
+
+	    .project-step-icon {
+	    	border-color: black;
+	    	color: black;
+	    }
+
+	    .tab-cont span {
+	    	color: black;
+	    }
+
+	    @include breakpoint(28em) {
+	    	border-left: 0;
+	    	border-top: 3px solid #b1d928;
+	    }
+	}
+}
+
+.project-step-icon {
+	display: inline-block;
+	width: 2em;
+	height: 2em;
+	padding-top: 6px;
+	text-align: center;
+	color: #aaa;
+	@include border-radius(1em);
+	border: 2px solid #aaa;
+}
+
+.tab-cont span {
+	display: inline-block;
+	padding-left: .625em;
+	color: #aaa;
+}
+
+.repo-list {
+  display: block;
+  border-top: 1px solid #ccc;
+  padding-top: 15px;
+  margin-top: 15px;
+}
+
+.repo-list li a {
+  display: block;
+  position: relative;
+  margin: 3px 0;
+  padding: 5px 0;
+  border: none;
+  border-bottom: 1px solid #e1e1e1;
+  color: #666;
+  @include transition(.3s padding-left ease, .3s color ease);
+
+  &:before {
+    position: absolute;
+    left: -15px;
+    opacity: 0;
+    content: '\25BA';
+    @include transition(opacity .5s ease, left .3s ease);
+  }
+
+  &:hover {
+    &:before {
+      opacity: 1;
+      left: 0;
+    }
+  }
+}
+
+.repo-list li a:hover {
+  padding-left: 20px;
+  color: #000;
+}
+
+.repo-list li a .repo-meta {
+  float: right;
+  color: #666;
+  font-size: .8em;
+}

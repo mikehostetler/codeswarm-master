@@ -1,0 +1,133 @@
+#main {
+    float: left;
+    width: 100%;
+    padding: .5em;
+
+    @include breakpoint(37.5em) {
+        padding: 1em;
+    }
+
+    @include breakpoint(56.25em) {
+        padding: 2.5em;
+    }
+}
+
+.page-title {
+    float: left;
+    width: 100%;
+    margin: 0;
+    padding: 14px 10px;
+    color: #f2f2f2;
+    font-size: .938em;
+    font-weight: 400;
+    background: #5c6771;
+    @include border-radius(3px 3px 0 0);
+
+    .breadcrumb-hide {
+        display: none;
+    }
+
+    a {
+        color: white;
+    }
+
+    .btn {
+        margin: -7px 0 -8px;
+        color: white;
+    }
+
+    @include breakpoint(30em) {
+        .breadcrumb-hide,
+        .fa {
+            display: inline;
+        }
+
+        a.breadcrumb-link {
+            color: #d2d2d2;
+            font-style: italic;
+
+            &:hover {
+                color: white;
+            }
+        }
+    }
+
+    @include breakpoint(37.5em) {
+        padding: 15px 10px;
+        font-size: 1em;
+    }
+
+    @include breakpoint(56.25em) {
+        padding: 19px 10px;
+        font-size: 1.125em;
+
+        .fa {
+            float: left;
+            font-size: 1.25em;
+            margin: -4px 6px -7px 0;
+        }
+
+        .fa-angle-right {
+            float: none;
+            margin: 0;
+            font-size: 1em;
+        }
+
+        .btn {
+            margin: -9px 0 -11px;
+
+            .fa {
+                float: none;
+                font-size: 1em;
+                margin: 0;
+            }
+        }
+    }
+}
+
+.content-wrap {
+    float: left;
+    width: 100%;
+    background: #fff;
+    padding: 1.25em;
+    @include border-radius(0 0 3px 3px);
+
+    h3 {
+        font-size: .938em;
+        padding-bottom: .5em;
+
+        @include breakpoint(56.25em) {
+            font-size: 1.125em;
+        }
+    }
+}
+
+.section-title {
+    float: left;
+    width: 100%;
+    margin: .25em 0 .5em;
+    padding: 0 0 .25em;
+    font-weight: 400;
+    font-size: 1.25em;
+    border-bottom: 2px solid #e2e2e2;
+
+    @include breakpoint(37.5em) {
+        font-size: 1.75em;
+        margin: .5em 0 .375em;
+    }
+
+    @include breakpoint(63.75em) {
+        width: 75%;
+        margin: 1em 0 .375em;
+    }
+}
+
+.splash {
+  position: fixed;
+  top: 45%;
+  left: 50%;
+  width: 200px;
+  margin-left: -100px;
+  text-align: center;
+  font-weight: 300;
+}

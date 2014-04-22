@@ -1,0 +1,34 @@
+.sidebar-glance-contain {
+    width: 100%;
+    margin: 1em 0 0;
+
+    @include breakpoint(63.75em) {
+        margin: -2.5em 0 1.5em;
+    }
+}
+
+.sidebar-glance-title {
+    font-weight: 400;
+    color: black;
+}
+
+.sidebar-glance {
+    font-size: .875em;
+    line-height: 1.375em;
+    padding: 1em 0 1.5em;
+    border-top: 2px solid #e2e2e2;
+    border-bottom: 2px solid #e2e2e2;
+
+    span {
+        font-size: 1.125em;
+    }
+
+    strong {
+        color: black;
+    }
+}
+
+.content-wrap .sidebar-glance-title {
+    font-size: 1.125em;
+    margin: 0;
+}

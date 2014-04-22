@@ -1,0 +1,186 @@
+.global-form {
+    float: left;
+    width: 100%;
+}
+
+.gf-col {
+    float: left;
+    width: 100%;
+
+    @include breakpoint(50em) {
+        width: 50%;
+        padding: 0 1em 0 0;
+
+        &:nth-child(2) {
+            padding: 0 0 0 1em;
+        }
+    }
+}
+
+.gf-centered {
+    float: left;
+    width: 100%;
+    text-align: center;
+    padding-top: 1em;
+
+    p {
+        margin-bottom: 1em;
+    }
+}
+
+.gf-actions {
+    float: left;
+    width: 100%;
+    border-top: 1px solid #bdc3c7;
+    padding-top: .75em;
+}
+
+.global-form {
+    label {
+        display: block;
+        width: 100%;
+        margin: 0 0 .5em;
+        font-size: .938em;
+
+        @include breakpoint(50em) {
+            font-size: 1.125em;
+            margin: .75em 0 .75em;
+        }
+    }
+
+    input,
+    select,
+    textarea {
+        display: block;
+        width: 100%;
+        margin: 0 0 1.5em;
+        padding: .75em;
+        color: #333;
+        font-size: .938em;
+        font-weight: normal;
+        border: 1px solid #bdc3c7;
+        @include box-shadow(inset 0 -1px #bdc3c7);
+        @include border-radius(4px);
+
+        &:focus {
+            border: 1px solid #f28b20;
+            outline: none;
+            @include box-shadow(inset 0 -1px #f28b20);
+        }
+
+        @include breakpoint(50em) {
+            padding: .875em;
+            font-size: 1em;
+        }
+    }
+
+    input:disabled {
+        color: #ccc;
+    }
+
+    input.checkbox {
+        display: inline;
+        width: auto;
+    }
+
+    textarea {
+        font-family: "Roboto", Arial, Helvetica, sans-serif;
+        min-height: 150px;
+    }
+}
+
+// Custom select styling
+span.customSelect {
+    display: block;
+    width: 100%;
+    margin: .875em 0 1.5em;
+    padding: .75em;
+    color: #333;
+    font-size: .938em;
+    font-weight: normal;
+    border: 1px solid #bdc3c7;
+    @include box-shadow(inset 0 -1px #bdc3c7);
+    @include border-radius(4px);
+
+    &:focus {
+        border: 1px solid #b1d928;
+        outline: none;
+        @include box-shadow(inset 0 -1px #b1d928);
+    }
+
+    @include breakpoint(50em) {
+        padding: .875em;
+        font-size: 1em;
+    }
+
+    background: #fff url(../images/select-arrow.png) right center no-repeat;
+}
+
+// Project config form
+.project-config-form {
+    margin-top: 1.5em;
+
+    @include breakpoint(63.75em) {
+        margin-top: 0;
+        width: 75%;
+    }
+}
+
+// User config form
+.user-config-form {
+    margin-top: 1.5em;
+
+    @include breakpoint(63.75em) {
+        margin-top: 0;
+        width: 75%;
+    }
+}
+
+.user-config-image {
+    float: left;
+    width: 100%;
+    margin: 0 0 1.5em;
+
+    label {
+        display: block;
+        width: 100%;
+        margin: 0 0 .5em;
+        font-size: .938em;
+
+        @include breakpoint(50em) {
+            font-size: 1.125em;
+            margin: .75em 0 .75em;
+        }
+    }
+
+    .image-contain {
+        position: relative;
+        float: left;
+
+        .image-edit-trigger {
+            display: none;
+            position: absolute;
+            z-index: 1;
+            top: 50px;
+            right: 0;
+            left: 0;
+            margin: 0 auto;
+            width: 50%;
+            text-align: center;
+            cursor: pointer;
+            @include border-radius(3px);
+        }
+
+        img {
+            float: left;
+            height: 120px;
+            max-width: 100%;
+            @include transition(opacity .2s ease);
+        }
+    }
+
+    @include breakpoint(63.75em) {
+        width: 25%;
+        padding: 0 0 0 2.5em;
+    }
+}

@@ -1,0 +1,65 @@
+header {
+    float: left;
+    width: 100%;
+    padding: 0 .5em;
+    background: #fff;
+    z-index: 999;
+    height: 2.75em;
+    border-bottom: 1px solid #e2e2e2;
+
+    .fa-check-circle {
+        color: #f2f2f2;
+        font-size: 1.5em;
+        padding: 0;
+        float: left;
+        margin: -.175em .25em 0;
+
+        &:hover {
+            color: #f2f2f2;
+        }
+    }
+
+    @include breakpoint(37.5em) {
+        height: 3.75em;
+
+        .fa-check-circle {
+            font-size: 1.75em;
+            margin: -.25em .25em 0;
+        }
+    }
+
+    @include breakpoint(56.25em) {
+        padding: 0 2.5em;
+    }
+}
+
+.global-logo {
+    float: left;
+    margin: .5em 0 0;
+    background: url(../../images/logo-light.png) no-repeat;
+    background-size: 155px;
+    width: 155px;
+    height: 40px;
+
+    @include breakpoint(37.5em) {
+        width: 175px;
+        margin: .938em 0 0;
+        background-size: 100%;
+    }
+}
+
+.menu-button {
+    float: left;
+    margin: .938em 0 0;
+    color: #f2f2f2 !important;
+    font-size: 1em;
+
+    &:hover {
+        color: #f2f2f2;
+    }
+
+    @include breakpoint(37.5em) {
+        margin: 1.125em 0 0;
+        font-size: 1.1875em;
+    }
+}
