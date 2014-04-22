@@ -1,5 +1,5 @@
 {
-  "name": "codeswarm",
+  "name": "CodeSwarm",
   "version": "0.1.13",
   "homepage": "https://github.com/codeswarm/codeswarm",
   "authors": [
@@ -22,10 +22,8 @@
     "test",
     "tests"
   ],
+  "main": "app.js",
   "dependencies": {
-    "handlebars": "~1.1.0",
-    "jquery": "~2.0.0",
-    "requirejs-text": "~2.0.0",
-    "requirejs": "~2.1.8"
+    "jquery": "~2.1.0"
   }
 }

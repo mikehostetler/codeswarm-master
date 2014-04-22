@@ -17,6 +17,7 @@ require.config({
 		'base64': 'vendor/base64/base64',
 		'jqcustomselect': 'vendor/jquery.customselect/jquery.customselect.min',
 		'handlebars': 'vendor/handlebars/handlebars.min',
+		'amplify': 'vendor/amplify/amplify.min',
 		'request': 'utils/request',
 		'utils': 'utils',
     'controllers': 'controllers',
