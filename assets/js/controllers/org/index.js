@@ -1,16 +1,18 @@
 define([
   'knockout',
-  'request',
-  'dom',
-  'session',
-  'utils/github',
+  'utils/requests',
+  'utils/dom',
+  'utils/session',
+  'github',
   'plugins/router'
 ], function (ko, request, dom, session, github, router) {
 
   var ctor = {
 
+	/*
     // Check that user is logged in
     canActivate: function () {
+		
       session.isLoggedIn(function (sess) {
         if (!sess) {
           router.navigate('/user/login');
@@ -19,6 +21,7 @@ define([
       // This is required for Durandal
       return true;
     },
+		*/
 
     // Set displayName
     displayName: 'About CodeSwarm',
@@ -32,7 +35,7 @@ define([
     // Initialization
     activate: function (org) {
       this.orgs([]);
-      this.org(org.toLowerCase());
+      //this.org(org.toLowerCase());
       // Setup orgs list
       this.tryGetOrgs();
       // Load projects
