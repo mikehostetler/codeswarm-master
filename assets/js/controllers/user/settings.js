@@ -1,13 +1,13 @@
 define([
     'knockout',
     'request',
-    'dom',
+    'durandal/app',
     'gravatar',
     'session',
     'plugins/router',
   ],
 
-  function (ko, request, dom, gravatar, session, router) {
+  function (ko, request, app, gravatar, session, router) {
 
     var ctor = {
 
@@ -60,7 +60,7 @@ define([
         });
         // Failure response
         req.fail(function (err) {
-          dom.showNotification('error', JSON.parse(err.responseText).message);
+          app.showMessage('Error: ' + JSON.parse(err.responseText).message);
           // Send home
           router.navigate('/user');
         });
@@ -68,7 +68,7 @@ define([
 
       // Email change notification
       changeEmailNote: function () {
-        dom.showNotification('error', 'Please contact support to change your email');
+        app.showMessage('Error: ' + 'Please contact support to change your email');
       },
 
       // Define save-info request object
@@ -82,19 +82,19 @@ define([
         // Ensure all fields (sans email; tested later) contain values
 
         if (this.fname() === undefined || this.lname() === undefined) {
-          dom.showNotification('error', 'Please provide First and Last name and Email');
+          app.showMessage('Error: ' + 'Please provide First and Last name and Email');
           return;
         }
 
         // Test email
         if (!/\S+@\S+\.\S+/.test(this.email())) {
-          dom.showNotification('error', 'Invalid email address');
+          app.showMessage('Error: ' + 'Invalid email address');
           return;
         }
 
         // Check password confirm
         if (this.password() !== this.confirm_password()) {
-          dom.showNotification('error', 'Your passwords do not match');
+          app.showMessage('Error: ' + 'Your passwords do not match');
           return;
         }
 
@@ -115,10 +115,10 @@ define([
         // Processes request obj
         var req = request(this.saveSettingsRequest, payload);
         req.done(function () {
-          dom.showNotification('success', 'Settings successfully saved');
+          app.showMessage('Success: ' + 'Settings successfully saved');
         });
         req.fail(function (err) {
-          dom.showNotification('error', JSON.parse(err.responseText).message);
+          app.showMessage('Error: ' + JSON.parse(err.responseText).message);
         });
 
       }

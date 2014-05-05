@@ -1,11 +1,11 @@
 define([
   'knockout',
   'request',
-  'dom',
   'session',
   'utils/github',
+  'durandal/app',
   'plugins/router'
-], function (ko, request, dom, session, github, router) {
+], function (ko, request, session, github, app, router) {
 
   var ctor = {
 
@@ -47,7 +47,7 @@ define([
       var self = this;
       github.getRepo(this.org(), this.repo(), function (err, repo) {
         if (err) {
-          dom.showNotification('error', err);
+          app.showMessage('Error: ' + err);
         } else {
           repo.show(function (err, repo) {
             self.stats({
@@ -90,7 +90,7 @@ define([
 
       // On failure
       req.fail(function (err) {
-        dom.showNotification('error', JSON.parse(err.responseText).message);
+        app.showMessage('Error: ' + JSON.parse(err.responseText).message);
       });
     },
 

@@ -1,12 +1,12 @@
 define([
     'knockout',
     'request',
-    'dom',
+    'durandal/app',
     'session',
     'plugins/router'
   ],
 
-  function (ko, request, dom, session, router) {
+  function (ko, request, app, session, router) {
 
     var ctor = {
 
@@ -41,19 +41,19 @@ define([
       trySignup: function () {
         // Ensure all fields (sans email; tested later) contain values
         if (this.fname() === undefined || this.lname() === undefined || this.password() === undefined) {
-          dom.showNotification('error', 'Please fill out all fields');
+          app.showMessage('Error: ' + 'Please fill out all fields');
           return;
         }
 
         // Test email
         if (!/\S+@\S+\.\S+/.test(this.email())) {
-          dom.showNotification('error', 'Invalid email address');
+          app.showMessage('Error: ' + 'Invalid email address');
           return;
         }
 
         // Check password confirm
         if (this.password() !== this.confirm_password()) {
-          dom.showNotification('error', 'Your passwords do not match');
+          app.showMessage('Error: ' + 'Your passwords do not match');
           return;
         }
 
@@ -72,7 +72,7 @@ define([
           router.navigate('/projects');
         });
         req.fail(function (err) {
-          dom.showNotification('error', JSON.parse(err.responseText).message);
+          app.showMessage('Error: ' + JSON.parse(err.responseText).message);
         });
 
       }
