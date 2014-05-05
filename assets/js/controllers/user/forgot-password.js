@@ -1,10 +1,10 @@
 define([
     'knockout',
     'request',
-    'dom'
+    'durandal/app'
   ],
 
-  function (ko, request, dom) {
+  function (ko, request, app) {
 
     var ctor = {
 
@@ -29,10 +29,10 @@ define([
         // Processes request obj
         var req = request(this.resetPasswordRequest, payload);
         req.done(function () {
-          dom.showNotification('success', 'Password reset, please check your email');
+          app.showMessage('Success: ' + 'Password reset, please check your email');
         });
         req.fail(function () {
-          dom.showNotification('error', 'There was a problem with the email you provided');
+          app.showMessage('Error: ' + 'There was a problem with the email you provided');
         });
       }
 

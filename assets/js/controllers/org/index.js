@@ -4,8 +4,9 @@ define([
   'dom',
   'session',
   'utils/github',
+  'durandal/app',
   'plugins/router'
-], function (ko, request, dom, session, github, router) {
+], function (ko, request, dom, session, github, app, router) {
 
   var ctor = {
 
@@ -106,7 +107,7 @@ define([
 
       // On failure
       req.fail(function (err) {
-        dom.showNotification('error', JSON.parse(err.responseText).message);
+        app.showMessage('Error: ' + JSON.parse(err.responseText).message);
       });
     }
 

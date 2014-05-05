@@ -14,7 +14,8 @@ require(['require-config'], function () {
     // Plugins
     app.configurePlugins({
       router: true,
-      widget: true
+      widget: true,
+      dialog: true
     });
 
     app.start().then(function () {

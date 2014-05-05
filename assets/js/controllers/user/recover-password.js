@@ -1,11 +1,11 @@
 define([
     'knockout',
     'request',
-    'dom',
+    'durandal/app',
     'plugins/router'
   ],
 
-  function (ko, request, dom, router) {
+  function (ko, request, app, router) {
 
     var ctor = {
 
@@ -36,12 +36,12 @@ define([
       tryResetPassword: function () {
         // Check password match
         if (this.password() !== this.password_confirm()) {
-          dom.showNotification('error', 'Passwords must match');
+          app.showMessage('Error: ' + 'Passwords must match');
           return false;
         }
 
         if (this.password().length < 8) {
-          dom.showNotification('error', 'Password must be at least 8 characters');
+          app.showMessage('Error: ' + 'Passwords must be at least 8 characters');
           return false;
         }
         // Define request payload
@@ -53,11 +53,11 @@ define([
         // Processes request obj
         var req = request(this.resetPasswordRequest, payload);
         req.done(function () {
-          dom.showNotification('success', 'Password reset, please log in');
+          app.showMessage('Success: ' + 'Password reset, please log in');
           router.navigate('/#user/login');
         });
         req.fail(function () {
-          dom.showNotification('error', 'There was a problem with the information provided');
+          app.showMessage('Error: ' + 'There was a problem with the information provided');
         });
       }
 
