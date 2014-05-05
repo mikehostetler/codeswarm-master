@@ -5,8 +5,9 @@ define([
   'utils/github',
   'session',
   'plugins/router',
+  'durandal/app',
   'base64',
-], function (ko, request, dom, github, session, router) {
+], function (ko, request, dom, github, session, app, router) {
 
   var ctor = {
 
@@ -72,7 +73,7 @@ define([
 
       github.getUser(function (err, user) {
         if (err) {
-          dom.showNotification('error', err);
+          app.showMessage('Error: ' + err);
         } else {
           self.token(true);
           user.repos('admin', function (err, repos) {
@@ -132,7 +133,7 @@ define([
     getBranches: function (org, repo, default_branch) {
       github.getRepo(org, repo, function (err, repo) {
         if (err) {
-          dom.showNotification('error', err);
+          app.showMessage('Error: ' + err);
         } else {
 
           repo.listBranches(function (err, branches) {
@@ -185,7 +186,7 @@ define([
 
       // On failure
       req.fail(function (err) {
-        dom.showNotification('error', JSON.parse(err.responseText).message);
+        app.showMessage('Error: ' + JSON.parse(err.responseText).message);
       });
     },
 
@@ -223,12 +224,12 @@ define([
 
       // On success
       req.done(function (data) {
-        dom.showNotification('success', 'Project successfully saved');
+        app.showMessage('Success: ' + 'Project successfully saved');
       });
 
       // On failure
       req.fail(function (err) {
-        dom.showNotification('error', JSON.parse(err.responseText).message);
+        app.showMessage('Error: ' + JSON.parse(err.responseText).message);
       });
     },
 
@@ -248,7 +249,7 @@ define([
           router.navigate('#projects');
         });
         req.fail(function (err) {
-          dom.showNotification('error', JSON.parse(err.responseText).message);
+          app.showMessage('Error: ' + JSON.parse(err.responseText).message);
         });
       }
     }

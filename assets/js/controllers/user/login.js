@@ -2,12 +2,12 @@ define([
     'knockout',
     'request',
     'session',
-    'dom',
     'durandal/system',
+    'durandal/app',
     'plugins/router'
   ],
 
-  function (ko, request, session, dom, system, router) {
+  function (ko, request, session, system, app, router) {
 
     var ctor = {
 
@@ -48,10 +48,9 @@ define([
           router.navigate('/projects');
         });
         req.fail(function (err) {
-          dom.showNotification('error', JSON.parse(err.responseText).message);
+          app.showMessage('Error: ' + JSON.parse(err.responseText).message);
         });
       }
-
     };
     return ctor;
   });
