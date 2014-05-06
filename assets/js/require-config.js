@@ -2,26 +2,29 @@
 require.config({
 	baseUrl: 'js',
 	paths: {
-		'text': 'vendor/requirejs-text/text',
+    'controllers': 'controllers',
+    'routes': 'routes',
+
+		'utils': 'utils',
+		'request': 'utils/request',
+
 		'durandal': 'vendor/durandal/js',
 		'plugins': 'vendor/durandal/js/plugins',
 		'transitions': 'vendor/durandal/js/transitions',
-		'knockout': 'vendor/knockout/knockout-3.1.0',
-		'jquery': 'vendor/jquery/jquery.min',
-		'socketio': 'sails.io.js',
+
+		'amplify': 'vendor/amplify/lib/amplify.min',
 		'ansi_up': 'vendor/ansi_up/ansi_up',
-		'async': 'vendor/async/async',
+		'async': 'vendor/async/lib/async',
+		'base64': 'vendor/base64/base64.min',
 		'github': 'vendor/github/github',
-		'underscore': 'vendor/underscore/underscore',
-		'gravatar': 'vendor/gravatar/gravatar',
-		'base64': 'vendor/base64/base64',
-		'jqcustomselect': 'vendor/jquery.customselect/jquery.customselect.min',
+		'gravatar': 'vendor/gravatarjs/gravatar',
 		'handlebars': 'vendor/handlebars/handlebars.min',
-		'amplify': 'vendor/amplify/amplify.min',
-		'request': 'utils/request',
-		'utils': 'utils',
-    'controllers': 'controllers',
-    'routes': 'routes'
+		'jquery': 'vendor/jquery/dist/jquery.min',
+		'knockout': 'vendor/knockout.js/knockout',
+		'postal': 'vendor/postal.js/lib/postal.min',
+		'socketio': 'sails.io.js',
+		'text': 'vendor/requirejs-text/text',
+		'underscore': 'vendor/underscore/underscore'
 	},
 	shim: {
 		'handlebars': {
@@ -32,9 +35,6 @@ require.config({
 		},
 		'underscore': {
 			exports: '_'
-		},
-		'jqcustomselect': {
-			exports: 'jqcustomselect'
 		}
 	}
 });

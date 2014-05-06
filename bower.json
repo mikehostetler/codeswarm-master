@@ -24,6 +24,24 @@
   ],
   "main": "app.js",
   "dependencies": {
-    "jquery": "~2.1.0"
+    "handlebars": "~1.1.0",
+    "requirejs-text": "~2.0.0",
+    "requirejs": "~2.1.8",
+    "jquery": "~2.1.0",
+    "postal.js": "~0.8.11",
+    "github": "~0.9.0",
+    "amplify": "~1.1.2",
+    "durandal": "~2.0.1",
+    "async": "~0.8.0",
+    "base64": "~0.3.0",
+    "underscore": "~1.6.0",
+    "knockout.js": "~3.0.0",
+    "ansi_up": "https://github.com/drudru/ansi_up.git",
+    "gravatarjs": "~1.0.0"
+  },
+  "resolutions": {
+    "jquery": "~2.1.0",
+    "underscore": "~1.6.0",
+    "knockout.js": "~3.0.0"
   }
 }
