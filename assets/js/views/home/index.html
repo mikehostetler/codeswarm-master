@@ -1,7 +1,71 @@
 ﻿<h1 class="page-title" data-bind="html:displayName"> </h1>
 
 <div class="content-wrap">
-	Bacon ipsum dolor sit amet ham pastrami bacon shoulder ball tip beef andouille prosciutto kevin sirloin pork loin. Spare ribs pancetta prosciutto ball tip ham hock pig fatback jowl doner salami venison boudin kielbasa pastrami. Pork chop chicken ham biltong doner boudin swine andouille pork belly kevin ham hock. Beef cow tenderloin sirloin. Shank doner salami ball tip rump capicola meatball ribeye andouille jowl turducken beef bresaola pork chop boudin. Ball tip porchetta kevin, t-bone leberkas sausage turkey corned beef. Pork loin ham ground round kevin shoulder pancetta ball tip venison.
+	<h3>Sample Home Page</h3>
+	<h4>Logged In</h4>
+	<p>Show a dashboard of the latest builds</p>
 
-	Bacon ham landjaeger, salami venison biltong fatback andouille tongue tenderloin beef ribs flank ground round bresaola doner. Jerky tongue jowl sausage beef strip steak leberkas ham hock pig salami. Fatback cow t-bone, pastrami salami venison turkey beef meatball pork strip steak tri-tip ground round ball tip. T-bone beef ribs pork loin ground round pancetta salami boudin meatloaf frankfurter flank biltong drumstick kevin ham. Shankle sirloin sausage prosciutto chicken doner. Beef ribs flank t-bone ground round swine doner pork chop, kielbasa jowl.
+	<h4>Logged Out</h4>
+	<p>Welcome, thanks for sponsors, login form</p>
+
+    <div class="sidebar">
+      <div class="sidebar-list-contain">
+        <!-- ko ifnot: token -->
+        <p>You need to be logged in to github in order to add a project.</p>
+
+        <br>
+
+          <form method="post" action="/tokens/github">
+
+              <button class="btn">Login to Github</button>
+
+          </form>
+
+      <!-- /ko -->
+
+      <!-- ko if: token -->
+          <h3 class="sidebar-list-title">Filter</h3>
+          <select id="org-filter" data-bind="
+              options: orgs,
+              optionsText: function (org) {
+                if (org==='projects') {
+                  return 'View All'
+                }
+                return org
+              }">
+          </select>
+      <!-- /ko -->
+      </div>
+      <br>
+      <div class="sidebar-list-contain">
+        <h3 class="sidebar-list-title">Recent project builds</h3>
+
+        <ul class="sidebar-list">
+          <li><a href="#">
+            <strong>jQuery/jQuery</strong> - <time>Feb 11, 2014</time>
+            <span>Commit d792e40 by rwaldron</span>
+          </a></li>
+          <li><a href="#">
+            <strong>guardian/frontend</strong> - <time>Feb 10, 2014</time>
+            <span>Commit d792e40 by trevanhetzel</span>
+          </a></li>
+          <li><a href="#">
+            <strong>jQuery/jQuery</strong> - <time>Feb 11, 2014</time>
+            <span>Commit d792e40 by rwaldron</span>
+          </a></li>
+          <li><a href="#">
+            <strong>guardian/frontend</strong> - <time>Feb 10, 2014</time>
+            <span>Commit d792e40 by trevanhetzel</span>
+          </a></li>
+          <li><a href="#">
+            <strong>jQuery/jQuery</strong> - <time>Feb 11, 2014</time>
+            <span>Commit d792e40 by rwaldron</span>
+          </a></li>
+        </ul>
+
+        <div class="sidebar-list-actions">
+          <a href="#" class="btn btn-sml">View all</a>
+        </div>
+      </div>
+    </div>
 </div>

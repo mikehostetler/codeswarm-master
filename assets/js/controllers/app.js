@@ -1,13 +1,13 @@
 define([
-  'plugins/router',
   'durandal/app',
+  'plugins/router',
   'utils/dom',
   'utils/session',
   'jquery',
   'knockout',
   'gravatar',
   'transitions/entrance',
-], function (router, app, dom, $, session, ko, gravatar) {
+], function (app, router, dom, session, $, ko, gravatar) {
   return {
     gravatarUrl: ko.observable('http://www.gravatar.com/avatar/00000000000000000000000000000000'),
     fullName: ko.observable(),
@@ -15,17 +15,16 @@ define([
     router: router,
     activate: function () {
 
-      var self = this;
       // Handle header checks
       router.on('router:navigation:complete', function () {
         session.data(function (err, data) {
           if (err) {
-            self.loggedIn(false);
+            this.loggedIn(false);
           } else {
             var gUrl = gravatar(data.email, 50);
-            self.fullName(data.fname + ' ' + data.lname);
-            self.gravatarUrl(gUrl);
-            self.loggedIn(true);
+            this.fullName(data.fname + ' ' + data.lname);
+            this.gravatarUrl(gUrl);
+            this.loggedIn(true);
           }
         });
       });
@@ -33,14 +32,14 @@ define([
       // Map routes
       router.map([
         // Static Routes
-        { route: '', moduleId: 'controllers/home/index', title: 'Welcome', nav: true }
-      ]).buildNavigationModel();
+        { route: '', moduleId: 'controllers/home/index', title: 'Welcome' }
+      ]);
 
       return router.activate();
     },
     compositionComplete: function () {
       // On composition, run dom controller activation
-      dom.activate();
+      //dom.activate();
     }
   };
 
