@@ -23,7 +23,7 @@ module.exports = function(grunt) {
 		assets: {
 
 			// Assets to watch:
-			files: ['assets/**/*'],
+			files: ['assets/js/*'],
 
 			// When assets are changed:
 			tasks: ['compileAssets']
