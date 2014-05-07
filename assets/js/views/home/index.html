@@ -10,7 +10,6 @@
 
     <div class="sidebar">
       <div class="sidebar-list-contain">
-        <!-- ko ifnot: token -->
         <p>You need to be logged in to github in order to add a project.</p>
 
         <br>
@@ -21,20 +20,7 @@
 
           </form>
 
-      <!-- /ko -->
-
-      <!-- ko if: token -->
           <h3 class="sidebar-list-title">Filter</h3>
-          <select id="org-filter" data-bind="
-              options: orgs,
-              optionsText: function (org) {
-                if (org==='projects') {
-                  return 'View All'
-                }
-                return org
-              }">
-          </select>
-      <!-- /ko -->
       </div>
       <br>
       <div class="sidebar-list-contain">

@@ -14,8 +14,10 @@ require(['require-config'], function () {
     // Plugins
     app.configurePlugins({
       router: true,
-      widget: true,
-      dialog: true
+      dialog: true,
+      widget: {
+				kinds: ['label']
+			}
     });
 
     app.start().then(function () {

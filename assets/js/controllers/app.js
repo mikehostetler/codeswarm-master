@@ -5,41 +5,65 @@ define([
   'utils/session',
   'jquery',
   'knockout',
-  'gravatar',
-  'transitions/entrance',
-], function (app, router, dom, session, $, ko, gravatar) {
+	'gravatar',
+	'amplify'
+], function (app, router, dom, session, $, ko) {
+
   return {
+    router: router,
+
     gravatarUrl: ko.observable('http://www.gravatar.com/avatar/00000000000000000000000000000000'),
     fullName: ko.observable(),
-    loggedIn: ko.observable(false),
-    router: router,
+    isLoggedIn: ko.observable(false),
+
     activate: function () {
 
-      // Handle header checks
+			// Set up our subscription when the loggedIn state changes
+			amplify.subscribe('user.loggedIn',this,function(isLoggedIn) {
+				if(isLoggedIn) {
+					var user = amplify.store.localStorage('user');
+					this.fullName(user.name);
+					this.gravatarUrl(gravatar('mike@appendto.com',{size: 32}));
+					this.isLoggedIn(true);
+					return true;
+				}
+				this.isLoggedIn(false);
+				return false;
+			});
+
+
+      // Check our session
       router.on('router:navigation:complete', function () {
-        session.data(function (err, data) {
-          if (err) {
-            this.loggedIn(false);
-          } else {
-            var gUrl = gravatar(data.email, 50);
-            this.fullName(data.fname + ' ' + data.lname);
-            this.gravatarUrl(gUrl);
-            this.loggedIn(true);
-          }
+				amplify.request({
+					resourceId: 'user.session',
+					data: {},
+					success: function(data) {
+            amplify.publish('user.loggedIn',true);
+					},
+					error: function(data) {
+            amplify.publish('user.loggedIn',false);
+					}
         });
       });
 
       // Map routes
-      router.map([
+      return router.map([
         // Static Routes
-        { route: '', moduleId: 'controllers/home/index', title: 'Welcome' }
-      ]);
+        { route: '', moduleId: 'controllers/home/index', title: 'Welcome', nav: true},
 
-      return router.activate();
+        { route: 'user/login', moduleId: 'controllers/user/login', title: 'Log into CodeSwarm', nav: true},
+        { route: 'user/forgot-password', moduleId: 'controllers/user/forgot-password', title: 'Forgot Password', nav: true},
+        { route: 'user/logout', moduleId: 'controllers/user/logout'},
+        { route: 'user/register', moduleId: 'controllers/user/register', title: 'Create a new Account', nav: true},
+        { route: 'user/account', moduleId: 'controllers/user/account', title: '', nav: true}
+
+      ]).buildNavigationModel()
+				.mapUnknownRoutes('site/not-found','not-found')
+				.activate();
     },
+
     compositionComplete: function () {
       // On composition, run dom controller activation
-      //dom.activate();
     }
   };
 

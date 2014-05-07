@@ -1,19 +1,12 @@
 define([
-  'session'
-], function (session) {
-  var ctor = {
+	'durandal/app',
+  'plugins/router',
+  'utils/session'
+], function (app, router, session) {
 
-    // Set displayName
-    displayName: 'Log Out',
+	amplify.request('user.logout');
 
-    canActivate: function () {
-      // Ends session, returns to login screen
-      session.end();
-      return true;
-    }
-
-  };
-
-  return ctor;
-
+	router.navigate('/');
+	
+  return {};
 });
