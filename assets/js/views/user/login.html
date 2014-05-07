@@ -5,9 +5,19 @@
 
 <div class="content-wrap">
 	<form id="login" class="global-form">
+    <div class="gf-col">
+			<h3>Log in with:</h3>
+			<ul>
+				<li> <a href="/auth/github">Log in with Github</a> </li>
+				<li> <a href="/auth/bitbucket">Log in with BitBucket</a> </li>
+				<li> <a href="/auth/twitter">Log in with Twitter</a> </li>
+				<li> <a href="/auth/google">Log in with Google</a> </li>
+			</ul>
+		</div>
+
 		<div class="gf-col">
-			<label>Email</label>
-			<input type="email" placeholder="Email Address" name="email" data-bind="value: email">
+			<label>Username</label>
+			<input type="username" placeholder="Username" name="username" data-bind="value: username">
 
 			<label>Password</label>
 			<input type="password" placeholder="Password" name="password" data-bind="value: password">
@@ -15,7 +25,8 @@
 
 		<div class="gf-actions">
 			<button class="btn" data-bind="click: btnLogin_Click">Login</button>
-			<a href="" data-bind="attr: { href: router.convertRouteToHash('user/forgot') }" class="btn btn-sec">Forgot Password?</a>
+			<a href="#user/forgot-password" data-bind="attr: { href: router.convertRouteToHash('user/forgot-password') }" class="btn btn-sec">Forgot Password?</a>
+			<p>New User? <a href="#user/register">Register Here</a></p>
 		</div>
 	</form>
 </div>

@@ -1,10 +1,12 @@
 define([
 	'durandal/app',
   'plugins/router',
-  'utils/session'
+  'utils/session',
+	'models/user'
 ], function (app, router, session) {
 
-	amplify.request('user.logout');
+	var user = require('models/user');
+	user.tryLogout();
 
 	router.navigate('/');
 	

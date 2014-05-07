@@ -3,47 +3,43 @@ define([
     'plugins/router',
     'knockout',
 		'utils/session',
-		'ko.validate'
+		'ko.validate',
+		'models/user'
   ],
 
   function (app, router, ko, session) {
 
+		var user = require('models/user');
 
-  return {
+		return {
 
-		activate: function() {
-			// If session active, goto profile
-			amplify.request('user.session',function(data) {
-				console.log("User Session?", data);
-			});
-		},
+			activate: function() {
+				// If session active, goto profile
+				if(user.isLoggedIn()) {
+					router.navigate(''); // Go home
+				}
+			},
 
-		// Set displayName
-		displayName: 'Login',
+			// Set displayName
+			displayName: 'Login',
 
-      // Setup model
-      email: ko.observable().extend({required: true}),
-      password: ko.observable().extend({required: true}),
+			// Setup model
+			username: ko.observable().extend({required: true}),
+			password: ko.observable().extend({required: true}),
 
-      // Login handler method
-      btnLogin_Click: function () {
-				amplify.request({
-					resourceId: 'user.login',
-					data: {
-						'email': this.email(),
-						'password': this.password()
-					},
-					success: function(data) {
-						// Store the credentials
-						amplify.store.localStorage('user',data.user);
-            amplify.publish('user.loggedIn',true);
-						router.navigate('/');
-					},
-					error: function(data) {
-            amplify.publish('user.loggedIn',false);
-						app.showMessage('Invalid Username or Password', '');
-					}
-				});
-      }
-    }
+			// Login handler method
+			btnLogin_Click: function () {
+				// TODO - Validate login!
+
+				var loginResult = user.tryLogin(this.username(), this.password());
+
+				if(loginResult === true) {
+					// Success!
+					router.navigate('/');
+				}
+				else {
+					app.showMessage('Invalid Username or Password', '');
+				}
+			}
+		}
   });

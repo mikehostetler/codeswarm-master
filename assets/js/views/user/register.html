@@ -4,15 +4,23 @@
 </h1>
 
 <div class="content-wrap">
-	<h2>Not Implemented yet</h2>
-  <!--form id="signup" class="global-form" data-bind="submit: trySignup">
+  <form id="register" class="global-form" data-bind="submit: frmRegister_Submit">
 
     <div class="gf-col">
-			<label>First Name</label>
-			<input type="text" placeholder="First Name" name="fname" data-bind="value: fname">
+			<h3>Quickly register with:</h3>
+			<ul>
+				<li> <a href="/auth/github">Log in with Github</a> </li>
+				<li> <a href="/auth/bitbucket">Log in with BitBucket</a> </li>
+				<li> <a href="/auth/twitter">Log in with Twitter</a> </li>
+				<li> <a href="/auth/google">Log in with Google</a> </li>
+			</ul>
+		</div>
 
-			<label>Last Name</label>
-			<input type="text" placeholder="Last Name" name="lname" data-bind="value: lname">
+    <div class="gf-col">
+			<h3>Or create an account:</h3>
+
+			<label>Username</label>
+			<input type="text" placeholder="Username" name="username" data-bind="value: username">
 
       <label>Email</label>
 			<input type="text" placeholder="Email Address" name="email" data-bind="value: email">
@@ -20,16 +28,15 @@
 			<label>Password</label>
 			<input type="password" placeholder="Password" name="password" data-bind="value: password">
 
-			<label>Confirm Password</label>
-			<input type="password" placeholder="Confirm Password" name="password" data-bind="value: confirm_password">
-
 		</div>
 
     <div class="gf-actions">
-      <button>Sign up</button>
-      <a href="#/user/login" class="btn btn-sec">Login</a>
+			<p>By registering, you are agreeing to the <a href="">Terms of Service</a> and the <a href="">Privacy Policy.</a></p>
+			<br />
+      <button>Register</button>
+      <a data-bind="attr: { href: router.convertRouteToHash('user/login') }" href="#user/login" class="btn btn-sec">Login</a>
     </div>
 
-  </form-->
+  </form>
 
 </div>

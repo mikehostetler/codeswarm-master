@@ -1,5 +1,5 @@
 /**
- * SessionController
+ * UserController
  *
  * @module      :: Controller
  * @description :: A set of functions called `actions`.
@@ -29,7 +29,6 @@ module.exports = {
       else res.json({ok: true});
     }
   },
-
 
   /**
    * Overrides for the settings in `config/controllers.js`

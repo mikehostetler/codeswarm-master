@@ -71,7 +71,7 @@ module.exports.blueprints = {
    * you must take great care not to inadvertently expose unsafe/unintentional controller logic
    * to GET requests.
    */
-  actions: true,
+  actions: false,
 
 
   
@@ -105,7 +105,7 @@ module.exports.blueprints = {
    *
    * `shortcuts` are enabled by default, but SHOULD BE DISABLED IN PRODUCTION!!!!!
    */
-  shortcuts: true,
+  shortcuts: false,
 
 
 
