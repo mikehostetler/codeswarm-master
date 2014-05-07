@@ -40,8 +40,8 @@
     "gravatarjs": "~1.0.0"
   },
   "resolutions": {
-    "jquery": "~2.1.0",
     "underscore": "~1.6.0",
-    "knockout.js": "~3.0.0"
+    "knockout.js": "~3.0.0",
+    "jquery": "~2.1.0"
   }
 }
