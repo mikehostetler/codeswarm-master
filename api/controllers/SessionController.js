@@ -40,19 +40,28 @@ module.exports = {
     User.authenticate(username, password, replied);
 
     function replied(err, sessionId, username, roles) {
-      if (err) res.send(err.status_code || 500, err);
-      else if (! sessionId) res.send(500, new Error('No session id generated'));
+      if (err) 
+				res.send(err.status_code || 500, err);
+      else if (! sessionId) 
+				res.send(500, new Error('No session id generated'));
       else {
-        var cookie = Cookie.serialize('sid', sessionId, cookieOptions);
-        res.setHeader('Set-Cookie', cookie);
         if (sessionId) {
-          var user = {
-            name: username,
-            roles: roles,
-            isAdmin: roles.indexOf('admin') >= 0
-          };
+					User.findOne({id: User.userIdFromUsername(username)}, function(err, user) {
+							if (err) res.send(err.status_code || 500, err);
+							else if (! user) res.send(500, new Error('No session id generated'));
+							else {
+								var user = {
+									username: user.username,
+									email: user.email,
+									roles: roles,
+									isAdmin: roles.indexOf('admin') >= 0
+								};
+								var cookie = Cookie.serialize('sid', sessionId, cookieOptions);
+								res.setHeader('Set-Cookie', cookie);
+								res.json({ session: sessionId, user: user });
+							}
+					});
         }
-        res.json({ session: sessionId, user: user });
       }
     }
   },

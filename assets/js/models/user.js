@@ -44,6 +44,23 @@ define(['amplify'],function(require) {
 				}
 			});
 		},
+		tryCreateUser: function(username, email, password, cb) {
+			amplify.request({
+				resourceId: 'user.create',
+				data: {
+					'username': username,
+					'email': email,
+					'password': password
+				},
+				success: function(data) {
+					amplify.store.localStorage('user',data.user);
+					cb(true);
+				},
+				error: function(data) {
+					cb(false);
+				}
+			});
+		},
 		tryLogin: function(username, password, cb) {
 			amplify.request({
 				resourceId: 'user.login',

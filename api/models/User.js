@@ -14,6 +14,11 @@ module.exports = {
 
   attributes: {
 
+    username: {
+      type: 'string',
+      required: true
+    },
+
     email: {
       type: 'email',
       required: true
@@ -29,11 +34,6 @@ module.exports = {
       defaultsTo: 'user'
     },
 
-    name: {
-      type: 'string',
-      required: true
-    },
-
     roles: {
       type: 'array',
       defaultsTo: []
@@ -47,24 +47,23 @@ module.exports = {
     iterations: 'integer',
     password_scheme: 'string',
     salt: 'string'
-
   },
 
   beforeValidation: function beforeValidation(attrs, next) {
-    if (! attrs.id) attrs.id = userIdFromEmail(attrs.email);
-    if(! attrs.name) attrs.name = attrs.email;
+    if (! attrs.id) attrs.id = userIdFromUsername(attrs.username);
     if (! attrs.roles) attrs.roles = [];
     next();
   },
 
   beforeCreate: function beforeCreate(attrs, next) {
+		attrs.id = userIdFromUsername(attrs.username);
     next(null, attrs);
   },
 
-  userIdFromEmail: userIdFromEmail,
+  userIdFromUsername: userIdFromUsername,
 
   tokenFor: function tokenFor(username, provider, cb) {
-    this.findOne({id: userIdFromEmail(username)}, replied);
+    this.findOne({id: userIdFromUsername(username)}, replied);
 
     function replied(err, user) {
       if (err) cb(err);
@@ -75,6 +74,6 @@ module.exports = {
 };
 
 
-function userIdFromEmail(email) {
-  return 'org.couchdb.user:' + email;
+function userIdFromUsername(username) {
+  return 'org.couchdb.user:' + username;
 }

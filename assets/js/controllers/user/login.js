@@ -13,6 +13,7 @@ define([
 			/**
 			 * local viewmodel properties
 			 */
+			router: router,
 			username: ko.observable().extend({required: true, minLength: 3}),
 			password: ko.observable().extend({required: true, minLength: 3}),
 
