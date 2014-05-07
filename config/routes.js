@@ -94,13 +94,13 @@ module.exports.routes = {
 
   /// Users
 
-  'post /users': 'UserController.create',
-
+  'get /user': 'UserController.get',
+  'post /user': 'UserController.create',
 
   /// Sessions
-
   'get /session': 'SessionController.get',
-  'post /sessions': 'SessionController.create',
+  'post /session': 'SessionController.create',
+  'delete /session': 'SessionController.delete',
 
 
   /// Projects
