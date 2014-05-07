@@ -24,9 +24,21 @@ module.exports = {
   create: function (req, res) {
     User.create(req.body, replied);
 
-    function replied(err) {
-      if (err) res.send(err.status_code || 500, err);
-      else res.json({ok: true});
+    function replied(err, user) {
+      if (err) {
+				res.send(err.status_code || 500, err);
+			}
+      else {
+				res.json({
+					message: "User successfully created",
+					user: {
+						username: user.username,
+						email: user.email,
+						roles: user.roles
+					}
+				});
+						
+			}
     }
   },
 

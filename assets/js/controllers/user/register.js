@@ -2,7 +2,8 @@ define([
     'knockout',
     'durandal/app',
     'plugins/router',
-		'models/user'
+		'models/user',
+		'ko.validate'
   ],
 
   function (ko, app, router, user) {
@@ -10,9 +11,10 @@ define([
 			/**
 			 * Local ViewModel Properties
 			 */
-      username: ko.observable(),
-      email: ko.observable(),
-      password: ko.observable(),
+			router: router,
+			username: ko.observable().extend({required: true, minLength: 3}),
+			email: ko.observable().extend({required: true, email: true, minLength: 3}),
+			password: ko.observable().extend({required: true, minLength: 3}),
 
 			/**
 			 * Activate our model, this method is always called
@@ -37,18 +39,19 @@ define([
 						&& this.password.isValid()) {
 
 					// Try to login 
-					user.createUser(this.username(), 
-													this.email(),
-													this.password(), 
-												function(createResult) {
-													if(createResult) {
-															// Yay!	
-													}
-													else {
-														// Error, show a message
-														app.showMessage('Could not create your account. Please try again');
-													}
-												});
+					user.tryCreateUser(this.username(), this.email(), this.password(), 
+						function(createResult) {
+							if(createResult) {
+								// Yay!	
+								app.showMessage('User created successfully, please log in', '').then(function() {
+									router.navigate('user/login');
+								});
+							}
+							else {
+								// Error, show a message
+								app.showMessage('Could not create your account. Please try again', '');
+							}
+						});
 				}
 			}
     }

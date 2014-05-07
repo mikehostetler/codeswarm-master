@@ -22,14 +22,16 @@ define([
 		 * Activate our model, this method is always called
 		 */
     activate: function () {
+			// Check whether we are logged in
+			user.isLoggedIn();
 
 			// Set up our subscription when the loggedIn state changes
 			amplify.subscribe('user.loggedIn',this,function(isLoggedIn) {
 				if(isLoggedIn) {
 					var user = amplify.store.localStorage('user');
-					this.username('admin');
-					this.email();
-					this.gravatarUrl(gravatar('mike@appendto.com',{size: 32}));
+					this.username(user.username);
+					this.email(user.email);
+					if(user.email) this.gravatarUrl(gravatar(user.email,{size: 32}));
 					this.isLoggedIn(true);
 				}
 				else {
