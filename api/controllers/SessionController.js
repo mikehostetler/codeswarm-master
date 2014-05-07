@@ -85,6 +85,9 @@ module.exports = {
     }
   },
 
+  /**
+   *    `DELETE /session`
+   */
 	delete: function (req, res) {
 		var options = cookieOptions;
 		options.expires = new Date(Date.now() - sessionExpirationMs);

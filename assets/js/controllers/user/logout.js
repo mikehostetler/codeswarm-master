@@ -1,14 +1,22 @@
 define([
 	'durandal/app',
   'plugins/router',
-  'utils/session',
 	'models/user'
-], function (app, router, session) {
+], function (app, router, user) {
 
-	var user = require('models/user');
-	user.tryLogout();
-
-	router.navigate('/');
-	
-  return {};
+  return {
+		/**
+		 * local viewmodel properties
+		 */
+		
+		/**
+		 * Activate our model, this method is always called
+		 */
+		activate: function() {
+			// Log out and go home
+			user.tryLogout(function() {
+				router.navigate('/');
+			});
+		}
+	};
 });

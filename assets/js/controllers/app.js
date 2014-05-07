@@ -4,37 +4,43 @@ define([
   'knockout',
 	'models/user',
 	'gravatar',
-], function (app, router, ko) {
-
-	var user = require('models/user');
+], function (app, router, ko, user) {
 
   return {
+		/**
+		 * local viewmodel properties
+		 */
+		// Needed to set up the routes below
     router: router,
 
+    isLoggedIn: ko.observable(false),
     gravatarUrl: ko.observable('http://www.gravatar.com/avatar/00000000000000000000000000000000'),
-    fullName: ko.observable(),
-    isLoggedIn: ko.observable(user.isLoggedIn()),
+    username: ko.observable(),
+    email: ko.observable(),
 
+		/**
+		 * Activate our model, this method is always called
+		 */
     activate: function () {
 
 			// Set up our subscription when the loggedIn state changes
 			amplify.subscribe('user.loggedIn',this,function(isLoggedIn) {
 				if(isLoggedIn) {
 					var user = amplify.store.localStorage('user');
-					this.fullName(user.name);
+					this.username('admin');
+					this.email();
 					this.gravatarUrl(gravatar('mike@appendto.com',{size: 32}));
 					this.isLoggedIn(true);
-					return true;
 				}
-				this.isLoggedIn(false);
-				return false;
+				else {
+					this.isLoggedIn(false);
+				}
 			});
-
 
       // Check our session
       router.on('router:navigation:complete', function () {
 				// Check the login state each route change
-				user.isLoggedIn();
+				//user.isLoggedIn();
       });
 
       // Map routes
@@ -49,7 +55,7 @@ define([
         { route: 'user/account', moduleId: 'controllers/user/account', title: '', nav: true}
 
       ]).buildNavigationModel()
-				.mapUnknownRoutes('site/not-found','not-found')
+				//.mapUnknownRoutes('site/not-found','not-found')
 				.activate();
     },
 

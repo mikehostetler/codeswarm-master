@@ -11,21 +11,21 @@ define([
 		return {
 
 			/**
-			 * Local ViewModel Properties
+			 * local viewmodel properties
 			 */
-			displayName: 'Login',
-			username: ko.observable().extend({required: true, minLength: 8}),
-			password: ko.observable().extend({required: true, minLength: 8}),
+			username: ko.observable().extend({required: true, minLength: 3}),
+			password: ko.observable().extend({required: true, minLength: 3}),
 
 			/**
 			 * Activate our model, this method is always called
 			 */
 			activate: function() {
-				// If session active, goto profile
-				if(user.isLoggedIn()) {
-					// Go Home
-					//router.navigate('');
-				}
+				// If session active, go home
+				user.isLoggedIn(function(isLoggedIn) {
+					if(isLoggedIn === true) {
+						router.navigate('');
+					}
+				});
 			},
 
 			/**
@@ -36,15 +36,16 @@ define([
 				if(this.username.isValid() && this.password.isValid()) {
 					
 					// Try to login 
-					var loginResult = user.tryLogin(this.username(), this.password());
-					if(loginResult === true) {
-						// Success!
-						router.navigate('');
-					}
-					else {
-						// Error, show a message
-						app.showMessage('Invalid Username or Password', '');
-					}
+					user.tryLogin(this.username(), this.password(), function(loginResult) {
+						if(loginResult === true) {
+							// Success!
+							router.navigate('');
+						}
+						else {
+							// Error, show a message
+							app.showMessage('Invalid Username or Password', '');
+						}
+					});
 				}
 			}
 		}

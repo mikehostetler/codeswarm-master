@@ -5,49 +5,51 @@ define([
 		'models/user'
   ],
 
-  function (ko, app, router) {
-
-		var user = require('models/user');
-
+  function (ko, app, router, user) {
     return {
-			activate: function() {
-				// If session active, goto home
-				if(user.isLoggedIn()) {
-					router.navigate('/');
-				}
-			},
-
-      // Set displayName
-      displayName: 'Register',
-
-      // Setup model
+			/**
+			 * Local ViewModel Properties
+			 */
       username: ko.observable(),
       email: ko.observable(),
       password: ko.observable(),
 
-			frmRegister_Submit: function() {
-				// TODO - Validate login!
-
-				// Ok, we are validated
-				amplify.request({
-					resourceId: 'user.create',
-					data: {
-						'username': this.username(),
-						'email': this.email(),
-						'password': this.password()
-					},
-					success: function(data) {
-						// Store the credentials
-						amplify.store.localStorage('user',data.user);
-						amplify.publish('user.loggedIn',true);
-						router.navigate('/');
-					},
-					error: function(data) {
-						amplify.publish('user.loggedIn',false);
-						app.showMessage('Could not register you!', '');
+			/**
+			 * Activate our model, this method is always called
+			 */
+			activate: function() {
+				// If session active, go home
+				user.isLoggedIn(function(isLoggedIn) {
+					if(isLoggedIn === true) {
+						router.navigate('');
 					}
 				});
-				
+			},
+
+			/**
+			 * Custom methods
+			 */
+			frmRegister_Submit: function() {
+
+				// Validate our form
+				if(this.username.isValid() 
+						&& this.email.isValid()
+						&& this.password.isValid()) {
+
+					// Try to login 
+					user.createUser(this.username(), 
+													this.email(),
+													this.password(), 
+												function(createResult) {
+													if(createResult) {
+															// Yay!	
+													}
+													else {
+														// Error, show a message
+														app.showMessage('Could not create your account. Please try again');
+													}
+												});
+				}
 			}
     }
   });
