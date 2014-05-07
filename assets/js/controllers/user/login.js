@@ -2,44 +2,49 @@ define([
     'durandal/app',
     'plugins/router',
     'knockout',
-		'utils/session',
-		'ko.validate',
-		'models/user'
+		'models/user',
+		'ko.validate'
   ],
 
-  function (app, router, ko, session) {
-
-		var user = require('models/user');
+  function (app, router, ko, user) {
 
 		return {
 
+			/**
+			 * Local ViewModel Properties
+			 */
+			displayName: 'Login',
+			username: ko.observable().extend({required: true, minLength: 8}),
+			password: ko.observable().extend({required: true, minLength: 8}),
+
+			/**
+			 * Activate our model, this method is always called
+			 */
 			activate: function() {
 				// If session active, goto profile
 				if(user.isLoggedIn()) {
-					router.navigate(''); // Go home
+					// Go Home
+					//router.navigate('');
 				}
 			},
 
-			// Set displayName
-			displayName: 'Login',
-
-			// Setup model
-			username: ko.observable().extend({required: true}),
-			password: ko.observable().extend({required: true}),
-
-			// Login handler method
-			btnLogin_Click: function () {
-				// TODO - Validate login!
-
-				var loginResult = user.tryLogin(this.username(), this.password());
-
-				if(loginResult === true) {
-					// Success!
-					router.navigate('/');
+			/**
+			 * Custom methods
+			 */
+			frmLogin_Submit: function () {
+				if(this.username.isValid() && this.password.isValid()) {
+					var loginResult = user.tryLogin(this.username(), this.password());
+					if(loginResult === true) {
+						// Success!
+						router.navigate('');
+					}
+					else {
+						// Error, show a message
+						app.showMessage('Invalid Username or Password', '');
+					}
 				}
-				else {
-					app.showMessage('Invalid Username or Password', '');
-				}
+
+				// TODO - Show validation messages???
 			}
 		}
   });
