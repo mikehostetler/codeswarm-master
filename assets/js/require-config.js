@@ -4,9 +4,7 @@ require.config({
 	paths: {
     'controllers': 'controllers',
     'routes': 'routes',
-
 		'utils': 'utils',
-		'request': 'utils/request',
 
 		'durandal': 'vendor/durandal/js',
 		'plugins': 'vendor/durandal/js/plugins',
