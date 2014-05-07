@@ -85,6 +85,16 @@ module.exports = {
     }
   },
 
+	delete: function (req, res) {
+		var options = cookieOptions;
+		options.expires = new Date(Date.now() - sessionExpirationMs);
+
+		var cookie = Cookie.serialize('sid', '', options);
+		res.setHeader('Set-Cookie', cookie);
+
+    res.json({ message: "Session Deleted" });
+	},
+
 
 
 

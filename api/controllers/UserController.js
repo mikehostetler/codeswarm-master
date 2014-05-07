@@ -19,7 +19,7 @@ module.exports = {
 
 
   /**
-   *    `POST /users`
+   * `POST /user`
    */
   create: function (req, res) {
     User.create(req.body, replied);
