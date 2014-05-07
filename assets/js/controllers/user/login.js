@@ -1,56 +1,49 @@
 define([
-    'knockout',
-    'request',
-    'session',
-    'durandal/system',
     'durandal/app',
-    'plugins/router'
+    'plugins/router',
+    'knockout',
+		'utils/session',
+		'ko.validate'
   ],
 
-  function (ko, request, session, system, app, router) {
+  function (app, router, ko, session) {
 
-    var ctor = {
 
-      canActivate: function () {
-        // If session active, goto profile
-        session.data(function (err, data) {
-          if (!err) {
-            router.navigate('/projects');
-          }
-        });
+  return {
 
-        return true;
-      },
+		activate: function() {
+			// If session active, goto profile
+			amplify.request('user.session',function(data) {
+				console.log("User Session?", data);
+			});
+		},
 
-      // Set displayName
-      displayName: 'Login',
+		// Set displayName
+		displayName: 'Login',
 
       // Setup model
-      email: ko.observable(),
-      password: ko.observable(),
-
-      // Define request object
-      loginRequest: {
-        url: '/sessions',
-        type: 'POST'
-      },
+      email: ko.observable().extend({required: true}),
+      password: ko.observable().extend({required: true}),
 
       // Login handler method
-      tryLogin: function () {
-        // Define request payload
-        var payload = {
-          'email': this.email(),
-          'password': this.password()
-        };
-        // Processes request obj
-        var req = request(this.loginRequest, payload);
-        req.done(function (data) {
-          router.navigate('/projects');
-        });
-        req.fail(function (err) {
-          app.showMessage('Error: ' + JSON.parse(err.responseText).message);
-        });
+      btnLogin_Click: function () {
+				amplify.request({
+					resourceId: 'user.login',
+					data: {
+						'email': this.email(),
+						'password': this.password()
+					},
+					success: function(data) {
+						// Store the credentials
+						amplify.store.localStorage('user',data.user);
+            amplify.publish('user.loggedIn',true);
+						router.navigate('/');
+					},
+					error: function(data) {
+            amplify.publish('user.loggedIn',false);
+						app.showMessage('Invalid Username or Password', '');
+					}
+				});
       }
-    };
-    return ctor;
+    }
   });
