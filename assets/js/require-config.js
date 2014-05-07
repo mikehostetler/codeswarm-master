@@ -27,6 +27,7 @@ require.config({
 	},
 	shim: {
 		'amplify': {
+			deps: ['jquery'],
 			'exports': 'amplify'
 		},
 		'handlebars': {
