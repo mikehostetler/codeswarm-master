@@ -16,8 +16,7 @@ define(['amplify'],function(require) {
 
 	amplify.request.define('user.session','ajax',{
 		url: '/session',
-		type: 'GET',
-		cache: "sessionStorage"
+		type: 'GET'
 	});
 
 	amplify.request.define('user.session.end','ajax',{
@@ -27,8 +26,7 @@ define(['amplify'],function(require) {
 
 	return {
 		// Public Methods
-		isLoggedIn: function() {
-
+		isLoggedIn: function(cb) {
 			// Refresh the session for good measure
 			amplify.request({
 				resourceId: 'user.session',
@@ -36,23 +34,17 @@ define(['amplify'],function(require) {
 					// Set local session
 					amplify.store.sessionStorage('cs_sid',data.session);
 					amplify.publish('user.loggedIn',true);
+					if(cb) cb(true);
 				},
 				error: function() {
 					// Clear local session
 					amplify.store.sessionStorage('cs_sid',null);
 					amplify.publish('user.loggedIn',false);
+					if(cb) cb(false);
 				}
 			});
-			
-			var sid = amplify.store.sessionStorage('cs_sid');
-			if(sid !== null) {
-				return true;
-			}
-			else {
-				return false;
-			}
 		},
-		tryLogin: function(username, password) {
+		tryLogin: function(username, password, cb) {
 			amplify.request({
 				resourceId: 'user.login',
 				data: {
@@ -65,20 +57,30 @@ define(['amplify'],function(require) {
 					amplify.store.localStorage('user',data.user);
 
 					amplify.publish('user.loggedIn',true);
-					return true;
+					cb(true);
 				},
 				error: function(data) {
 					// Clear local session
 					amplify.store.sessionStorage('cs_sid','');
 					amplify.publish('user.loggedIn',false);
-					return false;
+					cb(false);
 				}
 			});
 		},
-		tryLogout: function(username, password) {
-			amplify.request('user.session.end');
-			amplify.store.sessionStorage('cs_sid','');
-			amplify.publish('user.loggedIn',false);
+		tryLogout: function(cb) {
+			amplify.request({
+				resourceId: 'user.session.end',
+				success: function(data) {
+					amplify.store.sessionStorage('cs_sid','');
+					amplify.publish('user.loggedIn',false);
+					if(cb) cb();
+				},
+				error: function(data) {
+					amplify.store.sessionStorage('cs_sid','');
+					amplify.publish('user.loggedIn',false);
+					if(cb) cb();
+				}
+			});
 		}
 	};
 });

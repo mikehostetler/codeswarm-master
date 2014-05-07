@@ -2,7 +2,6 @@
   <header>
 		<a class="global-logo" href="#"></a>
 
-
 		<div>
 			<a href="#" class="global-search--trigger fa fa-search"></a>
 		</div>
@@ -17,7 +16,7 @@
 		<div class="profile-nav">
 			<a class="profile-nav--trigger">
 				<img data-bind="attr: { src: gravatarUrl }" class="profile-nav--thumb">
-				<span data-bind="text: fullName">Welcome!</span>
+				<span data-bind="text: username">Welcome!</span>
 				<i class="fa fa-caret-down"></i>
 			</a>
 
@@ -31,14 +30,18 @@
 		<!-- ko if: !isLoggedIn() -->
 		<ul class="global-nav">
 			<li>
-				<a href="#" data-bind="attr: { href: router.convertRouteToHash('user/register') }">
-					Create
-				</a>
+				<a href="#" data-bind="attr: { href: router.convertRouteToHash('user/register') }"> Create </a>
 			</li>
 			<li>
-				<a href="#" data-bind="attr: { href: router.convertRouteToHash('user/login') }">
-					Login
-				</a>
+				<a href="#" data-bind="attr: { href: router.convertRouteToHash('user/login') }"> Login </a>
+			</li>
+		</ul>
+		<!-- /ko -->
+
+		<!-- ko if: isLoggedIn() -->
+		<ul class="global-nav">
+			<li>
+				<a href="#" data-bind="attr: { href: router.convertRouteToHash('user/logout') }"> Logout </a>
 			</li>
 		</ul>
 		<!-- /ko -->
@@ -46,13 +49,12 @@
 
 	<div id="main">
 		<div class="container-fluid page-host" data-bind="router: { cacheViews: false }"></div>
-
 	</div>
 
 	<footer>
-		<a href="/#/about" class="fa fa-search">About</a>
-		<a href="/#/support" class="fa fa-search">Support</a>
-		<a href="/#/contribute" class="fa fa-search">Contribute</a>
+		<a href="/#about" class="fa fa-search">About</a>
+		<a href="/#support" class="fa fa-search">Support</a>
+		<a href="/#contribute" class="fa fa-search">Contribute</a>
 	</footer>
 
 </div>
