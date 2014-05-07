@@ -32,7 +32,10 @@ define([
 			 * Custom methods
 			 */
 			frmLogin_Submit: function () {
+				// Validate!
 				if(this.username.isValid() && this.password.isValid()) {
+					
+					// Try to login 
 					var loginResult = user.tryLogin(this.username(), this.password());
 					if(loginResult === true) {
 						// Success!
@@ -43,8 +46,6 @@ define([
 						app.showMessage('Invalid Username or Password', '');
 					}
 				}
-
-				// TODO - Show validation messages???
 			}
 		}
   });
