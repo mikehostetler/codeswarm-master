@@ -32,12 +32,12 @@ module.exports = {
    */
    create: function (req, res) {
 
-    var email = req.param('email');
+    var username = req.param('username');
     var password = req.param('password');
 
-    if (! email || ! password) return res.send(400, new Error('Need username and password'));
+    if (! username || ! password) return res.send(400, new Error('Need username and password'));
 
-    User.authenticate(email, password, replied);
+    User.authenticate(username, password, replied);
 
     function replied(err, sessionId, username, roles) {
       if (err) res.send(err.status_code || 500, err);
@@ -80,7 +80,7 @@ module.exports = {
     function replied(err, session) {
       if (err) err.send(err.status_code || 500, err);
       else {
-        res.json({ session: sid, user: session.userCtx.name });
+        res.json({ session: sid, user: session.userCtx });
       }
     }
   },

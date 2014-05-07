@@ -1,10 +1,9 @@
 define([
     'knockout',
-    'request',
     'durandal/app'
   ],
 
-  function (ko, request, app) {
+  function (ko, app) {
 
     var ctor = {
 

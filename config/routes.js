@@ -94,7 +94,6 @@ module.exports.routes = {
 
   /// Users
 
-  'get /user': 'UserController.get',
   'post /user': 'UserController.create',
 
   /// Sessions

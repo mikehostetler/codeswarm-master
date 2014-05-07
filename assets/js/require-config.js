@@ -3,7 +3,6 @@ require.config({
 	baseUrl: 'js',
 	paths: {
     'controllers': 'controllers',
-    'routes': 'routes',
 		'models': 'models',
 		'utils': 'utils',
 
@@ -15,7 +14,6 @@ require.config({
 		'ansi_up': 'vendor/ansi_up/ansi_up',
 		'async': 'vendor/async/lib/async',
 		'base64': 'vendor/base64/base64.min',
-		'bootstrap': 'vendor/bootstrap/dist/js/bootstrap.min',
 		'github': 'vendor/github/github',
 		'gravatar': 'vendor/gravatarjs/gravatar',
 		'handlebars': 'vendor/handlebars/handlebars.min',
@@ -28,6 +26,9 @@ require.config({
 		'underscore': 'vendor/underscore/underscore'
 	},
 	shim: {
+		'amplify': {
+			'exports': 'amplify'
+		},
 		'handlebars': {
 			'exports': 'Handlebars'
 		},

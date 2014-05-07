@@ -1,20 +1,19 @@
 define([
   'durandal/app',
   'plugins/router',
-  'utils/dom',
-  'utils/session',
-  'jquery',
   'knockout',
+	'models/user',
 	'gravatar',
-	'amplify'
-], function (app, router, dom, session, $, ko) {
+], function (app, router, ko) {
+
+	var user = require('models/user');
 
   return {
     router: router,
 
     gravatarUrl: ko.observable('http://www.gravatar.com/avatar/00000000000000000000000000000000'),
     fullName: ko.observable(),
-    isLoggedIn: ko.observable(false),
+    isLoggedIn: ko.observable(user.isLoggedIn()),
 
     activate: function () {
 
@@ -34,16 +33,8 @@ define([
 
       // Check our session
       router.on('router:navigation:complete', function () {
-				amplify.request({
-					resourceId: 'user.session',
-					data: {},
-					success: function(data) {
-            amplify.publish('user.loggedIn',true);
-					},
-					error: function(data) {
-            amplify.publish('user.loggedIn',false);
-					}
-        });
+				// Check the login state each route change
+				user.isLoggedIn();
       });
 
       // Map routes
