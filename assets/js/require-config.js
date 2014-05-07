@@ -19,7 +19,7 @@ require.config({
 		'handlebars': 'vendor/handlebars/handlebars.min',
 		'jquery': 'vendor/jquery/dist/jquery.min',
 		'knockout': 'vendor/knockout.js/knockout',
-		'ko.validate': 'vendor/knockout.validation/Src/knockout.validation',
+		'ko.validate': 'vendor/knockout-validation/Src/knockout.validation',
 		'postal': 'vendor/postal.js/lib/postal.min',
 		'socketio': 'sails.io.js',
 		'text': 'vendor/requirejs-text/text',

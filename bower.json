@@ -38,7 +38,7 @@
     "knockout.js": "~3.0.0",
     "ansi_up": "https://github.com/drudru/ansi_up.git",
     "gravatarjs": "~1.0.0",
-    "knockout.validation": "~1.0.2"
+    "knockout-validation": "~1.0.2"
   },
   "resolutions": {
     "underscore": "~1.6.0",
