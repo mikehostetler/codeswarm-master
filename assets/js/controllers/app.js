@@ -23,7 +23,7 @@ define([
 		 */
     activate: function () {
 			// Check whether we are logged in
-			user.isLoggedIn();
+			//user.isLoggedIn();
 
 			// Set up our subscription when the loggedIn state changes
 			amplify.subscribe('user.loggedIn',this,function(isLoggedIn) {
@@ -82,6 +82,7 @@ define([
 		},
 
 		globalNav: function() {
+
 			var $nav = $('.profile-nav'),
 					navOpen = 'profile-nav--open';
 

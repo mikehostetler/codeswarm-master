@@ -16,7 +16,8 @@ define(['amplify'],function(require) {
 
 	amplify.request.define('user.session','ajax',{
 		url: '/session',
-		type: 'GET'
+		type: 'GET',
+		cache: true
 	});
 
 	amplify.request.define('user.session.end','ajax',{
@@ -27,6 +28,8 @@ define(['amplify'],function(require) {
 	return {
 		// Public Methods
 		isLoggedIn: function(cb) {
+			var sid = amplify.store.sessionStorage('cs_sid');
+
 			// Refresh the session for good measure
 			amplify.request({
 				resourceId: 'user.session',
@@ -34,12 +37,14 @@ define(['amplify'],function(require) {
 					// Set local session
 					amplify.store.sessionStorage('cs_sid',data.session);
 					amplify.publish('user.loggedIn',true);
+					console.log("Cookies Success!",document.cookie);
 					if(cb) cb(true);
 				},
 				error: function() {
 					// Clear local session
 					amplify.store.sessionStorage('cs_sid',null);
 					amplify.publish('user.loggedIn',false);
+					console.log("Cookies Error!",document.cookie);
 					if(cb) cb(false);
 				}
 			});
