@@ -2656,6 +2656,12 @@ header .fa-check-circle:hover {
 }
 
 /* line 36, layout/_header.scss */
+.floating {
+  position: fixed;
+  top: 0;
+}
+
+/* line 41, layout/_header.scss */
 .global-logo {
   float: left;
   margin: .5em 0 0;
@@ -2665,7 +2671,7 @@ header .fa-check-circle:hover {
   height: 40px;
 }
 @media (min-width: 37.5em) {
-  /* line 36, layout/_header.scss */
+  /* line 41, layout/_header.scss */
   .global-logo {
     width: 175px;
     margin: .938em 0 0;
@@ -2673,19 +2679,19 @@ header .fa-check-circle:hover {
   }
 }
 
-/* line 51, layout/_header.scss */
+/* line 56, layout/_header.scss */
 .menu-button {
   float: left;
   margin: .938em 0 0;
   color: #f2f2f2 !important;
   font-size: 1em;
 }
-/* line 57, layout/_header.scss */
+/* line 62, layout/_header.scss */
 .menu-button:hover {
   color: #f2f2f2;
 }
 @media (min-width: 37.5em) {
-  /* line 51, layout/_header.scss */
+  /* line 56, layout/_header.scss */
   .menu-button {
     margin: 1.125em 0 0;
     font-size: 1.1875em;
