@@ -33,6 +33,11 @@ header {
     }
 }
 
+.floating {
+	position: fixed;
+	top: 0;
+}
+
 .global-logo {
     float: left;
     margin: .5em 0 0;

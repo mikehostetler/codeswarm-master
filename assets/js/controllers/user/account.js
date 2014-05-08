@@ -1,18 +1,50 @@
 define([
-    'knockout',
-    'request',
     'durandal/app',
-    'gravatar',
-    'session',
     'plugins/router',
+    'knockout',
+		'models/user',
+		'ko.validate'
   ],
 
-  function (ko, request, app, gravatar, session, router) {
+  function (app, router, ko, user) {
 
+		return {
+
+			/**
+			 * local viewmodel properties
+			 */
+			router: router,
+			username: ko.observable().extend({required: true, minLength: 3}),
+      email: ko.observable(),
+			password: ko.observable().extend({required: true, minLength: 3}),
+      confirm_password: ko.observable(),
+      gravatarUrl: ko.observable('http://www.gravatar.com/avatar/00000000000000000000000000000000?s=120'),
+
+			/**
+			 * Activate our model, this method is always called
+			 */
+			activate: function() {
+				// If session active, go home
+				user.isLoggedIn(function(isLoggedIn) {
+					if(isLoggedIn === true) {
+						router.navigate('');
+					}
+				});
+			},
+
+			/**
+			 * Custom methods
+			 */
+      cancelBtnClick: function () {
+        router.navigateBack();
+      },
+
+			/*
     var ctor = {
 
       // Check that user is logged in
       canActivate: function () {
+			/*
         session.isLoggedIn(function (sess) {
           if (!sess) {
             router.navigate('/user/login');
@@ -22,9 +54,6 @@ define([
         return true;
       },
 
-      cancelBtnClick: function () {
-        router.navigateBack();
-      },
 
       activate: function () {
         this.getSettings();
@@ -125,4 +154,6 @@ define([
 
     };
     return ctor;
+		*/
+		}
   });
