@@ -18,10 +18,9 @@ var Cookie = require('cookie');
  */
 
 var sessionExpirationMs = 1000 * 60 * 60 * 24 * 30; // 30 days
+// Send no cookie options because when testing locally on an odd port, trying to set a path breaks things
 var cookieOptions = {
-  path: '/',
-  httpOnly: true,
-  expires: new Date(Date.now() + sessionExpirationMs)
+  //expires: new Date(Date.now() + sessionExpirationMs)
 };
 
 module.exports = {
@@ -56,7 +55,7 @@ module.exports = {
 									roles: roles,
 									isAdmin: roles.indexOf('admin') >= 0
 								};
-								var cookie = Cookie.serialize('sid', sessionId, cookieOptions);
+								var cookie = Cookie.serialize('sid', sessionId, {});
 								res.setHeader('Set-Cookie', cookie);
 								res.json({ session: sessionId, user: user });
 							}
@@ -98,10 +97,7 @@ module.exports = {
    *    `DELETE /session`
    */
 	delete: function (req, res) {
-		var options = cookieOptions;
-		options.expires = new Date(Date.now() - sessionExpirationMs);
-
-		var cookie = Cookie.serialize('sid', '', options);
+		var cookie = Cookie.serialize('sid', '', {});
 		res.setHeader('Set-Cookie', cookie);
 
     res.json({ message: "Session Deleted" });
