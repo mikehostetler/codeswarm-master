@@ -14,6 +14,7 @@ var queue = require('../lib/queue');
 module.exports.bootstrap = function (cb) {
 
   async.series([
+			initSessionStore,
       initQueue,
       initPlugins,
       startWorker,
@@ -27,6 +28,28 @@ module.exports.bootstrap = function (cb) {
   function initPlugins(cb) {
     require('../lib/plugins').init(cb);
   }
+
+	function initSessionStore(cb) {
+		var sessionStore = require('./session');
+		var connect = require('../node_modules/connect-couchdb/node_modules/connect');
+
+		var opts = {
+			name: sessionStore.session.name || 'sessions',
+			username: sessionStore.session.username,
+			password: sessionStore.session.password
+		};
+
+		var connect_couchdb = new (require(__dirname + '/../node_modules/connect-couchdb/lib/connect-couchdb.js')(connect))(opts);
+
+		connect_couchdb.setup(opts, function (err) {
+			if (err) {
+				cb(err);
+			} 
+			else {
+				cb();
+			}
+		});
+	}
 
   function startWorker(cb) {
     if (process.env.NODE_ENV != 'production') {

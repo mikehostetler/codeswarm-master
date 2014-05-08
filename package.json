@@ -71,7 +71,8 @@
     "codeswarm-testling": "git+ssh://git@github.com:codeswarm/codeswarm-testling.git",
     "codeswarm-plato": "git+ssh://git@github.com:codeswarm/codeswarm-plato.git",
     "codeswarm-custom": "git+ssh://git@github.com:codeswarm/codeswarm-custom.git",
-    "sails-couchdb-orm": "git+ssh://git@github.com:codeswarm/sails-couchdb-orm.git"
+    "sails-couchdb-orm": "git+ssh://git@github.com:codeswarm/sails-couchdb-orm.git",
+    "connect-couchdb": "^0.4.2"
   },
   "devDependencies": {
     "nodemon": "~1.0.14",
