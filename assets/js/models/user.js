@@ -37,14 +37,12 @@ define(['amplify'],function(require) {
 					// Set local session
 					amplify.store.sessionStorage('cs_sid',data.session);
 					amplify.publish('user.loggedIn',true);
-					console.log("Cookies Success!",document.cookie);
 					if(cb) cb(true);
 				},
 				error: function() {
 					// Clear local session
 					amplify.store.sessionStorage('cs_sid',null);
 					amplify.publish('user.loggedIn',false);
-					console.log("Cookies Error!",document.cookie);
 					if(cb) cb(false);
 				}
 			});

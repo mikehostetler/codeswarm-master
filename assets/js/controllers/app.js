@@ -23,7 +23,7 @@ define([
 		 */
     activate: function () {
 			// Check whether we are logged in
-			//user.isLoggedIn();
+			user.isLoggedIn();
 
 			// Set up our subscription when the loggedIn state changes
 			amplify.subscribe('user.loggedIn',this,function(isLoggedIn) {
@@ -33,10 +33,6 @@ define([
 					this.email(user.email);
 					if(user.email) this.gravatarUrl(gravatar(user.email,{size: 32}));
 					this.isLoggedIn(true);
-					
-					// Client-Side Binding
-					this.globalNav();
-					this.globalSearch();
 				}
 				else {
 					this.isLoggedIn(false);

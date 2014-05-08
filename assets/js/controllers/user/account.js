@@ -37,10 +37,11 @@ define([
 			 * Custom methods
 			 */
       cancelBtnClick: function () {
-        router.navigateBack();
+        router.navigate('');
       },
 
       frmAccount_Submit: function () {
+				alert('Not Implemented yet!');
 		  },
 
 			/*
