@@ -8,7 +8,7 @@ module.exports = {
   express: {
     customMiddleware: function(app) {
       app.use(session);
-      app.use(passport.initialize());
+      //app.use(passport.initialize());
     }
   },
 	paths: {

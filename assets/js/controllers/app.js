@@ -60,6 +60,13 @@ define([
 				//.mapUnknownRoutes('site/not-found','not-found')
 				.activate();
     },
+		/*
+        { route: 'user/login', moduleId: 'controllers/user/login', title: 'Log into CodeSwarm', nav: true},
+        { route: 'user/forgot-password', moduleId: 'controllers/user/forgot-password', title: 'Forgot Password', nav: true},
+        { route: 'user/logout', moduleId: 'controllers/user/logout'},
+        { route: 'user/register', moduleId: 'controllers/user/register', title: 'Create a new Account', nav: true},
+        { route: 'user/account', moduleId: 'controllers/user/account', title: '', nav: true}
+				*/
 
     compositionComplete: function () {
       // On composition, run dom controller activation
@@ -79,10 +86,11 @@ define([
 
 		globalNav: function() {
 
-			var $nav = $('.profile-nav'),
-					navOpen = 'profile-nav--open';
 
 			$(document).on('click', '.profile-nav--trigger', function (e) {
+				var $nav = $('.profile-nav'),
+						navOpen = 'profile-nav--open';
+
 				e.stopPropagation();
 				e.preventDefault();
 
@@ -94,12 +102,16 @@ define([
 			});
 
 			$(document).on('click', function () {
+				var $nav = $('.profile-nav'),
+						navOpen = 'profile-nav--open';
 				$nav.removeClass(navOpen);
 			}).on('click', '.profile-nav--list', function (e) {
 				e.stopPropagation();
 			});
 
 			$('.global-search--trigger, .profile-nav a').on('click', function () {
+				var $nav = $('.profile-nav'),
+						navOpen = 'profile-nav--open';
 				$nav.removeClass(navOpen);
 			});
     },

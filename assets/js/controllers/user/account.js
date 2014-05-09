@@ -27,7 +27,6 @@ define([
 				// If session active, go home
 				user.isLoggedIn(function(isLoggedIn) {
 					if(isLoggedIn !== true) {
-						console.log("Not logged in!");
 						router.navigate('user/login');
 					}
 				});

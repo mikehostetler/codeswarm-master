@@ -25,11 +25,10 @@ var cookieOptions = {
 
 module.exports = {
 
-
   /**
    *    `POST /session`
    */
-   create: function (req, res) {
+  create: function (req, res) {
 
     var username = req.param('username');
     var password = req.param('password');

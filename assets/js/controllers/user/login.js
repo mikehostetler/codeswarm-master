@@ -35,9 +35,12 @@ define([
 			frmLogin_Submit: function () {
 				// Validate!
 				if(this.username.isValid() && this.password.isValid()) {
+					var username = this.username(),
+							password = this.password();
 					
+
 					// Try to login 
-					user.tryLogin(this.username(), this.password(), function(loginResult) {
+					user.tryLogin(username, password, function(loginResult) {
 						if(loginResult === true) {
 							// Success!
 							router.navigate('');

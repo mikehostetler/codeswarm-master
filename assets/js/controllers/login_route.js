@@ -1,3 +1,4 @@
+/*
 define(function (require) {
     var session = require('controllers/session'),
         dom = require('controllers/dom'),
@@ -16,3 +17,4 @@ define(function (require) {
         }
     };
 });
+*/

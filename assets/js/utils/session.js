@@ -2,6 +2,7 @@ define([
 	'amplify'
 ], function () {
 
+/*
 	amplify.request.define('user','ajax',{
 		url: '/user',
 		type: 'GET'
@@ -26,6 +27,7 @@ define([
 		url: '/session',
 		type: 'DELETE'
 	});
+	*/
 
   // Client side maintenance of user session information
 	/*

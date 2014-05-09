@@ -92,14 +92,31 @@ module.exports.routes = {
 
   */
 
+	//'get /login': 'AuthController.login',
+	//'get /register': 'AuthController.register',
+
+	'get /user': 'UserController.get',
+	'get /logout': 'AuthController.logout',
+
+	'post /auth/local': 'AuthController.callback',
+	'post /auth/local/:action': 'AuthController.callback',
+
+	'get /auth/:provider': 'AuthController.provider',
+	'get /auth/:provider/callback': 'AuthController.callback',
+
   /// Users
 
+	/*
   'post /user': 'UserController.create',
+  'get /user/login': 'UserController.login',
+  'post /user/login': 'UserController.login',
+  'post /user/logout': 'UserController.logout',
+	*/
 
   /// Sessions
-  'get /session': 'SessionController.get',
-  'post /session': 'SessionController.create',
-  'delete /session': 'SessionController.delete',
+  //'get /session': 'SessionController.get',
+  //'post /session': 'SessionController.create',
+  //'delete /session': 'SessionController.delete',
 
 
   /// Projects
