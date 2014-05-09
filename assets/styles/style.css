@@ -3156,6 +3156,11 @@ button .fa,
   -webkit-border-radius: 3px;
   border-radius: 3px;
 }
+
+.datatable.projects td {
+    display: table-cell;
+}
+
 @media (max-width: 63.74em) {
   /* line 10, modules/_datatable.scss */
   .datatable thead tr {
