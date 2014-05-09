@@ -17,6 +17,19 @@
 
 module.exports = {
 
+  /**
+   * `GET /user`
+	 * Gets the current user from the session, used as a "Logged In" heartbeat
+   */
+	get: function(req, res) {
+		if(req.user) {
+			res.json({ message: "Logged In!", user: req.user });
+		}
+		else {
+      res.json(403, {message: 'No session'});
+		}
+	},
+
 
   /**
    * `POST /user`
