@@ -92,15 +92,23 @@ module.exports.routes = {
 
   */
 
-	//'get /login': 'AuthController.login',
-	//'get /register': 'AuthController.register',
 
-	'get /user': 'UserController.get',
-	'get /logout': 'AuthController.logout',
+	// User Object management routes
+	// Delete is intentionally not here for security
+	// Automatic blueprint URL's are turned off on the User Model 
+	// because we want people to register and properly create a
+	// Passport (see /auth/local below)
+	'get		/user/:id?': 'UserController.find',
+	'put		/user/:id?': 'UserController.update',
 
+	// Callbacks for local registration & authentication
 	'post /auth/local': 'AuthController.callback',
 	'post /auth/local/:action': 'AuthController.callback',
 
+	// Logout action
+	'get /logout': 'AuthController.logout',
+
+	// Callbacks for each Passport.js provider
 	'get /auth/:provider': 'AuthController.provider',
 	'get /auth/:provider/callback': 'AuthController.callback',
 
