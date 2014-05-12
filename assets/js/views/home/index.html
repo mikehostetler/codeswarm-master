@@ -2,11 +2,37 @@
 
 <div class="content-wrap">
 	<h3>Sample Home Page</h3>
-	<h4>Logged In</h4>
-	<p>Show a dashboard of the latest builds</p>
 
-	<h4>Logged Out</h4>
-	<p>Welcome, thanks for sponsors, login form</p>
+    <span data-bind="visible: isLoggedIn()">
+        <h4>Projects</h4>
+
+        <table class="datatable projects">
+            <thead>
+                <tr>
+                    <th class="center" width="75">Status</th>
+                    <th class="center" width="65">Build</th>
+                    <th>Project</th>
+                    <th class="center" width="60">Branch</th>
+                    <th class="center" width="60">id</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: projects">
+            <tr>
+                <td class="center status-col" data-bind="text: state"></td>
+                <td class="center run-col" data-bind="text: ended_at"></td>
+                <td></td>
+                <td class="center logs-col" data-bind="text: branch"></td>
+                <td class="center logs-col" data-bind="text: id"></td>
+            </tr>
+            </tbody>
+        </table>
+ 
+    </span>
+
+    <span data-bind="visible: !isLoggedIn()">
+        <h4>You're Logged Out. Log in to see your projects.</h4>
+        <p>Welcome, thanks for sponsors, login form</p>
+    </span>
 
     <div class="sidebar">
       <div class="sidebar-list-contain">
