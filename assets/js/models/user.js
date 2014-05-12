@@ -1,6 +1,6 @@
 define(['amplify'],function(require) {
 	amplify.request.define('user','ajax',{
-		url: '/user',
+		url: '/user/{username}',
 		dataType: 'json',
 		type: 'GET'
 	});
@@ -11,13 +11,19 @@ define(['amplify'],function(require) {
 		type: 'POST'
 	});
 
+	amplify.request.define('user.save','ajax',{
+		url: '/user/{username}',
+		dataType: 'json',
+		type: 'PUT'
+	});
+
 	amplify.request.define('user.login','ajax',{
 		url: '/auth/local',
 		dataType: 'json',
 		type: 'POST'
 	});
 
-	amplify.request.define('user.session.end','ajax',{
+	amplify.request.define('user.logout','ajax',{
 		url: '/logout',
 		dataType: 'json',
 		type: 'GET'
@@ -89,7 +95,7 @@ define(['amplify'],function(require) {
 		},
 		tryLogout: function(cb) {
 			amplify.request({
-				resourceId: 'user.session.end',
+				resourceId: 'user.logout',
 				success: function(data) {
 					amplify.store.sessionStorage('loggedIn',false);
 					amplify.store.localStorage('user',{});

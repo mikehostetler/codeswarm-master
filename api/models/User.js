@@ -49,6 +49,26 @@ module.exports = {
     salt: 'string'
   },
 
+	/*
+	toObject: function(obj) {
+		var obj = obj || this.toObject();
+		delete obj.tokens;
+		delete obj.salt;
+		delete obj.derived_key;
+		delete obj.password_scheme;
+		return obj;
+	},
+	*/
+
+	toJSON: function(obj) {
+		var obj = obj || this.toObject();
+		delete obj.tokens;
+		delete obj.salt;
+		delete obj.derived_key;
+		delete obj.password_scheme;
+		return obj;
+	},
+
   beforeValidation: function beforeValidation(attrs, next) {
     if (! attrs.id) attrs.id = userIdFromUsername(attrs.username);
     if (! attrs.roles) attrs.roles = [];
@@ -57,6 +77,11 @@ module.exports = {
 
   beforeCreate: function beforeCreate(attrs, next) {
 		attrs.id = userIdFromUsername(attrs.username);
+    next(null, attrs);
+  },
+
+  beforeUpdate: function beforeCreate(attrs, next) {
+		// Leaving this as a shim in case we need it
     next(null, attrs);
   },
 
@@ -73,7 +98,6 @@ module.exports = {
   }
 };
 
-
 function userIdFromUsername(username) {
-  return 'org.couchdb.user:' + username;
+	return 'org.couchdb.user:' + username;
 }
