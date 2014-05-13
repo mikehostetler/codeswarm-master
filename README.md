@@ -1,93 +1,99 @@
-# CodeSwarm
+<h1>
+<a href="http://codeswarm.com"><img src="http://codeswarm.com/wp-content/uploads/2014/03/codeswarm-logo.png" title="CodeSwarm"/>
+</h1>
 
-## Install
+### [Website](http://codeswarm.com/)  &nbsp; [Getting Started](http://github.com/codeswarm/codeswarm/#!get-started) &nbsp; [Submit Issue](https://github.com/codeswarm/codeswarm/search?q=&type=Issues)
 
-Checkout plugin `codeswarm-node`:
+## Overview
+CodeSwarm is a third-generation Continuous Integration and Continuous Deployment
+system written primarily for JavaScript.  CodeSwarm is written using JavaScript and 
+Node.JS and uses CouchDB as a database backend.
 
-```
-$ cd projects
-$ git clone git@github.com:CodeSwarm/codeswarm-node.git
-$ cd codeswarm-node
-$ npm link
-```
+CodeSwarm supports the ability to run project builds within [Docker](http://docker.io)
+containers, ensuring builds are run within a clean environment.
 
-Checkout plugin `codeswarm-sauce`:
+---
 
-```
-$ cd projects
-$ git clone git@github.com:CodeSwarm/codeswarm-sauce.git
-$ cd codeswarm-sauce
-$ npm link
-```
+* [System Requirements](#system)
+* [Dependencies](#dependencies)
+* [Installation](#setup)
+* [Configuration](#environment-variables)
 
-Checkout plugin `codeswarm-plato`:
+### System
 
-```
-$ cd projects
-$ git clone git@github.com:CodeSwarm/codeswarm-plato.git
-$ cd codeswarm-plato
-$ npm link
-```
+CodeSwarm has been tested on the following systems:
 
-Checkout plugin `codeswarm-custom`:
+* Ubuntu Precise 12.04 (LTS) (64-bit)
+* Mac OSX 10.8.5
 
-```
-$ cd projects
-$ git clone git@github.com:CodeSwarm/codeswarm-custom.git
-$ cd codeswarm-custom
-$ npm link
-```
+CodeSwarm was built to work on POSIX systems, including most Unix and Linux variants that support Node.js.
 
-Checkout plugin `codeswarm-gateway`:
+### Dependencies
 
-```
-$ cd projects
-$ git clone git@github.com:CodeSwarm/codeswarm-gateway.git
-$ cd codeswarm-gateway
-$ npm link
-```
+CodeSwarm consists of a single Node.JS Web Application process, which spawns test jobs in response to source code commits and manual test runs.
 
-Link them:
+* Node.JS
+* A CouchDB database backend
 
-```
-$ cd  projects/codeswarm
-$ npm link codeswarm-node
-$ npm link codeswarm-sauce
-$ npm link codeswarm-plato
-$ npm link codeswarm-custom
+### Setup
+
+CodeSwarm can be cloned from Github and installed then its dependencies can be installed via `npm`.
+
+You can download and install using the following commands:
+
+```sh
+$ git clone git@github.com:codeswarm/codeswarm.git
+$ npm install
+$ npm start
 ```
 
-## Run
+CodeSwarm runs on port 1337 by default.  After starting the CodeSwarm process you can navigate to http://localhost:1337 to create an account and get started.
 
-Start CodeSwarm in dev mode (uses nodemon to restart when JS changes are made):
+**Github Authentication**
+You will also need a GitHub Client ID and Secret:
 
-```bash
-$ npm run mon
+* Register a new application https://github.com/settings/applications
+* Set the homepage URL to http://$YOUR_IP_ADDRESS/
+* Set the callback URL to http://$YOUR_IP_ADDRESS/auth/github/callback
+* Save the ClientID and Secret for assigning to Environment Variables, defined below
+
+**CouchDB Setup**
+
+* Assuming you have CouchDB [installed](http://wiki.apache.org/couchdb/Installing_on_OSX) and configured ...
+* Copy your CouchDB URL and username and password for setup below
+
+### Environment Variables
+
+CodeSwarm utilizes Environment variables for configuration.  
+
+* PORT - Public port CodeSwarm runs on, defaults to 1337
+* COUCHDB_URL - CouchDB URL, defaults to 'http://localhost:5984'
+* COUCHDB_USERNAME - CouchDB Username, defaults to 'admin'
+* COUCHDB_PASSWORD - CouchDB Password, defaults to 'admin'
+* GITHUB_CLIENT_ID - Github Client ID, defaults to an application set up for local development
+* GITHUB_CLIENT_SECRET - Github Client Secret, defaults to an application set up for local development
+* GITHUB_CALLBACK_URL - Github Client Callback Url, defaults to http://localhost:1337/auth/github/callback
+
+You can set these variables on the command line prior to calling NPM start.  Here's a quick example:
+
+```sh
+$ PORT=1337 COUCHDB_URL=http://localhost:5984 COUCHDB_USERNAME=admin COUCHDB_PASSWORD=admin npm run start
 ```
 
+## License Information
 
-## CouchDB Setup
+This project has been released under the [Apache License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html), the text of which is included below. This license applies ONLY to the source of this repository and does not extend to any other CodeSwarm distribution or variant, or any other 3rd party libraries used in a repository. 
 
-You have to create the admin user with the `admin` password. You can override this with the COUCHDB_USERNAME and COUCHDB_PASSWORD env vars though.
+> Copyright © 2014 CodeSwarm, Inc.
 
-To add the couchdb admin user go to futon (the couchdb admin interface), and click on the `Setup more admins` on the bottom right side.
-On the couchdb configuration, set couchdb_httpd_auth=> allow_pesistent_cookies to true
-Make sure the admin user is listed on the config `admins` section
+> Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
 
-Using a different user on the fronted than the admin user and also the persistent cookie session should prevent you from being logged out.
+> [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
-### Session timeout
-
-To define / redefine the session timeout you need to specify the `timeout` parameter of the `couch_httpd_auth` section of the configuration, in seconds:
-
-![session timeout](docs/images/session_timeout.png)
-
-
-## Admin rights
-
-In order to add foreign projects (projects you are not a github admin of), you need to bead admin rights.
-
-To give a user admin rights go to the `_users` database in CouchDB and edit the relevant user.
-Edit the `roles` attribute and add an `admin` value to it. Save the user document.
-
-The user must logout and login in order to get the privileges.
+>  Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
