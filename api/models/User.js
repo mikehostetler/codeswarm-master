@@ -69,7 +69,7 @@ module.exports = {
 		return obj;
 	},
 
-  beforeValidation: function beforeValidation(attrs, next) {
+  beforeValidate: function beforeValidation(attrs, next) {
     if (! attrs.id) attrs.id = userIdFromUsername(attrs.username);
     if (! attrs.roles) attrs.roles = [];
     next();

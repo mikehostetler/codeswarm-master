@@ -10,7 +10,6 @@ define([
 		/**
 		 * local viewmodel properties
 		 */
-		// Needed to set up the routes below
     router: router,
 
     isLoggedIn: ko.observable(false),
@@ -39,34 +38,19 @@ define([
 				}
 			});
 
-      // Check our session
-      router.on('router:navigation:complete', function () {
-				// Check the login state each route change
-				//user.isLoggedIn();
-      });
-
       // Map routes
       return router.map([
         // Static Routes
         { route: '', moduleId: 'controllers/home/index', title: 'Welcome', nav: true},
 
-        { route: 'user/login', moduleId: 'controllers/user/login', title: 'Log into CodeSwarm', nav: true},
-        { route: 'user/forgot-password', moduleId: 'controllers/user/forgot-password', title: 'Forgot Password', nav: true},
-        { route: 'user/logout', moduleId: 'controllers/user/logout'},
-        { route: 'user/register', moduleId: 'controllers/user/register', title: 'Create a new Account', nav: true},
-        { route: 'user/account', moduleId: 'controllers/user/account', title: '', nav: true}
+				// Binds to a child router for all user related routes
+        { route: 'user*index', moduleId: 'controllers/user/index', title: 'Log into CodeSwarm', nav: true, hash: '#user'},
+        { route: 'new*index', moduleId: 'controllers/new-project/index', title: 'New Project', nav: true, hash: '#new'}
 
       ]).buildNavigationModel()
-				//.mapUnknownRoutes('site/not-found','not-found')
+				.mapUnknownRoutes('home/not-found','not-found')
 				.activate();
     },
-		/*
-        { route: 'user/login', moduleId: 'controllers/user/login', title: 'Log into CodeSwarm', nav: true},
-        { route: 'user/forgot-password', moduleId: 'controllers/user/forgot-password', title: 'Forgot Password', nav: true},
-        { route: 'user/logout', moduleId: 'controllers/user/logout'},
-        { route: 'user/register', moduleId: 'controllers/user/register', title: 'Create a new Account', nav: true},
-        { route: 'user/account', moduleId: 'controllers/user/account', title: '', nav: true}
-				*/
 
     compositionComplete: function () {
       // On composition, run dom controller activation
