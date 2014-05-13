@@ -37,6 +37,7 @@ module.exports.policies = {
 	*/
 
 	ProjectController: {
+		'*': ['passport'],
 		create: ['isAuthenticated', 'hasGithubToken', 'ownsGithubRepo'],
 		list: 'isAuthenticated',
 		find: ['isAuthenticated', 'userOwnsProjectOrPublic'],
@@ -52,16 +53,19 @@ module.exports.policies = {
 	},
 
 	TokenController: {
+		'*': ['passport'],
 		create: 'isAuthenticated',
 		find: 'isAuthenticated'
 	},
 
 	BuildController: {
+		'*': ['passport'],
 		index: 'isAuthenticated',
 		find: ['isAuthenticated', 'userOwnsProjectOrPublic', 'buildBelongsToProject']
 	},
 
 	PluginController: {
+		'*': ['passport'],
 		list: 'isAuthenticated'
 	}
 

@@ -2774,6 +2774,19 @@ header .fa-check-circle:hover {
   }
 }
 
+/* line 11, layout/_sidebar.scss */
+.sidebar-left {
+  float: left;
+  width: 100%;
+}
+@media (min-width: 63.75em) {
+  /* line 11, layout/_sidebar.scss */
+  .sidebar-left {
+    width: 25%;
+    padding: 0 1.25em 0 0;
+  }
+}
+
 @media (min-width: 63.75em) {
   /* line 1, modules/_add-project.scss */
   .tabs-horiz.add-project-steps {
@@ -3156,11 +3169,6 @@ button .fa,
   -webkit-border-radius: 3px;
   border-radius: 3px;
 }
-
-.datatable.projects td {
-    display: table-cell;
-}
-
 @media (max-width: 63.74em) {
   /* line 10, modules/_datatable.scss */
   .datatable thead tr {
