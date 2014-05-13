@@ -4,7 +4,7 @@ define([
   'knockout',
 	'models/user',
 	'gravatar',
-], function (app, router, ko, user) {
+], function (app, router, ko, User) {
 
   return {
 		/**
@@ -22,7 +22,7 @@ define([
 		 */
     activate: function () {
 			// Check whether we are logged in
-			user.isLoggedIn();
+			User.isLoggedIn();
 
 			// Set up our subscription when the loggedIn state changes
 			amplify.subscribe('user.loggedIn',this,function(isLoggedIn) {

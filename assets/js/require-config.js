@@ -7,8 +7,8 @@ require.config({
 		'utils': 'utils',
 
 		// Customized DurandalJS
-		'durandal.src': 'vendor/durandal/js',
-		'durandal': 'ext/durandal.extension',
+		'durandal': 'vendor/durandal/js',
+		//TODO - 'durandal': 'ext/durandal.extension',
 
 		'plugins': 'vendor/durandal/js/plugins',
 		'transitions': 'vendor/durandal/js/transitions',

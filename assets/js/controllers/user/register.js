@@ -6,7 +6,7 @@ define([
 		'ko.validate'
   ],
 
-  function (ko, app, router, user) {
+  function (ko, app, router, User) {
     return {
 			/**
 			 * Local ViewModel Properties
@@ -21,7 +21,7 @@ define([
 			 */
 			activate: function() {
 				// If session active, go home
-				user.isLoggedIn(function(isLoggedIn) {
+				User.isLoggedIn(function(isLoggedIn) {
 					if(isLoggedIn === true) {
 						router.navigate('');
 					}
@@ -39,7 +39,7 @@ define([
 						&& this.password.isValid()) {
 
 					// Try to login 
-					user.tryCreateUser(this.username(), this.email(), this.password(), 
+					User.tryCreateUser(this.username(), this.email(), this.password(), 
 						function(createResult) {
 							if(createResult) {
 								// Yay!	
