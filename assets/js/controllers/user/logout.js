@@ -2,7 +2,7 @@ define([
 	'durandal/app',
   'plugins/router',
 	'models/user'
-], function (app, router, user) {
+], function (app, router, User) {
 
   return {
 		/**
@@ -14,7 +14,7 @@ define([
 		 */
 		activate: function() {
 			// Log out and go home
-			user.tryLogout(function() {
+			User.tryLogout(function() {
 				router.navigate('/');
 			});
 		}

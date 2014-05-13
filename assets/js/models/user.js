@@ -1,5 +1,11 @@
 define(['amplify'],function(require) {
 	amplify.request.define('user','ajax',{
+		url: '/user',
+		dataType: 'json',
+		type: 'GET'
+	});
+
+	amplify.request.define('user.get','ajax',{
 		url: '/user/{username}',
 		dataType: 'json',
 		type: 'GET'
@@ -29,10 +35,23 @@ define(['amplify'],function(require) {
 		type: 'GET'
 	});
 
-	return {
+	var User = amplify.model.extend({
+		/**
+		 * Instance Methods
+		 */
+		defaults: {
+			username: '',
+			email: 'email@email.com'
+		},
+		initialize: function(){
+			//alert("I've initialized a User Model!");
+		},
+		customMethod: function(){
+			//alert("Calling User.customMethod");
+		}
+	},{
 		// Public Methods
 		isLoggedIn: function(cb) {
-
 			var loggedIn = amplify.store.sessionStorage('loggedIn');
 
 			// Refresh the session for good measure
@@ -110,5 +129,7 @@ define(['amplify'],function(require) {
 				}
 			});
 		}
-	};
+	});
+
+	return User;
 });

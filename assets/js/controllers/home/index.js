@@ -5,7 +5,7 @@ define([
     'knockout'
   ],
 
-  function (user, projects, session, ko) {
+  function (User, projects, session, ko) {
 
   return {
 
@@ -22,7 +22,7 @@ define([
 			 * Activate our model, this method is always called
 			 */
             activate: function () {
-                user.isLoggedIn(
+                User.isLoggedIn(
                         function (res) {
                             this.isLoggedIn(res);
                         }.bind(this));

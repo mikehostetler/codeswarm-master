@@ -6,7 +6,7 @@ define([
 		'ko.validate'
   ],
 
-  function (app, router, ko, user) {
+  function (app, router, ko, User) {
 
 		return {
 
@@ -22,7 +22,7 @@ define([
 			 */
 			activate: function() {
 				// If session active, go home
-				user.isLoggedIn(function(isLoggedIn) {
+				User.isLoggedIn(function(isLoggedIn) {
 					if(isLoggedIn === true) {
 						router.navigate('');
 					}
@@ -40,7 +40,7 @@ define([
 					
 
 					// Try to login 
-					user.tryLogin(username, password, function(loginResult) {
+					User.tryLogin(username, password, function(loginResult) {
 						if(loginResult === true) {
 							// Success!
 							router.navigate('');

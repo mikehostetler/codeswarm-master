@@ -4,7 +4,7 @@ define([
   'knockout',
 	'models/user',
 	'gravatar',
-], function (app, router, ko, user) {
+], function (app, router, ko, User) {
 	var childRouter = router.createChildRouter()
 				.map([
 					{ route: 'user/login', moduleId: 'controllers/user/login', title: 'Log into CodeSwarm', nav: true},
