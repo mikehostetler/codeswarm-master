@@ -98,8 +98,8 @@ module.exports.routes = {
 	// Automatic blueprint URL's are turned off on the User Model 
 	// because we want people to register and properly create a
 	// Passport (see /auth/local below)
-	'get		/user/:id?': 'UserController.find',
-	'put		/user/:id?': 'UserController.update',
+	'get /user/:id?': 'UserController.find',
+	'put /user/:id?': 'UserController.update',
 
 	// Callbacks for local registration & authentication
 	'post /auth/local': 'AuthController.callback',
@@ -112,23 +112,7 @@ module.exports.routes = {
 	'get /auth/:provider': 'AuthController.provider',
 	'get /auth/:provider/callback': 'AuthController.callback',
 
-  /// Users
-
-	/*
-  'post /user': 'UserController.create',
-  'get /user/login': 'UserController.login',
-  'post /user/login': 'UserController.login',
-  'post /user/logout': 'UserController.logout',
-	*/
-
-  /// Sessions
-  //'get /session': 'SessionController.get',
-  //'post /session': 'SessionController.create',
-  //'delete /session': 'SessionController.delete',
-
-
   /// Projects
-
   'get /projects': 'ProjectController.list',
   'get /projects/:owner/:repo': 'ProjectController.find',
 
@@ -147,14 +131,7 @@ module.exports.routes = {
   'get /projects/:owner/:repo/builds/tags': 'BuildController.byTag',
   'get /projects/:owner/:repo/builds/:build': 'BuildController.find',
 
-  /// Tokens
-
-  'get /tokens/:provider': 'TokenController.find',
-  'post /tokens/:provider': 'TokenController.create',
-  'get /tokens/:provider/callback': 'TokenController.callback',
-
   /// Plugin Config
-
   'get /plugins/config/:type': 'PluginController.list',
 
 	/// Catch All Route

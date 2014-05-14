@@ -33,13 +33,33 @@ module.exports = {
 			username = req.user.username;
 		}
 
-		User.findOne({id: User.userIdFromUsername(username)}, replied);
+		User.findOne({id: User.userIdFromUsername(username)}, function (err, user) {
+			if (err) res.json(401, {message: 'Could not find User'});
+			else if (user == undefined) res.json(401, {message: 'Could not find User'});
+			else {
+				var user = User.toJSON(user);
+				Passport.find({user: User.userIdFromUsername(username)},function(err, passports) {
+					if (err) res.json(401, {message: 'Error retrieving Passports'});
 
-    function replied(err, user) {
-      if (err) res.json(401, {message: 'Could not find User'});
-      else if (!user) res.json(401, {message: 'Cound not find User'});
-      else res.json({ message: "Successfully found user", user: User.toJSON(user)});
-		}
+					/**
+					 * Load up all the tokens
+					 */
+					user.tokens = user.tokens || {};
+					for (var i=0; i<passports.length; i++) {
+						pass = passports[i];
+						if(pass.provider) {
+							user.tokens[pass.provider] = {	
+									token: pass.tokens.accessToken || null,
+									username: pass.profile.login || null,
+									id: pass.identifier || null 
+								};
+						}
+					}
+
+					res.json({ message: "Successfully found user", user: user });
+				});
+			}
+		});
 	},
 
   /**

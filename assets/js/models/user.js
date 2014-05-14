@@ -5,7 +5,7 @@ define(['amplify'],function(require) {
 		type: 'GET'
 	});
 
-	amplify.request.define('user.get','sails',{
+	amplify.request.define('user.read','sails',{
 		url: '/user/{username}',
 		dataType: 'json',
 		type: 'GET'
@@ -17,7 +17,7 @@ define(['amplify'],function(require) {
 		type: 'POST'
 	});
 
-	amplify.request.define('user.save','sails',{
+	amplify.request.define('user.update','sails',{
 		url: '/user/{username}',
 		dataType: 'json',
 		type: 'PUT'
@@ -46,19 +46,18 @@ define(['amplify'],function(require) {
 	var User = amplify.model.extend({
 		/**
 		 * Instance Methods
+		 * var user = new User;
 		 */
 		defaults: {
 			username: '',
 			email: 'email@email.com'
 		},
-		initialize: function(){
-			//alert("I've initialized a User Model!");
-		},
-		customMethod: function(){
-			//alert("Calling User.customMethod");
-		}
+		urlRoot: 'user'
 	},{
-		// Public Methods
+		/**
+		 * Static Methods
+		 * User.isLoggedIn(function() { });
+		 */
 		isLoggedIn: function(cb) {
 			var loggedIn = amplify.store.sessionStorage('loggedIn');
 

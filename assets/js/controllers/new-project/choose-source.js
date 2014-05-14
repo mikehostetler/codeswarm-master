@@ -7,7 +7,7 @@ define([
 		'ko.validate'
   ],
 
-  function (app, router, ko, user, newProjectParent) {
+  function (app, router, ko, User, newProjectParent) {
 
 		return {
 
