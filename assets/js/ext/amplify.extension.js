@@ -46,7 +46,7 @@ define(['amplify.src','backbone'],function() {
 					// Supports 'get','post','delete' and 'put'
 					socketSettings.method = socketSettings.type.toLowerCase();
 
-					console.debug("Attempting Socket Request to",socketSettings.url);
+					console.debug("Attempting Socket Request to",socketSettings.url,socketSettings);
 					_io.socket._request(socketSettings,handleResponse);
 				}
 			}

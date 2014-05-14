@@ -22,13 +22,14 @@
  * @param {Function} next
  */
 module.exports = function (req, res, next) {
+	//sails.log.debug('API -> Policies -> Passport.js -> Checking Passport policy on request!');
   // Initialize Passport
   passport.initialize()(req, res, function () {
     // Use the built-in sessions
     passport.session()(req, res, function () {
       // Make the user available throughout the frontend
       res.locals.user = req.user;
-
+			//sails.log.debug('API -> Policies -> Passport.js -> Call the next Middleware',req.user);
       next();
     });
   });

@@ -77,7 +77,7 @@ module.exports = {
    */
   find: function (req, res) {
 
-    var user = req.session.username();
+    var user = req.user.username;
     if (! user) return res.send(403, new Error('No user session'));
 
     var provider = req.param('provider');

@@ -1,5 +1,5 @@
 define(['amplify'],function(require) {
-	amplify.request.define('projects','ajax',{
+	amplify.request.define('projects','sails',{
 		url: '/projects',
 		type: 'GET'
 	});

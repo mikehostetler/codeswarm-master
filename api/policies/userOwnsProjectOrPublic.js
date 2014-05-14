@@ -1,7 +1,7 @@
 module.exports = userOwnsProject;
 
 function userOwnsProject(req, res, next) {
-  var user = req.session.username();
+  var user = req.user.username;
   var project = req.param('owner') + '/' + req.param('repo');
 
   Project.findOne({id: project}, replied);

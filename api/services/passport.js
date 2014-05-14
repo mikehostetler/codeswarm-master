@@ -198,7 +198,7 @@ passport.endpoint = function (req, res) {
  * @param {Function} next
  */
 passport.callback = function (req, res, next) {
-  var provider = req.param('provider', 'local')
+  var provider = req.param('provider') || 'local'
     , action   = req.param('action');
 
   // Passport.js wasn't really built for local user registration, but it's nice
@@ -221,6 +221,7 @@ passport.callback = function (req, res, next) {
     // the authentication process by attempting to obtain an access token. If
     // access was granted, the user will be logged in. Otherwise, authentication
     // has failed.
+		//sails.log.debug("Services -> Passport.js -> Go Login with ",provider);
     this.authenticate(provider, next)(req, res, req.next);
   }
 };
@@ -299,11 +300,22 @@ passport.loadStrategies = function (req) {
 };
 
 passport.serializeUser(function(username, done) {
+	//sails.log.debug("API -> Services -> Passport.js :: Serializing User",username);
   done(null, username);
 });
 
 passport.deserializeUser(function(user, done) {
-  User.findOne({id: user.id}, done);
+	//sails.log.debug("API -> Services -> Passport.js :: Deserializing User",user);
+  User.findOne({username: user.username}, function (err, user) {
+    if (err || !user) {
+			//sails.log.debug("API -> Services -> Passport.js :: Deserialization Failed!",err);
+			done(new Error('Could not find User with id '+user.id),null);
+		}
+		else {
+			//sails.log.debug("API -> Services -> Passport.js :: Deserialization Successful!",User.toJSON(user));
+			done(null,User.toJSON(user));
+		}
+	});
 });
 
 
