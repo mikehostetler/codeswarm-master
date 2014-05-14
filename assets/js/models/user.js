@@ -1,35 +1,43 @@
 define(['amplify'],function(require) {
-	amplify.request.define('user','ajax',{
+	amplify.request.define('user','sails',{
 		url: '/user',
 		dataType: 'json',
 		type: 'GET'
 	});
 
-	amplify.request.define('user.get','ajax',{
+	amplify.request.define('user.get','sails',{
 		url: '/user/{username}',
 		dataType: 'json',
 		type: 'GET'
 	});
 
-	amplify.request.define('user.create','ajax',{
+	amplify.request.define('user.create','sails',{
 		url: '/auth/local/register',
 		dataType: 'json',
 		type: 'POST'
 	});
 
-	amplify.request.define('user.save','ajax',{
+	amplify.request.define('user.save','sails',{
 		url: '/user/{username}',
 		dataType: 'json',
 		type: 'PUT'
 	});
 
-	amplify.request.define('user.login','ajax',{
+	/* Including this here for clarity, this has intentionally been disabled server-side
+	amplify.request.define('user.delete','sails',{
+		url: '/user/{username}',
+		dataType: 'json',
+		type: 'DELETE'
+	});
+	*/
+
+	amplify.request.define('user.login','sails',{
 		url: '/auth/local',
 		dataType: 'json',
 		type: 'POST'
 	});
 
-	amplify.request.define('user.logout','ajax',{
+	amplify.request.define('user.logout','sails',{
 		url: '/logout',
 		dataType: 'json',
 		type: 'GET'

@@ -68,7 +68,18 @@ var AuthController = {
    * @param {Object} res
    */
   logout: function (req, res) {
-    req.logout();
+		if(req.logout) {
+			req.logout();
+		}
+		else {
+			// Passport.js gets confused over sockets, logout manually
+			req.user = null;
+			if (req._passport && req._passport.session) {
+				delete req._passport.session.user;
+				delete req._passport.session;
+			}
+		}
+
 		if(req.wantsJSON === true) {
 			res.json({ message: "Session Deleted" });
 		}
