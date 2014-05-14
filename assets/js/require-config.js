@@ -14,7 +14,7 @@ require.config({
 		'transitions': 'vendor/durandal/js/transitions',
 
 		// Customized Amplify
-		'amplify.src': 'vendor/amplify/lib/amplify.min',
+		'amplify.src': 'vendor/amplify/lib/amplify',
 		'amplify': 'ext/amplify.extension',
 
 		'ansi_up': 'vendor/ansi_up/ansi_up',
