@@ -32,7 +32,7 @@ module.exports = {
 
     var project = req.body;
     project.public = project.public == 'true';
-    project.owners = [req.session.username()];
+    project.owners = [req.user.username];
 
     Project.create(project, replied);
 
@@ -77,7 +77,7 @@ module.exports = {
       if (err) res.send(err.status_code || 500, err);
       else if (! project) res.send(404, new Error('Not found'));
       else {
-        var user = req.session.username();
+        var user = req.user.username;
         if (project.public || user && project.owners.indexOf(user) >= 0)
           res.send(filterProjectForUser(project, user));
         else res.send(404, new Error('Not Found'));
@@ -189,7 +189,7 @@ module.exports = {
    *    `GET /projects`
    */
   list: function (req, res) {
-    var user = req.session.username();
+    var user = req.user.username;
     var search = req.param('search');
 
     if (! user) {
@@ -289,7 +289,7 @@ module.exports = {
         previous_build: project.last_build,
         previous_successful_build: project.last_successful_build,
         created_at: time,
-        triggered_by: req.session && req.session.username(),
+        triggered_by: req.user.username,
         repo: project.repo,
         dir: id,
         branch: project.branch,
@@ -340,7 +340,7 @@ module.exports = {
     function validateAuthorization(cb) {
       if (! project.owners)
         return res.forbidden('No project owners');
-      if (project.owners.indexOf(req.session.username()) < 0)
+      if (project.owners.indexOf(req.user) < 0)
         return res.forbidden('you are not an owner of ' + projectName);
       cb();
     }

@@ -139,6 +139,7 @@ var AuthController = {
    */
   callback: function (req, res) {
     passport.callback(req, res, function (err, user) {
+			//sails.log.debug("API -> Controllers->AuthControllers->Callback: Found our user, now lets log them in",user);
       req.login(user, function (err) {
         // If an error was thrown, redirect the user to the login which should
         // take care of rendering the error messages.

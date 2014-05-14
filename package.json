@@ -4,7 +4,7 @@
   "private": true,
   "version": "0.0.0",
   "dependencies": {
-    "sails": "git+ssh://git@github.com:balderdashy/sails.git#060415c2a394d2fb238ad465ea4a275d3d6c518c",
+    "sails": "git+ssh://git@github.com:mikehostetler/sails.git",
     "sails-disk": "~0.10.0",
     "rc": "~0.3.3",
     "include-all": "~0.1.3",

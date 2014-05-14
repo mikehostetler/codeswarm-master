@@ -25,7 +25,7 @@ module.exports = {
 		var username = req.param('id');
 
 		if(req.user === undefined) {
-			res.json(403, {message: 'No session'});
+			res.json(401, {message: 'No session'});
 			return;
 		}
 
@@ -36,8 +36,8 @@ module.exports = {
 		User.findOne({id: User.userIdFromUsername(username)}, replied);
 
     function replied(err, user) {
-      if (err) res.json(500, {message: 'Could not find User'});
-      else if (!user) res.json(500, {message: 'Cound not find User'});
+      if (err) res.json(401, {message: 'Could not find User'});
+      else if (!user) res.json(401, {message: 'Cound not find User'});
       else res.json({ message: "Successfully found user", user: User.toJSON(user)});
 		}
 	},
