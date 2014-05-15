@@ -1,6 +1,0 @@
-assets/**/*.js
-node_modules/*
-*.swp
-*.swo
-*.git
-.git/*

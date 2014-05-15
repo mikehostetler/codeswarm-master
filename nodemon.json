@@ -1,0 +1,22 @@
+{
+	"verbose": true,
+	"watch": [
+		"api/",
+		"config/",
+		"lib/",
+		"tasks/",
+		"tests/",
+		"views/"
+	],
+	"ignore": [
+		"assets/**/*.js",
+		"node_modules/*",
+		"*.swp",
+		"*.swo",
+		".git/*"
+	],
+	"env": {
+		"NODE_ENV": "development"
+	},
+	"ext": "js json"
+}
