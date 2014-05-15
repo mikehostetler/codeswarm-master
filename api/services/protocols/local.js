@@ -125,13 +125,19 @@ exports.login = function (req, identifier, password, next) {
 	 */
 	if(identifier == 'admin') {
     User.authenticate(identifier, password, function(err, sessionId, username, roles) {
-      if (err) res.send(err.status_code || 500, err);
-      else if (!sessionId) res.send(500, new Error('No session id generated'));
+			if (err) return next(err);
+      else if (!sessionId) {
+				req.flash('error', 'No session id generated');
+				return next(null, false);
+			}
       else {
         if (sessionId) {
 					User.findOne(query, function(err, user) {
-							if (err) res.send(err.status_code || 500, err);
-							else if (!user) res.send(500, new Error('No session id generated'));
+							if (err) return next(err);
+							else if (!sessionId) {
+								req.flash('error', "Couldn't find the user");
+								return next(null, false);
+							}
 							else {
 								var user = {
 									username: user.username,
