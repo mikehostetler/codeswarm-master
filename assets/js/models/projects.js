@@ -1,12 +1,18 @@
+/* JSHint checking */
+
+/* global amplify:false */
+
 define(['amplify'],function(require) {
 	amplify.request.define('projects','sails',{
 		url: '/projects',
+        dataType: 'json',
 		type: 'GET'
 	});
 
-	return {
+    var Projects = amplify.model.extend({
+    },{
 		// Public Methods
-		getAllProjects: function(cb) {
+		tryGetAllProjects: function(cb) {
 			amplify.request({
 				resourceId: 'projects',
 				success: function(data) {
@@ -15,13 +21,15 @@ define(['amplify'],function(require) {
                         cb(true);
                     }
 				},
-				error: function() {
-					amplify.publish('projects',false);
+				error: function(data) {
+					amplify.publish('projects',data);
 					if(cb) {
                         cb(false);
                     }
 				}
 			});
 		},
-	};
+	});
+
+    return Projects;
 });
