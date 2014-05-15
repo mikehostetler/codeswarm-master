@@ -134,7 +134,7 @@ exports.login = function (req, identifier, password, next) {
         if (sessionId) {
 					User.findOne(query, function(err, user) {
 							if (err) return next(err);
-							else if (!sessionId) {
+							else if (!user) {
 								req.flash('error', "Couldn't find the user");
 								return next(null, false);
 							}
