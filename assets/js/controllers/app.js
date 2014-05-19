@@ -45,7 +45,8 @@ define([
 
 				// Binds to a child router for all user related routes
         { route: 'user*index', moduleId: 'controllers/user/index', title: 'Log into CodeSwarm', nav: true, hash: '#user'},
-        { route: 'new*index', moduleId: 'controllers/new-project/index', title: 'New Project', nav: true, hash: '#new'}
+        { route: 'new', moduleId: 'controllers/new-project/index', title: 'New Project', nav: true, hash: '#new'}
+        /*{ route: 'new*index', moduleId: 'controllers/new-project/index', title: 'New Project', nav: true, hash: '#new'}*/
 
       ]).buildNavigationModel()
 				.mapUnknownRoutes('home/not-found','not-found')
