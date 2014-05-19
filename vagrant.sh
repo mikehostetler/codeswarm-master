@@ -1,13 +1,10 @@
 #!/bin/bash
 
+echo "Updating package lists"
 apt-get update
 apt-get upgrade -y
 apt-get install -y python-software-properties
 add-apt-repository -y ppa:couchdb/stable
-
-echo "Updating package lists"
-apt-get update
-apt-get upgrade -y
 
 echo "Installing dependencies"
 apt-get install -y build-essential libcurl4-gnutls-dev libexpat1-dev gettext libz-dev libssl-dev git ruby-full rubygems couchdb python g++ curl
@@ -31,7 +28,7 @@ gem install sass --no-ri --no-rdoc
 
 npm set bin-links false
 
-# Edit Vagrant user profile
+echo "Configuring the local Vagrant user"
 cat >/home/vagrant/.bashrc <<EOL
 set -o vi
 alias l="ls -alF"
@@ -45,7 +42,14 @@ sed -i.bak 's/;bind_address = 127.0.0.1/bind_address = 0.0.0.0/g' /etc/couchdb/l
 sed -i.bak 's/;admin = mysecretpassword/admin = admin/g' /etc/couchdb/local.ini
 
 # Ensure CouchDB is started
-start couchdb
+restart couchdb
+
+echo "Installing Docker"
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
+sh -c 'echo deb http://get.docker.io/ubuntu docker main' > /etc/apt/sources.list.d/docker.list
+apt-get update
+apt-get install -y linux-image-generic-lts-raring linux-headers-generic-lts-raring
+apt-get install -y lxc-docker
 
 # Unpack config archive and set up
 if [ ! -f /vagrant/vagrant.tar.gz ]; then
