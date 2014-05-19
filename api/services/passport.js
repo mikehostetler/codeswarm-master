@@ -299,9 +299,9 @@ passport.loadStrategies = function (req) {
   });
 };
 
-passport.serializeUser(function(username, done) {
+passport.serializeUser(function(user, done) {
 	//sails.log.debug("API -> Services -> Passport.js :: Serializing User",username);
-  done(null, username);
+  done(null, user);
 });
 
 passport.deserializeUser(function(user, done) {
