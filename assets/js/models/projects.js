@@ -9,7 +9,14 @@ define(['amplify'],function(require) {
 		type: 'GET'
 	});
 
+	amplify.request.define('project.create','sails',{
+		url: '/projects',
+		dataType: 'json',
+		type: 'POST'
+	});
+
     var Projects = amplify.model.extend({
+			urlRoot: 'project'
     },{
 		// Public Methods
 		tryGetAllProjects: function(cb) {
