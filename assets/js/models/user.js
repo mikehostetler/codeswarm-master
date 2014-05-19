@@ -58,6 +58,9 @@ define(['amplify'],function(require) {
 		 * Static Methods
 		 * User.isLoggedIn(function() { });
 		 */
+		getCurrentUser: function() {
+			return new User(amplify.store.localStorage('user'));
+		},
 		isLoggedIn: function(cb) {
 			var loggedIn = amplify.store.sessionStorage('loggedIn');
 
