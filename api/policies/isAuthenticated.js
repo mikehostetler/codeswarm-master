@@ -12,5 +12,8 @@ module.exports = function(req, res, next) {
   if (req.user) {
 		next();
 	}
-  else res.send(401, new Error('You are not permitted to perform this action.'));
+  else {
+		//sails.log.debug("Policy -> isAuthenticated :: DENIED!");
+		res.send(401, new Error('You are not permitted to perform this action.'));
+	}
 };
