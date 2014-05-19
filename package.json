@@ -4,7 +4,7 @@
   "private": true,
   "version": "0.0.0",
   "dependencies": {
-    "sails": "git+ssh://git@github.com:mikehostetler/sails.git",
+    "sails": "git+https://github.com/mikehostetler/sails.git",
     "sails-disk": "~0.10.0",
     "rc": "~0.3.3",
     "include-all": "~0.1.3",
@@ -62,12 +62,13 @@
     "chai": "^1.9.1"
   },
   "scripts": {
-    "start": "node app.js",
+    "start": "node_modules/.bin/nodemon app.js --prod",
     "mon": "node_modules/.bin/nodemon app.js --dev",
-    "silly": "node_modules/.bin/nodemon ./node_modules/sails/bin/sails.js lift --silly",
+    "silly": "node_modules/.bin/nodemon app.js --silly",
     "forever": "forever start app.js",
     "foreverstop": "forever stop app.js",
-    "debug": "node debug app.js"
+    "inspect": "node --debug app.js",
+    "debug": "node --debug app.js"
   },
   "main": "app.js",
   "repository": {

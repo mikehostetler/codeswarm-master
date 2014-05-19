@@ -37,32 +37,27 @@ module.exports.policies = {
 	*/
 
 	ProjectController: {
-		create: ['isAuthenticated', 'hasGithubToken', 'ownsGithubRepo'],
-		list: 'isAuthenticated',
-		find: ['isAuthenticated', 'userOwnsProjectOrPublic'],
-		tags: ['isAuthenticated', 'userOwnsProjectOrPublic'],
-		starTag: ['isAuthenticated', 'userOwnsProject'],
-		unstarTag: ['isAuthenticated', 'userOwnsProject'],
-		saveTagContent: ['isAuthenticated', 'userOwnsProject'],
-		deploy: ['isAuthenticated', 'userOwnsProject'],
-		webhook: ['hasValidProjectSecret'],
-		destroy: ['isAuthenticated', 'userOwnsProject'],
-		update: ['isAuthenticated', 'userOwnsProject'],
-		updatePlugins: ['isAuthenticated', 'userOwnsProject']
-	},
-
-	TokenController: {
-		create: 'isAuthenticated',
-		find: 'isAuthenticated'
+		create: ['passport','isAuthenticated', 'hasGithubToken', 'ownsGithubRepo'],
+		list: ['passport','isAuthenticated'],
+		find: ['passport','isAuthenticated', 'userOwnsProjectOrPublic'],
+		tags: ['passport','isAuthenticated', 'userOwnsProjectOrPublic'],
+		starTag: ['passport','isAuthenticated', 'userOwnsProject'],
+		unstarTag: ['passport','isAuthenticated', 'userOwnsProject'],
+		saveTagContent: ['passport','isAuthenticated', 'userOwnsProject'],
+		deploy: ['passport','isAuthenticated', 'userOwnsProject'],
+		webhook: ['passport','hasValidProjectSecret'],
+		destroy: ['passport','isAuthenticated', 'userOwnsProject'],
+		update: ['passport','isAuthenticated', 'userOwnsProject'],
+		updatePlugins: ['passport','isAuthenticated', 'userOwnsProject']
 	},
 
 	BuildController: {
-		index: 'isAuthenticated',
-		find: ['isAuthenticated', 'userOwnsProjectOrPublic', 'buildBelongsToProject']
+		index: ['passport','isAuthenticated'],
+		find: ['passport','isAuthenticated', 'userOwnsProjectOrPublic', 'buildBelongsToProject']
 	},
 
 	PluginController: {
-		list: 'isAuthenticated'
+		list: ['passport','isAuthenticated']
 	}
 
 };
