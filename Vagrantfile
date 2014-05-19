@@ -28,13 +28,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	# CouchDB + Futon Port
 	config.vm.network :forwarded_port, guest: 5984, host: 5984
 
-	# Performance profiling
-	config.vm.network :forwarded_port, guest: 5959, host: 5959
-
-  # Create a private network, which allows host-only access to the machine
-  # using a specific IP.
-  config.vm.network :private_network, ip: "192.168.56.101"
-
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
   # your network.
@@ -65,11 +58,5 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # View the documentation for the provider you're using for more
   # information on available options.
 
-  config.vm.provision :shell, :path => "vagrant.sh"
-
-# TODO
-# - Force bash-profile to use NVM when you login
-# - CouchDB Config File
-#	
-
+	config.vm.provision :shell, :path => "vagrant.sh"
 end
