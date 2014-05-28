@@ -1,6 +1,8 @@
 #!/bin/bash
 
+
 echo "Updating package lists"
+export DEBIAN_FRONTEND=noninteractive
 apt-get update
 apt-get upgrade -y
 apt-get install -y python-software-properties
@@ -17,9 +19,13 @@ source ~/.profile
 nvm install v0.10.28
 nvm use v0.10.28
 
-npm install grunt-cli -g
-npm install nodemon -g
-npm install mocha -g
+npm install grunt-cli -g --no-bin-links
+npm install nodemon -g --no-bin-links
+npm install mocha -g --no-bin-links
+
+echo "Install project's node_modules"
+cd /vagrant
+npm install --no-bin-links
 
 echo "Installing Compass"
 gem install compass --no-ri --no-rdoc
@@ -50,19 +56,3 @@ sh -c 'echo deb http://get.docker.io/ubuntu docker main' > /etc/apt/sources.list
 apt-get update
 apt-get install -y linux-image-generic-lts-raring linux-headers-generic-lts-raring
 apt-get install -y lxc-docker
-
-# Unpack config archive and set up
-if [ ! -f /vagrant/vagrant.tar.gz ]; then
-    echo "No config package found";
-    exit;
-fi
-
-tar -xzvf /vagrant/vagrant.tar.gz -C /tmp
-
-if [ ! -f /tmp/vagrant/install.sh ]; then
-    echo "No config installation script found";
-    exit;
-fi
-
-cd /tmp/vagrant
-sh install.sh
