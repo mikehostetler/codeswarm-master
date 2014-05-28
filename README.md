@@ -2,22 +2,24 @@
 <a href="http://codeswarm.com"><img src="http://codeswarm.com/wp-content/uploads/2014/03/codeswarm-logo.png" title="CodeSwarm"/>
 </h1>
 
-### [Website](http://codeswarm.com/)  &nbsp; [Getting Started](http://github.com/codeswarm/codeswarm/#!get-started) &nbsp; [Submit Issue](https://github.com/codeswarm/codeswarm/search?q=&type=Issues)
+### [Website](http://codeswarm.com/)  &nbsp; [Getting Started](http://github.com/codeswarm/codeswarm/#!get-started) &nbsp; [Plugins](https://github.com/codeswarm/codeswarm/#plugins) &nbsp; [Submit Issue](https://github.com/codeswarm/codeswarm/search?q=&type=Issues)
 
 ## Overview
-CodeSwarm is a third-generation Continuous Integration and Continuous Deployment
-system written primarily for JavaScript.  CodeSwarm is written using JavaScript and 
-Node.JS and uses CouchDB as a database backend.
-
-CodeSwarm supports the ability to run project builds within [Docker](http://docker.io)
-containers, ensuring builds are run within a clean environment.
+CodeSwarm is an Open Source [Continuous Integration](http://en.wikipedia.org/wiki/Continuous_integration) and [Continuous Deployment](http://en.wikipedia.org/wiki/Continuous_deployment)
+system built with [Node.js](http://nodejs.org), [CouchDB](http://couchdb.apache.org/) and [Docker](http://docker.io/).  CodeSwarm is built with plugins, providing tremendous flexibility.
 
 ---
 
+* [Quick Install with Vagrant](#vagrant)
 * [System Requirements](#system)
 * [Dependencies](#dependencies)
 * [Installation](#setup)
 * [Configuration](#environment-variables)
+* [Plugins](#plugins)
+
+### Vagrant
+
+
 
 ### System
 
@@ -32,8 +34,11 @@ CodeSwarm was built to work on POSIX systems, including most Unix and Linux vari
 
 CodeSwarm consists of a single Node.JS Web Application process, which spawns test jobs in response to source code commits and manual test runs.
 
-* Node.JS
-* A CouchDB database backend
+* **Required**
+	* Node.JS
+	* A CouchDB database backend
+* **Optional**
+	* Docker
 
 ### Setup
 
