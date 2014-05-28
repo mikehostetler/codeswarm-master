@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 echo "Updating package lists"
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
@@ -48,7 +47,7 @@ sed -i.bak 's/;bind_address = 127.0.0.1/bind_address = 0.0.0.0/g' /etc/couchdb/l
 sed -i.bak 's/;admin = mysecretpassword/admin = admin/g' /etc/couchdb/local.ini
 
 # Ensure CouchDB is started
-restart couchdb
+/etc/init.d/couchdb restart
 
 echo "Installing Docker"
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
