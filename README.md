@@ -17,10 +17,6 @@ system built with [Node.js](http://nodejs.org), [CouchDB](http://couchdb.apache.
 * [Configuration](#environment-variables)
 * [Plugins](#plugins)
 
-### Vagrant
-
-
-
 ### System
 
 CodeSwarm has been tested on the following systems:
@@ -29,6 +25,8 @@ CodeSwarm has been tested on the following systems:
 * Mac OSX 10.8.5
 
 CodeSwarm was built to work on POSIX systems, including most Unix and Linux variants that support Node.js.
+
+CodeSwarm has not been tested on Windows with Node.js.
 
 ### Dependencies
 
@@ -39,10 +37,46 @@ CodeSwarm consists of a single Node.JS Web Application process, which spawns tes
 	* A CouchDB database backend
 * **Optional**
 	* Docker
+	* Vagrant
 
-### Setup
+### Setup with Vagrant
+
+If you don't want to go through the difficulty of installing CouchDB, CodeSwarm comes with a Vagrantfile to automate the installation and setup of the CodeSwarm server.  This is the recommended approach to working with CodeSwarm.
+
+To use CodeSwarm with Vagrant, follow these steps:
+
+1. Install [VirtualBox](http://virtualbox.org/wiki/Downloads)
+2. Install [Vagrant](http://docs.vagrantup.com/v2/installation/)
+3. Download CodeSwarm
+
+```sh
+$ git clone git@github.com:codeswarm/codeswarm.git
+```
+
+4. Engage Vagrant (this will take a while)
+
+```sh
+$ vagrant up
+```
+5. Log into Vagrant and start CodeSwarm
+```sh
+$ vagrant ssh
+$ npm run mon
+```
+
+If all goes well, you should be able to log into CodeSwarm at the following URL:
+http://localhost:1337
+
+CouchDB's Futon will be available at:
+http://localhost:5984/_utils/index.html
+
+### Manual Setup
 
 CodeSwarm can be cloned from Github and installed then its dependencies can be installed via `npm`.
+
+1. Install [Node.js](http://nodejs.org/)  (We recommend using the excellent [NVM script](http://github.com/creationix/nvm(
+2. Install [CouchDB](http://docs.couchdb.org/en/latest/install/index.html)
+3. Download and Install CodeSwarm:
 
 You can download and install using the following commands:
 
@@ -89,7 +123,7 @@ $ PORT=1337 COUCHDB_URL=http://localhost:5984 COUCHDB_USERNAME=admin COUCHDB_PAS
 
 This project has been released under the [Apache License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html), the text of which is included below. This license applies ONLY to the source of this repository and does not extend to any other CodeSwarm distribution or variant, or any other 3rd party libraries used in a repository. 
 
-> Copyright © 2014 CodeSwarm, Inc.
+> Copyright © 2014 [appendTo, Inc.](http://appendto.com)
 
 > Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
