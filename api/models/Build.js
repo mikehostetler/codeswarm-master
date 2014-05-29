@@ -50,7 +50,8 @@ module.exports = {
 
     plugins: {
       type: 'json',
-      required: true
+      required: true,
+      defaultsTo: {}
     },
 
     stages: 'json',

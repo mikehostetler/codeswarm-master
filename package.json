@@ -30,7 +30,8 @@
     "codeswarm-plato": "git+ssh://git@github.com:codeswarm/codeswarm-plato.git",
     "codeswarm-custom": "git+ssh://git@github.com:codeswarm/codeswarm-custom.git",
     "sails-couchdb-orm": "git+ssh://git@github.com:codeswarm/sails-couchdb-orm.git",
-    "ssh-keypair": "~1.0.1"
+    "ssh-keypair": "~1.0.1",
+    "shelly": "0.0.3"
   },
   "scripts": {
     "start": "node app.js",
