@@ -48,12 +48,14 @@
     "codeswarm-testling": "git+ssh://git@github.com:codeswarm/codeswarm-testling.git",
     "codeswarm-plato": "git+ssh://git@github.com:codeswarm/codeswarm-plato.git",
     "codeswarm-custom": "git+ssh://git@github.com:codeswarm/codeswarm-custom.git",
-    "sails-couchdb-orm": "^0.10.0",
+    "sails-couchdb-orm": "git+ssh://git@github.com:codeswarm/sails-couchdb-orm.git",
     "connect-couchdb": "^0.4.2",
     "passport-local": "^1.0.0",
     "bcrypt": "^0.7.8",
     "validator": "^3.12.0",
-    "passport-bitbucket": "^0.1.2"
+    "passport-bitbucket": "^0.1.2",
+    "ssh-keypair": "~1.0.1",
+    "shelly": "0.0.3"
   },
   "devDependencies": {
     "nodemon": "~1.0.14",
