@@ -36,7 +36,7 @@
     "base64": "~0.3.0",
     "underscore": "~1.6.0",
     "knockout.js": "git@github.com:knockout/knockout.git#224f8e94095dd9ba7dd5623391f7a9220f704f45",
-    "ansi_up": "https://github.com/drudru/ansi_up.git",
+    "ansi_up": "git@github.com:drudru/ansi_up.git#7e9940fdadeeef1ed9871d0f6bb2aa80d531d704",
     "gravatarjs": "~1.0.0",
     "knockout-validation": "~1.0.2",
     "backbone": "~1.1.2"
