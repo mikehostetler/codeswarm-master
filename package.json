@@ -13,7 +13,7 @@
     "codeswarm-plato": "git+https://github.com/codeswarm/codeswarm-plato.git",
     "codeswarm-sauce": "git+https://github.com/codeswarm/codeswarm-sauce.git",
     "colors": "~0.6.2",
-    "connect-couchdb": "^0.4.2",
+    "connect-couchdb": "git+https://github.com/mikehostetler/connect-couchdb.git",
     "cookie": "~0.1.0",
     "cqs": "~0.8.1",
     "ejs": "~0.8.4",
