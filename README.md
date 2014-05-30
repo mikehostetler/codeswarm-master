@@ -10,7 +10,7 @@ system built with [Node.js](http://nodejs.org), [CouchDB](http://couchdb.apache.
 
 ---
 
-* [Quick Install with Vagrant](#vagrant)
+* [Quick Install with Vagrant](#setup-with-vagrant)
 * [System Requirements](#system)
 * [Dependencies](#dependencies)
 * [Installation](#setup)
@@ -61,6 +61,8 @@ $ vagrant up
 5. Log into Vagrant and start CodeSwarm
 ```sh
 $ vagrant ssh
+$ npm install
+$ bower install
 $ npm run mon
 ```
 
