@@ -1,5 +1,5 @@
-var adapters = require('./adapters').adapters;
-var couchdb = adapters.couchdb;
+var connections = require('./connections').connections;
+var couchdb = connections.couchdb;
 if (! couchdb) throw new Error('Need couchdb adapter defined in config/adapters.js');
 
 exports.url = urlForConfig(couchdb);

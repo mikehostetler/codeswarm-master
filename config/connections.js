@@ -18,6 +18,10 @@
  * http://links.sailsjs.org/docs/config/connections
  */
 
+var URL = require('url');
+var couchdbURL = process.env.COUCHDB_URL || "http://localhost:5984";
+var url = URL.parse(couchdbURL);
+
 module.exports.connections = {
 
   // Local disk storage for DEVELOPMENT ONLY
