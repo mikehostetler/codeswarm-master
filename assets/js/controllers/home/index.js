@@ -31,7 +31,7 @@ define([
                     this.projects.push.apply(this.projects, stuff);
                 });
 
-                projects.getAllProjects();
+                projects.tryGetAllProjects();
             },
         };
 
