@@ -11,6 +11,7 @@
 	"ignore": [
 		"assets/**/*.js",
 		"node_modules/*",
+		".sass-cache/*",
 		"*.swp",
 		"*.swo",
 		".git/*"
