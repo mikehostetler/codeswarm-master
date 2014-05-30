@@ -14,12 +14,40 @@ var queue = require('../lib/queue');
 module.exports.bootstrap = function (cb) {
 
   async.series([
+			initAdminUser,
 			initSessionStore,
       initQueue,
       initPlugins,
       startWorker,
 			welcomeMessage,
     ], initialized);
+
+	function initAdminUser(cb) {
+		/**
+		 * Default couchDB install authenticates the server with admin/admin, but we need to 
+		 * ensure that an admin user exists or a person can't login 
+		 */
+		User.findOne({username: 'admin'},function(err, user) {
+			if(err || user === undefined) {
+				User.create({
+					username: 'admin',
+					name: 'admin',
+					password: null,
+					email: 'hello@codeswarm.com',
+					roles: [],
+					type: 'user'
+				},function(err, user) {
+					if(err) cb(err);
+
+					cb();
+				});
+			}
+			else {
+				// Success!
+				cb();
+			}
+		});
+	}
 
   function initQueue(cb) {
     queue.init(cb);

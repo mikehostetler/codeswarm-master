@@ -8,7 +8,7 @@
 
 module.exports = {
 
-  tableName: '_users',
+  tableName: 'users',
   autoCreatedAt: false,
   autoUpdatedAt: false,
 
@@ -99,5 +99,6 @@ module.exports = {
 };
 
 function userIdFromUsername(username) {
-	return 'org.couchdb.user:' + username;
+	return username;
+	//return 'org.couchdb.user:' + username;
 }
