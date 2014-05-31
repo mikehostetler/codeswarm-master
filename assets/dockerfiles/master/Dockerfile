@@ -5,9 +5,6 @@ MAINTAINER Levi
 
 RUN apt-get update; apt-get install software-properties-common nodejs npm couchdb -y
 
-#RUN add-apt-repository -y ppa:couchdb/stable
-#RUN add-apt-repository -y ppa:chris-lea/node.js
-
 RUN apt-get update
 
 RUN apt-get install -y build-essential libcurl4-gnutls-dev libexpat1-dev gettext libz-dev libssl-dev git ruby-full rubygems nodejs couchdb python g++ curl

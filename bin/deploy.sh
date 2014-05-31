@@ -11,15 +11,6 @@ function printHelp() {
     echo "usage: $0 -i <image> [-w <#workers>] [-v <data_directory>] [-c]"
     echo ""
     echo "  image: $buildname image from:"
-    echo -n "               "
-    for i in ${spark_images[@]}; do
-        echo -n "  $i"
-    done
-    echo ""
-    echo -n "               "
-    for i in ${shark_images[@]}; do
-        echo -n "  $i"
-    done
     echo ""
 }
 
@@ -69,13 +60,13 @@ function parse_options() {
     while getopts "i:w:cv:h" opt; do
         case $opt in
         i)
-            echo "$OPTARG" | grep "spark:" > /dev/null;
+            echo "$OPTARG" | grep "master:" > /dev/null;
 	    if [ "$?" -eq 0 ]; then
-                image_type="spark"
+                image_type="master"
             fi
-            echo "$OPTARG" | grep "shark:" > /dev/null;
+            echo "$OPTARG" | grep "worker:" > /dev/null;
             if [ "$?" -eq 0 ]; then
-                image_type="shark"
+                image_type="worker"
             fi
 	    image_name=$(echo "$OPTARG" | awk -F ":" '{print $1}')
             image_version=$(echo "$OPTARG" | awk -F ":" '{print $2}')
