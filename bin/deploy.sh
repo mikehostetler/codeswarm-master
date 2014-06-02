@@ -15,6 +15,36 @@ function printHelp() {
 }
 
 
+function buildMaster(){
+
+    if type "$docker" > /dev/null; then
+        echo "Building Master"
+        docker build -t master-$buildname:$buildver assets/dockerfiles/master/
+        echo "Master Built"
+    else
+        echo "please install Docker, on debian: apt-get install docker || redhat/centos: yum install docker-io || Mac: http://docs.docker.io/installation/mac/"
+        if [ "$(uname)" == "Darwin" ]; then
+            open http://docs.docker.io/installation/mac/
+        fi
+    fi
+
+}
+
+function buildWorker(){
+
+    if type "$docker" > /dev/null; then
+        echo "Building Worker"
+        docker build -t worker-$buildname:$buildver assets/dockerfiles/worker/
+        echo "Worker Built"
+    else
+        echo "please install Docker, on debian: apt-get install docker || redhat/centos: yum install docker-io || Mac: http://docs.docker.io/installation/mac/"
+        if [ "$(uname)" == "Darwin" ]; then
+            open http://docs.docker.io/installation/mac/
+        fi
+    fi
+
+}
+
 function startMaster() {
     echo "starting master container"
     if [ "$DEBUG" -gt 0 ]; then
@@ -68,7 +98,7 @@ function parse_options() {
             if [ "$?" -eq 0 ]; then
                 image_type="worker"
             fi
-	    image_name=$(echo "$OPTARG" | awk -F ":" '{print $1}')
+	        image_name=$(echo "$OPTARG" | awk -F ":" '{print $1}')
             image_version=$(echo "$OPTARG" | awk -F ":" '{print $2}')
           ;;
         w)

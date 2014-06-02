@@ -3,15 +3,15 @@ FROM ubuntu:saucy
 
 MAINTAINER Levi
 
-RUN apt-get update; apt-get install software-properties-common nodejs npm couchdb -y
+RUN mkdir /root/.ssh
+ADD ../build/id_rsa /root/.ssh/id_rsa
+ADD ../build/id_rsa.pub /root/.ssh/id_rsa.pub
 
-RUN apt-get update
-
-RUN apt-get install -y build-essential libcurl4-gnutls-dev libexpat1-dev gettext libz-dev libssl-dev git ruby-full rubygems nodejs couchdb python g++ curl
+RUN apt-get update; apt-get install software-properties-common nodejs npm couchdb ssh build-essential libcurl4-gnutls-dev libexpat1-dev gettext libz-dev libssl-dev git ruby-full rubygems nodejs couchdb python g++ curl-y
 
 RUN npm install grunt-cli mocha bower -g
 
-VOLUME["/home/th3m4d0n3/NetBeansProjects/codeswarm-master/assets/:/data"]
+VOLUME["/home/th3m4d0n3/NetBeansProjects/codeswarm-master/:/data"]
 
 RUN ls -alh /data
 
