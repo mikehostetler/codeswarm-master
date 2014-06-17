@@ -55,7 +55,7 @@ define([
 					console.log('We got an error!',err);
 				}
 			});
-		},
+		}
   };
 });
 
