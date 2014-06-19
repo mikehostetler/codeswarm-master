@@ -23,27 +23,20 @@
     "tests"
   ],
   "main": "app.js",
-  "dependencies": {
-    "handlebars": "~1.1.0",
-    "requirejs-text": "~2.0.0",
-    "requirejs": "~2.1.8",
-    "jquery": "~2.1.0",
-    "postal.js": "~0.8.11",
-    "github": "~0.9.0",
-    "amplify": "~1.1.2",
-    "durandal": "~2.0.1",
-    "async": "~0.8.0",
-    "base64": "~0.3.0",
-    "underscore": "~1.6.0",
-    "knockout.js": "git@github.com:knockout/knockout.git#224f8e94095dd9ba7dd5623391f7a9220f704f45",
-    "ansi_up": "git@github.com:drudru/ansi_up.git#7e9940fdadeeef1ed9871d0f6bb2aa80d531d704",
-    "gravatarjs": "~1.0.0",
-    "knockout-validation": "~1.0.2",
-    "backbone": "~1.1.2"
-  },
-  "resolutions": {
-    "underscore": "~1.6.0",
-    "knockout.js": "224f8e94095dd9ba7dd5623391f7a9220f704f45",
-    "jquery": "~2.1.0"
-  }
+	"dependencies": {
+			"angular": "*",
+			"angular-resource": "*",
+			"angular-cookies": "*",
+			"angular-route": "*",
+			"angular-animate": "*",
+			"angular-sanitize": "*",
+			"restangular":"*",
+			"jquery": "*",
+			"github": "*",
+			"angular-base64": "*",
+			"lodash": "*",
+			"gravatarjs": "*",
+			"spin.js": "*",
+			"angular-spinner":"*"
+	}
 }

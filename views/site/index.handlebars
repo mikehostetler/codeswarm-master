@@ -1,66 +1,157 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html ng-app="codeswarm">
+<head>
     <title>CodeSwarm Continuous Integration &amp; Deployment</title>
-<!--
-  .-. . .-..----..-.    .---. .----..-.   .-..----.    .---. .----.    
-  | |/ \| || {_  | |   /  ___}  {}  \  `.'  || {_     {_   _}  {}  \   
-  |  .'.  || {__ | `--.\     }      / |\ /| || {__      | | \      /   
-  `-'   `-'`----'`----' `---' `----'`-' ` `-'`----'     `-'  `----'    
-            .---..-. .-..----.                                         
-           {_   _} {_} || {_                                           
-             | | | { } || {__                                          
-             `-' `-' `-'`----'  
-   _____           _        _____                              
-  /  __ \         | |      /  ___|                             
-  | /  \/ ___   __| | ___  \ `--.__      ____ _ _ __ _ __ ___  
-  | |    / _ \ / _` |/ _ \  `--. \ \ /\ / / _` | '__| '_ ` _ \ 
-  | \__/\ (_) | (_| |  __/ /\__/ /\ V  V / (_| | |  | | | | | |
-   \____/\___/ \__,_|\___| \____/  \_/\_/ \__,_|_|  |_| |_| |_|
--->
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <!--
+      .-. . .-..----..-.    .---. .----..-.   .-..----.    .---. .----.
+      | |/ \| || {_  | |   /  ___}  {}  \  `.'  || {_     {_   _}  {}  \
+      |  .'.  || {__ | `--.\     }      / |\ /| || {__      | | \      /
+      `-'   `-'`----'`----' `---' `----'`-' ` `-'`----'     `-'  `----'
+                .---..-. .-..----.
+               {_   _} {_} || {_
+                 | | | { } || {__
+                 `-' `-' `-'`----'
+       _____           _        _____
+      /  __ \         | |      /  ___|
+      | /  \/ ___   __| | ___  \ `--.__      ____ _ _ __ _ __ ___
+      | |    / _ \ / _` |/ _ \  `--. \ \ /\ / / _` | '__| '_ ` _ \
+      | \__/\ (_) | (_| |  __/ /\__/ /\ V  V / (_| | |  | | | | | |
+       \____/\___/ \__,_|\___| \____/  \_/\_/ \__,_|_|  |_| |_| |_|
+    -->
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
     <meta name="format-detection" content="telephone=no"/>
     <meta name="viewport" content="width=device-width, user-scalable=no">
 
-    <link rel="apple-touch-startup-image" href="/images/ios-startup-image-landscape.png" media="(orientation:landscape)" />
-    <link rel="apple-touch-startup-image" href="/images/ios-startup-image-portrait.png" media="(orientation:portrait)" />        
+    <link rel="apple-touch-startup-image" href="/images/ios-startup-image-landscape.png"
+          media="(orientation:landscape)"/>
+    <link rel="apple-touch-startup-image" href="/images/ios-startup-image-portrait.png" media="(orientation:portrait)"/>
     <link rel="apple-touch-icon" href="/images/icon.png"/>
 
     <!--STYLES-->
     <link rel="stylesheet" href="/styles/style.css">
-    <link rel="stylesheet" href="/styles/durandal.css">
     <!--STYLES END-->
 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
 
-    <script type="text/javascript">
-    if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
-      var msViewportStyle = document.createElement("style");
-      var mq = "@@-ms-viewport{width:auto!important}";
-      msViewportStyle.appendChild(document.createTextNode(mq));
-      document.getElementsByTagName("head")[0].appendChild(msViewportStyle);
-    }
-    </script>
-  </head>
+</head>
 
-  <body>
+<body ng-controller="codeswarmController">
+<div>
+    <header>
+        <a class="global-logo" href="#"></a>
 
-    <div id="applicationHost">
-      <div class="splash">
-        <div class="message">
-          <i class="fa fa-cog fa-spin active"></i><strong>Code</strong>Swarm loading...
+        <div>
+            <a href="#" class="global-search--trigger fa fa-search"></a>
         </div>
-      </div>
-    </div>
 
-    <!--SCRIPTS-->
-    <script src="/js/sails.io.js"></script>
-    <!--SCRIPTS END-->
+        <form class="global-search">
+            <input type="text" name="Search" placeholder="Search..." class="search-input">
+        </form>
 
-    <script src="/js/vendor/requirejs/require.js" data-main="/js/main.js"></script>
-  </body>
+        <a class="fa fa-bars nav-trigger"></a>
+
+        <div class="profile-nav">
+            <a class="profile-nav--trigger">
+                <img ng-src="blank" class="profile-nav--thumb">
+                <span data-bind="text: username">Welcome!</span>
+                <i class="fa fa-caret-down"></i>
+            </a>
+
+            <ul class="profile-nav--list">
+                <li><a href="/#new"><i class="fa fa-plus-circle"></i>New Project</a></li>
+                <li><a href="/#user/account"><i class="fa fa-cog"></i>Account Settings</a></li>
+                <li><a href="/#user/logout"><i class="fa fa-power-off"></i>Log Out</a></li>
+            </ul>
+        </div>
+
+        <ul class="global-nav">
+            <li>
+                <a ng-href="/#/user/register"> Create </a>
+            </li>
+            <li>
+                <a ng-href="/#/user/login"> Login </a>
+            </li>
+        </ul>
+
+    </header>
+    <span us-spinner="{radius:50, width:12, length: 16}" spinner-key="theSpinner"></span>
+
+    <div ng-view></div>
+
+    <footer>
+        <a href="/#about" class="fa fa-search">About</a>
+        <a href="/#support" class="fa fa-search">Support</a>
+        <a href="/#contribute" class="fa fa-search">Contribute</a>
+    </footer>
+
+</div>
+
+
+<!--SCRIPTS-->
+<script src="/js/vendor/angular/angular.js"></script>
+<script src="/js/vendor/restangular/dist/restangular.js"></script>
+<!--this module needed to be modified but it's still here because i only added a few things-->
+<script src="/js/custom/angular-local-storage/angular-local-storage.js"></script>
+<script src="/js/vendor/angular-animate/angular-animate.js"></script>
+<script src="/js/vendor/angular-cookies/angular-cookies.js"></script>
+<script src="/js/vendor/angular-resource/angular-resource.js"></script>
+<script src="/js/vendor/angular-route/angular-route.js"></script>
+<script src="/js/vendor/angular-base64/angular-base64.js"></script>
+<script src="/js/vendor/angular-sanitize/angular-sanitize.js"></script>
+<script src="/js/vendor/spin.js/spin.js"></script>
+<script src="/js/vendor/angular-spinner/angular-spinner.js"></script>
+<script src="/js/vendor/github/github.js"></script>
+<script src="/js/vendor/gravatarjs/gravatar.js"></script>
+<script src="/js/vendor/jquery/dist/jquery.js"></script>
+<script src="/js/vendor/lodash/dist/lodash.js"></script>
+<!--<script src="/js/sails.io.js"></script>-->
+<!--SCRIPTS END-->
+
+<!--Main Angular File-->
+<script src="/js/codeswarm.js"></script>
+<!--Controllers-->
+<script src="/js/controllers/codeswarmController.js"></script>
+
+<script src="/js/controllers/user/loginController.js"></script>
+<script src="/js/controllers/user/logoutController.js"></script>
+<script src="/js/controllers/user/registerController.js"></script>
+<script src="/js/controllers/user/accountController.js"></script>
+<script src="/js/controllers/user/forgotpasswordController.js"></script>
+<script src="/js/controllers/user/userindexController.js"></script>
+
+<script src="/js/controllers/mainController.js"></script>
+
+<script src="/js/controllers/home/indexController.js"></script>
+<script src="/js/controllers/home/aboutController.js"></script>
+<script src="/js/controllers/home/contributeController.js"></script>
+<script src="/js/controllers/home/searchController.js"></script>
+<script src="/js/controllers/home/supportController.js"></script>
+
+<script src="/js/controllers/org/buildController.js"></script>
+<script src="/js/controllers/org/configController.js"></script>
+<script src="/js/controllers/org/orgindexController.js"></script>
+<script src="/js/controllers/org/projectController.js"></script>
+
+<script src="/js/controllers/newproject/chooserepoController.js"></script>
+<script src="/js/controllers/newproject/choosesourceController.js"></script>
+<script src="/js/controllers/newproject/choosetypeController.js"></script>
+<script src="/js/controllers/newproject/newprojectindexController.js"></script>
+
+<!--End Controllers-->
+
+<!--Directives-->
+<script type="application/javascript" src="/js/directives/sidebarlist.js"></script>
+<script type="application/javascript" src="/js/directives/projectlist.js"></script>
+<!--End Directives-->
+
+<!--Services-->
+<script type="application/javascript" src="/js/services/codeswarmService.js"></script>
+<!--End Services-->
+
+
+</body>
 </html>
