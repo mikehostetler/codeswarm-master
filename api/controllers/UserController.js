@@ -63,19 +63,6 @@ module.exports = {
 	},
 
   /**
-   * `PUT /user`
-   */
-  update: function (req, res) {
-		var id = req.param('id');
-
-		if(id === undefined) {
-      res.json(500, {message: 'No session'});
-
-		}
-	},
-
-
-  /**
    * `POST /user`
    */
   update: function (req, res) {
