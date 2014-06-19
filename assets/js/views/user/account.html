@@ -7,11 +7,11 @@
 	<form id="user-config" data-bind="submit: frmAccount_Submit">
 		<div class="global-form user-config-form">
 	    <div class="gf-col">
-	      <label>Username</label>
+	      <label>Username - Locked</label>
 	      <input type="text" disabled="disabled" placeholder="Username" data-bind="value: username">
 
-	      <label>Email - Locked <i class="fa fa-question-circle"></i></label>
-	      <input disabled="disabled" type="text" placeholder="Email Address" data-bind="value: email">
+	      <label>Email</label>
+	      <input type="text" placeholder="Email Address" data-bind="value: email">
 
 	      <label>Password</label>
 	      <input name="branch" type="password" placeholder="Password" data-bind="value: password">
@@ -26,8 +26,9 @@
 
 	  <div class="user-config-image">
 			<label>Profile image</label>
+			<p><i class="note">Your profile image is managed by <a href="http://gravatar.com">Gravatar</a>.</i></p>
 			<div class="image-contain">
-				<img data-bind="attr: { src: gravatarUrl }">
+				<img data-bind="attr: { src: gravatarUrl }" />
 			</div>
 		</div>
 

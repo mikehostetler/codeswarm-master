@@ -132,8 +132,8 @@ define(['amplify'],function(require) {
 					if(cb) cb();
 				},
 				error: function(data) {
-					amplify.store.sessionStorage('cs_sid','');
-					amplify.publish('user.loggedIn',false);
+					amplify.store.sessionStorage('loggedIn',false);
+					amplify.store.localStorage('user',{});
 					amplify.publish('user.loggedIn',false);
 					if(cb) cb();
 				}

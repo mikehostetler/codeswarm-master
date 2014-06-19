@@ -3,10 +3,11 @@ define([
     'plugins/router',
     'knockout',
 		'models/user',
-		'ko.validate'
+		'ko.validate',
+		'gravatar',
   ],
 
-  function (app, router, ko, user) {
+  function (app, router, ko, User) {
 
 		return {
 
@@ -14,6 +15,7 @@ define([
 			 * local viewmodel properties
 			 */
 			router: router,
+
 			username: ko.observable().extend({required: true, minLength: 3}),
       email: ko.observable(),
 			password: ko.observable().extend({required: true, minLength: 3}),
@@ -24,11 +26,19 @@ define([
 			 * Activate our model, this method is always called
 			 */
 			activate: function() {
+				self = this;
 				// If session active, go home
-				user.isLoggedIn(function(isLoggedIn) {
+				User.isLoggedIn(function(isLoggedIn) {
 					if(isLoggedIn !== true) {
 						router.navigate('user/login');
+						return;
 					}
+
+					var user = amplify.store.localStorage('user');
+					self.username(user.username);
+					self.email(user.email);
+					if(user.email) 
+						self.gravatarUrl(gravatar(user.email,{size: 120}));
 				});
 			},
 
@@ -36,11 +46,15 @@ define([
 			 * Custom methods
 			 */
       cancelBtnClick: function () {
-        router.navigate('');
+        router.navigateBack();
       },
 
       frmAccount_Submit: function () {
-				alert('Not Implemented yet!');
+				// Validate!
+				if(this.username.isValid() && this.password.isValid()) {
+					var username = this.username(),
+							password = this.password();
+				}
 		  },
 
 			/*

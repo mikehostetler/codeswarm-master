@@ -88,13 +88,29 @@ module.exports = {
   userIdFromUsername: userIdFromUsername,
 
   tokenFor: function tokenFor(username, provider, cb) {
-    this.findOne({id: userIdFromUsername(username)}, replied);
+		Passport.find({ 
+				user: User.userIdFromUsername(username),
+				provider: provider
+			},
+			function(err, passports) {
+				if (err) cb(err);
+				else if (!passports) cb(new Error('No tokens found!'));
 
-    function replied(err, user) {
-      if (err) cb(err);
-      else if (! user) cb(new Error('No such user'));
-      else cb(null, user.tokens && user.tokens[provider]);
-    }
+				else {
+					user.tokens = user.tokens || {};
+					for (var i=0; i<passports.length; i++) {
+						pass = passports[i];
+						if(pass.provider) {
+							user.tokens[pass.provider] = {	
+									token: pass.tokens.accessToken || null,
+									username: pass.profile.login || null,
+									id: pass.identifier || null 
+								};
+						}
+					}
+					cb(null, user.tokens && user.tokens[provider]);
+				}
+			});
   }
 };
 
