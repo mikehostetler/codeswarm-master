@@ -21,7 +21,7 @@
 
         <div class="gf-actions">
             <button type="submit" class="btn">Login</button>
-            <p>New User? <a href="#user/register">Register Here</a></p>
+            <a href="#user/register" class="btn btn-sec">New User? Register Here</a>
         </div>
     </form>
 </div>
