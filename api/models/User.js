@@ -39,6 +39,11 @@ module.exports = {
       defaultsTo: []
     },
 
+		passports: {
+		  collection: 'passport',
+			via: 'user'
+		},
+
     derived_key: 'string',
     iterations: 'integer',
     password_scheme: 'string',
@@ -99,5 +104,18 @@ module.exports = {
 
 				cb(null, user);
 			});
-  }
+  },
+
+	tokenFor: function tokenFor(username, provider, cb) {
+		User.findOne({username: username}, function (err, user) {
+			if (err) res.json(401, {message: 'Could not find User'});
+			else if (user == undefined) res.json(401, {message: 'Could not find User'});
+
+			user = User.toJSON(user);
+			User.getTokens(user,function(err, user) {
+				if (err) cb(new Error('Error retrieving Tokens'));
+				else cb(null, user.tokens && user.tokens[provider]);
+			});
+		});
+	}
 };
