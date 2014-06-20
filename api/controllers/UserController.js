@@ -29,36 +29,21 @@ module.exports = {
 			return;
 		}
 
+		// Grab the username from the session
 		if(username === undefined) {
 			username = req.user.username;
 		}
 
-		User.findOne({id: User.userIdFromUsername(username)}, function (err, user) {
+		User.findOne({username: username}, function (err, user) {
 			if (err) res.json(401, {message: 'Could not find User'});
 			else if (user == undefined) res.json(401, {message: 'Could not find User'});
-			else {
-				var user = User.toJSON(user);
-				Passport.find({user: User.userIdFromUsername(username)},function(err, passports) {
-					if (err) res.json(401, {message: 'Error retrieving Passports'});
 
-					/**
-					 * Load up all the tokens
-					 */
-					user.tokens = user.tokens || {};
-					for (var i=0; i<passports.length; i++) {
-						pass = passports[i];
-						if(pass.provider) {
-							user.tokens[pass.provider] = {	
-									token: pass.tokens.accessToken || null,
-									username: pass.profile.login || null,
-									id: pass.identifier || null 
-								};
-						}
-					}
+			user = User.toJSON(user);
+			User.getTokens(user,function(err, user) {
+				if (err) res.json(401, {message: 'Error retrieving Tokens'});
 
-					res.json({ message: "Successfully found user", user: user });
-				});
-			}
+				res.json({ message: "Successfully found user", user: user });
+			});
 		});
 	},
 
@@ -72,9 +57,7 @@ module.exports = {
 			username = req.user.username;
 		}
 
-		User
-			.findOne({id: User.userIdFromUsername(username)},
-				function(err, user) {
+		User.findOne({id: username},function(err, user) {
 					if (err) {
 						res.send(err.status_code || 500, err);
 					}
