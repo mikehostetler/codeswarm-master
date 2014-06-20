@@ -78,16 +78,18 @@
         </ul>
 
     </header>
-    <span us-spinner="{radius:50, width:12, length: 16}" spinner-key="theSpinner"></span>
 
-    <div ng-view></div>
+		<div id="main">
+			<span us-spinner="{radius:50, width:12, length: 16}" spinner-key="theSpinner"></span>
+
+			<div ng-view></div>
+		</div>
 
     <footer>
         <a href="/#about" class="fa fa-search">About</a>
         <a href="/#support" class="fa fa-search">Support</a>
         <a href="/#contribute" class="fa fa-search">Contribute</a>
     </footer>
-
 </div>
 
 
