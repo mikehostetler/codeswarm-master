@@ -37,7 +37,7 @@ module.exports.policies = {
 	*/
 
 	ProjectController: {
-		create: ['passport','isAuthenticated', 'hasGithubToken', 'ownsGithubRepo'],
+		create: ['passport','isAuthenticated'],
 		list: ['passport','isAuthenticated'],
 		find: ['passport','isAuthenticated', 'userOwnsProjectOrPublic'],
 		tags: ['passport','isAuthenticated', 'userOwnsProjectOrPublic'],

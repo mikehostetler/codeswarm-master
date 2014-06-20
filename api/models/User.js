@@ -39,9 +39,10 @@ module.exports = {
       defaultsTo: []
     },
 
-    tokens: {
-      type: 'json'
-    },
+		passports: {
+		  collection: 'passport',
+			via: 'user'
+		},
 
     derived_key: 'string',
     iterations: 'integer',
@@ -70,13 +71,13 @@ module.exports = {
 	},
 
   beforeValidate: function beforeValidation(attrs, next) {
-    if (! attrs.id) attrs.id = userIdFromUsername(attrs.username);
+    if (! attrs.id) attrs.id = attrs.username;
     if (! attrs.roles) attrs.roles = [];
     next();
   },
 
   beforeCreate: function beforeCreate(attrs, next) {
-		attrs.id = userIdFromUsername(attrs.username);
+		attrs.id = attrs.username;
     next(null, attrs);
   },
 
@@ -85,41 +86,36 @@ module.exports = {
     next(null, attrs);
   },
 
-  userIdFromUsername: userIdFromUsername,
-
-  tokenFor: function tokenFor(username, provider, cb) {
-		Passport.find({ 
-				user: User.userIdFromUsername(username),
-				provider: provider
-			},
-			function(err, passports) {
+  getTokens: function getTokens(user, cb) {
+		Passport.find({ user: user.username },function(err, passports) {
 				if (err) cb(err);
 				else if (!passports) cb(new Error('No tokens found!'));
 
-				else {
-					if(user) {
-						user.tokens = user.tokens || {};
-						for (var i=0; i<passports.length; i++) {
-							pass = passports[i];
-							if(pass.provider) {
-								user.tokens[pass.provider] = {	
-										token: pass.tokens.accessToken || null,
-										username: pass.profile.login || null,
-										id: pass.identifier || null 
-									};
-							}
-						}
-						cb(null, user.tokens && user.tokens[provider]);
-					}
-					else {
-						cb(null);
-					}
-				}
-			});
-  }
-};
+				user.tokens = user.tokens || {};
 
-function userIdFromUsername(username) {
-	return username;
-	//return 'org.couchdb.user:' + username;
-}
+				for (var i=0; i<passports.length; i++) {
+					pass = passports[i];
+					user.tokens[pass.provider] = {	
+							token: pass.tokens.accessToken || null,
+							username: pass.profile.login || null,
+							id: pass.identifier || null 
+						};
+				}
+
+				cb(null, user);
+			});
+  },
+
+	tokenFor: function tokenFor(username, provider, cb) {
+		User.findOne({username: username}, function (err, user) {
+			if (err) res.json(401, {message: 'Could not find User'});
+			else if (user == undefined) res.json(401, {message: 'Could not find User'});
+
+			user = User.toJSON(user);
+			User.getTokens(user,function(err, user) {
+				if (err) cb(new Error('Error retrieving Tokens'));
+				else cb(null, user.tokens && user.tokens[provider]);
+			});
+		});
+	}
+};
