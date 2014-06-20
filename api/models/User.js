@@ -97,18 +97,23 @@ module.exports = {
 				else if (!passports) cb(new Error('No tokens found!'));
 
 				else {
-					user.tokens = user.tokens || {};
-					for (var i=0; i<passports.length; i++) {
-						pass = passports[i];
-						if(pass.provider) {
-							user.tokens[pass.provider] = {	
-									token: pass.tokens.accessToken || null,
-									username: pass.profile.login || null,
-									id: pass.identifier || null 
-								};
+					if(user) {
+						user.tokens = user.tokens || {};
+						for (var i=0; i<passports.length; i++) {
+							pass = passports[i];
+							if(pass.provider) {
+								user.tokens[pass.provider] = {	
+										token: pass.tokens.accessToken || null,
+										username: pass.profile.login || null,
+										id: pass.identifier || null 
+									};
+							}
 						}
+						cb(null, user.tokens && user.tokens[provider]);
 					}
-					cb(null, user.tokens && user.tokens[provider]);
+					else {
+						cb(null);
+					}
 				}
 			});
   }
