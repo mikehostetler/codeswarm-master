@@ -91,50 +91,118 @@ module.exports.routes = {
 
      */
 
+		/**
+		 * Authentication
+		 */
+    // Callbacks for local registration & authentication
+    'post /auth/local': { controller: 'AuthController', action: 'callback' },
+    'post /auth/local/:action': { controller: 'AuthController', action: 'callback' },
 
+    // Callbacks for each Passport.js provider
+    'get /auth/:provider': { controller: 'AuthController', action: 'provider' },
+    'get /auth/:provider/callback': { controller: 'AuthController', action: 'callback' },
+
+    // Logout action
+    'get /logout': { controller: 'AuthController', action: 'logout' },
+
+		/**
+		 * Users
+		 */
     // User Object management routes
     // Delete is intentionally not here for security
     // Automatic blueprint URL's are turned off on the User Model
     // because we want people to register and properly create a
-    // Passport (see /auth/local below)
-    'get /user/:id?': { controller: 'UserController', action: 'find', cors: true },
-    'put /user/:id?': { controller: 'UserController', action: 'update', cors: true },
+    // Passport (see /auth/local above)
+    'get /user/:id?': { controller: 'UserController', action: 'find' },
+    'post /user/:id': { controller: 'UserController', action: 'update' },
 
-    // Callbacks for local registration & authentication
-    'post /auth/local': { controller: 'AuthController', action: 'callback', cors: true },
-    'post /auth/local/:action': { controller: 'AuthController', action: 'callback', cors: true },
 
-    // Logout action
-    'get /logout': { controller: 'AuthController', action: 'logout', cors: true },
+		/**
+		 * Projects
+		 */
+		// List projects available on the provider
+		'get /projects/:provider': { controller: 'ProjectController', action: 'gatherByProvider' }
+		
+		// Create a project for a provider
+    'post /projects': { controller: 'ProjectController', action: 'create' },
 
-    // Callbacks for each Passport.js provider
-    'get /auth/:provider': { controller: 'AuthController', action: 'provider', cors: true },
-    'get /auth/:provider/callback': { controller: 'AuthController', action: 'callback', cors: true },
+		// List available projects
+    'get /projects': { controller: 'ProjectController', action: 'list' },
+    'get /:project-id': { controller: 'ProjectController', action: 'find' },
+	
+		// Edit & Delete 
+    'post /:project-id': { controller: 'ProjectController', action: 'edit' },
+    'post /:project-id/plugins': { controller: 'ProjectController', action: 'updatePlugins' },
+    'delete /:project-id': { controller: 'ProjectController', action: 'delete' },
 
-    /// Projects
-    'get /projects': { controller: 'ProjectController', action: 'list', cors: true },
-    'get /projects/:owner/:repo': { controller: 'ProjectController', action: 'find', cors: true },
+		/**
+		 * Tags
+		 */
+    'get /:project-id/tags': { controller: 'TagController', action: 'list' },
+    'post /:project-id/tags': { controller: 'TagController', action: 'create' },
+    'get /:project-id/:tag': { controller: 'TagController', action: 'find' },
+    'delete /:project-id/:tag': { controller: 'TagController', action: 'delete' },
+    'post /:project-id/:tag/star': { controller: 'TagController', action: 'starTag' },
+    'delete /:project-id/:tag/star': { controller: 'TagController', action: 'unstarTag' },
 
-    'get /projects/:owner/:repo/tags': { controller: 'ProjectController', action: 'tags', cors: true },
-    'put /projects/:owner/:repo/tags/:tag/star': { controller: 'ProjectController', action: 'starTag', cors: true },
-    'delete /projects/:owner/:repo/tags/:tag/star': { controller: 'ProjectController', action: 'unstarTag', cors: true },
-    'put /projects/:owner/:repo/tags/:tag/content': { controller: 'ProjectController', action: 'saveTagContent', cors: true },
+		/**
+		 * Branches
+		 */
+    'get /:project-id/branches': { controller: 'BranchController', action: 'list' },
+    'get /:project-id/:branch': { controller: 'BranchController', action: 'find' },
 
-    'post /projects': { controller: 'ProjectController', action: 'create', cors: true },
-    'post /:owner/:repo/deploy': { controller: 'ProjectController', action: 'deploy', cors: true },
-    'post /:owner/:repo/webhook': { controller: 'ProjectController', action: 'webhook', cors: true },
-    'delete /projects/:owner/:repo': { controller: 'ProjectController', action: 'destroy', cors: true },
-    'put /projects/:owner/:repo': { controller: 'ProjectController', action: 'update', cors: true },
-    'put /projects/:owner/:repo/plugins': { controller: 'ProjectController', action: 'updatePlugins', cors: true },
-    'get /projects/:owner/:repo/builds': { controller: 'BuildController', action: 'index', cors: true },
-    'get /projects/:owner/:repo/builds/tags': { controller: 'BuildController', action: 'byTag', cors: true },
-    'get /projects/:owner/:repo/builds/:build': { controller: 'BuildController', action: 'find', cors: true },
+		/**
+		 * Targets
+		 */
+    'get /:project-id/targets': { controller: 'TargetController', action: 'list' },
+    'post /:project-id/targets': { controller: 'TargetController', action: 'create' },
+    'get /:project-id/:target': { controller: 'TargetController', action: 'find' },
+    'delete /:project-id/:target': { controller: 'TargetController', action: 'delete' },
 
-    /// Plugin Config
-    'get /plugins/config/:type': { controller: 'PluginController', action: 'list', cors: true },
+		/**
+		 * Target Actions
+		 */
+    'get /:project-id/:target/build': { controller: 'TargetController', action: 'find' },
+    'get /:project-id/:target/deploy': { controller: 'TargetController', action: 'find' },
 
-    /// Catch All Route
-    'get /[^.?]+?': { controller: 'SiteController', action: 'redirect', cors: true }
+		/**
+		 * Builds
+		 */
+    'get /:project-id/builds': { controller: 'BuildController', action: 'index' },
+    'get /:project-id/:build': { controller: 'BuildController', action: 'find' },
+    'get /:project-id/builds/tags': { controller: 'BuildController', action: 'byTag' },
+
+		/**
+		 * Plugins
+		 */
+    'get /plugin/:type': { controller: 'PluginController', action: 'list' },
+
+		/**
+		 * Catch All Route
+		 */
+    'get /[^.?]+?': { controller: 'SiteController', action: 'redirect' },
+
+		/*****************************
+		 * OLD ROUTES
+		 *****************************/
+    'get /projects': { controller: 'ProjectController', action: 'list' },
+    'get /projects/:owner/:repo': { controller: 'ProjectController', action: 'find' },
+
+    'get /projects/:owner/:repo/tags': { controller: 'ProjectController', action: 'tags' },
+    'put /projects/:owner/:repo/tags/:tag/star': { controller: 'ProjectController', action: 'starTag' },
+    'delete /projects/:owner/:repo/tags/:tag/star': { controller: 'ProjectController', action: 'unstarTag' },
+    'put /projects/:owner/:repo/tags/:tag/content': { controller: 'ProjectController', action: 'saveTagContent' },
+
+    'post /projects': { controller: 'ProjectController', action: 'create' },
+    'post /:owner/:repo/deploy': { controller: 'ProjectController', action: 'deploy' },
+    'post /:owner/:repo/webhook': { controller: 'ProjectController', action: 'webhook' },
+    'delete /projects/:owner/:repo': { controller: 'ProjectController', action: 'destroy' },
+
+    'put /projects/:owner/:repo': { controller: 'ProjectController', action: 'update' },
+    'put /projects/:owner/:repo/plugins': { controller: 'ProjectController', action: 'updatePlugins' },
+    'get /projects/:owner/:repo/builds': { controller: 'BuildController', action: 'index' },
+    'get /projects/:owner/:repo/builds/tags': { controller: 'BuildController', action: 'byTag' },
+    'get /projects/:owner/:repo/builds/:build': { controller: 'BuildController', action: 'find' }
 };
 
 
