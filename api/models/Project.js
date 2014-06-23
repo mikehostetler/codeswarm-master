@@ -24,7 +24,7 @@ module.exports = {
 
     branch: {
       type: 'string',
-      required: true
+      defaultsTo: 'master'
     },
 
     started_at: 'integer',
@@ -72,7 +72,18 @@ module.exports = {
       defaultsTo: {}
     },
 
-    getTagsForCommit: getTagsForCommit
+    getTagsForCommit: function getTagsForCommit(targetCommit) {
+			var tag;
+			var tags = [];
+			if (! this.tags) return tags;
+
+			this.tags.forEach(function(tag) {
+				var commit = tag.commit && tag.commit.sha;
+				if (targetCommit == commit) tags.push(tag.name);
+			});
+
+			return tags;
+		}
   },
 
   beforeValidate: function beforeValidation(attrs, next) {
@@ -83,7 +94,12 @@ module.exports = {
 
   beforeCreate: function beforeCreate(attrs, next) {
     var match = attrs.repo.match(repoRegex);
+
+		// TODO - Update this to work for other providers
     attrs.id = match && match[5];
+		if(attrs.repo.search(/github.com/i)) {
+			attrs.id = "gh-"+attrs.id.replace(/\//,'-');
+		}
 
     async.parallel([
       function(cb) {
@@ -92,8 +108,7 @@ module.exports = {
       function(cb) {
         enrichWithGithubBranches(attrs, cb);
       }
-      ], next);
-
+		], next);
   },
 
   beforeUpdate: function beforeUpdate(attrs, next) {
@@ -104,10 +119,25 @@ module.exports = {
       function(cb) {
         enrichWithGithubBranches(attrs, cb);
       }
-      ], next);
+		], next);
   },
 
-  afterUpdate: afterUpdate,
+  afterUpdate: function afterUpdate(project, cb) {
+		var id = project.id;
+		var sockets = sails.io.sockets.in(id);
+		for(var attr in project) {
+			sockets.emit('update', id, attr, project[attr]);
+		}
+		cb();
+	},
+
+	beforeDestroy: function beforeDestroy(project, cb) {
+		cb();
+  },
+
+	afterDestroy: function afterDestroy(project, cb) {
+		cb();
+  },
 
   views: {
     owner_id_begins_with: {
@@ -131,17 +161,6 @@ module.exports = {
   }
 };
 
-
-function afterUpdate(project, cb) {
-  var id = project.id;
-  var sockets = sails.io.sockets.in(id);
-  for(var attr in project) {
-    sockets.emit('update', id, attr, project[attr]);
-  }
-  cb();
-}
-
-
 function enrichWithGithubTags(project, cb) {
   github.tags(project, gotTags);
 
@@ -154,7 +173,6 @@ function enrichWithGithubTags(project, cb) {
   }
 }
 
-
 function enrichWithGithubBranches(project, cb) {
   github.branches(project, gotBranches);
 
@@ -165,21 +183,4 @@ function enrichWithGithubBranches(project, cb) {
       cb();
     }
   }
-}
-
-
-/// getTagsForCommit
-
-function getTagsForCommit(targetCommit) {
-  var tag;
-  var tags = [];
-  if (! this.tags) return tags;
-
-
-  this.tags.forEach(function(tag) {
-    var commit = tag.commit && tag.commit.sha;
-    if (targetCommit == commit) tags.push(tag.name);
-  });
-
-  return tags;
 }

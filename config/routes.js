@@ -116,24 +116,25 @@ module.exports.routes = {
     'get /user/:id?': { controller: 'UserController', action: 'find' },
     'post /user/:id': { controller: 'UserController', action: 'update' },
 
-
 		/**
 		 * Projects
 		 */
 		// List projects available on the provider
-		'get /projects/:provider': { controller: 'ProjectController', action: 'gatherByProvider' }
+		'get /projects/:provider': { controller: 'ProjectController', action: 'gatherByProvider' },
 		
 		// Create a project for a provider
     'post /projects': { controller: 'ProjectController', action: 'create' },
 
 		// List available projects
     'get /projects': { controller: 'ProjectController', action: 'list' },
-    'get /:project-id': { controller: 'ProjectController', action: 'find' },
+    'get r|^/([gh,gc,bb].*)$|project-id': { controller: 'ProjectController', action: 'find' },
 	
 		// Edit & Delete 
-    'post /:project-id': { controller: 'ProjectController', action: 'edit' },
+    'post r|^/([gh,gc,bb].*)$|project-id': { controller: 'ProjectController', action: 'edit' },
+    'delete r|^/([gh,gc,bb].*)$|project-id': { controller: 'ProjectController', action: 'destroy' },
+
+// -----------------------------
     'post /:project-id/plugins': { controller: 'ProjectController', action: 'updatePlugins' },
-    'delete /:project-id': { controller: 'ProjectController', action: 'delete' },
 
 		/**
 		 * Tags

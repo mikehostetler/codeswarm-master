@@ -24,12 +24,30 @@ var repoRegexp = /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([
 
 module.exports = {
 
+	/*
+		'get /projects/:provider': { controller: 'ProjectController', action: 'gatherByProvider' },
+		
+		// List available projects
+    'get /projects': { controller: 'ProjectController', action: 'list' },
+    'get /:project-id': { controller: 'ProjectController', action: 'find' },
+	
+		// Edit & Delete 
+    'post /:project-id': { controller: 'ProjectController', action: 'edit' },
+    'post /:project-id/plugins': { controller: 'ProjectController', action: 'updatePlugins' },
+    'delete /:project-id': { controller: 'ProjectController', action: 'delete' },
+		*/
+  /**
+   * `GET /projects/:provider`
+	 *	List projects available on the provider
+   */
+	gatherByProvider: function gatherByProvider (req, res) {
+	},
+
   /**
    * Action blueprints:
    *    `POST /projects`
    */
-   create: function (req, res) {
-
+  create: function (req, res) {
     var project = req.body;
     project.public = project.public == 'true';
     project.owners = [req.user.username];
@@ -48,11 +66,8 @@ module.exports = {
    * Action blueprints:
    *    `PUT /projects/:owner/:repo`
    */
-   update: function (req, res) {
-
-
-    var id = req.param('owner') + '/' + req.param('repo');
-
+	edit: function (req, res) {
+		var id = req.param('project-id');	
     req.body.public = !! req.body.public;
 
     Project.merge(id, req.body, saved);
@@ -68,11 +83,8 @@ module.exports = {
    *    `GET /projects/:owner/:repo`
    */
   find: function (req, res) {
-
-    var id = req.param('owner') + '/' + req.param('repo');
-
+		var id = req.param('project-id');	
     Project.findOne({id: id}, replied);
-
     function replied(err, project) {
       if (err) res.send(err.status_code || 500, err);
       else if (! project) res.send(404, new Error('Not found'));
@@ -109,81 +121,6 @@ module.exports = {
       }
     }
   },
-
-  /**
-   *    `PUT /projects/:owner/:repo/tags/:tag/star`
-   */
-  starTag: function (req, res) {
-    var id = req.param('owner') + '/' + req.param('repo');
-
-    Project.findOne({id: id}, replied);
-
-    function replied(err, project) {
-      if (err) res.send(res.status_code || 500, err);
-      else if (! project) res.send(404, new Error('Not found'));
-      else {
-        var tag = req.param('tag');
-        if (! project.starred_tags) project.starred_tags = [];
-        if (project.starred_tags.indexOf(tag) < 0) project.starred_tags.push(tag);
-        project.save(savedProject);
-      };
-    }
-
-    function savedProject(err) {
-      if (err) res.send(res.status_code || 500, err);
-      else res.json({ok: true});
-    }
-  },
-
-  /**
-   *    `DELETE /projects/:owner/:repo/tags/:tag/star`
-   */
-  unstarTag: function (req, res) {
-    var id = req.param('owner') + '/' + req.param('repo');
-
-    Project.findOne({id: id}, replied);
-
-    function replied(err, project) {
-      if (err) res.send(res.status_code || 500, err);
-      else if (! project) res.send(404, new Error('Not found'));
-      else {
-        var tag = req.param('tag');
-        if (! project.starred_tags) project.starred_tags = [];
-        var idx = project.starred_tags.indexOf(tag);
-        if (idx >= 0) project.starred_tags.splice(idx, 1);
-        project.save(savedProject);
-      };
-    }
-
-    function savedProject(err) {
-      if (err) res.send(res.status_code || 500, err);
-      else res.json({ok: true});
-    }
-  },
-
-
-  /**
-   *    `PUT /projects/:owner/:repo/tags/:tag/content`
-   */
-  saveTagContent: function (req, res) {
-    var id = req.param('owner') + '/' + req.param('repo');
-    var tag = req.param('tag');
-
-    Project.findOne({id: id}, replied);
-
-    function replied(err, project) {
-      if (! project.tag_content) project.tag_content = {};
-      project.tag_content[tag] = req.body;
-      project.save(savedProject);
-    }
-
-    function savedProject(err) {
-      if (err) res.send(res.status_code || 500, err);
-      else res.json({ok: true});
-    }
-  },
-
-
 
   /**
    *    `GET /projects`
@@ -253,83 +190,20 @@ module.exports = {
     }
   },
 
-
-  /**
-   *     `POST /:owner/:repo/deploy`
-   */
-  deploy: function(req, res) {
-    var projectName = req.param('owner') + '/' + req.param('repo');
-
-    Project.findOne({id: projectName}, gotProject);
-
-    function gotProject(err, project) {
-      if (! err && ! project) {
-        err = new Error('Could not find project');
-        err.status_code = 404;
-      }
-
-      if (err) return res.send(err.status_code || 500, err);
-
-      if (! project.type) return res.send(500, new Error('no project type defined'));
-
-      var run = true;
-      if (project.state == 'running') {
-        var timeout = project.started_at + testConfig.timeout_ms;
-        run = timeout < Date.now();
-      }
-
-      if (! run) return res.send(400, new Error('Build is still running, please wait...'));
-
-      var id = uuid();
-      var time = Date.now();
-
-      var build = {
-        id: id,
-        project: project.id,
-        previous_build: project.last_build,
-        previous_successful_build: project.last_successful_build,
-        created_at: time,
-        triggered_by: req.user.username,
-        repo: project.repo,
-        dir: id,
-        branch: project.branch,
-        commit: req.body.tag || 'HEAD',
-        type: project.type,
-        plugins: project.plugins,
-        state: 'pending',
-        fresh: true
-      };
-
-      build.branch = project.branch;
-
-      // Set state object
-      build.state = 'pending';
-
-      Build.create(build, createdBuild);
-    }
-
-    function createdBuild(err, build) {
-      if (err) res.send(err.status_code || 500, err);
-      else res.json(build);
-    }
-  },
-
-
   // destroy
-
   destroy: function destroy(req, res) {
-    var projectName = req.param('owner') + '/' + req.param('repo');
+		var projectId = req.param('project-id');	
 
     async.series([
       getProject,
       validateAuthorization,
       deleteProject],
-      reply);
+		reply);
 
     var project;
 
     function getProject(cb) {
-      Project.get(projectName, gotProject);
+			Project.findOne({id: projectId}, gotProject);
 
       function gotProject(err, _project) {
         if (_project) project = _project;
@@ -340,17 +214,22 @@ module.exports = {
     function validateAuthorization(cb) {
       if (! project.owners)
         return res.forbidden('No project owners');
-      if (project.owners.indexOf(req.user) < 0)
-        return res.forbidden('you are not an owner of ' + projectName);
+      if (project.owners.indexOf(req.user.username) < 0)
+        return res.forbidden('you are not an owner of ' + projectId);
       cb();
     }
 
 
     function deleteProject(cb) {
-      projects.delete(project, cb);
+			console.log("Try and destroy!",projectId);
+      Project.destroy({id: projectId},function(err) {
+					console.log("Destroyed?",err);
+					cb(err);
+				});
     }
 
     function reply(err) {
+			console.log("Finally here!");
       if (err) return res.send(err.status_code || 500, err);
       else return res.json({ok: true});
     }
@@ -412,9 +291,9 @@ module.exports = {
   /// Update Plugins
 
   updatePlugins: function updatePlugins(req, res) {
-    var projectName = req.param('owner') + '/' + req.param('repo');
+    var projectId = req.param('project-id');
 
-    Project.findOne({id: projectName}, foundProject);
+    Project.findOne({id: projectId}, foundProject);
 
     function foundProject(err, project) {
       if (err) res.send(err.status_code || 500, err);

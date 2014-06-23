@@ -2,9 +2,9 @@ module.exports = userOwnsProject;
 
 function userOwnsProject(req, res, next) {
   var user = req.user.username;
-  var project = req.param('owner') + '/' + req.param('repo');
+	var id = req.param('project-id');	
 
-  Project.findOne({id: project}, replied);
+  Project.findOne({id: id}, replied);
 
   function replied(err, project) {
     if (err) res.send(err.status_code || 500, err);

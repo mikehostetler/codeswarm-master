@@ -50,7 +50,7 @@
     "rc": "~0.3.3",
     "request": "~2.34.0",
     "sails": "git+https://github.com/mikehostetler/sails.git",
-    "sails-couchdb-orm": "^0.10.1",
+    "sails-couchdb-orm": "^0.10.2",
     "sails-disk": "~0.10.0",
     "validator": "^3.12.0"
   },
