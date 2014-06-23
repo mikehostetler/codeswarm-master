@@ -122,15 +122,11 @@ passport.connect = function (req, query, profile, next) {
         }
 
         // Save any updates to the Passport before moving on
-        passport.save(function (err, passport) {
+        passport.save(function (err) {
           if (err) return next(err);
 
-					// Hit a random error here once that I can't recreate
-					// Server restarted because `passport.user.id` was not defined
-					// TODO - Add better data testing here.
-
           // Fetch the user associated with the Passport
-          User.findOne({id: passport.user.id}, next);
+          User.findOne({username: passport.user}, next);
         });
       }
     } else {
