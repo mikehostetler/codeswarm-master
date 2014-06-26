@@ -23,6 +23,7 @@ module.exports = {
   log: {
     level: 'info',
 		noShip: true
-  }
+  },
+	
 
 };

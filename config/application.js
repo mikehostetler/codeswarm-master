@@ -1,6 +1,5 @@
 var extend   = require('util')._extend;
 var Cookie   = require('cookie');
-var passport = require('../lib/passport');
 
 module.exports = {
 
@@ -8,7 +7,6 @@ module.exports = {
   express: {
     customMiddleware: function(app) {
       app.use(session);
-      //app.use(passport.initialize());
     }
   },
 	paths: {

@@ -6,7 +6,8 @@ var spawn        = require('child_process').spawn;
 module.exports = Command;
 
 function Command(command, args, options) {
-  console.log('[command] %s %s (%j)', command, (args || []).join(' '), options);
+  sails.log.debug('[COMMAND] %s %s (%j)', command, (args || []).join(' '), options);
+
   EventEmitter.call(this);
 
   var self = this;
@@ -39,15 +40,12 @@ function Command(command, args, options) {
       process.nextTick(function() {
         self.emit('close', code);
       });
-
     }
   }
 }
 
-inherits(Command, EventEmitter);
-
-var C = Command.prototype;
-
-C.kill = function kill(signal) {
+Command.prototype.kill = function kill(signal) {
   this._child.kill(signal);
 }
+
+inherits(Command, EventEmitter);

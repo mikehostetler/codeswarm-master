@@ -6,10 +6,10 @@ var mkdirp   = require('mkdirp');
 var extend   = require('util')._extend;
 var Command  = require('./command');
 
-module.exports = Worker;
-
 function Worker(build) {
-  if (! this instanceof Worker) return new Worker(build);
+  if (!this instanceof Worker) 
+		return new Worker(build);
+
   EE2.call(this);
   this._backgroundCommands = [];
   this.executing = false;
@@ -19,14 +19,12 @@ function Worker(build) {
 
 inherits(Worker, EE2);
 
-var W = Worker.prototype;
-
-W.init = function init(image, cb) {
+Worker.prototype.init = function init(image, cb) {
   // nothing to see here, move on...
   process.nextTick(cb);
 };
 
-W.command = function command(command, args, options) {
+Worker.prototype.command = function command(command, args, options) {
   var self = this;
   var closed = false;
 
@@ -41,14 +39,15 @@ W.command = function command(command, args, options) {
   console.log('[WORKER] command: %s %s (%j)'.yellow, command, args.join(' '), options);
 
   var background = options.background || options.silent;
-  if (self.executing && ! background) throw new Error('Worker already executing command, parallel commands not allowed. Was trying to execute command ' + command);
+  if (self.executing && !background) 
+		throw new Error('Worker already executing command, parallel commands not allowed. Was trying to execute command ' + command);
 
-  if (! background) {
+  if (!background) {
     self.executing = true;
     self._pendingCommands ++;
   }
 
-  if (! background)
+  if (!background)
     self.emit('command', command, args, options);
 
   var child = new Command(command, args, options);
@@ -101,35 +100,37 @@ W.command = function command(command, args, options) {
 
 };
 
-W.fakeCommand = function fakeCommand(command) {
+Worker.prototype.fakeCommand = function fakeCommand(command) {
   this.emit('command', command, [], {});
 }
 
-W.out = function out(what) {
+Worker.prototype.out = function out(what) {
   this.emit('stdout', what);
 };
 
-W._fullPath = function fullPath(dir) {
+Worker.prototype._fullPath = function fullPath(dir) {
   return path.normalize(path.join('/tmp', dir));
 };
 
-W.reset = function reset() {
+Worker.prototype.reset = function reset() {
   this._endResults = undefined;
   this._pendingCommands = 0;
   this._endAfterCommandsEnd = false;
 };
 
-W.end = function end(data, force) {
+Worker.prototype.end = function end(data, force) {
   if (data) this._endResults = data;
 
-  if (!this._pendingCommands || force) this._terminate();
+  if (!this._pendingCommands || force) {
+		this._terminate();
+	}
   else {
-    console.log('[worker] end() - still pending commands, not ending yet...'.yellow);
+    console.log('[WORKER] end() - still pending commands, not ending yet...'.yellow);
     this._endAfterCommandsEnd = true;
   }
 };
 
-W._terminate = function terminate() {
+Worker.prototype._terminate = function terminate() {
   if (! this._pendingCommands) this.executing = false;
   if (this._endResults) {
     this.emit('data', this._endResults);
@@ -138,14 +139,16 @@ W._terminate = function terminate() {
   this.emit('end');
 };
 
-W.dispose = function dispose() {
+Worker.prototype.dispose = function dispose() {
   this._backgroundCommands.forEach(function(command) {
     command.kill();
   });
 }
 
-W.error = function error(err) {
+Worker.prototype.error = function error(err) {
   console.error(err.stack || err);
   this.emit('error', err);
   this.end(null, true);
 };
+
+module.exports = Worker;

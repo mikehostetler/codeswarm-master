@@ -1,35 +1,32 @@
 var nano    = require('nano');
 var cqs     = require('cqs');
-var couchdb = require('../config/couchdb');
+var couchdb = require('../../config/couchdb');
 
 var VISIBILITY_TIMEOUT = 60 * 5; // 5 minutes timeout
 var POLL_INTERVAL = 3000;
 
 var options = {
-  couch: couchdb.url,
-  db: 'cqs'
+	couch: couchdb.url,
+	db: 'build_queue'
 };
 
 cqs = cqs.defaults(options);
 
 var queue;
 
-/// init
-
-exports.init = init;
-
-function init(cb) {
+/**
+ * Init the Queue
+ */
+exports.init = function init(cb) {
   var db = nano(couchdb.url);
 
   db.use(options.db).get('someid', getReplied);
-
   function getReplied(err) {
     if (err) {
       if (err.reason == 'no_db_file') {
         createDB(function(err) {
           if (err) cb(err);
           else {
-            console.log('created.');
             init(cb);
           }
         });
@@ -47,42 +44,35 @@ function init(cb) {
   }
 
   function createDB(cb) {
-    console.log('creating queue CouchDB database...');
     db.db.create(options.db, cb);
   }
-
 
   function createdQueue(err, _queue) {
     if (err) cb(err);
     else {
-      queue = _queue;
-      queue.VisibilityTimeout = VISIBILITY_TIMEOUT;
+      sails.config.codeswarm.build_queue = _queue;
+      sails.config.codeswarm.build_queue.VisibilityTimeout = VISIBILITY_TIMEOUT;
       cb();
     }
   }
-
 }
 
-
-/// push
-
-exports.push = push;
-
-function push(m, cb) {
+/**
+ * Push an item onto the Queue
+ */
+exports.queueBuild = exports.push = function push(build, cb) {
   if (! cb) throw new Error('need callback');
-  console.log('GOING TO QUEUE build:', m);
-  queue.send(m, cb);
+  sails.config.codeswarm.build_queue.send(build, cb);
 }
 
-/// pull
-
-exports.pull = pull;
-
-function pull(cb) {
+/**
+ * Push an item onto the Queue
+ */
+exports.dequeueBuild = exports.pull = function pull(cb) {
   if ('function' != typeof cb) throw new Error('need callback');
 
-  queue.VisibilityTimeout = VISIBILITY_TIMEOUT; // HACK
-  queue.receive(pulled);
+  sails.config.codeswarm.build_queue.VisibilityTimeout = VISIBILITY_TIMEOUT; // HACK
+  sails.config.codeswarm.build_queue.receive(pulled);
   var m;
 
   function pulled(err, messages) {

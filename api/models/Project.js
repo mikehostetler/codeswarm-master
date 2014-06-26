@@ -112,14 +112,7 @@ module.exports = {
   },
 
   beforeUpdate: function beforeUpdate(attrs, next) {
-    async.parallel([
-      function(cb) {
-        enrichWithGithubTags(attrs, cb);
-      },
-      function(cb) {
-        enrichWithGithubBranches(attrs, cb);
-      }
-		], next);
+		next();
   },
 
   afterUpdate: function afterUpdate(project, cb) {

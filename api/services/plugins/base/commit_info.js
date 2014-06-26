@@ -1,6 +1,5 @@
-module.exports = getCommitInfo;
-
-function getCommitInfo(build, worker) {
+module.exports = function getCommitInfo(build, worker) {
+	// TODO - This should support the BUILD Revision
   var cmd = worker.command('git', ['log', '--name-status', 'HEAD^..HEAD'], {silent: true});
   var out = '';
   cmd.stdout.setEncoding('utf8');
@@ -43,7 +42,6 @@ function parseCommitInfo(out) {
     date: date,
     message: message
   }
-
 }
 
 function parseCommit(line) {
@@ -79,8 +77,7 @@ function parseDate(line) {
   return date;
 }
 
-/// Misc
-
+/// Util
 function trim(s) {
   return s.trim();
 }

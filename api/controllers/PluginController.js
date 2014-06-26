@@ -7,7 +7,7 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
-var projectTypes = require('../../config/project_types');
+//var projectTypes = require('../../config/project_types');
 
 module.exports = {
 
@@ -15,7 +15,7 @@ module.exports = {
     var type = req.param('type');
     if (! type) return res.send(409, 'No type defined');
 
-    var plugins = projectTypes[type] || [];
+    var plugins = sails.config.codeswarm.project_types[type] || [];
     var configs = {};
 
     plugins.forEach(function(plugin) {

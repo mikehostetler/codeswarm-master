@@ -127,7 +127,8 @@ module.exports.routes = {
 
 		// List available projects
     'get /projects': { controller: 'ProjectController', action: 'list' },
-    'get r|^/([gh,gc,bb].*)$|project-id': { controller: 'ProjectController', action: 'find' },
+    'get r|^/([A-Za-z0-9-/]+)/deploy$|project-id': { controller: 'ProjectController', action: 'deploy' },
+    'get r|^/([A-Za-z0-9-/]+)$|project-id': { controller: 'ProjectController', action: 'find' },
 	
 		// Edit & Delete 
     'post r|^/([gh,gc,bb].*)$|project-id': { controller: 'ProjectController', action: 'edit' },
@@ -139,32 +140,32 @@ module.exports.routes = {
 		/**
 		 * Tags
 		 */
-    'get /:project-id/tags': { controller: 'TagController', action: 'list' },
-    'post /:project-id/tags': { controller: 'TagController', action: 'create' },
-    'get /:project-id/:tag': { controller: 'TagController', action: 'find' },
-    'delete /:project-id/:tag': { controller: 'TagController', action: 'delete' },
-    'post /:project-id/:tag/star': { controller: 'TagController', action: 'starTag' },
-    'delete /:project-id/:tag/star': { controller: 'TagController', action: 'unstarTag' },
+    //'get /:project-id/tags': { controller: 'TagController', action: 'list' },
+    //'post /:project-id/tags': { controller: 'TagController', action: 'create' },
+    //'get /:project-id/:tag': { controller: 'TagController', action: 'find' },
+    //'delete /:project-id/:tag': { controller: 'TagController', action: 'delete' },
+    //'post /:project-id/:tag/star': { controller: 'TagController', action: 'starTag' },
+    //'delete /:project-id/:tag/star': { controller: 'TagController', action: 'unstarTag' },
 
 		/**
 		 * Branches
 		 */
-    'get /:project-id/branches': { controller: 'BranchController', action: 'list' },
-    'get /:project-id/:branch': { controller: 'BranchController', action: 'find' },
+    //'get /:project-id/branches': { controller: 'BranchController', action: 'list' },
+    //'get /:project-id/:branch': { controller: 'BranchController', action: 'find' },
 
 		/**
 		 * Targets
 		 */
-    'get /:project-id/targets': { controller: 'TargetController', action: 'list' },
-    'post /:project-id/targets': { controller: 'TargetController', action: 'create' },
-    'get /:project-id/:target': { controller: 'TargetController', action: 'find' },
-    'delete /:project-id/:target': { controller: 'TargetController', action: 'delete' },
+    //'get /:project-id/targets': { controller: 'TargetController', action: 'list' },
+    //'post /:project-id/targets': { controller: 'TargetController', action: 'create' },
+    //'get /:project-id/:target': { controller: 'TargetController', action: 'find' },
+    //'delete /:project-id/:target': { controller: 'TargetController', action: 'delete' },
 
 		/**
 		 * Target Actions
 		 */
-    'get /:project-id/:target/build': { controller: 'TargetController', action: 'find' },
-    'get /:project-id/:target/deploy': { controller: 'TargetController', action: 'find' },
+    //'get /:project-id/:target/build': { controller: 'TargetController', action: 'find' },
+    //'get /:project-id/:target/deploy': { controller: 'TargetController', action: 'find' },
 
 		/**
 		 * Builds
@@ -185,7 +186,7 @@ module.exports.routes = {
 
 		/*****************************
 		 * OLD ROUTES
-		 *****************************/
+		 *****************************
     'get /projects': { controller: 'ProjectController', action: 'list' },
     'get /projects/:owner/:repo': { controller: 'ProjectController', action: 'find' },
 
@@ -204,6 +205,7 @@ module.exports.routes = {
     'get /projects/:owner/:repo/builds': { controller: 'BuildController', action: 'index' },
     'get /projects/:owner/:repo/builds/tags': { controller: 'BuildController', action: 'byTag' },
     'get /projects/:owner/:repo/builds/:build': { controller: 'BuildController', action: 'find' }
+		*/
 };
 
 

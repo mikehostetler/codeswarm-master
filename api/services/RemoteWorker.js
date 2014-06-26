@@ -1,6 +1,6 @@
 var inherits = require('util').inherits;
-var Test     = require('remote-test');
-var Worker   = require('./worker');
+//var Test     = require('remote-test');
+var Worker   = require('./SimpleWorker');
 var extend   = require('util')._extend;
 
 module.exports = RemoteWorker;
@@ -16,10 +16,13 @@ var RW = RemoteWorker.prototype;
 
 RW.init = function init(image, cb) {
   var self = this;
+	cb();
+	/*
   this.remoteTest = new Test(image);
   this.remoteTest.on('ready', function() {
     cb();
   });
+	*/
 };
 
 RW.command = function command(command, args, options) {

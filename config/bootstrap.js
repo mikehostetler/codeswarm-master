@@ -9,14 +9,12 @@
  */
 
 var async = require('async');
-var queue = require('../lib/queue');
-
 module.exports.bootstrap = function (cb) {
 
   async.series([
 			initAdminUser,
 			initSessionStore,
-      initQueue,
+      initBuildQueue,
       initPlugins,
       startWorker,
 			welcomeMessage,
@@ -49,12 +47,12 @@ module.exports.bootstrap = function (cb) {
 		});
 	}
 
-  function initQueue(cb) {
-    queue.init(cb);
+  function initBuildQueue(cb) {
+    BuildQueue.init(cb);
   }
 
   function initPlugins(cb) {
-    require('../lib/plugins').init(cb);
+		PluginService.init(cb);
   }
 
 	function initSessionStore(cb) {
@@ -81,8 +79,7 @@ module.exports.bootstrap = function (cb) {
 
   function startWorker(cb) {
     if (process.env.NODE_ENV != 'production') {
-      var runner = require('../lib/runner');
-      runner.start();
+			BuildRunner.start();
     }
 
     process.nextTick(cb);

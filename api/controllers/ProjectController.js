@@ -18,7 +18,6 @@
 var async    = require('async');
 var extend   = require('util')._extend;
 var uuid     = require('../../lib/uuid');
-var testConfig = require('../../config/test');
 
 var repoRegexp = /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?\.git$/;
 
@@ -232,6 +231,66 @@ module.exports = {
 			console.log("Finally here!");
       if (err) return res.send(err.status_code || 500, err);
       else return res.json({ok: true});
+    }
+  },
+
+  /**
+   *     `POST /:owner/:repo/deploy`
+   */
+  deploy: function(req, res) {
+		var projectId = req.param('project-id');	
+
+    Project.findOne({id: projectId}, gotProject);
+
+    function gotProject(err, project) {
+      if (! err && ! project) {
+        err = new Error('Could not find project');
+        err.status_code = 404;
+      }
+
+      if (err) return res.send(err.status_code || 500, err);
+
+      if (! project.type) return res.send(500, new Error('no project type defined'));
+
+      var run = true;
+      if (project.state == 'running') {
+        var timeout = project.started_at + sails.config.codeswarm.timeout_ms;
+        run = timeout < Date.now();
+      }
+
+      //if (! run) return res.send(400, new Error('Build is still running, please wait...'));
+
+      var id = uuid();
+      var time = Date.now();
+
+      var build = {
+        id: id,
+        project: project.id,
+        previous_build: project.last_build,
+        previous_successful_build: project.last_successful_build,
+        created_at: time,
+        triggered_by: req.user.username,
+        repo: project.repo,
+        dir: id,
+        branch: project.branch,
+        commit: req.body && req.body.tag || 'HEAD',
+        type: project.type,
+        plugins: project.plugins || '{}',
+        state: 'pending',
+        fresh: true
+      };
+
+      build.branch = project.branch;
+
+      // Set state object
+      build.state = 'pending';
+
+      Build.create(build, createdBuild);
+    }
+
+    function createdBuild(err, build) {
+      if (err) res.send(err.status_code || 500, err);
+      else res.json(build);
     }
   },
 

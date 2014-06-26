@@ -1,15 +1,8 @@
 var extend   = require('util')._extend;
 var EE2      = require('eventemitter2').EventEmitter2;
+var buildObserver = exports = module.exports = new EE2();
 
-var hub = exports = module.exports = new EE2();
-
-var PUSH_INTERVAL_MS = 2000;
-
-/// addWorker
-
-hub.addWorker = addWorker;
-
-function addWorker(build, worker) {
+buildObserver.addWorker = function addWorker(build, worker) {
 
   build.started_at = Date.now();
   build.ended = false;
@@ -26,14 +19,16 @@ function addWorker(build, worker) {
   worker.on('build.end', onBuildEnd);
 
   pushBuild();
-  var interval = setInterval(pushBuild, PUSH_INTERVAL_MS);
+  var interval = setInterval(pushBuild, sails.config.codeswarm.push_interval);
 
+	/*
   Project.merge(build.project, {
     state: 'running',
     started_at: Date.now(),
     ended_at: '',
     last_build: build.id
   }, updatedProject);
+	*/
 
   function onError(err) {
     var lastCommand = build.lastCommand;
@@ -114,6 +109,7 @@ function addWorker(build, worker) {
     var projectData = {
       data: data
     };
+		// TODO 
     ProjectData.merge(build.project, projectData, savedProjectData);
 
     var buildData = {
@@ -123,6 +119,7 @@ function addWorker(build, worker) {
       tags: build.tags,
       data: data
     };
+		// TODO 
     BuildData.create(buildData, savedBuildData);
   }
 
@@ -143,6 +140,7 @@ function addWorker(build, worker) {
       };
       if (build.success) projectProps.last_successful_build = build.id;
 
+			// TODO
       Project.merge(build.project, projectProps, updatedProject);
     }
   }
@@ -154,17 +152,11 @@ function addWorker(build, worker) {
   }
 
   function pushBuild() {
-
     if (build) {
-      sails.io.sockets.in(build.project + ' builds').
-        emit('build', build);
-
-      sails.io.sockets.in('build ' + build.id).
-        emit('build detail', build.project, Build.forShow(build));
-
+      sails.io.sockets.in(build.project + ' builds').emit('build', build);
+      sails.io.sockets.in('build ' + build.id).emit('build detail', build.project, Build.forShow(build));
     }
   }
-
 }
 
 function savedProjectData(err) {

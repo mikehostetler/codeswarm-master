@@ -7,7 +7,7 @@
  */
 
 var extend  = require('util')._extend;
-var goBuild = require('../../lib/build');
+var queueBuild = require('../services/BuildQueue').queueBuild;
 
 module.exports = {
 
@@ -50,7 +50,7 @@ module.exports = {
 
     plugins: {
       type: 'json',
-      required: true
+			required: true,
     },
 
     stages: 'json',
@@ -103,7 +103,7 @@ module.exports = {
   beforeUpdate: searchTags,
   beforeCreate: searchTags,
 
-  afterCreate: goBuild,
+  afterCreate: queueBuild,
 
   forShow: forShow
 };
