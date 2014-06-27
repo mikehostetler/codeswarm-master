@@ -1,12 +1,13 @@
-module.exports = buildBelongsToProject;
-
-function buildBelongsToProject(req, res, next) {
+module.exports = function buildBelongsToProject(req, res, next) {
   var project = req.project.id;
-  if (! project) return res.send(404, new Error('Project not found'));
+  if (! project) 
+		return res.send(404, new Error('Project not found'));
+	
   var build = req.param('build');
 
-  Build.findOne({id: build}, replied);
+	sails.log.silly("Policy::buildBelongsToProject - ",project, build);
 
+  Build.findOne({id: build}, replied);
   function replied(err, build) {
     if (err) res.send(err.status_code || 500, err);
     else if (! build) return res.send(404, new Error('Build not found'));

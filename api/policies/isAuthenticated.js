@@ -8,6 +8,7 @@
  *
  */
 module.exports = function(req, res, next) {
+	sails.log.silly("Policy::isAuthenticated ");
 	//sails.log.debug('API -> Policies -> isAuthenticated.js -> Checking req.user policy on request!',req.user);
   if (req.user) {
 		next();
