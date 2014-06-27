@@ -6,7 +6,7 @@ var spawn        = require('child_process').spawn;
 module.exports = Command;
 
 function Command(command, args, options) {
-  sails.log.debug('[COMMAND] %s %s (%j)', command, (args || []).join(' '), options);
+  sails.log.silly(' * * * * * [COMMAND] %s %s (%j)'.red, command, (args || []).join(' '), options);
 
   EventEmitter.call(this);
 
@@ -45,6 +45,8 @@ function Command(command, args, options) {
 }
 
 Command.prototype.kill = function kill(signal) {
+	// TODO - Better management of the signal being sent here
+	// http://nodejs.org/api/child_process.html#child_process_child_kill_signal
   this._child.kill(signal);
 }
 

@@ -36,7 +36,7 @@ Worker.prototype.command = function command(command, args, options) {
   if (options.cwd.charAt(0) != '/')
     options.cwd = this._fullPath(options.cwd);
 
-  console.log('[WORKER] command: %s %s (%j)'.yellow, command, args.join(' '), options);
+	sails.log.silly(' * * * * [WORKER] Worker issuing command: %s %s (%j)'.yellow, command, args.join(' '), options);
 
   var background = options.background || options.silent;
   if (self.executing && !background) 
@@ -64,14 +64,14 @@ Worker.prototype.command = function command(command, args, options) {
 
   return child;
 
-  function onChildStdoutData(d) {
-    process.stdout.write('[worker] stdout: ' + d);
-    self.emit('stdout', d);
+  function onChildStdoutData(data) {
+    process.stdout.write('[worker] stdout: ' + data);
+    self.emit('stdout', data);
   }
 
-  function onChildStderrData(d) {
-    process.stdout.write('[worker] stderr: ' + d);
-    self.emit('stderr', d);
+  function onChildStderrData(data) {
+    process.stdout.write('[worker] stderr: ' + data);
+    self.emit('stderr', data);
   }
 
   function onChildClose(code) {
@@ -122,10 +122,11 @@ Worker.prototype.end = function end(data, force) {
   if (data) this._endResults = data;
 
   if (!this._pendingCommands || force) {
+		sails.log.silly(' * * * * [WORKER] end() - All commands complete!'.yellow);
 		this._terminate();
 	}
   else {
-    console.log('[WORKER] end() - still pending commands, not ending yet...'.yellow);
+		sails.log.silly(' * * * * [WORKER] end() - Still pending commands, not ending yet...'.yellow);
     this._endAfterCommandsEnd = true;
   }
 };
@@ -141,6 +142,7 @@ Worker.prototype._terminate = function terminate() {
 
 Worker.prototype.dispose = function dispose() {
   this._backgroundCommands.forEach(function(command) {
+		sails.log.silly(' * * * * [WORKER] dispose() - killing all commends ...'.yellow);
     command.kill();
   });
 }
