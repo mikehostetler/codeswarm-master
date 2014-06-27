@@ -120,7 +120,8 @@ module.exports.routes = {
 		 * Projects
 		 */
 		// List projects available on the provider
-		'get /projects/:provider': { controller: 'ProjectController', action: 'gatherByProvider' },
+		// TODO
+		//'get /projects/:provider': { controller: 'ProjectController', action: 'gatherByProvider' },
 		
 		// Create a project for a provider
     'post /projects': { controller: 'ProjectController', action: 'create' },

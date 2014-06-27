@@ -28,7 +28,7 @@ exports.start = function start() {
 			sails.log.error(err.stack || err);
 		} else {
 			process.nextTick(dequeue);
-			sails.log.info('Worker dequeued build '+build.id+' for project '+build.project);
+			sails.log.debug('[BUILDRunner] BuildRunner::start - Worker dequeued build '+build.id+' for project '+build.project);
 			BuildRunner.runBuild(build, done);
 		}
 	}
@@ -51,7 +51,8 @@ exports.runBuild = function runBuild(build, dequeueBuildCB) {
 		//sails.log.error(buildConfig);
 		sails.log.error("-----------------------------------------------");
 
-		dequeueBuildCB(err);
+		// Pass null here so we don't process the error twice
+		dequeueBuildCB(null);
 		/*
     if (worker) 
 			worker.error(err);
@@ -71,7 +72,7 @@ exports.runBuild = function runBuild(build, dequeueBuildCB) {
 
   buildDomain.run(runDomainBuild); 
   function runDomainBuild() {
-		sails.log.silly('BuildRunner::runDomainBuild - Kicking off a build for the '+build.project+' project');
+		sails.log.silly('[BUILDRunner] BuildRunner::runDomainBuild - Kicking off a build for the '+build.project+' project');
 
 		/**
 		 * MASTER BUILD WORKFLOW
@@ -87,7 +88,6 @@ exports.runBuild = function runBuild(build, dequeueBuildCB) {
 
 				// Lets get started!
 				initBuild,
-
 				startWorker,
 
 				// 
@@ -108,7 +108,6 @@ exports.runBuild = function runBuild(build, dequeueBuildCB) {
 				finishBuild,
 			],function (err, result) {
 				if(err) dequeueBuildCB(err);
-				console.log('Finished our build!');
 				dequeueBuildCB();
 			});
 		}
@@ -118,12 +117,12 @@ exports.runBuild = function runBuild(build, dequeueBuildCB) {
   }
 
   function loadCurrentBuild(cb) {
-		sails.log.silly('[BUILD] BuildRunner::LoadCurrentBuild - Finding Build '+build.id);
+		sails.log.silly('[BUILDRunner] BuildRunner::LoadCurrentBuild - Finding Build '+build.id);
     Build.findOne({_id: build.id}, cb);
   }
 
   function loadPreviousBuild(cb) {
-		sails.log.silly('[BUILD] BuildRunner::LoadPreviousBuild - Finding Build '+build.previous_successful_build);
+		sails.log.silly('[BUILDRunner] BuildRunner::LoadPreviousBuild - Finding Build '+build.previous_successful_build);
     if (build.previous_successful_build) {
       Build.findOne({_id:build.previous_successful_build}, cb);
 		}
@@ -131,9 +130,9 @@ exports.runBuild = function runBuild(build, dequeueBuildCB) {
   }
 
   function initBuild(config, cb) {
-		buildConfig = config;
-		sails.log.silly('[BUILD] BuildRunner::Initializing the Build!');
+		sails.log.silly('[BUILDRunner] BuildRunner::Initializing the Build!');
 
+		buildConfig = config;
 		buildConfig.stages = sails.config.codeswarm.build_stages;
 		buildConfig.ended = false;
 		buildConfig.ranCleanup = false;
@@ -174,7 +173,7 @@ exports.runBuild = function runBuild(build, dequeueBuildCB) {
   }
 
   function startWorker(buildConfig, cb) {
-		sails.log.silly('[BUILD] BuildRunner::Starting the Build');
+		sails.log.silly('[BUILDRunner] BuildRunner::Starting the Build');
 
     if (! buildConfig.plugins.length) 
 			throw new Error('No plugins detected for build');
@@ -248,7 +247,9 @@ exports.runBuild = function runBuild(build, dequeueBuildCB) {
 			buildConfig.contexts[plugin.name] = {};
 
 		var context = buildConfig.contexts[plugin.name];
+		//console.log("CONTEXT -----",context);
 		var config = buildConfig.current.plugins && buildConfig.current.plugins[plugin.name] || {};
+		//console.log("CONFIG -----",config);
 		var fn = plugin[stage];
 		if ('function' == typeof fn) {
 			buildConfig.worker.emit('plugin.start', plugin.name);

@@ -45,9 +45,10 @@ module.exports = {
 		push_interval: 2000,
 
 		// Available build plugins
+		// Ordering matters!
 		plugins: {
-			//'codeswarm-echo': require('../api/services/plugins/echo/index.js'),
 			'codeswarm-base': require('../api/services/plugins/base/index.js'),
+			'codeswarm-echo': require('../api/services/plugins/echo/index.js'),
 			//'codeswarm-custom': require('codeswarm-custom'),
 			//'codeswarm-node': require('codeswarm-node'),
 			//'codeswarm-sauce': require('codeswarm-sauce'),
