@@ -9,43 +9,36 @@ exports.env = {};
 
 /// init
 exports.init = function init(cb) {
-	//console.log("CodeSwarm :: Echo :: init callback");
-
-  /// We could initialize here if we wanted to
+	console.log(" ***** [CodeSwarm ECHO PLUGIN] :: Echo :: init callback");
   process.nextTick(cb);
 }
 
 /// prepare
 exports.prepare = function prepare(build, stage) {
-	console.log("CodeSwarm :: Echo :: prepare callback");
-  stage.command('npm', ['install']);
-  stage.end();
+	console.log(" ***** [CodeSwarm ECHO PLUGIN] :: Echo :: prepare callback");
+	stage.end();
 }
 
 /// test
 exports.test = function test(build, stage) {
-	console.log("CodeSwarm :: Echo :: test callback");
-  stage.command('npm', ['test']);
-  stage.end();
+	console.log(" ***** [CodeSwarm ECHO PLUGIN] :: Echo :: test callback");
+	stage.end();
 }
 
 // exports.analyze = ...
-exports.analyze = function analyze(cb) {
-	console.log("CodeSwarm :: Echo :: analyze callback");
-  /// We could analyze here if we wanted to
-  process.nextTick(cb);
+exports.analyze = function analyze(build, stage) {
+	console.log(" ***** [CodeSwarm ECHO PLUGIN] :: Echo :: analyze callback");
+	stage.end();
 }
 
 // exports.deploy = ...
-exports.deploy = function deploy(cb) {
-	console.log("CodeSwarm :: Echo :: deploy callback");
-  /// We could deploy here if we wanted to
-  process.nextTick(cb);
+exports.deploy = function deploy(build, stage) {
+	console.log(" ***** [CodeSwarm ECHO PLUGIN] :: Echo :: deploy callback");
+	stage.end();
 }
 
 // exports.cleanup = ...
-exports.cleanup = function cleanup(cb) {
-	console.log("CodeSwarm :: Echo :: cleanup callback");
-  /// We could cleanup here if we wanted to
-  process.nextTick(cb);
+exports.cleanup = function cleanup(build, stage) {
+	console.log(" ***** [CodeSwarm ECHO PLUGIN] :: Echo :: cleanup callback");
+	stage.end();
 }
