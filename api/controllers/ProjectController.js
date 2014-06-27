@@ -18,6 +18,8 @@
 var async    = require('async');
 var extend   = require('util')._extend;
 var uuid     = require('../../lib/uuid');
+var github = require('../../lib/github');
+var ghAPI = require('github');
 
 var repoRegexp = /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?\.git$/;
 
@@ -40,6 +42,41 @@ module.exports = {
 	 *	List projects available on the provider
    */
 	gatherByProvider: function gatherByProvider (req, res) {
+		var provider = req.param('provider');
+		var github = new ghAPI({ version: "3.0.0" });
+
+		// This is all we support right now
+		provider = 'github';
+
+		var owner = req.user;
+		User.tokenFor(owner.username, provider, gotToken);
+
+		function gotToken(err, _token) {
+			if (err) res.json(err.status_code || 500, err);
+			if (! _token) res.json(err.status_code || 500, err);
+			token = _token.token;
+
+			github.authenticate({
+				type: "oauth",
+				token: token
+			});
+			github.repos.getAll({type:'owner'},function(err, data) {
+				if (err) {
+					res.json(err.status_code || 500, err);
+				}
+
+				var repos = [];
+				data.forEach(function (repo) {
+					repos.push({
+						id: repo.id,
+						name: repo.name,
+						description: repo.description,
+						git_url: repo.git_url
+					});
+				});
+				res.json({ provider: provider, repos: repos });
+			});
+		}
 	},
 
   /**

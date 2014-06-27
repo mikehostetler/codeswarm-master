@@ -108,8 +108,8 @@ module.exports = {
 
 	tokenFor: function tokenFor(username, provider, cb) {
 		User.findOne({username: username}, function (err, user) {
-			if (err) res.json(401, {message: 'Could not find User'});
-			else if (user == undefined) res.json(401, {message: 'Could not find User'});
+			if (err) cb(new Error('Could not find User'));
+			else if (user == undefined) cb(new Error('Could not find User'));
 
 			user = User.toJSON(user);
 			User.getTokens(user,function(err, user) {

@@ -37,6 +37,7 @@ module.exports.policies = {
 	*/
 
 	ProjectController: {
+		gatherByProvider: ['passport','isAuthenticated'],
 		create: ['passport','isAuthenticated'],
 		list: ['passport','isAuthenticated'],
 		find: ['passport','isAuthenticated', 'userOwnsProjectOrPublic'],

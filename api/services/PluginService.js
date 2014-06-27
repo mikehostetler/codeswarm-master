@@ -2,7 +2,6 @@ require('colors');
 
 var async        = require('async');
 var _						 = require('lodash');
-var stageFunction = require('../../lib/stage_function');
 
 /**
  * Plugin Service

@@ -2,7 +2,7 @@ module.exports = function userOwnsProjectOrPublic(req, res, next) {
   var user = req.user.username;
 	var id = req.param('project-id');	
 
-	sails.log.silly("Policy::userOwnsProjectOrPublic - ",user,id);
+	sails.log.debug("Policy::userOwnsProjectOrPublic - ",user,id);
 
   Project.findOne({id: id}, replied);
   function replied(err, project) {
