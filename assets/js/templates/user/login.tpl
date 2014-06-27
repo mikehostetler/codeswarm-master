@@ -7,8 +7,9 @@
     <form id="login" class="global-form" name="loginForm" ng-submit="login(credentials)" novalidate>
         <div class="gf-col">
             <h3>Log in with:</h3>
+						<br />
             <ul>
-                <li><a href="/auth/github">Log in with Github</a></li>
+                <li><a href="/auth/github" class="btn btn-sec">Github</a></li>
             </ul>
         </div>
         <div class="gf-col">

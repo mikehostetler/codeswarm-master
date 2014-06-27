@@ -8,8 +8,9 @@
 
         <div class="gf-col">
             <h3>Quickly register with:</h3>
+						<br />
             <ul>
-                <li><a ng-href="{{prefix}}/auth/github">Log in with Github</a></li>
+                <li><a ng-href="{{prefix}}/auth/github" class="btn btn-sec">Github</a></li>
             </ul>
         </div>
 

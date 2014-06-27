@@ -24,7 +24,7 @@ module.exports = {
 	find: function(req, res) {
 		var username = req.param('id');
 
-		if(req.user === undefined) {
+		if(username === undefined && req.user === undefined) {
 			res.json(401, {message: 'No session'});
 			return;
 		}
@@ -37,13 +37,14 @@ module.exports = {
 		User.findOne({username: username}, function (err, user) {
 			if (err) res.json(401, {message: 'Could not find User'});
 			else if (user == undefined) res.json(401, {message: 'Could not find User'});
+			else {
+				user = User.toJSON(user);
+				User.getTokens(user,function(err, user) {
+					if (err) res.json(401, {message: 'Error retrieving Tokens'});
 
-			user = User.toJSON(user);
-			User.getTokens(user,function(err, user) {
-				if (err) res.json(401, {message: 'Error retrieving Tokens'});
-
-				res.json({ message: "Successfully found user", user: user });
-			});
+					res.json({ message: "Successfully found user", user: user });
+				});
+			}
 		});
 	},
 

@@ -1,5 +1,12 @@
-var codeswarm = angular.module("codeswarm", ['ngAnimate', 'ngRoute', 'ngResource', 'ngSanitize', 'LocalStorageModule', 'codeswarmService', 'angularSpinner']).
-    config(['$routeProvider', '$locationProvider',
+var codeswarm = angular.module("codeswarm", [
+			'ngAnimate', 
+			'ngRoute', 
+			'ngResource', 
+			'ngSanitize', 
+			'LocalStorageModule', 
+			'codeswarmService', 
+			'angularSpinner'
+		]).config(['$routeProvider', '$locationProvider',
         function ($routeProvider, $locationProvider) {
 
             $routeProvider.when("/", {templateUrl: '/js/templates/main.tpl', controller: "mainController"});
@@ -27,12 +34,13 @@ var codeswarm = angular.module("codeswarm", ['ngAnimate', 'ngRoute', 'ngResource
 
             $routeProvider.otherwise("/", {templateUrl: '/js/templates/main.tpl', controller: "mainController"});
 
-        }]).config(function ($sceDelegateProvider) {
+    }]).config(
+			function ($sceDelegateProvider) {
         $sceDelegateProvider.resourceUrlWhitelist([
             'self',
             'http://localhost:1337/**',
             'http://codeswarm.by-a.ninja/**']);
-    }).config(function (localStorageServiceProvider) {
+		}).config(function (localStorageServiceProvider) {
         localStorageServiceProvider.setPrefix('codeswarm');
         localStorageServiceProvider.setDefault("urlprefix", "http://localhost:1337");
     }).config(['$httpProvider', function ($httpProvider) {
