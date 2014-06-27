@@ -185,7 +185,7 @@ css.service('codeswarmService', ['$rootScope', '$resource', 'localStorageService
 		};
 
 		this.getProjectBuilds = function(project-id,buildId) {
-			return connector('/:project/:build').read({project: project-id, build: buildId}).getSingleBuild.$promise.then(function(data) {
+			return connector('/:project/build/:build').read({project: project-id, build: buildId}).getSingleBuild.$promise.then(function(data) {
 				return data;
 			});
 		};

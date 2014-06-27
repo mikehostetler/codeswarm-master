@@ -117,6 +117,48 @@ module.exports.routes = {
     'post /user/:id': { controller: 'UserController', action: 'update' },
 
 		/**
+		 * Tags - TODO
+		 */
+    //'get /:project-id/tags': { controller: 'TagController', action: 'list' },
+    //'post /:project-id/tags': { controller: 'TagController', action: 'create' },
+    //'get /:project-id/:tag': { controller: 'TagController', action: 'find' },
+    //'delete /:project-id/:tag': { controller: 'TagController', action: 'delete' },
+    //'post /:project-id/:tag/star': { controller: 'TagController', action: 'starTag' },
+    //'delete /:project-id/:tag/star': { controller: 'TagController', action: 'unstarTag' },
+
+		/**
+		 * Branches - TODO
+		 */
+    //'get /:project-id/branches': { controller: 'BranchController', action: 'list' },
+    //'get /:project-id/:branch': { controller: 'BranchController', action: 'find' },
+
+		/**
+		 * Targets - TODO
+		 */
+    //'get /:project-id/targets': { controller: 'TargetController', action: 'list' },
+    //'post /:project-id/targets': { controller: 'TargetController', action: 'create' },
+    //'get /:project-id/:target': { controller: 'TargetController', action: 'find' },
+    //'delete /:project-id/:target': { controller: 'TargetController', action: 'delete' },
+
+		/**
+		 * Target Actions - TODO
+		 */
+    //'get /:project-id/:target/build': { controller: 'TargetController', action: 'find' },
+    //'get /:project-id/:target/deploy': { controller: 'TargetController', action: 'find' },
+
+		/**
+		 * Builds
+		 */
+    'get r|^/([A-Za-z0-9-/]+)/builds$|project-id': { controller: 'BuildController', action: 'index' },
+    'get r|^/([A-Za-z0-9-/]+)/builds/tags$|project-id': { controller: 'BuildController', action: 'byTag' },
+    'get r|^/([A-Za-z0-9-/]+)/build/([A-Za-z0-9-/]+)$|project-id,build': { controller: 'BuildController', action: 'find' },
+
+		/**
+		 * Plugins - TODO
+		 */
+    'get /plugin/:type': { controller: 'PluginController', action: 'list' },
+
+		/**
 		 * Projects
 		 */
 		// List projects available on the provider
@@ -129,56 +171,18 @@ module.exports.routes = {
 		// List available projects
     'get /projects': { controller: 'ProjectController', action: 'list' },
     'get r|^/([A-Za-z0-9-/]+)/deploy$|project-id': { controller: 'ProjectController', action: 'deploy' },
-    'get r|^/([A-Za-z0-9-/]+)$|project-id': { controller: 'ProjectController', action: 'find' },
+		
 	
 		// Edit & Delete 
     'post r|^/([gh,gc,bb].*)$|project-id': { controller: 'ProjectController', action: 'edit' },
     'delete r|^/([gh,gc,bb].*)$|project-id': { controller: 'ProjectController', action: 'destroy' },
+    'post r|^/([A-Za-z0-9-/]+)/plugins$|project-id': { controller: 'ProjectController', action: 'updatePlugins' },
 
-// -----------------------------
-    'post /:project-id/plugins': { controller: 'ProjectController', action: 'updatePlugins' },
-
-		/**
-		 * Tags
-		 */
-    //'get /:project-id/tags': { controller: 'TagController', action: 'list' },
-    //'post /:project-id/tags': { controller: 'TagController', action: 'create' },
-    //'get /:project-id/:tag': { controller: 'TagController', action: 'find' },
-    //'delete /:project-id/:tag': { controller: 'TagController', action: 'delete' },
-    //'post /:project-id/:tag/star': { controller: 'TagController', action: 'starTag' },
-    //'delete /:project-id/:tag/star': { controller: 'TagController', action: 'unstarTag' },
-
-		/**
-		 * Branches
-		 */
-    //'get /:project-id/branches': { controller: 'BranchController', action: 'list' },
-    //'get /:project-id/:branch': { controller: 'BranchController', action: 'find' },
-
-		/**
-		 * Targets
-		 */
-    //'get /:project-id/targets': { controller: 'TargetController', action: 'list' },
-    //'post /:project-id/targets': { controller: 'TargetController', action: 'create' },
-    //'get /:project-id/:target': { controller: 'TargetController', action: 'find' },
-    //'delete /:project-id/:target': { controller: 'TargetController', action: 'delete' },
-
-		/**
-		 * Target Actions
-		 */
-    //'get /:project-id/:target/build': { controller: 'TargetController', action: 'find' },
-    //'get /:project-id/:target/deploy': { controller: 'TargetController', action: 'find' },
-
-		/**
-		 * Builds
-		 */
-    'get /:project-id/builds': { controller: 'BuildController', action: 'index' },
-    'get /:project-id/:build': { controller: 'BuildController', action: 'find' },
-    'get /:project-id/builds/tags': { controller: 'BuildController', action: 'byTag' },
-
-		/**
-		 * Plugins
-		 */
-    'get /plugin/:type': { controller: 'PluginController', action: 'list' },
+		/////////////////////////////////////////////////
+		// IMPORTANT - This route must be last for the vanity URL's to work
+		// This route must be last
+		/////////////////////////////////////////////////
+    'get r|^/([A-Za-z0-9-/]+)$|project-id': { controller: 'ProjectController', action: 'find' },
 
 		/**
 		 * Catch All Route

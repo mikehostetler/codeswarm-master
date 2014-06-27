@@ -18,6 +18,8 @@ module.exports = {
 
   attributes: {
 
+    id: 'string',
+
     project: {
       type: 'string',
       required: true

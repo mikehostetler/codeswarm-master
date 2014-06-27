@@ -24,11 +24,9 @@ module.exports = {
    *    `/build/index`
    *    `/build`
    */
-   index: function (req, res) {
-
-    var project = req.param('owner') + '/' + req.param('repo');
+	index: function (req, res) {
+		var project = req.param('project-id');	
     Build.findByProject(project, replied);
-
     function replied(err, builds) {
       if (err) res.send(err.status_code || 500, err);
       else res.json(builds.map(forList));
@@ -42,9 +40,10 @@ module.exports = {
    */
    find: function (req, res) {
 
-    var project = req.param('owner') + '/' + req.param('repo');
-    Build.findOne({id: req.param('build')}, replied);
+		var project = req.param('project-id');	
+		var build = req.param('build');	
 
+    Build.findOne({id: build}, replied);
     function replied(err, build) {
       if (err) res.send(err.status_code || 500, err);
       else if (! build) res.send(404, new Error('Build not found'));
@@ -54,7 +53,7 @@ module.exports = {
   },
 
   byTag: function (req, res) {
-    var project = req.param('owner') + '/' + req.param('repo');
+		var project = req.param('project-id');	
 
     async.parallel({
       project: loadProject,

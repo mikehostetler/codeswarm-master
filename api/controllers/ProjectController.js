@@ -82,6 +82,7 @@ module.exports = {
    *    `GET /projects/:owner/:repo`
    */
   find: function (req, res) {
+		sails.log.silly("ProjectController::find");
 		var id = req.param('project-id');	
     Project.findOne({id: id}, replied);
     function replied(err, project) {
