@@ -19,11 +19,10 @@ module.exports = {
     var configs = {};
 
     plugins.forEach(function(plugin) {
-      var config = require(plugin).config;
+      var config = plugin.config;
       if (config) configs[plugin] = config;
     });
 
     res.json(configs);
   }
-
 };
