@@ -4,7 +4,7 @@ var path     = require('path');
 var EE2      = require('eventemitter2').EventEmitter2;
 var mkdirp   = require('mkdirp');
 var extend   = require('util')._extend;
-var Command  = require('./command');
+var Command  = require('./Command');
 
 function Worker(build) {
   if (!this instanceof Worker) 

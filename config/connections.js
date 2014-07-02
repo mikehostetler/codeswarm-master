@@ -19,7 +19,14 @@
  */
 
 var URL = require('url');
-var couchdbURL = process.env.COUCHDB_URL || "http://localhost:5984";
+var couchdbURL = "http://localhost:5984";
+
+if(process.env.COUCH_PORT_5984_TCP_ADDR){
+
+    couchdbURL = "http://" + process.env.COUCH_PORT_5984_TCP_ADDR +":"+ process.env.COUCH_PORT_5984_TCP_PORT;
+    console.log("COUCH DB INITIALIZING: ", couchdbURL);
+}
+
 var url = URL.parse(couchdbURL);
 
 module.exports.connections = {
@@ -38,13 +45,13 @@ module.exports.connections = {
   // Run:
   // npm install sails-mysql
   //
-  someMysqlServer: {
-    adapter : 'sails-mysql',
-    host    : 'YOUR_MYSQL_SERVER_HOSTNAME_OR_IP_ADDRESS',
-    user    : 'YOUR_MYSQL_USER',
-    password: 'YOUR_MYSQL_PASSWORD', 
-    database: 'YOUR_MYSQL_DB'
-  },
+//  someMysqlServer: {
+//    adapter : 'sails-mysql',
+//    host    : 'YOUR_MYSQL_SERVER_HOSTNAME_OR_IP_ADDRESS',
+//    user    : 'YOUR_MYSQL_USER',
+//    password: 'YOUR_MYSQL_PASSWORD',
+//    database: 'YOUR_MYSQL_DB'
+//  },
 
   // MongoDB is the leading NoSQL database.
   // http://en.wikipedia.org/wiki/MongoDB
@@ -52,14 +59,14 @@ module.exports.connections = {
   // Run:
   // npm install sails-mongo
   //
-  someMongodbServer: {
-    adapter   : 'sails-mongo',
-    host      : 'localhost',
-    port      : 27017,
-    user      : 'username',
-    password  : 'password',
-    database  : 'your_mongo_db_name_here'
-  },
+//  someMongodbServer: {
+//    adapter   : 'sails-mongo',
+//    host      : 'localhost',
+//    port      : 27017,
+//    user      : 'username',
+//    password  : 'password',
+//    database  : 'your_mongo_db_name_here'
+//  },
 
   // PostgreSQL is another officially supported relational database. 
   // http://en.wikipedia.org/wiki/PostgreSQL
@@ -67,13 +74,13 @@ module.exports.connections = {
   // Run:
   // npm install sails-postgresql
   //
-  somePostgresqlServer: {
-    adapter   : 'sails-postgresql',
-    host      : 'YOUR_POSTGRES_SERVER_HOSTNAME_OR_IP_ADDRESS',
-    user      : 'YOUR_POSTGRES_USER',
-    password  : 'YOUR_POSTGRES_PASSWORD', 
-    database  : 'YOUR_POSTGRES_DB'
-  },
+//  somePostgresqlServer: {
+//    adapter   : 'sails-postgresql',
+//    host      : 'YOUR_POSTGRES_SERVER_HOSTNAME_OR_IP_ADDRESS',
+//    user      : 'YOUR_POSTGRES_USER',
+//    password  : 'YOUR_POSTGRES_PASSWORD',
+//    database  : 'YOUR_POSTGRES_DB'
+//  },
 
   "couchdb": {
     adapter		: 'sails-couchdb-orm',

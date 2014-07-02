@@ -39,10 +39,10 @@ var codeswarm = angular.module("codeswarm", [
         $sceDelegateProvider.resourceUrlWhitelist([
             'self',
             'http://localhost:1337/**',
-            'http://codeswarm.by-a.ninja/**']);
+            'http://codeswarm.by-a.ninja:8094/**']);
 		}).config(function (localStorageServiceProvider) {
         localStorageServiceProvider.setPrefix('codeswarm');
-        localStorageServiceProvider.setDefault("urlprefix", "http://localhost:1337");
+        localStorageServiceProvider.setDefault("urlprefix", "http://172.17.0.6:1337");
     }).config(['$httpProvider', function ($httpProvider) {
         $httpProvider.defaults.withCredentials = true;
     }]);

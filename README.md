@@ -108,7 +108,7 @@ You will also need a GitHub Client ID and Secret:
 CodeSwarm utilizes Environment variables for configuration.  
 
 * PORT - Public port CodeSwarm runs on, defaults to 1337
-* COUCHDB_URL - CouchDB URL, defaults to 'http://localhost:5984'
+* COUCH_PORT_5984_TCP_ADDR && COUCH_PORT_5984_TCP_PORT- CouchDB URL, defaults to 'http://localhost:5984'
 * COUCHDB_USERNAME - CouchDB Username, defaults to 'admin'
 * COUCHDB_PASSWORD - CouchDB Password, defaults to 'admin'
 * GITHUB_CLIENT_ID - Github Client ID, defaults to an application set up for local development
@@ -118,7 +118,7 @@ CodeSwarm utilizes Environment variables for configuration.
 You can set these variables on the command line prior to calling NPM start.  Here's a quick example:
 
 ```sh
-$ PORT=1337 COUCHDB_URL=http://localhost:5984 COUCHDB_USERNAME=admin COUCHDB_PASSWORD=admin npm run start
+$ PORT=1337 COUCH_PORT_5984_TCP_PORT=5984 COUCH_PORT_5984_TCP_ADDR="http://localhost" COUCHDB_USERNAME=admin COUCHDB_PASSWORD=admin npm run start
 ```
 
 ## License Information

@@ -51,7 +51,7 @@ module.exports.passport = {
       consumerKey: 'GMTSBMrLqDP36NZRT6',
       consumerSecret: 'auGM6EjgXHKbxJfvN3GESFsfE774gsLD',
     }
-  },
+  }
 
 	/*
   facebook: {

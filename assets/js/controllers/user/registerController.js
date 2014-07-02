@@ -8,6 +8,7 @@ function registerController($scope, $rootScope, codeswarmService, localStorageSe
     $scope.prefix = localStorageService.get('urlprefix');
 
     $scope.register = function (usermodel) {
+        console.log("ABOUT TO CREATE USER WITH THIS MODEL: ", usermodel);
         codeswarmService.createUser(usermodel).then(function(data){
             console.log("New User: ", data);
             localStorageService.set("newUser", data);

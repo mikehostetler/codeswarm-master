@@ -65,21 +65,21 @@ css.service('codeswarmService', ['$rootScope', '$resource', 'localStorageService
                 getSingleBuild: {
                     method: 'GET',
                     params: {}
-                },
+                }
             });
     }
 
 
-		/**
-		 * Log a user in against our local strategy
-		 */
+    /**
+     * Log a user in against our local strategy
+     */
     this.login = function (user, pass) {
         return connector("/auth/local").login({identifier: user, password: pass}).$promise;
     };
 
-		/**
-		 * Log a user out
-		 */
+    /**
+     * Log a user out
+     */
     this.logout = function () {
         connector("/logout").logout().$promise.then(function (data) {
             //console.log("Logout Returned: ", data);
@@ -87,22 +87,22 @@ css.service('codeswarmService', ['$rootScope', '$resource', 'localStorageService
         });
     };
 
-		/**
-		 * Check local storage whether the user is logged in
-		 */
+    /**
+     * Check local storage whether the user is logged in
+     */
     this.isloggedin = function ($scope) {
         if (!localStorageService.get("userdata")) {
             this.loggedin();
             return false;
-        }else{
+        } else {
             console.log("didn't run check");
             return true;
         }
     }
 
-		/**
-		 * Ask the server whether the user is logged in
-		 */
+    /**
+     * Ask the server whether the user is logged in
+     */
     this.loggedin = function () {
         usSpinnerService.spin('theSpinner');
         connector("/user").user().$promise.finally(function (data) {
@@ -118,16 +118,18 @@ css.service('codeswarmService', ['$rootScope', '$resource', 'localStorageService
                 //console.log("setting logged in to true");
                 localStorageService.set("user", data);
             }
-        })
+        }, function(err){
+            console.log("there was an error checking if the user is logged in: ", err);
+        });
     };
 
-		/**
-		 * Check whether the username exists
-		 */
+    /**
+     * Check whether the username exists
+     */
     this.userExists = function (username) {
         connector("/user/:action").read({action: username}).$promise.then(function (data) {
-						// TODO - Check whether the user does not exist!
-						// It will contain the string, 'Could not find User'
+            // TODO - Check whether the user does not exist!
+            // It will contain the string, 'Could not find User'
 
             console.log("DATA FROM AUTH LOCAL: ", data);
             localStorageService.set("authlocal", data);
@@ -135,15 +137,18 @@ css.service('codeswarmService', ['$rootScope', '$resource', 'localStorageService
         });
     };
 
-		/**
-		 * Create a new user with the local strategy
-		 */
-    this.createUser = function (username, email, password) {
-        return connector("/auth/local/register").register({
-            'username': username,
-            'email': email,
-            'password': password
-        }).$promise;
+    /**
+     * Create a new user with the local strategy
+     */
+    this.createUser = function (userobject) {
+        usSpinnerService.spin('theSpinner');
+        return connector("/auth/local/register").register(userobject).$promise.then(function (data) {
+            console.log("NEW USER CREATED: ", data);
+            usSpinnerService.stop('theSpinner');
+            localStorageService.set("user", data.user);
+        }, function (err) {
+            console.log("ERROR CREATING USER: ", err);
+        });
     };
 
     this.getCurrentUser = function () {
@@ -158,37 +163,37 @@ css.service('codeswarmService', ['$rootScope', '$resource', 'localStorageService
         return connector("/projects").projects().$promise;
     };
 
-		this.getProject = function(project-id) {
-			return connector('/:project').read({project: project-id}).getProject.$promise.then(function(data) {
-				return data;
-			});
-		};
-		
-		this.deployProject = function(project-id) {
-			return connector('/:project/deploy').read({project: project-id}).deployProject.$promise;
-		};
+    this.getProject = function (projectId) {
+        return connector('/:project').read({project: projectId}).getProject.$promise.then(function (data) {
+            return data;
+        });
+    };
 
-    this.editProject = function (project-id, branch) {
-        return connector("/:project").read({project: project-id}).editProject({
-            'branch': branch,
+    this.deployProject = function (projectId) {
+        return connector('/:project/deploy').read({project: projectId}).deployProject.$promise;
+    };
+
+    this.editProject = function (projectId, branch) {
+        return connector("/:project").read({project: projectId}).editProject({
+            'branch': branch
         }).$promise;
     };
 
-		this.deleteProject = function(project-id) {
-			return connector('/:project').read({project: project-id}).deleteProject.$promise;
-		};
+    this.deleteProject = function (projectId) {
+        return connector('/:project').read({project: projectId}).deleteProject.$promise;
+    };
 
-		this.getProjectBuilds = function(project-id) {
-			return connector('/:project/builds').read({project: project-id}).getBuilds.$promise.then(function(data) {
-				return data;
-			});
-		};
+    this.getProjectBuilds = function (projectId) {
+        return connector('/:project/builds').read({project: projectId}).getBuilds.$promise.then(function (data) {
+            return data;
+        });
+    };
 
-		this.getProjectBuilds = function(project-id,buildId) {
-			return connector('/:project/build/:build').read({project: project-id, build: buildId}).getSingleBuild.$promise.then(function(data) {
-				return data;
-			});
-		};
+    this.getProjectBuilds = function (projectId, buildId) {
+        return connector('/:project/build/:build').read({project: projectId, build: buildId}).getSingleBuild.$promise.then(function (data) {
+            return data;
+        });
+    };
 
     return this;
 }]);
